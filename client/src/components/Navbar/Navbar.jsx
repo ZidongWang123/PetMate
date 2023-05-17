@@ -1,0 +1,233 @@
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
+
+import logo from '../../images/petHouse.png';
+import './Navbar.css';
+
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import decode from 'jwt-decode';
+
+
+const pages = ['Explore', 'Groups', 'Event', 'Service'];
+const settings = ['How it works', 'Personal Info', 'My posts', 'My groups', 'My service', 'My events', 'Pure mode', 'Logout'];
+
+function Navbar() {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [activeButton, setActiveButton] = useState(null);
+
+    const dispatch = useDispatch();
+    const Navigate = useNavigate();
+    const location = useLocation();
+
+    const navColor = 'rgb(245, 242, 236)';
+    const fontColor = '#393c7c';
+    const signInButtonStyle = {
+        backgroundColor: 'rgb(245, 242, 236)',
+    };
+
+    const handleButtonClick = (page) => {
+        setActiveButton(page);
+    };
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+    const logout = () => {
+        dispatch({ type: 'LOGOUT' });
+
+        Navigate('/');
+
+        setUser(null);
+
+        window.location.reload();//极端方法，不推荐，但是暂时没有更好的办法
+    };
+
+    React.useEffect(() => {
+        const token = user?.token;
+
+        if (token) {
+            const decodedToken = decode(token);
+
+            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+        }
+
+        setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [location]);
+
+    return (
+        <AppBar position="static" sx={{ backgroundColor: navColor }}>
+            <Container maxWidth="xl" className="container">
+                <Toolbar disableGutters={true}>
+
+                    <img src={logo} alt="logo" key="small-logo" className="small-logo" />
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
+                        href="/"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'Comic Sans MS',
+                            fontWeight: 800,
+                            letterSpacing: '.1rem',
+                            color: fontColor,
+                            textDecoration: 'none',
+                        }}
+                    >
+                        PetMate
+                    </Typography>
+
+
+                    <Box sx={{ flexGrow: 1, fontFamily: 'Comic Sans MS', display: { xs: 'flex', md: 'none' } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="#393c7c"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                fontFamily: 'Comic Sans MS',
+                                display: { xs: 'block', md: 'none' },
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ fontFamily: 'Comic Sans MS', fontWeight: 500 }}>
+                                    <Typography textAlign="center" fontFamily="Comic Sans MS">{page}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+
+                    <img src={logo} alt="logo" key="large-logo" className="large-logo" />
+                    <Typography
+                        variant="h5"
+                        noWrap
+                        component="a"
+                        href="/"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'flex', md: 'none' },
+                            flexGrow: 1,
+                            fontFamily: 'Comic Sans MS',
+                            fontWeight: 700,
+                            letterSpacing: '.1rem',
+                            color: fontColor,
+                            textDecoration: 'none',
+                        }}
+                    >
+                        PetMate
+                    </Typography>
+
+                    <Box sx={{ flexGrow: 1, fontFamily: 'Comic Sans MS', display: { xs: 'none', md: 'flex' } }}>
+                        {pages.map((page) => (
+                            <Button
+                                key={page}
+                                onClick={() => handleButtonClick(page)}
+                                sx={{
+                                    fontFamily: 'Comic Sans MS',
+                                    color: fontColor,
+                                    backgroundColor: navColor,
+                                    display: 'block',
+                                    fontWeight: 800,
+                                    textDecoration: activeButton === page ? 'underline !important' : 'none',
+                                    textDecorationThickness: '2px !important',
+                                    textDecorationSkipInk: 'none !important',
+                                    textUnderlineOffset: '4px !important',
+                                }}
+                            >
+                        {page}
+                    </Button>
+                        ))}
+                </Box>
+
+                <Toolbar>
+                    {user ? (
+                        <div>
+                            <Typography variant='h6'>{user.result.name}</Typography>
+                        </div>) : (
+                        <Button component={Link} to="/auth" variant="contained" style={signInButtonStyle} sx={{ fontFamily: 'Comic Sans MS', color: fontColor }}>Sign In</Button>
+                    )}
+                </Toolbar>
+
+                {/* <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting) => (
+                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">{setting}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box> */}
+            </Toolbar>
+        </Container>
+        </AppBar >
+    );
+}
+export default Navbar;

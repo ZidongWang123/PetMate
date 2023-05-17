@@ -1,0 +1,38 @@
+.small-logo {
+    display: none;
+  }
+  
+.large-logo {
+    display: block;
+}
+
+.css-1oqqzyl-MuiContainer-root {
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (min-width: 1200px){
+  .css-1oqqzyl-MuiContainer-root {
+    max-width: 100% !important;
+  }
+}
+  
+@media (min-width: 960px) {
+    .small-logo {
+      display: block;
+      width: 48px;
+      height: 48px;
+    }
+  
+    .large-logo {
+      display: none;
+      width: 48px;
+      height: 48px;
+    }
+
+    .css-1oqqzyl-MuiContainer-root {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+}
