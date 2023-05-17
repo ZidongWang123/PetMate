@@ -8,7 +8,9 @@ Using React, Node.js, Express & MongoDB to build a Full Stack MERN Application. 
 
 Setup:
 - create a .env file and set the PORT and CONNECTION_URL (see .env.example)
-- run ```npm i && npm start``` for both client and server side to start the app
+- PORT is you could set one to suit your preference
+- CONNECTION_URL is the link to the cloud database that you have set up on mongodb
+- After setup of PORT and CONNECTION_URL run ```npm i && npm start``` for both client and server side to start the app
 
 ## Technical documentation
 Here we will instruct our code in each folder.
