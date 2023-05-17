@@ -28,10 +28,10 @@ function Navbar() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState('Explore');
 
     const dispatch = useDispatch();
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const location = useLocation();
 
     const navColor = 'rgb(245, 242, 236)';
@@ -43,6 +43,7 @@ function Navbar() {
 
     const handleButtonClick = (page) => {
         setActiveButton(page);
+        navigate(`/${page.toLowerCase()}`);
     };
 
     const handleOpenNavMenu = (event) => {
@@ -64,7 +65,7 @@ function Navbar() {
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
 
-        Navigate('/');
+        navigate('/');
 
         setUser(null);
 
@@ -193,7 +194,7 @@ function Navbar() {
                         <div>
                             <Typography variant='h6'>{user.result.name}</Typography>
                         </div>) : (
-                        <Button component={Link} to="/auth" variant="contained" style={signInButtonStyle} sx={{ fontFamily: 'Comic Sans MS', color: fontColor }}>Sign In</Button>
+                        <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" style={signInButtonStyle} sx={{ fontFamily: 'Comic Sans MS', color: fontColor }}>Sign In</Button>
                     )}
                 </Toolbar>
 

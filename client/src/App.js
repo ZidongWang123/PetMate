@@ -4,6 +4,9 @@ import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Explore from './components/Pages/Explore/Explore';
+import Groups from './components/Pages/Groups/Groups';
+import Event from './components/Pages/Event/Event';
+import Service from './components/Pages/Service/Service';
 import Auth from './components/Auth/Auth';
 
 
@@ -15,10 +18,11 @@ const App = () => {
           <Container maxWidth="lg">
               <Navbar />
               <Routes>
-                  <Route path="/" element={<Navigate to="/posts" />} />
+                  <Route path="/" element={<Navigate to="/explore" />} />
                   <Route path="/explore" element={<Explore />} />
-                  {/* <Route path="/posts/search" element={<Home />} />
-                  <Route path="/posts/:id" element={<PostDetails />} /> */}
+                  <Route path="/groups" element={<Groups />} />
+                  <Route path="/event" element={<Event />} />
+                  <Route path="/service" element={<Service />} />
                   {!user ? (
                       <Route path="/auth" element={<Auth />} />
                       ) : (
