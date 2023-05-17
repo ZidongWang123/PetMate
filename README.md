@@ -4,8 +4,6 @@
 
 Using React, Node.js, Express & MongoDB to build a Full Stack MERN Application. The App is called "PetMate" and it is a pet owner community app that allows users to meet like friends and have some group activities with same interest friends offline.
 
-By the end of this video, you will have a strong understanding of how the MERN Stack works.
-
 ## Init
 
 Setup:
