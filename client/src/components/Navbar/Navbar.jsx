@@ -39,6 +39,7 @@ function Navbar() {
     const signInButtonStyle = {
         backgroundColor: 'rgb(245, 242, 236)',
     };
+    //test commit
 
     const handleButtonClick = (page) => {
         setActiveButton(page);
