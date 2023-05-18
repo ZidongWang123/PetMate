@@ -4,7 +4,7 @@ import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signup, signin } from "../../actions/auth";
-import { fontColor, navColor, buttonColor } from "../../constant/actionTypes";
+import { darkPurple, paleYellow, orange } from "../../constant/actionTypes";
 
 import './Auth.css';
 
@@ -40,7 +40,7 @@ const Auth = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Paper sx={{ elevation: 3, backgroundColor: navColor, marginTop: 15, border: '1px solid black',
+            <Paper sx={{ elevation: 3, backgroundColor: paleYellow, marginTop: 15, border: '1px solid black',
             borderRadius: '10px',
             padding: '20px',
             boxSizing: 'border-box',}}>
@@ -49,7 +49,7 @@ const Auth = () => {
                         fontFamily: 'Comic Sans MS',
                         fontWeight: 800,
                         letterSpacing: '.1rem',
-                        color: fontColor,
+                        color: darkPurple,
                         margin: 4,
                         textDecoration: 'none',
                         textAlign: 'center',
@@ -76,8 +76,8 @@ const Auth = () => {
                         fontFamily: 'Comic Sans MS',
                         fontWeight: 800,
                         letterSpacing: '.1rem',
-                        color: fontColor,
-                        backgroundColor: buttonColor,
+                        color: darkPurple,
+                        backgroundColor: orange,
                     }}>
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
@@ -88,7 +88,7 @@ const Auth = () => {
                                 fontFamily: 'Comic Sans MS',
                                 fontWeight: 800,
                                 letterSpacing: '.1rem',
-                                color: fontColor,
+                                color: darkPurple,
                             }}>
                             {isSignup ? 'Already have an account?' : "Don't have an account?"}<br />
                             {isSignup ? 'Then Sign In!' : 'Then Sign Up!'}

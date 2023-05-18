@@ -20,7 +20,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import decode from 'jwt-decode';
 
-import { fontColor, navColor, buttonColor } from "../../constant/actionTypes";
+import { darkPurple, paleYellow, orange, brightPurple } from "../../constant/actionTypes";
+import ConfirmDialog from '../Widget/ConfirmDialog/ConfirmDialog';
 
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
@@ -83,7 +84,7 @@ function Navbar() {
     }, [location]);
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: navColor }}>
+        <AppBar position="static" sx={{ backgroundColor: paleYellow }}>
             <Container maxWidth="xl" className="container">
                 <Toolbar disableGutters={true}>
 
@@ -99,7 +100,7 @@ function Navbar() {
                             fontFamily: 'Comic Sans MS',
                             fontWeight: 800,
                             letterSpacing: '.1rem',
-                            color: fontColor,
+                            color: darkPurple,
                             textDecoration: 'none',
                         }}
                     >
@@ -158,7 +159,7 @@ function Navbar() {
                             fontFamily: 'Comic Sans MS',
                             fontWeight: 700,
                             letterSpacing: '.1rem',
-                            color: fontColor,
+                            color: darkPurple,
                             textDecoration: 'none',
                         }}
                     >
@@ -172,8 +173,8 @@ function Navbar() {
                                 onClick={() => pageNavigate(page)}
                                 sx={{
                                     fontFamily: 'Comic Sans MS',
-                                    color: fontColor,
-                                    backgroundColor: navColor,
+                                    color: darkPurple,
+                                    backgroundColor: paleYellow,
                                     display: 'block',
                                     fontWeight: 800,
                                     textDecoration: activeButton === page ? 'underline !important' : 'none',
@@ -189,9 +190,24 @@ function Navbar() {
 
                     <Toolbar>
                         {user ? (
-                            <Box sx={{ flexGrow: 0 }}>
+                            <Box sx={{ flexGrow: 0 , display: 'flex', flexDirection:'row', alignItems: 'center'}}>
+                                <ConfirmDialog
+                                    button="Join us!"
+                                    title="Be our membership now!"
+                                    contentText={`
+
+                                                    Sharing Posts and Building Groups!
+                                                    Creating Events and Sharing Services!
+                                                    Pure Mode!
+                                                    Higher Exposure in Explore!
+                                                    ...
+                                                    More benefits of membership are waiting for you!
+                                        `}
+                                    dialogColor={darkPurple}
+                                    style={{ marginRight: '10px' }}
+                                />
                                 <Tooltip title="Open settings">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, marginLeft:'20px' }}>
                                         <Avatar alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
                                     </IconButton>
                                 </Tooltip>
@@ -234,7 +250,7 @@ function Navbar() {
                                     ))}
                                 </Menu>
                             </Box>) : (
-                            <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" sx={{ fontFamily: 'Comic Sans MS', color: fontColor, backgroundColor: buttonColor }}>Sign In</Button>
+                            <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" sx={{ fontFamily: 'Comic Sans MS', color: darkPurple, backgroundColor: orange }}>Sign In</Button>
                         )}
                     </Toolbar>
                 </Toolbar>

@@ -5,6 +5,8 @@ export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 
 //font color and background color
-export const navColor = 'rgb(245, 242, 236)';
-export const fontColor = '#393c7c';
-export const buttonColor = '#F0A860';
+export const paleYellow = 'rgb(245, 242, 236)';
+export const darkPurple = '#393c7c';
+export const orange = '#F0A860';
+export const lightGreen = '#9AC7BF';
+export const brightPurple = '#9C62F2';
