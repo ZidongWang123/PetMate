@@ -53,7 +53,7 @@ export default function ConfirmDialog({ button, title, contentText, dialogColor 
                             fontFamily: 'Comic Sans MS',
                             color: dialogColor,
                             textTransform: 'none',
-                            fontSize: '15px',
+                            fontSize: '17px',
                             whiteSpace: 'pre-line',
                         }}>
                         {contentText}

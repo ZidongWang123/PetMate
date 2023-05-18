@@ -8,5 +8,5 @@ export const END_LOADING = 'END_LOADING';
 export const paleYellow = 'rgb(245, 242, 236)';
 export const darkPurple = '#393c7c';
 export const orange = '#F0A860';
-export const lightGreen = '#9AC7BF';
+export const brightGreen = '#9AC7BF';
 export const brightPurple = '#9C62F2';

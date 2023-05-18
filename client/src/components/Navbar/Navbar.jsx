@@ -201,6 +201,7 @@ function Navbar() {
                                                     Pure Mode!
                                                     Higher Exposure in Explore!
                                                     ...
+                                                    
                                                     More benefits of membership are waiting for you!
                                         `}
                                     dialogColor={darkPurple}
