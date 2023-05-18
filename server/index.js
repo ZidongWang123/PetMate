@@ -15,10 +15,14 @@ app.use(cors());
 
 app.use('/user', userRoutes);
 
-const PORT = process.env.PORT || 1000;
+const PORT = 100;
+const CONNECTION_URL = process.env.CONNECTION_URL;
 
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+    .then(() => app.listen(PORT, () => {
+        console.log(`Server running on port: ${PORT}`);
+        console.log(`Server running on port: ${CONNECTION_URL}`);}
+        ))
     .catch((error) => console.log(error.message));
 
 // www.mongodb.com/cloud/atlas

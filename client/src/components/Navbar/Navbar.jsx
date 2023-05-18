@@ -20,6 +20,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import decode from 'jwt-decode';
 
+import { fontColor, navColor} from "../../constant/actionTypes";
+
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
 const settings = ['How it works', 'Personal Info', 'My posts', 'My groups', 'My service', 'My events', 'Pure mode', 'Logout'];
@@ -34,8 +36,6 @@ function Navbar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const navColor = 'rgb(245, 242, 236)';
-    const fontColor = '#393c7c';
     const signInButtonStyle = {
         backgroundColor: 'rgb(245, 242, 236)',
     };
