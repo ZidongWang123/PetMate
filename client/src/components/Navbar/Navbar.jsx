@@ -20,11 +20,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import decode from 'jwt-decode';
 
-import { fontColor, navColor } from "../../constant/actionTypes";
+import { fontColor, navColor, buttonColor } from "../../constant/actionTypes";
 
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
-const settings = ['How it works', 'Personal Info', 'My posts', 'My groups', 'My services', 'My events', 'Pure mode', 'Logout'];
+const settings = ['Personal Info', 'My posts', 'My groups', 'My events', 'My services', 'How it works', 'Pure mode', 'Logout'];
 
 function Navbar() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -35,11 +35,6 @@ function Navbar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-
-    const signInButtonStyle = {
-        backgroundColor: 'rgb(245, 242, 236)',
-    };
-    //test commit
 
     const pageNavigate = (page) => {
         setActiveButton(page);
@@ -61,7 +56,7 @@ function Navbar() {
     const handleCloseUserMenu = (setting) => {
         if (typeof setting === 'string') {
             navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
-        } 
+        }
         setAnchorElUser(null);
     };
 
@@ -215,9 +210,14 @@ function Navbar() {
                                     }}
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
+                                    PaperProps={{
+                                        style: {
+                                            borderRadius: '20px',
+                                        },
+                                    }}
                                 >
                                     {settings.map((setting) => (
-                                        <MenuItem 
+                                        <MenuItem
                                             key={setting}
                                             onClick={() => {
                                                 handleCloseUserMenu(setting);
@@ -225,12 +225,16 @@ function Navbar() {
                                                     logout();
                                                 }
                                             }}>
-                                            <Typography textAlign="center">{setting}</Typography>
+                                            <Typography sx={{
+                                                fontFamily: 'Comic Sans MS',
+                                                fontWeight: 800,
+                                                color: setting === 'Logout' ? 'red' : 'inherit',
+                                            }}>{setting}</Typography>
                                         </MenuItem>
                                     ))}
                                 </Menu>
                             </Box>) : (
-                            <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" style={signInButtonStyle} sx={{ fontFamily: 'Comic Sans MS', color: fontColor }}>Sign In</Button>
+                            <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" sx={{ fontFamily: 'Comic Sans MS', color: fontColor, backgroundColor: buttonColor }}>Sign In</Button>
                         )}
                     </Toolbar>
                 </Toolbar>
