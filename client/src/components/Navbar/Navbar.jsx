@@ -15,16 +15,16 @@ import Button from '@mui/material/Button';
 import logo from '../../images/petHouse.png';
 import './Navbar.css';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import decode from 'jwt-decode';
 
-import { fontColor, navColor} from "../../constant/actionTypes";
+import { fontColor, navColor } from "../../constant/actionTypes";
 
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
-const settings = ['How it works', 'Personal Info', 'My posts', 'My groups', 'My service', 'My events', 'Pure mode', 'Logout'];
+const settings = ['How it works', 'Personal Info', 'My posts', 'My groups', 'My services', 'My events', 'Pure mode', 'Logout'];
 
 function Navbar() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -41,7 +41,7 @@ function Navbar() {
     };
     //test commit
 
-    const handleButtonClick = (page) => {
+    const pageNavigate = (page) => {
         setActiveButton(page);
         navigate(`/${page.toLowerCase()}`);
     };
@@ -58,7 +58,10 @@ function Navbar() {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (setting) => {
+        if (typeof setting === 'string') {
+            navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
+        } 
         setAnchorElUser(null);
     };
 
@@ -171,7 +174,7 @@ function Navbar() {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={() => handleButtonClick(page)}
+                                onClick={() => pageNavigate(page)}
                                 sx={{
                                     fontFamily: 'Comic Sans MS',
                                     color: fontColor,
@@ -184,51 +187,54 @@ function Navbar() {
                                     textUnderlineOffset: '4px !important',
                                 }}
                             >
-                        {page}
-                    </Button>
+                                {page}
+                            </Button>
                         ))}
-                </Box>
+                    </Box>
 
-                <Toolbar>
-                    {user ? (
-                        <div>
-                            <Typography variant='h6'>{user.result.name}</Typography>
-                        </div>) : (
-                        <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" style={signInButtonStyle} sx={{ fontFamily: 'Comic Sans MS', color: fontColor }}>Sign In</Button>
-                    )}
+                    <Toolbar>
+                        {user ? (
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    {settings.map((setting) => (
+                                        <MenuItem 
+                                            key={setting}
+                                            onClick={() => {
+                                                handleCloseUserMenu(setting);
+                                                if (setting === "Logout") {
+                                                    logout();
+                                                }
+                                            }}>
+                                            <Typography textAlign="center">{setting}</Typography>
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </Box>) : (
+                            <Button component={Link} to="/auth" onClick={() => setActiveButton(null)} variant="contained" style={signInButtonStyle} sx={{ fontFamily: 'Comic Sans MS', color: fontColor }}>Sign In</Button>
+                        )}
+                    </Toolbar>
                 </Toolbar>
-
-                {/* <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box> */}
-            </Toolbar>
-        </Container>
+            </Container>
         </AppBar >
     );
 }
