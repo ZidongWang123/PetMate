@@ -14,6 +14,7 @@ import MyGroups from './components/Settings/MyGroups/MyGroups';
 import MyEvents from './components/Settings/MyEvents/MyEvents';
 import MyServices from './components/Settings/MyServices/MyServices';
 import AppIntro from './components/Settings/AppIntro/AppIntro';
+import Ads from './components/Widget/Ads';
 
 
 const App = () => {
@@ -23,24 +24,30 @@ const App = () => {
       <BrowserRouter>
           <Container maxWidth="lg">
               <Navbar />
-              <Routes>
-                  <Route path="/" element={<Navigate to="/explore" />} />
-                  <Route path="/explore" element={<Explore />} />
-                  <Route path="/groups" element={<Groups />} />
-                  <Route path="/event" element={<Event />} />
-                  <Route path="/service" element={<Service />} />
-                  <Route path="/howitworks" element={<AppIntro />} />
-                  <Route path="/personalInfo" element={<PersonalInfo />} />
-                  <Route path="/myposts" element={<MyPosts />} />
-                  <Route path="/mygroups" element={<MyGroups />} />
-                  <Route path="/myevents" element={<MyEvents />} />
-                  <Route path="/myservices" element={<MyServices />} />
-                  {!user ? (
-                      <Route path="/auth" element={<Auth />} />
-                      ) : (
-                      <Route path="/explore" element={<Navigate to="/" />} />
-                  )}
-              </Routes>
+              <div className="page"> 
+                <Ads />
+                  <div className="routes">
+                    <Routes >
+                        <Route path="/" element={<Navigate to="/explore" />} />
+                        <Route path="/explore" element={<Explore />} />
+                        <Route path="/groups" element={<Groups />} />
+                        <Route path="/event" element={<Event />} />
+                        <Route path="/service" element={<Service />} />
+                        <Route path="/howitworks" element={<AppIntro />} />
+                        <Route path="/personalInfo" element={<PersonalInfo />} />
+                        <Route path="/myposts" element={<MyPosts />} />
+                        <Route path="/mygroups" element={<MyGroups />} />
+                        <Route path="/myevents" element={<MyEvents />} />
+                        <Route path="/myservices" element={<MyServices />} />
+                        {!user ? (
+                            <Route path="/auth" element={<Auth />} />
+                            ) : (
+                            <Route path="/explore" element={<Navigate to="/" />} />
+                        )}
+                    </Routes>
+                  </div>
+                <Ads />
+              </div>
           </Container>
       </BrowserRouter>
   );

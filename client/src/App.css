@@ -7,6 +7,37 @@
   pointer-events: none;
 }
 
+.ads{
+  width: 10%;
+}
+
+.page{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.routes{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+@media (max-width: 960px) {
+  .ads{
+    width: 100%;
+  }
+
+  .page{
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
