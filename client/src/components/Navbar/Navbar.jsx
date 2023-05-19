@@ -22,10 +22,11 @@ import decode from 'jwt-decode';
 
 import { darkPurple, paleYellow, orange, brightPurple } from "../../constant/actionTypes";
 import ConfirmDialog from '../Widget/ConfirmDialog/ConfirmDialog';
+import Subscription from './Subscription';
 
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
-const settings = ['Personal Info', 'My posts', 'My groups', 'My events', 'My services', 'How it works', 'Pure mode', 'Logout'];
+const settings = ['Personal Info', 'My posts', 'My groups', 'My events', 'My services', 'How it works', 'Logout'];
 
 function Navbar() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -191,20 +192,18 @@ function Navbar() {
                     <Toolbar>
                         {user ? (
                             <Box sx={{ flexGrow: 0 , display: 'flex', flexDirection:'row', alignItems: 'center'}}>
-                                <ConfirmDialog
+                                <Subscription
                                     button="Join us!"
                                     title="Be our membership now!"
                                     contentText={`
-
                                                     Sharing Posts and Building Groups!
                                                     Creating Events and Sharing Services!
-                                                    Pure Mode!
                                                     Higher Exposure in Explore!
+                                                    Pure Mode! No Ads!
                                                     ...
                                                     
                                                     More benefits of membership are waiting for you!
                                         `}
-                                    dialogColor={darkPurple}
                                     style={{ marginRight: '10px' }}
                                 />
                                 <Tooltip title="Open settings">
