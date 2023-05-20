@@ -14,7 +14,7 @@ import MyGroups from './components/Settings/MyGroups/MyGroups';
 import MyEvents from './components/Settings/MyEvents/MyEvents';
 import MyServices from './components/Settings/MyServices/MyServices';
 import AppIntro from './components/Settings/AppIntro/AppIntro';
-import Ads from './components/Widget/Ads';
+import Ads from './components/Widget/Ads/Ads';
 
 
 const App = () => {

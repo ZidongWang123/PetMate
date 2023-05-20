@@ -1,0 +1,9 @@
+.ads-container {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    border: 1px solid;
+    flex: 1 1 10%;
+    align-items: center;
+    height: 820px;
+  }

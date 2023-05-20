@@ -76,6 +76,32 @@ function Navbar() {
     };
 
     React.useEffect(() => {
+        const handleBrowserBack = () => {
+            const currentPath = window.location.pathname.toLowerCase().slice(1);
+            const formattedButton = currentPath.charAt(0).toUpperCase() + currentPath.slice(1);
+
+            console.log(currentPath);
+            console.log(formattedButton);
+            if (pages.includes(formattedButton)) {
+                setActiveButton(formattedButton);
+                localStorage.setItem('ActiveButton', formattedButton);
+            } else {
+                setActiveButton(null);
+            }
+        };
+
+        const handlePopstate = () => {
+            handleBrowserBack();
+        };
+
+        window.addEventListener('popstate', handlePopstate);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, []);
+
+    React.useEffect(() => {
         const token = user?.token;
 
         if (token) {
@@ -196,7 +222,7 @@ function Navbar() {
 
                     <Toolbar>
                         {user ? (
-                            <Box sx={{ flexGrow: 0 , display: 'flex', flexDirection:'row', alignItems: 'center'}}>
+                            <Box sx={{ flexGrow: 0, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <Subscription
                                     button="Join us!"
                                     title="Be our membership now!"
@@ -212,7 +238,7 @@ function Navbar() {
                                     style={{ marginRight: '10px' }}
                                 />
                                 <Tooltip title="Open settings">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, marginLeft:'20px' }}>
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, marginLeft: '20px' }}>
                                         <Avatar alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
                                     </IconButton>
                                 </Tooltip>
