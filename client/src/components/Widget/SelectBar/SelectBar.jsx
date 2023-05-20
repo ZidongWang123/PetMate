@@ -19,13 +19,13 @@ export default function SelectLabels({ selectItems }) {
                 value={select}
                 onChange={handleChange}
                 displayEmpty
-                inputProps={{
-                    'aria-label': 'Without label',
-                }}
                 sx={{
                     borderRadius: '100px',
                     backgroundColor: 'white',
                     boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
+                    '& fieldset': {
+                        border: 'none',
+                      },
                 }}
             >
             {selectItems.map((selectItem) => (

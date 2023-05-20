@@ -25,9 +25,9 @@ const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPas
                     )
                 } : {sx: {
                     fontFamily: 'Comic Sans MS',
-                    fontSize: '16px', // 设置字体大小
-                    fontWeight: 'bold', // 设置字体粗细
-                    color: darkPurple, // 设置字体颜色
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: darkPurple,
                 }}}
                 InputLabelProps={{
                     style: {
