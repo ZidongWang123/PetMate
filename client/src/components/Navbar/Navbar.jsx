@@ -89,7 +89,7 @@ function Navbar() {
 
     return (
         <AppBar position="static" sx={{ backgroundColor: paleYellow }}>
-            <Container maxWidth="xl" className="container">
+            <Container maxWidth="xxl" className="container">
                 <Toolbar disableGutters={true}>
 
                     <img src={logo} alt="logo" key="small-logo" className="small-logo" />
@@ -98,6 +98,7 @@ function Navbar() {
                         noWrap
                         component="a"
                         href="/"
+                        onClick={() => pageNavigate('Explore')}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -156,6 +157,7 @@ function Navbar() {
                         noWrap
                         component="a"
                         href="/"
+                        onClick={() => pageNavigate('Explore')}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },

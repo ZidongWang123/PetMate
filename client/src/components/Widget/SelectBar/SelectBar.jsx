@@ -6,11 +6,18 @@ import Typography from '@mui/material/Typography';
 import './SelectBar.css';
 import { darkPurple } from '../../../constant/actionTypes';
 
-export default function SelectLabels({ selectItems }) {
+export default function SelectBar({ selectItems, onSelect, selectedValue }) {
     const [select, setSelect] = React.useState('');
+
+    React.useEffect(() => {
+        if (selectedValue !== '') {
+            setSelect(selectedValue);
+        }
+    }, [selectedValue]);
 
     const handleChange = (event) => {
         setSelect(event.target.value);
+        onSelect(event.target.value);
     };
 
     return (
@@ -25,30 +32,30 @@ export default function SelectLabels({ selectItems }) {
                     boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
                     '& fieldset': {
                         border: 'none',
-                      },
+                    },
                 }}
             >
-            {selectItems.map((selectItem) => (
-                <MenuItem
-                    key={selectItem}
-                    value={selectItem}
-                    sx={{
-                        width: '100%',
-                    }}
-                >
-                    <Typography
+                {selectItems.map((selectItem) => (
+                    <MenuItem
+                        key={selectItem}
+                        value={selectItem}
                         sx={{
-                            fontFamily: 'Comic Sans MS',
-                            fontWeight: 'bold',
-                            display: 'flex',
-                            flexDirection: 'end',
-                            color: darkPurple
-                        }}>
-                        {selectItem}
-                    </Typography>
-                </MenuItem>
-            ))}
-        </Select>
+                            width: '100%',
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                fontFamily: 'Comic Sans MS',
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                flexDirection: 'end',
+                                color: darkPurple
+                            }}>
+                            {selectItem}
+                        </Typography>
+                    </MenuItem>
+                ))}
+            </Select>
         </FormControl >
     );
 }

@@ -10,3 +10,4 @@ export const darkPurple = '#393c7c';
 export const orange = '#F0A860';
 export const brightGreen = '#9AC7BF';
 export const brightPurple = '#9C62F2';
+export const darkGray = '#3F3F3F';
