@@ -1,9 +1,20 @@
+import { Container } from "@mui/material";
 import React from "react";
+import SelectLabels from "../../Widget/SelectBar/SelectBar";
+import InputBar from "../../Widget/InputBar/InputBar";
 
-
+const city = ['Munich', 'Berlin', 'Frankfurt']
 const Service = () => {
     return (
-        <h2>Service</h2>
+        <Container sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
+            <SelectLabels selectItems={city} />
+            <InputBar />
+        </Container>
     );
 };
 

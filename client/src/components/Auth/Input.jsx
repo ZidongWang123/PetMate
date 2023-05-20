@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextField, Grid, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { darkPurple } from '../../constant/actionTypes';
 
 const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPassword }) => {
     return (
@@ -22,7 +23,12 @@ const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPas
                             </IconButton>
                         </InputAdornment>
                     )
-                } : null}
+                } : {sx: {
+                    fontFamily: 'Comic Sans MS',
+                    fontSize: '16px', // 设置字体大小
+                    fontWeight: 'bold', // 设置字体粗细
+                    color: darkPurple, // 设置字体颜色
+                }}}
                 InputLabelProps={{
                     style: {
                         fontFamily: 'Comic Sans MS',
