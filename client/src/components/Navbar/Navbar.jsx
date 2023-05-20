@@ -20,7 +20,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import decode from 'jwt-decode';
 
-import { darkPurple, paleYellow, orange, brightPurple } from "../../constant/actionTypes";
+import { darkPurple, paleYellow, orange } from "../../constant/actionTypes";
 import ConfirmDialog from '../Widget/ConfirmDialog/ConfirmDialog';
 import Subscription from './Subscription';
 
@@ -32,7 +32,7 @@ function Navbar() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [activeButton, setActiveButton] = useState('Explore');
+    const [activeButton, setActiveButton] = useState(localStorage.getItem('ActiveButton') || 'Explore');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -40,6 +40,7 @@ function Navbar() {
 
     const pageNavigate = (page) => {
         setActiveButton(page);
+        localStorage.setItem('ActiveButton', page);
         navigate(`/${page.toLowerCase()}`);
     };
 
@@ -56,6 +57,8 @@ function Navbar() {
     };
 
     const handleCloseUserMenu = (setting) => {
+        setActiveButton(null);
+        localStorage.setItem('ActiveButton', null);
         if (typeof setting === 'string') {
             navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
         }
