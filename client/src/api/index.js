@@ -10,5 +10,6 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+// user login and register
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
