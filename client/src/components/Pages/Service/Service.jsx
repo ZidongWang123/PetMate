@@ -40,7 +40,8 @@ const Service = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [showStepper, setShowStepper] = React.useState(false);
     const [showButtons, setShowButtons] = React.useState(true);
-    const [stepInputs, setStepInputs] = React.useState(['', '', '', '']);//TODO: length of stepInputs should be the same as steps.length
+    const [showDateError, setShowDateError] = React.useState(false);
+    const [stepInputs, setStepInputs] = React.useState(['', '', '', '', '']);//TODO: length of stepInputs should be the same as steps.length
 
     const handleStepInput = (index, value) => {
         const newStepInputs = [...stepInputs];
@@ -48,9 +49,29 @@ const Service = () => {
         setStepInputs(newStepInputs);
     };
 
-    const handleDateSelect = (date) => {
+    const selectStartDate = (date) => {
+        if (stepInputs[4] !== '') {
+            if(date > stepInputs[4]){
+                setShowDateError(true);    
+            }else{
+                setShowDateError(false);
+            }
+        }
         const newStepInputs = [...stepInputs];
         newStepInputs[3] = date;
+        setStepInputs(newStepInputs);
+    };
+
+    const selectEndDate = (date) => {
+        if (stepInputs[3] !== '') {
+            if( date < stepInputs[3]){
+                setShowDateError(true);    
+            }else{
+                setShowDateError(false);
+            }
+        }
+        const newStepInputs = [...stepInputs];
+        newStepInputs[4] = date;
         setStepInputs(newStepInputs);
     };
 
@@ -68,7 +89,7 @@ const Service = () => {
     };
 
     const handleReset = () => {
-        setStepInputs(['', '', '', '']);
+        setStepInputs(['', '', '', '', '']);
         setActiveStep(0);
     };
 
@@ -177,9 +198,45 @@ const Service = () => {
                                         selectItems={step.content}
                                         onSelect={(value) => handleStepInput(index, value)}
                                         selectedValue={stepInputs[index]} />) :
-                                        (<DateSelecter
-                                            onSelect={(value) => handleDateSelect(value)}
-                                            selectedValue={stepInputs[index]} />)}
+                                        (
+                                            <div>
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{
+                                                        fontFamily: 'Comic Sans MS',
+                                                        fontWeight: 'bold',
+                                                        fontSize: '10px',
+                                                    }}
+                                                >
+                                                    Start date
+                                                </Typography>
+                                                <DateSelecter
+                                                    onSelect={(value) => selectStartDate(value)}
+                                                    selectedValue={stepInputs[index]} />
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{
+                                                        fontFamily: 'Comic Sans MS',
+                                                        fontWeight: 'bold',
+                                                        fontSize: '10px',
+                                                        marginTop: '30px',
+                                                    }}
+                                                >
+                                                    End date
+                                                </Typography>
+                                                <DateSelecter
+                                                    onSelect={(value) => selectEndDate(value)}
+                                                    selectedValue={stepInputs[index + 1]} />
+                                                {showDateError ? (<Typography sx={{
+                                                    mt: 1,
+                                                    mr: 1,
+                                                    color: 'red',
+                                                    fontFamily: 'Comic Sans MS',
+                                                    fontWeight: 'bold',
+                                                    fontSize: '5px',
+                                                }}>End date shall not early than start date!</Typography>) : null}
+                                            </div>
+                                        )}
                                     <Box sx={{ mb: 2, marginTop: '15px' }}>
                                         <div>
                                             {stepInputs[index] === '' ? (<Typography sx={{
@@ -200,7 +257,9 @@ const Service = () => {
                                                     fontFamily: 'Comic Sans MS',
                                                     fontWeight: 'bold',
                                                 }}
-                                                disabled={stepInputs[index] === ""}
+                                                disabled={(index === 0 || index === 1 || index === 2) ?
+                                                    stepInputs[index] === '' :
+                                                    (stepInputs[3] === '' || stepInputs[4] === '' || showDateError)}
                                             >
                                                 {index === steps.length - 1 ? 'Finish' : 'Continue'}
                                             </Button>
