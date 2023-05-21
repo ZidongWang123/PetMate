@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import './Service.css'
+import DatePicker from "../../Widget/Date/Date";
 
 import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 
@@ -28,6 +29,10 @@ const steps = [
     },
     {
         label: 'Please select a service type',
+        content: serviceType,
+    },
+    {
+        label: 'Please select a service date',
         content: serviceType,
     },
 ];
@@ -166,6 +171,11 @@ const Service = () => {
                                         selectItems={step.content}
                                         onSelect={(value) => handleStepInput(index, value)}
                                         selectedValue={stepInputs[index]} />
+                                    {/* { index < 3 ? (<SelectBar
+                                        selectItems={step.content}
+                                        onSelect={(value) => handleStepInput(index, value)}
+                                        selectedValue={stepInputs[index]} />) :
+                                        (<DatePicker />)} */}
                                     <Box sx={{ mb: 2, marginTop: '15px' }}>
                                         <div>
                                             {stepInputs[index] === "" ? (<Typography sx={{

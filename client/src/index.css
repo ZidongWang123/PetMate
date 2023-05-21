@@ -11,3 +11,27 @@ body {
 code {
   font-family: 'source-code-pro', 'Menlo', 'Monaco', 'Consolas', 'Courier New', 'Comic Sans MS', 'monospace';
 }
+
+input.MuiInputBase-input.MuiOutlinedInput-input {
+  font-family: 'Comic Sans MS' !important;
+}
+
+h4.MuiTypography-root.MuiDatePickerToolbar-title{
+  font-family: 'Comic Sans MS' !important;
+}
+
+span.MuiTypography-root{
+  font-family: 'Comic Sans MS' !important;
+}
+
+button.MuiButtonBase-root.MuiButton-root{
+  font-family: 'Comic Sans MS' !important;
+}
+
+div.MuiPickersCalendarHeader-label {
+  font-family: 'Comic Sans MS' !important;
+}
+
+button.MuiPickersDay-root {
+  font-family: 'Comic Sans MS' !important;
+}
