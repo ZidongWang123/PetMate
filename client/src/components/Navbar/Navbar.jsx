@@ -66,13 +66,17 @@ function Navbar() {
     };
 
     const logout = () => {
-        dispatch({ type: 'LOGOUT' });
+        try {
+            dispatch({ type: 'LOGOUT' });
 
-        navigate('/');
+            navigate('/');
 
-        setUser(null);
+            setUser(null);
 
-        window.location.reload();//极端方法，不推荐，但是暂时没有更好的办法
+            window.location.reload();//极端方法，不推荐，但是暂时没有更好的办法
+        } catch (error) {
+            console.log('logout:', error);
+        }
     };
 
     React.useEffect(() => {
@@ -268,15 +272,28 @@ function Navbar() {
                                             key={setting}
                                             onClick={() => {
                                                 handleCloseUserMenu(setting);
-                                                if (setting === "Logout") {
-                                                    logout();
-                                                }
                                             }}>
-                                            <Typography sx={{
-                                                fontFamily: 'Comic Sans MS',
-                                                fontWeight: 800,
-                                                color: setting === 'Logout' ? 'red' : 'inherit',
-                                            }}>{setting}</Typography>
+                                            {setting === 'Logout' ? (
+                                                <ConfirmDialog
+                                                    fontSize='20px'
+                                                    padding='0px'
+                                                    button='Logout'
+                                                    title="Confirm Logout"
+                                                    contentText={`
+
+                                                                    Are you sure you want to logout?
+
+                                                                `}
+                                                    dialogColor='#6f0000'
+                                                    buttonColor='red'
+                                                    onConfirm={logout}
+                                                    
+                                                />) : (
+                                                < Typography sx={{
+                                                    fontFamily: 'Comic Sans MS',
+                                                    fontWeight: 800,
+                                                    color: setting === 'Logout' ? 'red' : 'inherit',
+                                                }}>{setting}</Typography>)}
                                         </MenuItem>
                                     ))}
                                 </Menu>

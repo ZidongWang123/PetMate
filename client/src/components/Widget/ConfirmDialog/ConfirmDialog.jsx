@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import "./ConfirmDialog.css";
 
-export default function ConfirmDialog({ button, title, contentText, dialogColor }) {
+export default function ConfirmDialog({ fontSize, padding, button, title, contentText, dialogColor, buttonColor, onConfirm, onCancel }) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -18,15 +18,27 @@ export default function ConfirmDialog({ button, title, contentText, dialogColor 
         setOpen(false);
     };
 
+    const handleCancel = async () => {
+        //await onCancel();
+        setOpen(false);
+    };
+
+    const handleConfirm = async () => {
+        //await onConfirm();
+        onConfirm();
+        setOpen(false);
+    };
+
     return (
         <div>
             <Button onClick={handleClickOpen}
                 sx={{
                     fontFamily: 'Comic Sans MS',
-                    color: dialogColor,
+                    color: buttonColor,
                     fontWeight: 'bold',
                     textTransform: 'none',
-                    fontSize: '20px',
+                    fontSize: fontSize ? fontSize : '20px',
+                    padding: padding ? padding : '6px',
                 }}>
                 {button}
             </Button>
@@ -62,7 +74,7 @@ export default function ConfirmDialog({ button, title, contentText, dialogColor 
                 <DialogActions>
                     <Button
                         variant='outlined' 
-                        onClick={handleClose}
+                        onClick={handleCancel}
                         sx={{
                             fontFamily: 'Comic Sans MS',
                             color: dialogColor,
@@ -72,7 +84,7 @@ export default function ConfirmDialog({ button, title, contentText, dialogColor 
                             borderColor: dialogColor,
                             borderRadius: '10px',
                         }}>Cancel</Button>
-                    <Button onClick={handleClose} autoFocus
+                    <Button onClick={handleConfirm} autoFocus
                         sx={{
                             fontFamily: 'Comic Sans MS',
                             color: 'white',
