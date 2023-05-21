@@ -80,30 +80,17 @@ function Navbar() {
     };
 
     React.useEffect(() => {
-        const handleBrowserBack = () => {
-            const currentPath = window.location.pathname.toLowerCase().slice(1);
-            const formattedButton = currentPath.charAt(0).toUpperCase() + currentPath.slice(1);
+        const currentPath = window.location.pathname.toLowerCase().slice(1);
+        const formattedButton = currentPath.charAt(0).toUpperCase() + currentPath.slice(1);
 
-            console.log(currentPath);
-            console.log(formattedButton);
-            if (pages.includes(formattedButton)) {
-                setActiveButton(formattedButton);
-                localStorage.setItem('ActiveButton', formattedButton);
-            } else {
-                setActiveButton(null);
-            }
-        };
+        if (pages.includes(formattedButton)) {
+            setActiveButton(formattedButton);
+            localStorage.setItem('ActiveButton', formattedButton);
+        } else {
+            setActiveButton(null);
+        }
+    }, [location]);
 
-        const handlePopstate = () => {
-            handleBrowserBack();
-        };
-
-        window.addEventListener('popstate', handlePopstate);
-
-        return () => {
-            window.removeEventListener('popstate', handlePopstate);
-        };
-    }, []);
 
     React.useEffect(() => {
         const token = user?.token;
@@ -287,7 +274,7 @@ function Navbar() {
                                                     dialogColor='#6f0000'
                                                     buttonColor='red'
                                                     onConfirm={logout}
-                                                    
+
                                                 />) : (
                                                 < Typography sx={{
                                                     fontFamily: 'Comic Sans MS',
