@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import React from "react";
 import SelectBar from "../../Widget/SelectBar/SelectBar";
-import InputBar from "../../Widget/InputBar/InputBar";
+//import InputBar from "../../Widget/InputBar/InputBar";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import './Service.css'
-import DatePicker from "../../Widget/Date/Date";
+import DateSelecter from "../../Widget/DateSelecter/DateSelecter";
 
 import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 
@@ -33,7 +33,6 @@ const steps = [
     },
     {
         label: 'Please select a service date',
-        content: serviceType,
     },
 ];
 
@@ -41,7 +40,7 @@ const Service = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [showStepper, setShowStepper] = React.useState(false);
     const [showButtons, setShowButtons] = React.useState(true);
-    const [stepInputs, setStepInputs] = React.useState(['', '', '']);//TODO: length of stepInputs should be the same as steps.length
+    const [stepInputs, setStepInputs] = React.useState(['', '', '', '']);//TODO: length of stepInputs should be the same as steps.length
 
     const handleStepInput = (index, value) => {
         const newStepInputs = [...stepInputs];
@@ -49,8 +48,15 @@ const Service = () => {
         setStepInputs(newStepInputs);
     };
 
+    const handleDateSelect = (date) => {
+        const newStepInputs = [...stepInputs];
+        newStepInputs[3] = date;
+        setStepInputs(newStepInputs);
+    };
+
     React.useEffect(() => {
         localStorage.setItem('stepInputs', JSON.stringify(stepInputs));
+        console.log(stepInputs);
     }, [stepInputs]);
 
     const handleNext = () => {
@@ -62,7 +68,7 @@ const Service = () => {
     };
 
     const handleReset = () => {
-        setStepInputs(['', '', '']);
+        setStepInputs(['', '', '', '']);
         setActiveStep(0);
     };
 
@@ -167,18 +173,16 @@ const Service = () => {
                                     </Typography>
                                 </StepLabel>
                                 <StepContent>
-                                    <SelectBar
-                                        selectItems={step.content}
-                                        onSelect={(value) => handleStepInput(index, value)}
-                                        selectedValue={stepInputs[index]} />
-                                    {/* { index < 3 ? (<SelectBar
+                                    {index < 3 ? (<SelectBar
                                         selectItems={step.content}
                                         onSelect={(value) => handleStepInput(index, value)}
                                         selectedValue={stepInputs[index]} />) :
-                                        (<DatePicker />)} */}
+                                        (<DateSelecter
+                                            onSelect={(value) => handleDateSelect(value)}
+                                            selectedValue={stepInputs[index]} />)}
                                     <Box sx={{ mb: 2, marginTop: '15px' }}>
                                         <div>
-                                            {stepInputs[index] === "" ? (<Typography sx={{
+                                            {stepInputs[index] === '' ? (<Typography sx={{
                                                 mt: 1,
                                                 mr: 1,
                                                 marginLeft: '10px',

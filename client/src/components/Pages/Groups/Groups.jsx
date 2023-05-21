@@ -1,10 +1,10 @@
 import React from "react";
-import DatePicker from "../../Widget/Date/Date";
+//import DateSelecter from "../../Widget/DateSelecter/DateSelecter";
 
 const Groups = () => {
     return (
         <div>
-            <DatePicker />
+            <h1>Groups</h1>
         </div>
     );
 };
