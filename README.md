@@ -57,3 +57,6 @@ The routes folder contains the definitions for the routes that the application w
 
 ### Server/index.js
 The index.js file ties everything together, importing the necessary modules and setting up the server to listen for incoming requests.
+
+## Illustrations
+![The following diagram depicts the architecture of this project and how the files collaborate with each other.](./Architecture.png.png)

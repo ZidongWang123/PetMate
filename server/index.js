@@ -1,3 +1,4 @@
+//import all the dependencies
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -6,18 +7,23 @@ import dotenv from 'dotenv';
 
 import userRoutes from './routes/users.js'
 
+//create an instance of express
 const app = express();
+//use dotenv to hide the connection url
 dotenv.config();
 
+//set up the body parser and cors
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
+//connect the routes and app, which means the all requests with /user will be directed to the userRoutes
 app.use('/user', userRoutes);
 
 const PORT = 100;
 const CONNECTION_URL = process.env.CONNECTION_URL;
 
+//connect to the database and start the server
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => {
         console.log(`Server running on port: ${PORT}`);

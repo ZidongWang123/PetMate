@@ -77,7 +77,6 @@ const Service = () => {
 
     React.useEffect(() => {
         localStorage.setItem('stepInputs', JSON.stringify(stepInputs));
-        console.log(stepInputs);
     }, [stepInputs]);
 
     const handleNext = () => {
