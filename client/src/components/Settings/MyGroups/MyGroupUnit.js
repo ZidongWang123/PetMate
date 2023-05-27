@@ -1,39 +1,8 @@
-import React from 'react';
-import useFetch from "../../Widget/DataFetch/useFetch";
+/* import { ListItem, ListItemAvatar } from "@mui/material";
+import ListItemText from "@mui/material/ListItemText"; */
 import Avatar from "@mui/material/Avatar";
 import "./MyGroup.css";
-import MyGroupUnit from './MyGroupUnit';
-
-const MyGroups = () => {
-  const {
-    data: groups,
-    isPending,
-    error,
-  } = useFetch("http://localhost:8080/groups");
-
-  return (
-    /* <div className="my-groups">
-      <h1>My Groups</h1>
-      <ul className="group-list">
-        {groups.map((group, index) => (
-          <li key={index}>{group}</li>
-        ))}
-      </ul>
-    </div> */
-    
-    <div className="fetchGroupList">
-    {error && <div>{error}</div>}
-    {isPending && <div>loading...</div>}
-    {groups && (
-      <MyGroupUnit groups={groups} title="groups"  />
-    )}
-    </div>
-
-  );
-};
-
-/* 
-const GroupList = ({ groups }) => {
+const GroupList = ({ groups, groupJoin }) => {
   return (
     <div className="group-list">
       {groups.map((group) => (
@@ -45,22 +14,21 @@ const GroupList = ({ groups }) => {
             <div className="group-first-row">
               <p className="group-name">{group.name}</p>
               <p className="group-creater">Created by:{group.creater}</p>
-              <p className="group-amount">member:{group.amount}</p>
             </div>
             <p className="group-intro-text">{group.intro}</p>
-            <p>
+            {/* <p>
               {group.tag.map((tagItem, index) => (
                 <span key={index} className="tag">
                   #{tagItem}
                 </span>
               ))}
-            </p>
+            </p> */}
           </div>
+          
         </div>
       ))}
     </div>
   );
 };
- */
 
-export default MyGroups;
+export default GroupList;

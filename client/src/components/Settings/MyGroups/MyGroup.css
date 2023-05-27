@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+/* groups */
+/* group-preview/ list */
+.group-list {
+  margin-top: 20px;
+}
+.group-preview {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  margin: 10px 0;
+  margin-left: 0px;
+  border-bottom: 1px solid #fafafa;
+  width: 90%;
+  /*  margin-top: 100px; */
+}
+.group-preview:hover {
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+}
+/* .group-preview {
+  padding: 10px;
+  margin: 10px 0;
+  border-bottom: 1px solid #fafafa;
+} */
+
+.group-avatar {
+  margin-right: 20px;
+}
+.group-avatar .MuiAvatar-root {
+  width: 60px;
+  height: 60px;
+}
+
+.group-text-review {
+  flex-grow: 1;
+  width: 70%;
+  margin-right: 30px;
+}
+
+.group-first-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.group-first-row p {
+  margin-right: 0px;
+}
+.group-first-row .group-creater {
+  margin-right: 300px; /* 调整第二个元素的左边距 */
+}
+.group-first-row .group-amount {
+  margin-right: 20px;
+  color: #999999;
+}
+
+.group-name {
+  color: #393c7c;
+  font-size: 20px; /* 调整字体大小 */
+  font-weight: bold; /* 加粗字体 */
+}
+.group-intro-text {
+  margin-top: -5px;
+  margin-bottom: 8px;
+  color: #666666;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 4px 0px;
+  color: #ff8000;
+}
+
+.group-button {
+  padding: 8px 16px; /* 上下宽一点的内边距 */
+  font-size: 16px; /* 字体大小 */
+  margin: 4px 8px; /* 左右和上下宽一点的外边距 */
+  border-radius: 8px; /* 圆角 */
+  background-color: transparent; /* 背景色透明 */
+  color: #393c7c;
+  border-color: #393c7c;
+  cursor: pointer;
+}
+.group-button:hover {
+  /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
+  background-color: #393c7c;
+  color: #fafafa;
+}
