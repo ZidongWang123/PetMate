@@ -7,10 +7,9 @@ Using React, Node.js, Express & MongoDB to build a Full Stack MERN Application. 
 ## Init
 
 Setup:
-- create a .env file and set the PORT and CONNECTION_URL (see .env.example)
-- PORT is you could set one to suit your preference
+- create a .env file and set CONNECTION_URL (see .env.example)
 - CONNECTION_URL is the link to the cloud database that you have set up on mongodb
-- After setup of PORT and CONNECTION_URL run ```npm i && npm start``` for both client and server folder to start the app
+- After setup of PORT and CONNECTION_URL run ```npm install``` and ```npm start``` for both client and server folder to start the app
 
 ## Technical documentation
 Here we will instruct our code in each folder.
@@ -59,4 +58,5 @@ The routes folder contains the definitions for the routes that the application w
 The index.js file ties everything together, importing the necessary modules and setting up the server to listen for incoming requests.
 
 ## Illustrations
+The following diagram depicts the architecture of this project and how the files collaborate with each other.
 ![The following diagram depicts the architecture of this project and how the files collaborate with each other.](./Architecture.png)
