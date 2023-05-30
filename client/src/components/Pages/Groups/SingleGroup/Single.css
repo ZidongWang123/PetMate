@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+/* groups */
+.group-list {
+  margin-top: 20px;
+}
+.group-preview {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  margin: 10px 0;
+  margin-left: 0px;
+  border-bottom: 1px solid #fafafa;
+  width: 90%;
+  /*  margin-top: 100px; */
+}
+.group-preview:hover {
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+}
+/* .group-preview {
+  padding: 10px;
+  margin: 10px 0;
+  border-bottom: 1px solid #fafafa;
+} */
+
+.group-avatar {
+  margin-right: 20px;
+  margin-top: 50px;
+}
+.group-avatar .MuiAvatar-root {
+  width: 60px;
+  height: 60px;
+}
+
+.group-text-review {
+  flex-grow: 1;
+  width: 70%;
+  margin-right: 30px;
+}
+
+.group-first-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.group-first-row p {
+  margin-right: 0px;
+}
+.group-first-row .group-name {
+  margin-right: px; /* 调整第二个元素的左边距 */
+}
+.group-first-row .group-creater {
+  margin-right: 200px; /* 调整第二个元素的左边距 */
+}
+.group-first-row .group-amount {
+  margin-right: 50px;
+  color: #999999;
+}
+
+.group-name {
+  color: #393c7c;
+  font-size: 20px; /* 调整字体大小 */
+  font-weight: bold; /* 加粗字体 */
+}
+.group-intro-text {
+  margin-top: -5px;
+  margin-bottom: 8px;
+  color: #666666;
+}
+
+.tag {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 4px 0px;
+  color: #ff8000;
+}
+
+.group-tags {
+  /* 其他样式 */
+  margin-bottom: 10px; /* 增加底部间距 */
+}
+
+
+.group-button {
+  margin-top: 10px; 
+  padding: 8px 16px; /* 上下宽一点的内边距 */
+  font-size: 16px; /* 字体大小 */
+  margin: 4px 8px; /* 左右和上下宽一点的外边距 */
+  border-radius: 8px; /* 圆角 */
+  background-color: transparent; /* 背景色透明 */
+  color: #393c7c;
+  border-color: #393c7c;
+  cursor: pointer;
+}
+.joined-button {
+  /* 其他样式 */
+  background-color:  #ccc; /* 设置橘色背景 */
+  color: white; /* 设置白色文本颜色 */
+  border-radius: 20px; /* 设置圆角 */
+}
+.write-post-button {
+  /* 其他样式 */
+  background-color: purple; /* 设置紫色背景 */
+  color: white; /* 设置白色文本颜色 */
+  border-radius: 20px; /* 设置圆角 */
+
+}
+
+.group-button:hover {
+  /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
+  background-color: #393c7c;
+  color: #fafafa;
+}
+
+/* Forum container */
+.forum {
+  margin: 20px;
+}
+
+/* Forum post */
+.forum-post {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Post topic */
+.post-topic {
+  flex: 1;
+}
+
+/* Post date */
+.post-date {
+  width: 120px;
+  text-align: center;
+  margin-left: 20px;
+}
+
+/* Post author */
+.post-author {
+  width: 200px;
+  text-align: right;
+}
+
+/* Forum header */
+.forum-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Column names */
+.column-names {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+/* Column name Date */
+.header-date {
+  text-align: right;
+  margin-right: 0.5px; /* 调整右边距 */
+}
+
