@@ -56,7 +56,7 @@ const GroupDetails = () => {
             <div className="group-name-creater">
               <span className="group-name">LargeDogMunich</span>
               <span className="group-creater">Created by: Sarah</span>
-              <span className="group-createtime">Osn: May 27, 2023</span>
+              <span className="group-createtime">On: May 27, 2023</span>
               <span className="group-amount">Member: 100</span>
               <p className="group-intro">Here is a group specified for large dog. Let's share raising experience, your story, and anything you can't wait to post with everybody!</p>
               <div className="group-tags">

@@ -179,6 +179,21 @@
   font-weight: bold;
 }
 
+.forum-header {
+  border-bottom: 1px dashed #ccc;
+  margin-bottom: 2px;
+}
+
+.header-date{
+  position: relative; /* 开启相对定位 */
+  left: -10px; /* 向左移动的距离 */
+}
+
+.post-date {
+  position: relative; /* 开启相对定位 */
+  left: -240px; /* 向左移动的距离 */
+}
+
 /* Column names */
 .column-names {
   display: flex;
