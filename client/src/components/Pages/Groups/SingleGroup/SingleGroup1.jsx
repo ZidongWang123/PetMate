@@ -2,7 +2,9 @@ import React from "react";
 import "./Single.css"; // 引入自定义的CSS样式文件
 import SearchBar from "./searchbarGroup";
 import Avatar from "@mui/material/Avatar";
+//import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 
+export const orange = '#F0A860';
 
 
 
@@ -45,30 +47,38 @@ const Forum = () => {
 const GroupDetails = () => {
   return (
     <div className="group-details">
-      <div className="group-avatar">
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          
-      </div>
       <div className="group-info">
-      
         <div className="group-first-row">
-              <p className="group-name">Group Name</p>
-              <p className="group-creater">Created by:Tina Timo</p>
-              <p className="group-amount">member:100</p>
+          <div className="group-avatar">
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          </div>
+          <div className="group-text">
+            <div className="group-name-creater">
+              <span className="group-name">LargeDogMunich</span>
+              <span className="group-creater">Created by: Sarah</span>
+              <span className="group-createtime">Osn: May 27, 2023</span>
+              <span className="group-amount">Member: 100</span>
+              <p className="group-intro">Here is a group specified for large dog. Let's share raising experience, your story, and anything you can't wait to post with everybody!</p>
+              <div className="group-tags">
+              {/* 小组标签 */}
+              <span className="tag">#Munich</span>
+              <span className="tag">#LargeDog</span>
+              <span className="tag">#Bogenhausen</span>
+              <span className="tag">#Marienplatz</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="group-intro">Group Introduction</p>
-        <div className="group-tags">
-          {/* 小组标签 */}
-          <span className="tag">#Tag 1</span>
-          <span className="tag">#Tag 2</span>
-          <span className="tag">#Tag 3</span>
-        </div>
+
+        
+        
+
         <div className="group-button">
-         <button className="joined-button" disabled>
-          Joined
-         </button>
-         <button className="write-post-button">Write a Post</button>
-      </div>
+          <button className="joined-button" disabled>
+            Joined
+          </button>
+          <button className="write-post-button">Write a Post</button>
+        </div>
       </div>
     </div>
   );

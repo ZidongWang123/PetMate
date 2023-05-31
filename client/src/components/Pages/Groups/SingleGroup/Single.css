@@ -1,73 +1,61 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 /* groups */
-.group-list {
-  margin-top: 20px;
-}
-.group-preview {
+
+.group-first-row {
   display: flex;
   align-items: center;
-  padding: 10px 10px;
-  margin: 10px 0;
-  margin-left: 0px;
-  border-bottom: 1px solid #fafafa;
-  width: 90%;
-  /*  margin-top: 100px; */
+  margin-bottom: 4px;
+  margin-top: 25px; /* 添加这行代码来设置上边距 */
 }
-.group-preview:hover {
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
-}
-/* .group-preview {
-  padding: 10px;
-  margin: 10px 0;
-  border-bottom: 1px solid #fafafa;
-} */
+
 
 .group-avatar {
   margin-right: 20px;
-  margin-top: 50px;
 }
+
 .group-avatar .MuiAvatar-root {
   width: 60px;
   height: 60px;
 }
 
-.group-text-review {
-  flex-grow: 1;
-  width: 70%;
-  margin-right: 30px;
-}
-
-.group-first-row {
+.group-text {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.group-first-row p {
-  margin-right: 0px;
-}
-.group-first-row .group-name {
-  margin-right: px; /* 调整第二个元素的左边距 */
-}
-.group-first-row .group-creater {
-  margin-right: 200px; /* 调整第二个元素的左边距 */
-}
-.group-first-row .group-amount {
-  margin-right: 50px;
-  color: #999999;
+  flex-direction: column;
+  flex-grow: 1;
+  font-family: "Comic Sans MS", cursive; 
 }
 
 .group-name {
   color: #393c7c;
-  font-size: 20px; /* 调整字体大小 */
-  font-weight: bold; /* 加粗字体 */
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-family: "Comic Sans MS", cursive; 
 }
-.group-intro-text {
-  margin-top: -5px;
-  margin-bottom: 8px;
-  color: #666666;
+
+.group-creater,
+.group-amount {
+  margin: 0;
+  color: #999999;
 }
+
+.group-creater {
+  margin-left: 20px; /* 设置左侧间距为 10px */
+}
+
+.group-createtime {
+  margin-left: -250px; /* 设置右侧间距为 10px */
+  color: #999999;
+
+}
+
+
+
+.group-amount {
+  margin-left: 70px;
+}
+
+
 
 .tag {
   display: inline-block;
@@ -80,7 +68,26 @@
   /* 其他样式 */
   margin-bottom: 10px; /* 增加底部间距 */
 }
+.group-info-bottom {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
 
+.group-info-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.group-intro-tags {
+  display: flex;
+  align-items: baseline;
+  margin-top: 4px;
+}
+.group-intro {
+  margin: 0;
+  margin-right: 10px;
+}
 
 .group-button {
   margin-top: 10px; 
@@ -95,16 +102,32 @@
 }
 .joined-button {
   /* 其他样式 */
-  background-color:  #ccc; /* 设置橘色背景 */
-  color: white; /* 设置白色文本颜色 */
-  border-radius: 20px; /* 设置圆角 */
+  color: white;
+  font-family: 'Comic Sans MS';
+  font-weight: bold;
+  background-color: #F0A860;
+  border-radius: 20px;
+  margin-left: 50px;
+  margin-right: 10px;
+  width: 100px;
 }
+
+.joined-button:disabled {
+  /* 其他样式 */
+  opacity: 0.6; /* 设置禁用状态的透明度 */
+  cursor: not-allowed; /* 设置禁用状态的鼠标样式 */
+}
+
 .write-post-button {
   /* 其他样式 */
-  background-color: purple; /* 设置紫色背景 */
-  color: white; /* 设置白色文本颜色 */
-  border-radius: 20px; /* 设置圆角 */
-
+  color: white;
+  font-family: 'Comic Sans MS';
+  font-weight: bold;
+  background-color: #9C62F2;
+  border-radius: 20px;
+  margin-left: 10px;
+  margin-right: 50px;
+  width: 100px;
 }
 
 .group-button:hover {
@@ -116,6 +139,7 @@
 /* Forum container */
 .forum {
   margin: 20px;
+  font-family: "Comic Sans MS", cursive; 
 }
 
 /* Forum post */
@@ -151,7 +175,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: transparent;
   font-weight: bold;
 }
 
@@ -161,7 +185,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color:transparent;
   font-weight: bold;
 }
 /* Column name Date */
