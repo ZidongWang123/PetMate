@@ -16,6 +16,8 @@ import MyServices from "./components/Settings/MyServices/MyServices";
 import AppIntro from "./components/Settings/AppIntro/AppIntro";
 import Ads from "./components/Widget/Ads/Ads";
 import GroupCreatePage from "./components/Pages/Groups/GroupCreatePage";
+import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
+import Post from "./components/Pages/Groups/Post/Post";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -32,9 +34,14 @@ const App = () => {
               <Route path="/explore" element={<Explore />} />
               <Route path="/groups" element={<Groups />} />
               <Route
+                path="/groups/group1"
+                element={<SingleGroup1/>}
+              />
+                <Route
                 path="/groups/create-group"
                 element={<GroupCreatePage />}
               />
+              <Route path="/groups/post" element={<Post />} />
               <Route path="/event" element={<Event />} />
               <Route path="/service" element={<Service />} />
               <Route path="/howitworks" element={<AppIntro />} />
