@@ -5,9 +5,17 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
 import TravelExploreTwoToneIcon from "@mui/icons-material/TravelExploreTwoTone";
 //import { darkPurple, orange } from "../../constant/actionTypes";
+import { styled, alpha } from "@mui/system";
 
 const filter = createFilterOptions();
 const orange = '#F0A860';
+
+const CustomTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiTypography-root": {
+    fontFamily: "Comic Sans MS",
+  },
+}));
+
 export default function SearchBar() {
   const [value, setValue] = React.useState(null);
 
@@ -93,10 +101,17 @@ export default function SearchBar() {
         }}
         freeSolo
         renderInput={(params) => (
-          <TextField {...params} label="Search author, title ..." />
+          <CustomTextField
+            {...params}
+            label="Search author, title ..."
+            InputLabelProps={{
+              sx: {
+                fontFamily: "Comic Sans MS",
+              },
+            }}
+          />
         )}
       />
-
       <TravelExploreTwoToneIcon
         variant="contained"
         sx={{ marginTop: 5, marginLeft: 2, fontSize: 50, color: orange }}
