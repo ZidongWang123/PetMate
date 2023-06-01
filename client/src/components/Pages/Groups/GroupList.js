@@ -25,7 +25,7 @@ const GroupList = ({ groups, groupJoin }) => {
               ))}
             </p>
           </div>
-          <button className="group-button" onClick={() => groupJoin(group.id)}>
+          <button className="group-button" onClick={() => window.location.href = "http://localhost:3000/groups/group1"}>
             Join Now
           </button>
         </div>
