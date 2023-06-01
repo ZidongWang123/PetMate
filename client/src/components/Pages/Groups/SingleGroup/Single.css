@@ -191,7 +191,7 @@
 
 .post-date {
   position: relative; /* 开启相对定位 */
-  left: -240px; /* 向左移动的距离 */
+  left: 40px; /* 向左移动的距离 */
 }
 
 /* Column names */
