@@ -21,7 +21,7 @@ const Groups = () => {
   return (
     <div className="groups">
       <div style={{ display: "flex", alignItems: "center" }}>
-        <SearchBar />
+        <SearchBar label="Search everything!" />
         <Link to="/groups/create-group">
           <GroupCreateButton />
         </Link>
