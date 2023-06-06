@@ -3,6 +3,8 @@ import "./Single.css"; // 引入自定义的CSS样式文件
 import SearchBar from "./searchbarGroup";
 import Avatar from "@mui/material/Avatar";
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
+import { Link } from 'react-router-dom';
+
 
 export const orange = '#F0A860';
 
@@ -10,7 +12,7 @@ export const orange = '#F0A860';
 
 const ForumPost = ({ topic, date, author }) => (
   <div className="forum-post">
-    <div className="post-topic">{topic}</div>
+    <Link to="/groups/post">{topic}</Link>
     <div className="post-date">{date}</div>
     <div className="post-author">{author}</div>
   </div>
@@ -19,7 +21,7 @@ const ForumPost = ({ topic, date, author }) => (
 
 const Forum = () => {
   const dummyData = [
-    { topic: "Topic 1", date: "2023-05-01", author: "Author 1" },
+    { topic: "Topic 1", date: "2023-05-01", author: "Sarah" },
     { topic: "Topic 2", date: "2023-05-02", author: "Author 2" },
     { topic: "Topic 3", date: "2023-05-03", author: "Author 3" },
   ];
@@ -83,6 +85,7 @@ const GroupDetails = () => {
     </div>
   );
 };
+
 
 const App = () => (
   <div>
