@@ -1,6 +1,5 @@
-import { Container } from "@mui/material";
 import React from "react";
-import SelectBar from "../../Widget/SelectBar/SelectBar";
+import SelectBar from "../../../Widget/SelectBar/SelectBar";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -10,9 +9,9 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import './CreationSteps.css'
-import DateSelecter from "../../Widget/DateSelecter/DateSelecter";
+import DateSelecter from "../../../Widget/DateSelecter/DateSelecter";
 
-import { darkPurple, brightGreen } from '../../../constant/actionTypes';
+import { darkPurple, brightGreen } from '../../../../constant/actionTypes';
 
 const CreationSteps = ({steps, showStepper}) => {
     const [activeStep, setActiveStep] = React.useState(0);

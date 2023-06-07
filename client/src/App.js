@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Explore from "./components/Pages/Explore/Explore";
 import Groups from "./components/Pages/Groups/Groups";
-import Event from "./components/Pages/Event/Event";
-import Service from "./components/Pages/Service/Service";
+import Event from "./components/Pages/Activity/Event/Event";
+import Service from "./components/Pages/Activity/Service/Service";
 import Auth from "./components/Auth/Auth";
 import PersonalInfo from "./components/Settings/PersonalInfo/PersonalInfo";
 import MyPosts from "./components/Settings/MyPosts/MyPosts";
@@ -66,22 +66,3 @@ const App = () => {
 
 export default App;
 
-/* function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App; */

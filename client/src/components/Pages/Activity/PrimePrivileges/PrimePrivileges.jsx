@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Container, Paper, Typography } from "@mui/material";
-import { brightPurple, darkPurple, orange } from '../../../constant/actionTypes';
+import { Button, Paper, Typography } from "@mui/material";
+import { brightPurple, darkPurple, orange } from '../../../../constant/actionTypes';
 
 
-const IsPrime = ({ activity, select, create }) => {
+const PrimePrivileges = ({ activity, select, create }) => {
     const [showButtons, setShowButtons] = React.useState(true);
     const handleLookFor = () => {
         select();
@@ -74,4 +74,4 @@ const IsPrime = ({ activity, select, create }) => {
     );
 };
 
-export default IsPrime;
+export default PrimePrivileges;

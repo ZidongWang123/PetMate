@@ -1,16 +1,13 @@
 
 import React from "react";
 import { Container } from "@mui/material";
-
-//import InputBar from "../../Widget/InputBar/InputBar";
-
-import './Service.css'
-import IsPrime from "../IsPrime/IsPrime";
+import './Event.css'
+import PrimePrivileges from "../PrimePrivileges/PrimePrivileges";
 import CreationSteps from "../Creation/CreationSteps";
 
 const city = ['Munich', 'Berlin', 'Frankfurt']
 const pet = ['dog', 'cat', 'any']
-const serviceType = ['walking', 'sitting', 'training', 'any']
+const eventType = ['walking', 'sitting', 'training', 'any']
 const steps = [
     {
         label: 'Please select a city',
@@ -21,15 +18,15 @@ const steps = [
         content: pet,
     },
     {
-        label: 'Please select a service type',
-        content: serviceType,
+        label: 'Please select a event type',
+        content: eventType,
     },
     {
-        label: 'Please select a service date',
+        label: 'Please select a event date',
     },
 ];
 
-const Service = () => {
+const Event = () => {
 
     const [showStepper, setShowStepper] = React.useState(false);
 
@@ -49,11 +46,11 @@ const Service = () => {
             alignItems: 'center',
         }}>
                         {/* todo: check if the user is prime */ }
-                        < IsPrime activity = "service" select = { selectActivity } create = { createActivity } />
+                        <PrimePrivileges activity = "event" select = { selectActivity } create = { createActivity } />
                         <CreationSteps steps={steps} showStepper={showStepper} />
         </Container >
     );
 };
 
 
-export default Service;
+export default Event;
