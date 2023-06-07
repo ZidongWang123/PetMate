@@ -3,12 +3,15 @@ import { TextField, Grid } from "@mui/material";
 import { darkPurple } from "../../../constant/actionTypes";
 
 const InputBar = ({ initialValue, onInputChange }) => {
+
   const [value, setValue] = useState(initialValue);
+
   const handleChange = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
     onInputChange(newValue);
   };
+
   return (
     <Grid
       item

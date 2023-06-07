@@ -1,0 +1,18 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-header{
+    display: flex;
+    flex-direction: row;
+}
+
+.chips-header{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    margin-top: 5px;
+}

@@ -35,3 +35,11 @@ div.MuiPickersCalendarHeader-label {
 button.MuiPickersDay-root {
   font-family: 'Comic Sans MS' !important;
 }
+
+h6.MuiTypography-root{
+  font-family: 'Comic Sans MS' !important;
+}
+
+span.MuiChip-label{
+  font-family: 'Comic Sans MS' !important;
+}

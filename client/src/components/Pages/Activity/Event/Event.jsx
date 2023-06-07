@@ -4,6 +4,7 @@ import { Container } from "@mui/material";
 import './Event.css'
 import PrimePrivileges from "../PrimePrivileges/PrimePrivileges";
 import CreationSteps from "../Creation/CreationSteps";
+import PageHeader from "../PageHeader/PageHeader";
 
 const city = ['Munich', 'Berlin', 'Frankfurt']
 const pet = ['dog', 'cat', 'any']
@@ -29,6 +30,7 @@ const steps = [
 const Event = () => {
 
     const [showStepper, setShowStepper] = React.useState(false);
+    const [showPrimePrivileges, setShowPrimePrivileges] = React.useState(false);
 
     const selectActivity = () => {
         setShowStepper(true);
@@ -38,6 +40,11 @@ const Event = () => {
         setShowStepper(true);
     };
 
+    const showMore = () => {
+        setShowPrimePrivileges(true) //todo: should detect if user is prime
+    };
+
+
     return (
         <Container sx={{
             display: 'flex',
@@ -45,8 +52,8 @@ const Event = () => {
             justifyContent: 'center',
             alignItems: 'center',
         }}>
-                        {/* todo: check if the user is prime */ }
-                        <PrimePrivileges activity = "event" select = { selectActivity } create = { createActivity } />
+                        <PageHeader onContinue={showMore}/>
+                        { showPrimePrivileges ? (<PrimePrivileges activity = "service" select = { selectActivity } create = { createActivity } />): null}
                         <CreationSteps steps={steps} showStepper={showStepper} />
         </Container >
     );
