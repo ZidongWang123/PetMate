@@ -3,13 +3,13 @@ import React from "react";
 import { Container } from "@mui/material";
 import './Event.css'
 import PrimePrivileges from "../PrimePrivileges/PrimePrivileges";
-import CreationSteps from "../Creation/CreationSteps";
+import CommonSteps from "../CommonSteps/CommonSteps";
 import PageHeader from "../PageHeader/PageHeader";
 
 const city = ['Munich', 'Berlin', 'Frankfurt']
 const pet = ['dog', 'cat', 'any']
 const eventType = ['walking', 'sitting', 'training', 'any']
-const steps = [
+const commonSteps = [
     {
         label: 'Please select a city',
         content: city,
@@ -54,7 +54,7 @@ const Event = () => {
         }}>
                         <PageHeader onContinue={showMore}/>
                         { showPrimePrivileges ? (<PrimePrivileges activity = "service" select = { selectActivity } create = { createActivity } />): null}
-                        <CreationSteps steps={steps} showStepper={showStepper} />
+                        <CommonSteps steps={commonSteps} showStepper={showStepper} />
         </Container >
     );
 };

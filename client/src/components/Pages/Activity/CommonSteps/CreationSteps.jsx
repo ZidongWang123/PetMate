@@ -1,5 +1,4 @@
 import React from "react";
-import SelectBar from "../../../Widget/SelectBar/SelectBar";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -8,51 +7,27 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import './CreationSteps.css'
-import DateSelecter from "../../../Widget/DateSelecter/DateSelecter";
+import './CommonSteps.css'
+import { TextField } from "@mui/material";
 
 import { darkPurple, brightGreen } from '../../../../constant/actionTypes';
 
-const CreationSteps = ({steps, showStepper}) => {
+const CreationSteps = ({ steps, showStepper, onGoNext }) => {
     const [activeStep, setActiveStep] = React.useState(0);
-    const [showDateError, setShowDateError] = React.useState(false);
-    const [stepInputs, setStepInputs] = React.useState(['', '', '', '', '']);//TODO: length of stepInputs should be the same as steps.length
 
-    const handleStepInput = (index, value) => {
-        const newStepInputs = [...stepInputs];
+    const [creationInputs, setCreationInputs] = React.useState(Array.from({ length: steps.length }, () => ''));
+
+
+    const handleStepInput = (value, index) => {
+        console.log(index, value);
+        const newStepInputs = [...creationInputs];
         newStepInputs[index] = value;
-        setStepInputs(newStepInputs);
-    };
-
-    const selectStartDate = (date) => {
-        if (stepInputs[4] !== '') {
-            if(date > stepInputs[4]){
-                setShowDateError(true);    
-            }else{
-                setShowDateError(false);
-            }
-        }
-        const newStepInputs = [...stepInputs];
-        newStepInputs[3] = date;
-        setStepInputs(newStepInputs);
-    };
-
-    const selectEndDate = (date) => {
-        if (stepInputs[3] !== '') {
-            if( date < stepInputs[3]){
-                setShowDateError(true);    
-            }else{
-                setShowDateError(false);
-            }
-        }
-        const newStepInputs = [...stepInputs];
-        newStepInputs[4] = date;
-        setStepInputs(newStepInputs);
-    };
+        setCreationInputs(newStepInputs);
+    }
 
     React.useEffect(() => {
-        localStorage.setItem('stepInputs', JSON.stringify(stepInputs));
-    }, [stepInputs]);
+        localStorage.setItem('stepInputs', JSON.stringify(creationInputs));
+    }, [creationInputs]);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -63,8 +38,13 @@ const CreationSteps = ({steps, showStepper}) => {
     };
 
     const handleReset = () => {
-        setStepInputs(['', '', '', '', '']);
+        const resetInputs = Array.from({ length: steps.length }, () => '');
+        setCreationInputs(resetInputs);
         setActiveStep(0);
+    };
+
+    const handleGoNext = () => {
+        onGoNext();
     };
 
     return (
@@ -100,52 +80,28 @@ const CreationSteps = ({steps, showStepper}) => {
                                     </Typography>
                                 </StepLabel>
                                 <StepContent>
-                                    {index < 3 ? (<SelectBar
-                                        selectItems={step.content}
-                                        onSelect={(value) => handleStepInput(index, value)}
-                                        selectedValue={stepInputs[index]} />) :
-                                        (
-                                            <div>
-                                                <Typography
-                                                    variant="body1"
-                                                    sx={{
-                                                        fontFamily: 'Comic Sans MS',
-                                                        fontWeight: 'bold',
-                                                        fontSize: '10px',
-                                                    }}
-                                                >
-                                                    Start date
-                                                </Typography>
-                                                <DateSelecter
-                                                    onSelect={(value) => selectStartDate(value)}
-                                                    selectedValue={stepInputs[index]} />
-                                                <Typography
-                                                    variant="body1"
-                                                    sx={{
-                                                        fontFamily: 'Comic Sans MS',
-                                                        fontWeight: 'bold',
-                                                        fontSize: '10px',
-                                                        marginTop: '30px',
-                                                    }}
-                                                >
-                                                    End date
-                                                </Typography>
-                                                <DateSelecter
-                                                    onSelect={(value) => selectEndDate(value)}
-                                                    selectedValue={stepInputs[index + 1]} />
-                                                {showDateError ? (<Typography sx={{
-                                                    mt: 1,
-                                                    mr: 1,
-                                                    color: 'red',
-                                                    fontFamily: 'Comic Sans MS',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '5px',
-                                                }}>End date shall not early than start date!</Typography>) : null}
-                                            </div>
-                                        )}
+                                    <TextField
+                                        variant="outlined"
+                                        onChange={(event) => {
+                                            handleStepInput(event.target.value, index);
+                                        }}
+                                        fullWidth
+                                        InputProps={{
+                                            placeholder: 'Type and press enter to add a tags',
+                                        }}
+                                        sx={{
+                                            fontFamily: 'Cosmic Sans MS',
+                                            marginTop: '20px',
+                                            borderRadius: '50px',
+                                            backgroundColor: '#f5f5f5',
+                                            border: '1px solid black',
+                                            width: "100%",
+                                            minWidth: 300,
+                                        }}
+                                    />
                                     <Box sx={{ mb: 2, marginTop: '15px' }}>
                                         <div>
-                                            {stepInputs[index] === '' ? (<Typography sx={{
+                                            {creationInputs[index] === '' ? (<Typography sx={{
                                                 mt: 1,
                                                 mr: 1,
                                                 marginLeft: '10px',
@@ -163,9 +119,9 @@ const CreationSteps = ({steps, showStepper}) => {
                                                     fontFamily: 'Comic Sans MS',
                                                     fontWeight: 'bold',
                                                 }}
-                                                disabled={(index === 0 || index === 1 || index === 2) ?
-                                                    stepInputs[index] === '' :
-                                                    (stepInputs[3] === '' || stepInputs[4] === '' || showDateError)}
+                                                disabled=
+                                                {creationInputs[index] === ''}
+
                                             >
                                                 {index === steps.length - 1 ? 'Finish' : 'Continue'}
                                             </Button>
@@ -197,13 +153,14 @@ const CreationSteps = ({steps, showStepper}) => {
                                 fontWeight: 'bold',
                                 color: darkPurple,
                             }}>All steps completed - you&apos;re finished !</Typography>
-                            <Button sx={{
-                                mt: 1, mr: 1, fontFamily: 'Comic Sans MS',
-                                fontWeight: 'bold',
-                                color: 'white',
-                                backgroundColor: brightGreen,
-                            }}>
-                                Go Next
+                            <Button
+                                onClick={handleGoNext} sx={{
+                                    mt: 1, mr: 1, fontFamily: 'Comic Sans MS',
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    backgroundColor: brightGreen,
+                                }}>
+                                Create!
                             </Button>
                             <Button
                                 variant="outlined"

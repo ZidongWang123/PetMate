@@ -28,7 +28,6 @@ const PageHeader = ({ onContinue }) => {
     const handleFindMore = () => {
         setShowSearchBar(false);
         onContinue();
-        console.log(showSearchBar);
     }
 
     const handleSearch = () => {
@@ -99,7 +98,7 @@ const PageHeader = ({ onContinue }) => {
                                 />
                             ))}
                         </div>
-                        <hr class="line"></hr>
+                        <hr className="line"></hr>
                     </div >
                     ) : null}
         </>

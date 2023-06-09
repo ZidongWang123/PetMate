@@ -6,13 +6,14 @@ import { Container } from "@mui/material";
 
 import './Service.css'
 import PrimePrivileges from "../PrimePrivileges/PrimePrivileges";
-import CreationSteps from "../Creation/CreationSteps";
+import CommonSteps from "../CommonSteps/CommonSteps";
 import PageHeader from "../PageHeader/PageHeader";
+import CreationSteps from "../CommonSteps/CreationSteps";
 
 const city = ['Munich', 'Berlin', 'Frankfurt']
 const pet = ['dog', 'cat', 'any']
 const serviceType = ['walking', 'sitting', 'training', 'any']
-const steps = [
+const commonServiceSteps = [
     {
         label: 'Please select a city',
         content: city,
@@ -27,6 +28,17 @@ const steps = [
     },
     {
         label: 'Please select a service date',
+    },
+];
+
+const creationServiceSteps = [
+    {
+        label: 'Please enter a price (euro/day)',
+        tip: 'euro/day',
+    },
+    {
+        label: 'Please enter the location of the service',
+        tip: 'place of your city',
     },
 ];
 
@@ -47,6 +59,10 @@ const Service = () => {
         setShowPrimePrivileges(true) //todo: should detect if user is prime
     };
 
+    const goNext = () => {
+        //todo: go to next page
+    };
+
     return (
         <Container sx={{
             display: 'flex',
@@ -56,7 +72,9 @@ const Service = () => {
         }}>
                         <PageHeader onContinue={showMore}/>
                         { showPrimePrivileges ? (<PrimePrivileges activity = "service" select = { selectActivity } create = { createActivity } />): null}
-                        <CreationSteps steps={steps} showStepper={showStepper} />
+                        <CommonSteps steps={commonServiceSteps} showStepper={showStepper} onGoNext={goNext}/>
+                        {/* todo: add condition to use creation steps only by prime */}
+                        <CreationSteps steps={creationServiceSteps} showStepper={true} onGoNext={goNext}/>
         </Container >
     );
 };
