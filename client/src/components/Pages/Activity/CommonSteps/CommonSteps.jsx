@@ -13,13 +13,12 @@ import DateSelecter from "../../../Widget/DateSelecter/DateSelecter";
 
 import { darkPurple, brightGreen } from '../../../../constant/actionTypes';
 
-const CommonSteps = ({steps, showStepper, onGoNext}) => {
+const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [showDateError, setShowDateError] = React.useState(false);
     const [stepInputs, setStepInputs] = React.useState(['', '', '', '', '']);//TODO: length of stepInputs should be the same as steps.length
 
     const handleStepInput = (index, value) => {
-        console.log(index, value);
         const newStepInputs = [...stepInputs];
         newStepInputs[index] = value;
         setStepInputs(newStepInputs);
@@ -69,7 +68,7 @@ const CommonSteps = ({steps, showStepper, onGoNext}) => {
     };
 
     const handleGoNext = () => {
-        onGoNext();
+        onFinishCommonStep(stepInputs);
     };
 
     return (

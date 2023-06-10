@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
     avatar: { type: String, default: '' },
 
     // is prime user status
-    isPrime: { type: Boolean, default: false },
+    isPrime: { type: Boolean, default: true }, // todo： add prime user status
 
     //member attributes
     subscriptionId: { type: String },

@@ -1,15 +1,11 @@
 
 import React from "react";
-import { Container } from "@mui/material";
-import './Event.css'
-import PrimePrivileges from "../PrimePrivileges/PrimePrivileges";
-import CommonSteps from "../CommonSteps/CommonSteps";
-import PageHeader from "../PageHeader/PageHeader";
+import Activity from "../Activity";
 
 const city = ['Munich', 'Berlin', 'Frankfurt']
 const pet = ['dog', 'cat', 'any']
 const eventType = ['walking', 'sitting', 'training', 'any']
-const commonSteps = [
+const commonEventSteps = [
     {
         label: 'Please select a city',
         content: city,
@@ -26,36 +22,26 @@ const commonSteps = [
         label: 'Please select a event date',
     },
 ];
+const creationEventSteps = [
+    {
+        label: 'Please enter the title of the event',
+        tip: 'title of event',
+    },
+    {
+        label: 'Please enter the location of the event',
+        tip: 'place in your city',
+    },
+    {
+        label: 'Please enter the expected amount of participants',
+        tip: 'how many people do you expect to come?',
+    },
+];
 
 const Event = () => {
-
-    const [showStepper, setShowStepper] = React.useState(false);
-    const [showPrimePrivileges, setShowPrimePrivileges] = React.useState(false);
-
-    const selectActivity = () => {
-        setShowStepper(true);
-    };
-
-    const createActivity = () => {
-        setShowStepper(true);
-    };
-
-    const showMore = () => {
-        setShowPrimePrivileges(true) //todo: should detect if user is prime
-    };
-
-
     return (
-        <Container sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-                        <PageHeader onContinue={showMore}/>
-                        { showPrimePrivileges ? (<PrimePrivileges activity = "service" select = { selectActivity } create = { createActivity } />): null}
-                        <CommonSteps steps={commonSteps} showStepper={showStepper} />
-        </Container >
+        <>
+            <Activity activity='event' commonSteps={commonEventSteps} creationSteps={creationEventSteps} />
+        </>
     );
 };
 

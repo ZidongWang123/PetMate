@@ -35,9 +35,9 @@ const App = () => {
               <Route path="/groups" element={<Groups />} />
               <Route
                 path="/groups/group1"
-                element={<SingleGroup1/>}
+                element={<SingleGroup1 />}
               />
-                <Route
+              <Route
                 path="/groups/create-group"
                 element={<GroupCreatePage />}
               />

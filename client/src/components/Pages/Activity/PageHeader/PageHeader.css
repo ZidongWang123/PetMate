@@ -27,3 +27,9 @@
   height: 1.2px;
   background-image: linear-gradient(to right, transparent 2%, black 10%, black 90%, transparent 98%);
 }
+
+@media (max-width: 960px) {
+  .search-header {
+      flex-direction: column;
+  }
+}

@@ -1,14 +1,6 @@
 
 import React from "react";
-import { Container } from "@mui/material";
-
-//import InputBar from "../../Widget/InputBar/InputBar";
-
-import './Service.css'
-import PrimePrivileges from "../PrimePrivileges/PrimePrivileges";
-import CommonSteps from "../CommonSteps/CommonSteps";
-import PageHeader from "../PageHeader/PageHeader";
-import CreationSteps from "../CommonSteps/CreationSteps";
+import Activity from "../Activity";
 
 const city = ['Munich', 'Berlin', 'Frankfurt']
 const pet = ['dog', 'cat', 'any']
@@ -38,44 +30,15 @@ const creationServiceSteps = [
     },
     {
         label: 'Please enter the location of the service',
-        tip: 'place of your city',
+        tip: 'place in your city',
     },
 ];
 
 const Service = () => {
-
-    const [showStepper, setShowStepper] = React.useState(false);
-    const [showPrimePrivileges, setShowPrimePrivileges] = React.useState(false);
-
-    const selectActivity = () => {
-        setShowStepper(true);
-    };
-
-    const createActivity = () => {
-        setShowStepper(true);
-    };
-
-    const showMore = () => {
-        setShowPrimePrivileges(true) //todo: should detect if user is prime
-    };
-
-    const goNext = () => {
-        //todo: go to next page
-    };
-
     return (
-        <Container sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-                        <PageHeader onContinue={showMore}/>
-                        { showPrimePrivileges ? (<PrimePrivileges activity = "service" select = { selectActivity } create = { createActivity } />): null}
-                        <CommonSteps steps={commonServiceSteps} showStepper={showStepper} onGoNext={goNext}/>
-                        {/* todo: add condition to use creation steps only by prime */}
-                        <CreationSteps steps={creationServiceSteps} showStepper={true} onGoNext={goNext}/>
-        </Container >
+        <>
+            <Activity activity='service' commonSteps={commonServiceSteps} creationSteps={creationServiceSteps} />
+        </>
     );
 };
 

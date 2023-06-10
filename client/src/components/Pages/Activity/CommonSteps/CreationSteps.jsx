@@ -12,14 +12,13 @@ import { TextField } from "@mui/material";
 
 import { darkPurple, brightGreen } from '../../../../constant/actionTypes';
 
-const CreationSteps = ({ steps, showStepper, onGoNext }) => {
+const CreationSteps = ({ steps, showStepper, onFinishCreationStep }) => {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const [creationInputs, setCreationInputs] = React.useState(Array.from({ length: steps.length }, () => ''));
 
 
     const handleStepInput = (value, index) => {
-        console.log(index, value);
         const newStepInputs = [...creationInputs];
         newStepInputs[index] = value;
         setCreationInputs(newStepInputs);
@@ -44,7 +43,7 @@ const CreationSteps = ({ steps, showStepper, onGoNext }) => {
     };
 
     const handleGoNext = () => {
-        onGoNext();
+        onFinishCreationStep(creationInputs);
     };
 
     return (
@@ -87,16 +86,14 @@ const CreationSteps = ({ steps, showStepper, onGoNext }) => {
                                         }}
                                         fullWidth
                                         InputProps={{
-                                            placeholder: 'Type and press enter to add a tags',
+                                            placeholder: step.tip,
                                         }}
                                         sx={{
                                             fontFamily: 'Cosmic Sans MS',
                                             marginTop: '20px',
                                             borderRadius: '50px',
                                             backgroundColor: '#f5f5f5',
-                                            border: '1px solid black',
-                                            width: "100%",
-                                            minWidth: 300,
+                                            border: '0.5px solid gray',
                                         }}
                                     />
                                     <Box sx={{ mb: 2, marginTop: '15px' }}>
