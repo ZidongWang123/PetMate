@@ -11,21 +11,46 @@ import Auth from "./components/Auth/Auth";
 import PersonalInfo from "./components/Settings/PersonalInfo/PersonalInfo";
 import MyPosts from "./components/Settings/MyPosts/MyPosts";
 import MyGroups from "./components/Settings/MyGroups/MyGroups";
-import MyEvents from "./components/Settings/MyEvents/MyEvents";
-import MyServices from "./components/Settings/MyServices/MyServices";
 import AppIntro from "./components/Settings/AppIntro/AppIntro";
 import Ads from "./components/Widget/Ads/Ads";
 import GroupCreatePage from "./components/Pages/Groups/GroupCreatePage";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
+import SecondNavbar from "./components/Navbar/SecondNavbar";
+import Applied from "./components/Settings/MyActivity/Applied/Applied";
+import Created from "./components/Settings/MyActivity/Created/Created";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
+  const [openSecNavbar, setOpenSecNavbar] = React.useState( localStorage.getItem('secNavbar') === 'true');
+  const [secNav, setSecNav] = React.useState(localStorage.getItem('secNav')?.split(",")  || []);
+  const activityTypes = ['events', 'services']
+  const [activityType, setActivityType] = React.useState('');
+
+  const handleSecNavbar = (param, type) => {
+    if(param.length === 0) {
+      localStorage.setItem('secNavbar', false);
+      setOpenSecNavbar(false);
+    }else{
+      localStorage.setItem('secNavbar', true);
+      setOpenSecNavbar(true);
+      setSecNav(param);
+      localStorage.setItem('secNav', param);
+      if(type === 'My events') {
+        setActivityType(activityTypes[0]);
+      }
+
+      if(type === 'My services') {
+        setActivityType(activityTypes[1]);
+      }
+    }
+  }
 
   return (
     <BrowserRouter>
       <Container maxWidth="lg">
-        <Navbar />
+        <Navbar handleSecNavbar={handleSecNavbar}/>
+        { openSecNavbar ? (<SecondNavbar pages={secNav} activityType={activityType}/>) : null}
         <div className="page">
           <Ads />
           <div className="routes">
@@ -48,8 +73,10 @@ const App = () => {
               <Route path="/personalInfo" element={<PersonalInfo />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/mygroups" element={<MyGroups />} />
-              <Route path="/myevents" element={<MyEvents />} />
-              <Route path="/myservices" element={<MyServices />} />
+              <Route path="/appliedevents" element={<Applied activityType={activityTypes[0]}/>} />
+              <Route path="/appliedservices" element={<Applied activityType={activityTypes[1]}/>} />
+              <Route path="/createdevents" element={<Created activityType={activityTypes[0]}/>} />
+              <Route path="/createdservices" element={<Created activityType={activityTypes[1]}/>} />
               {!user ? (
                 <Route path="/auth" element={<Auth />} />
               ) : (
