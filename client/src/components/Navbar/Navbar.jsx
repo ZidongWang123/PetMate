@@ -118,7 +118,7 @@ function Navbar({handleSecNavbar}) {
     }, [location]);
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: paleYellow }}>
+        <AppBar position="static" sx={{ backgroundColor: paleYellow, borderBottom:'1px solid gray' }}>
             <Container maxWidth="xxl" className="container">
                 <Toolbar disableGutters={true}>
 

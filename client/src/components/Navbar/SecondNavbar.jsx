@@ -32,7 +32,7 @@ const SecondNavbar = ({ pages, activityType }) => {
         } else {
             setActiveSetting(null);
         }
-    }, [location]);
+    }, [location, activityType, pages]);
 
     const pageNavigate = (page) => {
         setActiveSetting(page);
@@ -41,7 +41,7 @@ const SecondNavbar = ({ pages, activityType }) => {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: paleYellow }}>
+        <AppBar position="static" sx={{ backgroundColor: paleYellow, borderBottom:'1px solid gray', boxShadow:'none', marginBottom:'2px' }}>
             <Container maxWidth="xxl">
                 <Toolbar disableGutters={true}>
                     <Box sx={{ flexGrow: 1, fontFamily: 'Comic Sans MS' }}>
@@ -53,11 +53,13 @@ const SecondNavbar = ({ pages, activityType }) => {
                                     fontFamily: 'Comic Sans MS',
                                     color: darkPurple,
                                     backgroundColor: paleYellow,
-                                    fontWeight: 800,
+                                    fontWeight: 900,
+                                    fontSize: '15px',
                                     textDecoration: activeSetting === page ? 'underline !important' : 'none',
                                     textDecorationThickness: '2px !important',
                                     textDecorationSkipInk: 'none !important',
                                     textUnderlineOffset: '4px !important',
+                                    textTransform: 'none',
                                 }}
                             >
                                 {page}
