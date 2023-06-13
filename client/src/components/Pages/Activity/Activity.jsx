@@ -9,6 +9,7 @@ import PrimePrivileges from "./PrimePrivileges/PrimePrivileges";
 import CommonSteps from "./CommonSteps/CommonSteps";
 import PageHeader from "./PageHeader/PageHeader";
 import CreationSteps from "./CommonSteps/CreationSteps";
+import ActivityOverview from "./ActivityOverview/ActivityOverview";
 
 const Activity = ({activity, commonSteps, creationSteps}) => {
 
@@ -69,6 +70,7 @@ const Activity = ({activity, commonSteps, creationSteps}) => {
                         { showPrimePrivileges ? (<PrimePrivileges activity = {activity} select = { selectActivity } create = { createActivity } />): null}
                         <CommonSteps steps={commonSteps} showStepper={showCommonStepper} onFinishCommonStep={onFinishCommonStep}/>
                         <CreationSteps steps={creationSteps} showStepper={showCreationStepper && finishCommonStep} onFinishCreationStep={onFinishCreationStep}/>
+                        <ActivityOverview />
         </Container >
     );
 };

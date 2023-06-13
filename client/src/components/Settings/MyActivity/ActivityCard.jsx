@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
+import { orange, brightPurple } from "../../../constant/actionTypes";
 
-const ActivityCard = ({ activityType }) => {
+const ActivityCard = ({ activityType, isApply, isCreate }) => {
 
     return (
         <>
@@ -78,24 +79,74 @@ const ActivityCard = ({ activityType }) => {
                         description of the {activityType}:
                     </Typography>
                     <Typography variant="h6" sx={{
-                        wordWrap: 'break-word', 
-                        maxWidth: '100%', 
+                        wordWrap: 'break-word',
+                        maxWidth: '100%',
                     }} >
                         HIHIHIHIHIHIHIHIHIHIHHIHIHIHIHIHIHIHIHIHIHIHIHHIHIHIHIHIHIHIHIHIHIHIHIHHIHIHIHIHIHIHIHIHIHIHIHIHHIHI
                     </Typography>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        height: '10%',
-                    }}>
-                        <Button>
-                            Apply
-                        </Button>
-                        {/* todo: if applied, show text, applied or approved */}
-                        <Button>
-                            Withdraw
-                        </Button>
-                    </Box>
+
+                    {isApply ? (
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            height: '10%',
+                            width: '100%',
+                            padding: '0px 20px 0px 20px',
+                            justifyContent: 'space-between',
+                            boxSizing: 'border-box',
+                        }}>
+                            <Button
+                            sx={{
+                                width: '30%',
+                                backgroundColor: orange,
+                                color: 'white',
+                                borderRadius: '20px',
+                            }}>
+                                Apply
+                            </Button>
+                            {/* todo: if applied, show text, applied or approved */}
+                            <Button
+                            sx={{
+                                width: '30%',
+                                backgroundColor: brightPurple,
+                                color: 'white',
+                                borderRadius: '20px',
+                            }}>
+                                Withdraw
+                            </Button>
+                        </Box>) : null}
+
+                        {isCreate ? (
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            height: '10%',
+                            width: '100%',
+                            padding: '0px 20px 0px 20px',
+                            justifyContent: 'space-between',
+                            boxSizing: 'border-box',
+                        }}>
+                            <Button
+                            sx={{
+                                width: '30%',
+                                backgroundColor: orange,
+                                color: 'white',
+                                borderRadius: '20px',
+                            }}>
+                                Edit
+                            </Button>
+                            {/* todo: if applied, show text, applied or approved */}
+                            <Button
+                            sx={{
+                                width: '30%',
+                                backgroundColor: brightPurple,
+                                color: 'white',
+                                borderRadius: '20px',
+                            }}>
+                                Application
+                            </Button>
+                        </Box>) : null}
+
                 </Box>
 
             </Box >
