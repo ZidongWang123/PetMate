@@ -5,7 +5,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import { autocompleteClasses } from "@mui/material/Autocomplete";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const Root = styled("div")(
   ({ theme }) => `
     color: ${
@@ -18,12 +18,13 @@ const Root = styled("div")(
   `
 );
 
-/* const Label = styled("label")`
+const Label = styled("label")`
   padding: 0 0 4px;
   line-height: 1.5;
   display: block;
-`; */
+`;
 
+//inputWrapper style
 const InputWrapper = styled("div")(
   ({ theme }) => `
     width: 800px;
@@ -75,6 +76,7 @@ Tag.propTypes = {
   onDelete: PropTypes.func.isRequired,
 };
 
+//styleTag style
 const StyledTag = styled(Tag)(
   ({ theme }) => `
     display: flex;
@@ -115,6 +117,7 @@ const StyledTag = styled(Tag)(
   `
 );
 
+//Listbox style
 const Listbox = styled("ul")(
   ({ theme }) => `
     width: 300px;
@@ -167,14 +170,20 @@ const Listbox = styled("ul")(
   `
 );
 
-const InputTagBar = ({ selectedTags, onTagsChange }) => {
-  const handleTagClick = (option) => {
-    // 在点击标签时，将更新后的选中标签数组传递给父组件
-    const updatedTags = selectedTags.includes(option)
-      ? selectedTags.filter((tag) => tag !== option)
-      : [...selectedTags, option];
-    onTagsChange(updatedTags);
-  };
+const InputTagBar = ({}) => {
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  /*   React.useEffect(() => {
+    setSelectedTags(Tags);
+  }, [Tags]);
+
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    const newTags = newValue.split(",").filter((tag) => tag.trim() !== "");
+    setSelectedTags(newTags);
+    onTagsChange(newTags);
+  }; */
+  // 在这里处理传回的 selectedTags 数据
 
   const {
     getRootProps,
@@ -185,48 +194,56 @@ const InputTagBar = ({ selectedTags, onTagsChange }) => {
     getOptionProps,
     groupedOptions,
     value,
-    /*     setValue, */
+
     focused,
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    /*     value: selectedTags,
-    setValue: setSelectedTags, */
+
     multiple: true,
     options: possibleOptions,
     getOptionLabel: (option) => option.title,
   });
 
+  // 在selectedTags变化时调用onChange回调函数
+  /*   React.useEffect(() => {
+    onChange(selectedTags);
+  }, [selectedTags, onChange]); */
   return (
-    <Root>
-      <div {...getRootProps()}>
-        {/*  <Label {...getInputLabelProps()}></Label> */}
-        <InputWrapper
-          ref={setAnchorEl}
-          className={focused ? "focused" : ""}
-          sx={{ boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)" }}
-        >
-          {value.map((option) => (
-            <StyledTag label={option.title} {...getTagProps({ option })} /> //getTagProps:用来删掉
-          ))}
-
-          <input {...getInputProps()} />
-        </InputWrapper>
+    <div>
+      <Root>
+        <div {...getRootProps()}>
+          <Label {...getInputLabelProps()}></Label>
+          <InputWrapper
+            ref={setAnchorEl}
+            className={focused ? "focused" : ""}
+            sx={{ boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)" }}
+            /* value={selectedTags} */
+          >
+            {value.map((option, index) => (
+              <StyledTag label={option.title} {...getTagProps({ index })} /> //getTagProps:用来删掉
+            ))}
+            <input {...getInputProps()} />
+          </InputWrapper>
+        </div>
+        {groupedOptions.length > 0 ? (
+          <Listbox {...getListboxProps()}>
+            {groupedOptions.map((option, index) => (
+              <li {...getOptionProps({ option, index })}>
+                <span>{option.title}</span>
+                <CheckIcon fontSize="small" />
+              </li>
+            ))}
+          </Listbox> //下拉框的一些变化
+        ) : null}
+      </Root>
+      <div>
+        <h2>Selected Tags:</h2>
+        {value.map((option) => (
+          <p key={option.index}>{option.title}</p>
+        ))}
       </div>
-      {groupedOptions.length > 0 ? (
-        <Listbox {...getListboxProps()}>
-          {groupedOptions.map((option, index) => (
-            <li
-              {...getOptionProps({ option, index })}
-              onClick={() => handleTagClick(option.title)}
-            >
-              <span>{option.title}</span>
-              <CheckIcon fontSize="small" />
-            </li>
-          ))}
-        </Listbox> //下拉框的一些变化
-      ) : null}
-    </Root>
+    </div>
   );
 };
 const possibleOptions = [
