@@ -69,6 +69,9 @@ const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
 
     const handleGoNext = () => {
         onFinishCommonStep(stepInputs);
+        setStepInputs(['', '', '', '', '']);
+        setActiveStep(0);
+        //todo: send stepInputs to backend
     };
 
     return (

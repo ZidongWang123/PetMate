@@ -3,21 +3,18 @@ import { Button, Paper, Typography } from "@mui/material";
 import { brightPurple, darkPurple, orange } from '../../../../constant/actionTypes';
 
 
-const PrimePrivileges = ({ activity, select, create }) => {
-    const [showButtons, setShowButtons] = React.useState(true);
+const PrimePrivileges = ({ showPrimePrivileges, activity, select, create }) => {
     const handleLookFor = () => {
         select();
-        setShowButtons(false);
     };
 
     const handleCreate = () => {
         create();
-        setShowButtons(false);
     };
 
     return (
         <>
-            {showButtons ? (<Paper sx={{
+            {showPrimePrivileges ? (<Paper sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: 'inherit',

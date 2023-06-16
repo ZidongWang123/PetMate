@@ -44,6 +44,8 @@ const CreationSteps = ({ steps, showStepper, onFinishCreationStep }) => {
 
     const handleGoNext = () => {
         onFinishCreationStep(creationInputs);
+        setCreationInputs(Array.from({ length: steps.length }, () => ''));
+        setActiveStep(0);
     };
 
     return (

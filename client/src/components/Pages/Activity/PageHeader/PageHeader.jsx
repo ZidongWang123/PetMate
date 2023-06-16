@@ -4,11 +4,10 @@ import { TextField, Button, Chip, Typography, InputAdornment, IconButton } from 
 import SearchIcon from '@mui/icons-material/Search';
 import { darkGray } from '../../../../constant/actionTypes';
 
-const PageHeader = ({ onContinue }) => {
+const PageHeader = ({ showSearchBar, onContinue }) => {
 
     const user = JSON.parse(localStorage.getItem('profile'));
     const [tags, setTags] = React.useState([]);
-    const [showSearchBar, setShowSearchBar] = React.useState(true);
 
     const handleAddChip = (tag) => {
         setTags([...tags, tag]);
@@ -26,7 +25,6 @@ const PageHeader = ({ onContinue }) => {
     };
 
     const handleFindMore = () => {
-        setShowSearchBar(false);
         onContinue();
     }
 
