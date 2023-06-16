@@ -14,6 +14,7 @@ import MyGroups from "./components/Settings/MyGroups/MyGroups";
 import AppIntro from "./components/Settings/AppIntro/AppIntro";
 import Ads from "./components/Widget/Ads/Ads";
 import GroupForm from "./components/Pages/Groups/GroupForm/GroupForm";
+import GroupForm from "./components/Pages/Groups/GroupForm/GroupForm";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
@@ -65,7 +66,10 @@ const App = () => {
               <Route path="/explore" element={<Explore />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/groups/group1" element={<SingleGroup1 />} />
-              <Route path="/groups/create-group" element={<GroupForm />} />
+              <Route
+                path="/groups/create-group"
+                element={<GroupForm />}
+              />
               <Route path="/groups/post" element={<Post />} />
               <Route path="/event" element={<Event />} />
               <Route path="/service" element={<Service />} />

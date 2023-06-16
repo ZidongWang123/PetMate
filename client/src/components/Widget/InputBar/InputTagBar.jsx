@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import useAutocomplete from "@mui/base/useAutocomplete";
 import CheckIcon from "@mui/icons-material/Check";
@@ -7,14 +7,12 @@ import {
   InputWrapper,
   StyledTag,
   Listbox,
-  Tag,
   Label,
   Root,
 } from "./inputTagBarStyle";
 
-import { useState, useEffect } from "react";
 
-const InputTagBar = ({ onChange }) => {
+const InputTagBar = ({ onInputChange = () => { } }) => {
   const {
     getRootProps,
     getInputLabelProps,
@@ -33,6 +31,14 @@ const InputTagBar = ({ onChange }) => {
     options: possibleOptions,
     getOptionLabel: (option) => option.title,
   });
+
+  const sendTagToParent = (v) => {
+    onInputChange(v);
+  };
+
+  React.useEffect(() => {
+    sendTagToParent(value);
+  }, [value]);
 
   /*   const [selectedTags, setSelectedTags] = useState(currentValue); */
 

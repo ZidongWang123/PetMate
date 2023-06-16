@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-import StepLabel from "@mui/material/StepLabel";
 import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -17,8 +16,6 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 import {
   darkPurple,
-  brightGreen,
-  brightPurple,
   orange,
 } from "../../../../constant/actionTypes";
 import InputBar from "../../../Widget/InputBar/InputBar";
@@ -93,8 +90,8 @@ const GroupForm = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+        // find the first step that has been completed
+        steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -145,6 +142,13 @@ const GroupForm = () => {
   const handleFileReset = () => {
     // 删除选中的文件和预览图像
     setSelectedFile(null);
+  };
+
+  const handleTagsChange = (tags) => {
+    // 更新选中的标签状态
+   console.log(tags);
+    // 在标签数据变化时触发回调函数
+    // 可以在这里进行其他处理
   };
 
   return (
@@ -217,16 +221,14 @@ const GroupForm = () => {
                   <InputBar
                     initialValue={name}
                     onInputChange={handleNameChange}
-                    /*  value={stepInputs[1]} */
-                    /*  value={name} */
+                  /*  value={stepInputs[1]} */
+                  /*  value={name} */
                   />
                 )}
                 {activeStep === 1 && (
                   <InputTagBar
-                  /*                     value={selectedTags}
-                    onChange={handleTagsChange} */
-                  /*                     selectedTags={selectedTags}
-                    setSelectedTags={setSelectedTags} */
+                                      
+                  onInputChange={handleTagsChange}
                   />
                 )}
                 {activeStep === 2 && (
