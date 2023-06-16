@@ -5,7 +5,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import { autocompleteClasses } from "@mui/material/Autocomplete";
-
+import { useState } from "react";
 const Root = styled("div")(
   ({ theme }) => `
     color: ${
@@ -18,11 +18,11 @@ const Root = styled("div")(
   `
 );
 
-const Label = styled("label")`
+/* const Label = styled("label")`
   padding: 0 0 4px;
   line-height: 1.5;
   display: block;
-`;
+`; */
 
 const InputWrapper = styled("div")(
   ({ theme }) => `
@@ -167,7 +167,15 @@ const Listbox = styled("ul")(
   `
 );
 
-const InputTagBar = () => {
+const InputTagBar = ({ selectedTags, onTagsChange }) => {
+  const handleTagClick = (option) => {
+    // 在点击标签时，将更新后的选中标签数组传递给父组件
+    const updatedTags = selectedTags.includes(option)
+      ? selectedTags.filter((tag) => tag !== option)
+      : [...selectedTags, option];
+    onTagsChange(updatedTags);
+  };
+
   const {
     getRootProps,
     getInputLabelProps,
@@ -177,27 +185,29 @@ const InputTagBar = () => {
     getOptionProps,
     groupedOptions,
     value,
+    /*     setValue, */
     focused,
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    /* defaultValue: [top100Films[1]], */
+    /*     value: selectedTags,
+    setValue: setSelectedTags, */
     multiple: true,
-    options: top100Films,
+    options: possibleOptions,
     getOptionLabel: (option) => option.title,
   });
 
   return (
     <Root>
       <div {...getRootProps()}>
-        <Label {...getInputLabelProps()}></Label>
+        {/*  <Label {...getInputLabelProps()}></Label> */}
         <InputWrapper
           ref={setAnchorEl}
           className={focused ? "focused" : ""}
           sx={{ boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)" }}
         >
-          {value.map((option, index) => (
-            <StyledTag label={option.title} {...getTagProps({ index })} />
+          {value.map((option) => (
+            <StyledTag label={option.title} {...getTagProps({ option })} /> //getTagProps:用来删掉
           ))}
 
           <input {...getInputProps()} />
@@ -206,25 +216,28 @@ const InputTagBar = () => {
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>
           {groupedOptions.map((option, index) => (
-            <li {...getOptionProps({ option, index })}>
+            <li
+              {...getOptionProps({ option, index })}
+              onClick={() => handleTagClick(option.title)}
+            >
               <span>{option.title}</span>
               <CheckIcon fontSize="small" />
             </li>
           ))}
-        </Listbox>
+        </Listbox> //下拉框的一些变化
       ) : null}
     </Root>
   );
 };
-const top100Films = [
-  { title: "Munich", id: 1 },
-  { title: "LargeDog", id: 2 },
-  { title: "Bogenhausen", id: 3 },
-  { title: "Marienplatz", id: 4 },
-  { title: "DogFood", id: 5 },
-  { title: "CatFood", id: 6 },
-  { title: "CatLitter", id: 7 },
-  { title: "adopting", id: 8 },
-  { title: "lovelyfamily", id: 9 },
+const possibleOptions = [
+  { title: "Munich" },
+  { title: "LargeDog" },
+  { title: "Bogenhausen" },
+  { title: "Marienplatz" },
+  { title: "DogFood" },
+  { title: "CatFood" },
+  { title: "CatLitter" },
+  { title: "adopting" },
+  { title: "lovelyfamily" },
 ];
 export default InputTagBar;
