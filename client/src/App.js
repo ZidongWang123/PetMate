@@ -13,7 +13,7 @@ import MyPosts from "./components/Settings/MyPosts/MyPosts";
 import MyGroups from "./components/Settings/MyGroups/MyGroups";
 import AppIntro from "./components/Settings/AppIntro/AppIntro";
 import Ads from "./components/Widget/Ads/Ads";
-import GroupCreatePage from "./components/Pages/Groups/GroupForm/GroupForm";
+import GroupCreatePage from "./components/Pages/Groups/GroupCreatePage";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
