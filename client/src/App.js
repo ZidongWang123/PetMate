@@ -14,7 +14,6 @@ import MyGroups from "./components/Settings/MyGroups/MyGroups";
 import AppIntro from "./components/Settings/AppIntro/AppIntro";
 import Ads from "./components/Widget/Ads/Ads";
 import GroupForm from "./components/Pages/Groups/GroupForm/GroupForm";
-import GroupForm from "./components/Pages/Groups/GroupForm/GroupForm";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
