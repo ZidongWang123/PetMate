@@ -170,21 +170,7 @@ const Listbox = styled("ul")(
   `
 );
 
-const InputTagBar = ({}) => {
-  const [selectedTags, setSelectedTags] = useState([]);
-
-  /*   React.useEffect(() => {
-    setSelectedTags(Tags);
-  }, [Tags]);
-
-  const handleChange = (event) => {
-    const newValue = event.target.value;
-    const newTags = newValue.split(",").filter((tag) => tag.trim() !== "");
-    setSelectedTags(newTags);
-    onTagsChange(newTags);
-  }; */
-  // 在这里处理传回的 selectedTags 数据
-
+const InputTagBar = ({ onChange }) => {
   const {
     getRootProps,
     getInputLabelProps,
@@ -194,7 +180,6 @@ const InputTagBar = ({}) => {
     getOptionProps,
     groupedOptions,
     value,
-
     focused,
     setAnchorEl,
   } = useAutocomplete({
@@ -205,6 +190,11 @@ const InputTagBar = ({}) => {
     getOptionLabel: (option) => option.title,
   });
 
+  /*   const [selectedTags, setSelectedTags] = useState(currentValue); */
+
+  /*   const handleTagsChange = (tags) => {
+    onChange(tags);
+  }; */
   // 在selectedTags变化时调用onChange回调函数
   /*   React.useEffect(() => {
     onChange(selectedTags);
@@ -218,7 +208,6 @@ const InputTagBar = ({}) => {
             ref={setAnchorEl}
             className={focused ? "focused" : ""}
             sx={{ boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)" }}
-            /* value={selectedTags} */
           >
             {value.map((option, index) => (
               <StyledTag label={option.title} {...getTagProps({ index })} /> //getTagProps:用来删掉
@@ -247,14 +236,14 @@ const InputTagBar = ({}) => {
   );
 };
 const possibleOptions = [
-  { title: "Munich" },
-  { title: "LargeDog" },
-  { title: "Bogenhausen" },
-  { title: "Marienplatz" },
-  { title: "DogFood" },
-  { title: "CatFood" },
-  { title: "CatLitter" },
-  { title: "adopting" },
-  { title: "lovelyfamily" },
+  { title: "Munich", id: 1 },
+  { title: "LargeDog", id: 2 },
+  { title: "Bogenhausen", id: 3 },
+  { title: "Marienplatz", id: 4 },
+  { title: "DogFood", id: 5 },
+  { title: "CatFood", id: 6 },
+  { title: "CatLitter", id: 7 },
+  { title: "adopting", id: 8 },
+  { title: "lovelyfamily", id: 9 },
 ];
 export default InputTagBar;
