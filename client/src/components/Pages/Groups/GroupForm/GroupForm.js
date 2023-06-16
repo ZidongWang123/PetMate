@@ -42,7 +42,7 @@ const steps = [
   },
 ];
 
-const GroupCreatePage = () => {
+const GroupForm = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
 
@@ -408,4 +408,4 @@ const GroupCreatePage = () => {
   );
 };
 
-export default GroupCreatePage;
+export default GroupForm;
