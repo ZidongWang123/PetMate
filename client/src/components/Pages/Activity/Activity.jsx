@@ -61,6 +61,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     };
 
     const onFinishCommonStep = (stepInputs) => {
+        setAllInputs([]);
         setShowCommonStepper(false);
         if (user?.result.isPrime && !finishAfterCommonStep) {
             setFinishCommonStep(true);
@@ -79,12 +80,17 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
         setShowPublishActivity(true);
 
+        console.log(allInputs);
+    };
+
+    const publishAndGoBack = (value) => {
+        console.log(value); //get the value from PublishActivity
         //todo: async func to publish activity or not
         //if(){
+        setShowPublishActivity(false);
         setShowActivityOverview(true);
         setShowSearchBar(true);
         //}
-        console.log(allInputs);
     };
 
     return (
@@ -103,7 +109,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
             <CommonSteps steps={commonSteps} showStepper={showCommonStepper} onFinishCommonStep={onFinishCommonStep} />
             <CreationSteps steps={creationSteps} showStepper={showCreationStepper && finishCommonStep} onFinishCreationStep={onFinishCreationStep} />
 
-            {showPublishActivity ? (<PublishActivity activity={activity} allInputs={allInputs} />) : null}
+            {showPublishActivity ? (<PublishActivity activity={activity} allInputs={allInputs} publishAndGoBack={publishAndGoBack} isEdit={false}/>) : null}
 
             {/* default show activity overview when page is loaded */}
             {showActivityOverview ? (<ActivityOverview />) : null}

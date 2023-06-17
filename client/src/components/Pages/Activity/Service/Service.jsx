@@ -25,12 +25,16 @@ const commonServiceSteps = [
 
 const creationServiceSteps = [
     {
-        label: 'Please enter a price (euro/day)',
-        tip: 'euro/day',
+        label: 'Please enter the title of the service',
+        tip: 'title of service',
     },
     {
         label: 'Please enter the location of the service',
         tip: 'place in your city',
+    },
+    {
+        label: 'Please enter a price (euro/day)',
+        tip: 'euro/day',
     },
 ];
 
