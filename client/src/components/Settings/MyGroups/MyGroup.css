@@ -82,9 +82,15 @@
   color: #393c7c;
   border-color: #393c7c;
   cursor: pointer;
+  margin-left: auto;
 }
 .group-button:hover {
   /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
   background-color: #393c7c;
   color: #fafafa;
+}
+.group-title {
+  color: #393c7c;
+  font-family: 'Comic Sans MS', cursive;
+  text-align: center;
 }
