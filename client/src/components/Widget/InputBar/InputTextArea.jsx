@@ -4,44 +4,33 @@ import { darkPurple } from "../../../constant/actionTypes";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-/* import { Box as JoyBox } from "@mui/joy";
-import Textarea from "@mui/joy/Textarea";
-import { IconButton as JoyIconButton } from "@mui/joy";
-import { Typography as JoyTypography } from "@mui/joy";
- */
-const InputTextArea = ({ initialValue, onInputChange }) => {
-  const [value, setValue] = useState(initialValue);
-  const addEmoji = (emoji) => () => {
-    setValue((prevValue) => prevValue + emoji);
-  };
 
+const InputTextArea = ({ initialValue, onInputChange, onEmojiClick }) => {
+  /*  const [value, setValue] = useState(initialValue); */
+  /*  const addEmoji = (emoji) => () => {
+    setValue((prevValue) => `${prevValue}${emoji}`);
+  }; */
+  /*   const handleClick = (emoji) => () => {
+    setValue((prevValue) => `${prevValue}${emoji}`);
+    onEmojiClick(emoji);
+  }; */
   const handleChange = (event) => {
     const newValue = event.target.value;
-    setValue(newValue);
+
     onInputChange(newValue);
+  };
+  const handleEmojiButtonClick = (emoji) => {
+    onEmojiClick(emoji);
   };
 
   return (
-    /*     <Grid
-      item
-      xs={12}
-      sx={{
-        borderRadius: "100px",
-        backgroundColor: "transparent",
-        boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)",
-        width: "100%",
-        minWidth: 300,
-        marginTop: "10px",
-      }}
-    > */
-
     <TextField
       id="outlined-multiline-static"
       multiline
       rows={10}
-      defaultValue={initialValue}
-      value={value}
+      value={initialValue}
       onChange={handleChange}
+      placeholder="your intro"
       sx={{
         borderRadius: "35px",
 
@@ -67,79 +56,121 @@ const InputTextArea = ({ initialValue, onInputChange }) => {
                 flexWrap: "wrap",
                 gap: 0.5,
                 width: "80%",
-                justifyContent: "flex-end",
-                marginRight: "-300px",
+                justifyContent: "flex-start",
+                marginRight: "-450px",
               }}
             >
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("👍")}
+                onClick={() => handleEmojiButtonClick("👍")}
               >
                 👍
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🤭")}
+                onClick={() => handleEmojiButtonClick("🤭")}
               >
                 🤭
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🐇")}
+                onClick={() => handleEmojiButtonClick("🐇")}
               >
                 🐇
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🐈")}
+                onClick={() => handleEmojiButtonClick("🐈")}
               >
                 🐈
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🦮")}
+                onClick={() => handleEmojiButtonClick("🦮")}
               >
                 🦮
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🏞")}
+                onClick={() => handleEmojiButtonClick("🌓")}
               >
-                🏞
+                🌓
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🐕‍🦺")}
+                onClick={() => handleEmojiButtonClick("🐕‍🦺")}
               >
                 🐕‍🦺
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🥳")}
+                onClick={() => handleEmojiButtonClick("🥳")}
               >
                 🥳
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🤩")}
+                onClick={() => handleEmojiButtonClick("🤩")}
               >
                 🤩
               </IconButton>
               <IconButton
                 variant="outlined"
                 color="neutral"
-                onClick={addEmoji("🛒")}
+                onClick={() => handleEmojiButtonClick("🛒")}
               >
                 🛒
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={() => handleEmojiButtonClick("😇")}
+              >
+                😇
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={() => handleEmojiButtonClick("😎")}
+              >
+                😎
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={() => handleEmojiButtonClick("🫶")}
+              >
+                🫶
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={() => handleEmojiButtonClick("🌞‍")}
+              >
+                🌞
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={() => handleEmojiButtonClick("💥‍")}
+              >
+                💥
+              </IconButton>
+              <IconButton
+                variant="outlined"
+                color="neutral"
+                onClick={() => handleEmojiButtonClick("🦔‍")}
+              >
+                🦔
               </IconButton>
             </Box>
           </InputAdornment>

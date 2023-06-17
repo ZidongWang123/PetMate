@@ -1,6 +1,6 @@
 import React from "react";
-
-import useAutocomplete from "@mui/base/useAutocomplete";
+import { useState, useEffect } from "react";
+/* import useAutocomplete from "@mui/base/useAutocomplete";
 import CheckIcon from "@mui/icons-material/Check";
 
 import {
@@ -9,83 +9,67 @@ import {
   Listbox,
   Label,
   Root,
-} from "./inputTagBarStyle";
+} from "./inputTagBarStyle"; */
 
+import { Autocomplete } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
-const InputTagBar = ({ onInputChange = () => { } }) => {
-  const {
-    getRootProps,
-    getInputLabelProps,
-    getInputProps,
-    getTagProps,
-    getListboxProps,
-    getOptionProps,
-    groupedOptions,
-    value,
-    focused,
-    setAnchorEl,
-  } = useAutocomplete({
-    id: "customized-hook-demo",
+const InputTagBar = ({ initialValue, onInputChange = () => {} }) => {
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [inputValue, setInputValue] = useState(initialValue);
 
-    multiple: true,
-    options: possibleOptions,
-    getOptionLabel: (option) => option.title,
-  });
+  useEffect(() => {
+    setInputValue(selectedValues.join(", "));
+  }, [selectedValues, onInputChange]);
 
-  const sendTagToParent = (v) => {
-    onInputChange(v);
+  const handleChange = (event, values) => {
+    setSelectedValues(values);
+    onInputChange(values);
+    console.log(inputValue);
   };
 
-  React.useEffect(() => {
-    sendTagToParent(value);
-  }, [value]);
-
-  /*   const [selectedTags, setSelectedTags] = useState(currentValue); */
-
-  /*   const handleTagsChange = (tags) => {
-    onChange(tags);
-  }; */
-  // 在selectedTags变化时调用onChange回调函数
-  /*   React.useEffect(() => {
-    onChange(selectedTags);
-  }, [selectedTags, onChange]); */
   return (
     <div>
-      <Root>
-        <div {...getRootProps()}>
-          <Label {...getInputLabelProps()}></Label>
-          <InputWrapper
-            ref={setAnchorEl}
-            className={focused ? "focused" : ""}
-            sx={{ boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)" }}
-          >
-            {value.map((option, index) => (
-              <StyledTag label={option.title} {...getTagProps({ index })} /> //getTagProps:用来删掉
-            ))}
-            <input {...getInputProps()} />
-          </InputWrapper>
-        </div>
-        {groupedOptions.length > 0 ? (
-          <Listbox {...getListboxProps()}>
-            {groupedOptions.map((option, index) => (
-              <li {...getOptionProps({ option, index })}>
-                <span>{option.title}</span>
-                <CheckIcon fontSize="small" />
-              </li>
-            ))}
-          </Listbox> //下拉框的一些变化
-        ) : null}
-      </Root>
-      <div>
-        <h2>Selected Tags:</h2>
-        {value.map((option) => (
-          <p key={option.index}>{option.title}</p>
-        ))}
-      </div>
+      <Autocomplete
+        multiple
+        id="tags-standard"
+        options={possibleOptions}
+        getOptionLabel={(option) => option}
+        defaultValue={[]}
+        value={initialValue} // 设置 Autocomplete 的值为输入值
+        onChange={handleChange} // 处理输入值变化的函数
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            /* label="Multiple values" */
+            placeholder="your tags"
+            value={initialValue} // 设置 TextField 的值为输入值
+            onChange={(event) => setInputValue(event.target.value)}
+          />
+        )}
+        sx={{
+          backgroundColor: "white",
+          borderRadius: "100px",
+          minWidth: 800,
+          maxWidth: 900,
+          boxShadow: "0 5px 5px rgba(0, 0, 0, 0.1)",
+        }}
+      />
     </div>
   );
 };
 const possibleOptions = [
+  "Munich",
+  "LargeDog",
+  "Bogenhausen",
+  "Marienplatz",
+  "DogFood",
+  "CatFood",
+  "CatLitter",
+  "adopting",
+  "lovelyfamily",
+];
+/* const possibleOptions = [
   { title: "Munich", id: 1 },
   { title: "LargeDog", id: 2 },
   { title: "Bogenhausen", id: 3 },
@@ -95,5 +79,5 @@ const possibleOptions = [
   { title: "CatLitter", id: 7 },
   { title: "adopting", id: 8 },
   { title: "lovelyfamily", id: 9 },
-];
+]; */
 export default InputTagBar;

@@ -19,6 +19,7 @@ import Post from "./components/Pages/Groups/Post/Post";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
 import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
+import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -65,11 +66,12 @@ const App = () => {
               <Route path="/explore" element={<Explore />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/groups/group1" element={<SingleGroup1 />} />
-              <Route
-                path="/groups/create-group"
-                element={<GroupForm />}
-              />
+              <Route path="/groups/create-group" element={<GroupForm />} />
               <Route path="/groups/post" element={<Post />} />
+              <Route
+                path="/groups/:id/create-post"
+                element={<GroupPostForm />}
+              />
               <Route path="/event" element={<Event />} />
               <Route path="/service" element={<Service />} />
               <Route path="/howitworks" element={<AppIntro />} />
