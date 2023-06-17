@@ -1,7 +1,7 @@
 import React from "react";
 import GroupList from "./GroupList";
 import useFetch from "../../Widget/DataFetch/useFetch";
-import SearchBar from "../../Widget/SearchBar/SearchBar";
+import SearchBar from "../../Widget/searchBar/searchBar";
 import GroupCreateButton from "./GroupCreateButton";
 import { Link } from "react-router-dom";
 
