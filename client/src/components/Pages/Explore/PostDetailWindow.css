@@ -1,0 +1,86 @@
+.popUpWindow{
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245, 242, 236,0.98); 
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; 
+}
+.pictureDetail{
+
+    display: block;
+    margin: 0 auto;
+    border-radius: 5%;
+    height: 420px;
+    width: auto;
+    
+}
+.modal-content{
+    width:400px;
+    position: relative;
+}
+.showDetail{
+    width:380px;
+    height: 480px;
+    background-color: rgba(250, 250, 250, 1);
+    padding: 20px;
+    border-radius: 4%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+
+    
+}
+/* .showDetail::after{
+    
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    width: 100%;
+    background-color:  solid black;
+} */
+.arrowLeft{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:20px;
+    left:20px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 100%;
+}
+.arrowLeft:hover {
+    background-color: #ccc; /* 鼠标悬停时的背景色 */
+    cursor: pointer;
+  }
+  .endElement{
+    width: 380px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .contentWindow{
+    height:400px;
+    overflow: auto ;
+  }
+  .contentWindow::-webkit-scrollbar{
+    display: none;
+  }
+  .tagInPosts{
+    color: purple;
+    display:"inline-block"
+  }
+  .tagInPosts:hover{
+    cursor: pointer;
+    filter: brightness(0.8);
+
+  }

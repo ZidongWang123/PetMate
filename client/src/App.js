@@ -18,7 +18,9 @@ import Ads from "./components/Widget/Ads/Ads";
 import GroupCreatePage from "./components/Pages/Groups/GroupCreatePage";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
-
+import UserPage from "./components/Pages/Explore/UserPage";
+import PostDetail from "./components/Pages/Explore/PostDetail";
+import CreatePost from "./components/Pages/Explore/createPost";
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
@@ -50,6 +52,10 @@ const App = () => {
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/myevents" element={<MyEvents />} />
               <Route path="/myservices" element={<MyServices />} />
+              <Route path="/userPage/:name"   element={<UserPage/>}/>
+              <Route path="/createPost"   element={<CreatePost/>}/>
+
+              {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
               {!user ? (
                 <Route path="/auth" element={<Auth />} />
               ) : (

@@ -1,0 +1,6 @@
+.userPageProfil{
+    margin: o auto;
+    display: flex;
+    justify-content: center;
+    direction: "row"
+}
