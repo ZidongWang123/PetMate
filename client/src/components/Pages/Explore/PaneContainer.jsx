@@ -1,4 +1,4 @@
-import React,{useEffect,useState,useRef,useCallback} from 'react';
+import React from 'react';
 import PaneItem from './PaneItem';
 import pet from "../../../images/cat.jpg";
 import avatar from "../../../images/avatar.jpg"// 导入窗格项组件
@@ -9,7 +9,7 @@ import dog4 from "../../../images/dog4.jpeg"
 import dog5 from "../../../images/dog5.jpeg"
 const PaneContainer = () => {
     
-    const [posts,setPosts]=useState([[
+    const [posts,setPosts]= React.useState([[
       // request data from backend and initialize the four columns
     { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
     { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
@@ -104,7 +104,7 @@ const PaneContainer = () => {
       return ([postsCopy,...columns])
       // setColumn1(columns[0])
     }
-    useEffect(() => {
+    React.useEffect(() => {
       // const items = ;
       // console.log(items)
       // setPosts([1,2,3,4,5])

@@ -1,21 +1,12 @@
-import React,{useEffect,useState,useRef,useCallback} from 'react';
-import PaneItem from "./PaneItem";
-import pet from "../../../images/cat.jpg";
-import avatar from "../../../images/avatar.jpg"// 导入窗格项组件
-import { convertLength } from '@mui/material/styles/cssUtils';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PaneContainer from './PaneContainer';
 import SearchBar from './searchbarPosts';
 import Button from "@mui/material/Button";
-import Diversity1Icon from "@mui/icons-material/Diversity1";
-import { darkPurple, orange,brightPurple } from "../../../constant/actionTypes";
+import { orange } from "../../../constant/actionTypes";
 
 
 const Explore = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  // 通过 get 方法获取具体的查询参数值
-  const keyword = queryParams.get('keyword');
   return(
     <div>
       <div style={{display:"flex"}}>
