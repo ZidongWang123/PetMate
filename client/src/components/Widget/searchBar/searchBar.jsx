@@ -8,7 +8,7 @@ import { darkPurple, orange } from "../../../constant/actionTypes";
 
 const filter = createFilterOptions();
 
-export default function SearchBar() {
+export default function SearchBar({ label }) {
   const [value, setValue] = React.useState(null);
 
   return (
@@ -92,9 +92,7 @@ export default function SearchBar() {
           boxShadow: "0 5px 5px rgba(0, 0, 0, 0.1)",
         }}
         freeSolo
-        renderInput={(params) => (
-          <TextField {...params} label="Search everything!" />
-        )}
+        renderInput={(params) => <TextField {...params} label={label} />}
       />
 
       <TravelExploreTwoToneIcon

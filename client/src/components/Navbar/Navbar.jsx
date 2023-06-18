@@ -27,8 +27,10 @@ import Subscription from './Subscription';
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
 const settings = ['Personal Info', 'My posts', 'My groups', 'My events', 'My services', 'How it works', 'Logout'];
+const myService = ['Applied Services', 'Created Services'];
+const myEvent = ['Applied Events', 'Created Events'];
 
-function Navbar() {
+function Navbar({handleSecNavbar}) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -42,6 +44,7 @@ function Navbar() {
         setActiveButton(page);
         localStorage.setItem('ActiveButton', page);
         navigate(`/${page.toLowerCase()}`);
+        handleSecNavbar([],'');
     };
 
     const handleOpenNavMenu = (event) => {
@@ -59,10 +62,20 @@ function Navbar() {
     const handleCloseUserMenu = (setting) => {
         setActiveButton(null);
         localStorage.setItem('ActiveButton', null);
-        if (typeof setting === 'string') {
+        if (typeof setting === 'string' && (setting !== 'My services' || setting !== 'My events')) {
             navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
         }
         setAnchorElUser(null);
+
+        if(setting === 'My services') {
+            handleSecNavbar(myService, 'My services');
+            navigate(`/appliedservices`);
+        }
+
+        if(setting === 'My events') {
+            handleSecNavbar(myEvent, 'My events');
+            navigate(`/appliedevents`);
+        }
     };
 
     const logout = () => {
@@ -105,7 +118,7 @@ function Navbar() {
     }, [location]);
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: paleYellow }}>
+        <AppBar position="static" sx={{ backgroundColor: paleYellow, borderBottom:'1px solid gray' }}>
             <Container maxWidth="xxl" className="container">
                 <Toolbar disableGutters={true}>
 

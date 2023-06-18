@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import './DateSelecter.css'
 //import dayjs from 'dayjs';
 
-const DateSelecter = ({onSelect, selectedValue}) => {
+const DateSelecter = ({ onSelect, selectedValue, condition }) => {
     const [selectedDate, setSelectedDate] = React.useState(null);
 
     React.useEffect(() => {
@@ -18,7 +18,7 @@ const DateSelecter = ({onSelect, selectedValue}) => {
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        onSelect(date);  
+        onSelect(date);
         /* const date = event.$d;
         const year = date.getFullYear().toString(); // turn year to string
         const month = (date.getMonth() + 1).toString().padStart(2, '0'); // trun month to string and padStart with 0
@@ -30,17 +30,31 @@ const DateSelecter = ({onSelect, selectedValue}) => {
         onSelect(dateString); */
     };
 
+    const inStep = {
+        backgroundColor: 'white',
+        borderRadius: '150px',
+        minWidth: 300,
+        boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
+    };
+
+    const inActivity = {
+        backgroundColor: 'white',
+        borderRadius: '150px',
+        width: 146,
+        margin:'2px',
+        "& .MuiOutlinedInput-input": {
+            padding: "2px 2px 2px 8px",
+        },
+    };
+
+    const selectedSx = condition ? inActivity : inStep;
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
                 value={selectedDate}
                 onChange={handleDateChange}
-                sx={{
-                    backgroundColor: 'white',
-                    borderRadius: '150px',
-                    minWidth: 300,
-                    boxShadow: '0 2px 2px rgba(0, 0, 0, 0.1)',
-                }}
+                sx={selectedSx}
                 orientation="portrait"
             />
         </LocalizationProvider>

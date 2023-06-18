@@ -3,12 +3,9 @@ import "./Single.css"; // 引入自定义的CSS样式文件
 import SearchBar from "./searchbarGroup";
 import Avatar from "@mui/material/Avatar";
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-
-export const orange = '#F0A860';
-
-
+export const orange = "#F0A860";
 
 const ForumPost = ({ topic, date, author }) => (
   <div className="forum-post">
@@ -17,7 +14,6 @@ const ForumPost = ({ topic, date, author }) => (
     <div className="post-author">{author}</div>
   </div>
 );
-
 
 const Forum = () => {
   const dummyData = [
@@ -45,7 +41,6 @@ const Forum = () => {
   );
 };
 
-
 const GroupDetails = () => {
   return (
     <div className="group-details">
@@ -60,32 +55,34 @@ const GroupDetails = () => {
               <span className="group-creater">Created by: Sarah</span>
               <span className="group-createtime">On: May 27, 2023</span>
               <span className="group-amount">Member: 100</span>
-              <p className="group-intro">Here is a group specified for large dog. Let's share raising experience, your story, and anything you can't wait to post with everybody!</p>
+              <p className="group-intro">
+                Here is a group specified for large dog. Let's share raising
+                experience, your story, and anything you can't wait to post with
+                everybody!
+              </p>
               <div className="group-tags">
-              {/* 小组标签 */}
-              <span className="tag">#Munich</span>
-              <span className="tag">#LargeDog</span>
-              <span className="tag">#Bogenhausen</span>
-              <span className="tag">#Marienplatz</span>
+                {/* 小组标签 */}
+                <span className="tag">#Munich</span>
+                <span className="tag">#LargeDog</span>
+                <span className="tag">#Bogenhausen</span>
+                <span className="tag">#Marienplatz</span>
               </div>
             </div>
           </div>
         </div>
 
-        
-        
-
         <div className="group-button">
           <button className="joined-button" disabled>
             Joined
           </button>
-          <button className="write-post-button">Write a Post</button>
+          <Link to="/groups/:id/create-post">
+            <button className="write-post-button">Write a Post</button>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
-
 
 const App = () => (
   <div>
@@ -94,7 +91,7 @@ const App = () => (
       <Post key={index} title={post.title} content={post.content} />
     ))} */}
     <GroupDetails />
-    <Forum/>
+    <Forum />
   </div>
 );
 
