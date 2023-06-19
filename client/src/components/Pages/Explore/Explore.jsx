@@ -1,37 +1,46 @@
 import React from 'react';
-import PaneItem from './PaneItem'; // 导入窗格项组件
+import { Link, useLocation } from 'react-router-dom';
+import PaneContainer from './PaneContainer';
+import SearchBar from './searchbarPosts';
+import Button from "@mui/material/Button";
+import { orange } from "../../../constant/actionTypes";
 
-const PaneContainer = () => {
-  // 示例数据
-  const items = [
-    
-    { firstImageUrl:"cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"li" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    { firstImageUrl:"./cat.jpg", text:"today I went to...",avatar:"./avatar.jpg",name:"wang" } ,
-    // 添加更多的项...
-  ];
 
-  return (
-    <div className="pane-container">
-      <div className="row" style={{ display: 'flex' }}> 
-        {/* 渲染第一排窗格 */}
-        {items.slice(0, 4).map((item, index) => (
-          <span><PaneItem firstImageUrl={item.firstImageUrl} text={item.text} avatar={item.avatar} name={item.name}/></span>
-        ))}
+const Explore = () => {
+  return(
+    <div>
+      <div style={{display:"flex"}}>
+        <SearchBar/>
+        <Link to="/createPost">
+          <Button  variant="contained" 
+            
+            sx={{
+              height:"50px",
+              width:"150px",
+              marginTop: "45px",
+              marginLeft: 2,
+              padding: 2,
+              paddingLeft: 2,
+              paddingRight: 4,
+              borderRadius: "9999px",
+              color: "black",
+              backgroundColor: 'transparent',
+              border: 'gray',
+      
+              ":hover": {
+                color: "white",
+                backgroundColor: orange,
+              },
+            }} >create a post</Button>
+        </Link>
+       
       </div>
-      <div className="row" style={{ display: 'flex' }}>
-        {/* 渲染第二排窗格 */}
-        {items.slice(4).map((item, index) => (
-          <PaneItem key={index} firstImageUrl={item.firstImageUrl} text={item.text} avatar={item.avatar} name={item.name}/>
-        ))}
-      </div>
+
+      <PaneContainer/>
+
     </div>
-  );
-};
 
-export default PaneContainer;
+  )
+}
+export default Explore
+

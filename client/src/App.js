@@ -16,10 +16,14 @@ import Ads from "./components/Widget/Ads/Ads";
 import GroupForm from "./components/Pages/Groups/GroupForm/GroupForm";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
+import UserPage from "./components/Pages/Explore/UserPage";
+import PostDetail from "./components/Pages/Explore/PostDetail";
+import CreatePost from "./components/Pages/Explore/createPost";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
 import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
+
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -78,6 +82,11 @@ const App = () => {
               <Route path="/personalInfo" element={<PersonalInfo />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/mygroups" element={<MyGroups />} />
+              <Route path="/userPage/:name"   element={<UserPage/>}/>
+              <Route path="/createPost"   element={<CreatePost/>}/>
+
+              {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
+
               <Route
                 path="/appliedevents"
                 element={<Applied activityType={activityTypes[0]} />}

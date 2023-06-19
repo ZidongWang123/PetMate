@@ -4,17 +4,9 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
 import TravelExploreTwoToneIcon from "@mui/icons-material/TravelExploreTwoTone";
-//import { darkPurple, orange } from "../../constant/actionTypes";
-import { styled, alpha } from "@mui/system";
+import { darkPurple, orange } from "../../../constant/actionTypes";
 
 const filter = createFilterOptions();
-const orange = '#F0A860';
-
-const CustomTextField = styled(TextField)(({ theme }) => ({
-  "& .MuiTypography-root": {
-    fontFamily: "Comic Sans MS",
-  },
-}));
 
 export default function SearchBar() {
   const [value, setValue] = React.useState(null);
@@ -40,34 +32,34 @@ export default function SearchBar() {
             setValue(newValue);
           }
         }}
-        // filterOptions={(options, params) => {
-        //   const filtered = filter(options, params);
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
 
-        //   const { inputValue } = params;
-        //   // Suggest the creation of a new value
-        //   const isExisting = options.some(
-        //     (option) => inputValue === option.tag
-        //   );
-        //   if (inputValue !== "" && !isExisting) {
-        //     filtered.push({
-        //       inputValue,
-        //       tag: (
-        //         <>
-        //           {`"${inputValue}"`}
-        //           {"                "}
-        //           <TravelExploreTwoToneIcon />
-        //         </>
-        //       ),
-        //     });
-        //   }
+          const { inputValue } = params;
+          // Suggest the creation of a new value
+          const isExisting = options.some(
+            (option) => inputValue === option.tag
+          );
+          if (inputValue !== "" && !isExisting) {
+            filtered.push({
+              inputValue,
+              tag: (
+                <>
+                  {`"${inputValue}"`}
+                  {"                "}
+                  <TravelExploreTwoToneIcon />
+                </>
+              ),
+            });
+          }
 
-        //   return filtered;
-        // }}
+          return filtered;
+        }}
         selectOnFocus //帮助用户清除选择的值。
         clearOnBlur //帮助用户输入新值。
         /* handleHomeEndKeys */
         id="free-solo-with-text-demo"
-        //options={recommendedTag}
+        options={recommendedTag}
         getOptionLabel={(option) => {
           // Value selected with enter, right from the input
           if (typeof option === "string") {
@@ -93,25 +85,19 @@ export default function SearchBar() {
           // 向右移动
           marginLeft: 5,
           marginTop: 5,
+          marginBottom:"5px",
           backgroundColor: "transparent",
           borderRadius: "100px",
-          minWidth: 800,
-          maxWidth: 900,
-          boxShadow: "0 5px 5px rgba(0, 0, 0, 0.1)",
+          minWidth: 700,
+          maxWidth: 800,
+          boxShadow: "1px 1px 3px 3px rgba(0, 0, 0, 0.1)",
         }}
         freeSolo
         renderInput={(params) => (
-          <CustomTextField
-            {...params}
-            label="Search author, title ..."
-            InputLabelProps={{
-              sx: {
-                fontFamily: "Comic Sans MS",
-              },
-            }}
-          />
+          <TextField {...params} label="Search everything!" />
         )}
       />
+
       <TravelExploreTwoToneIcon
         variant="contained"
         sx={{ marginTop: 5, marginLeft: 2, fontSize: 50, color: orange }}
@@ -121,7 +107,7 @@ export default function SearchBar() {
 }
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-/* const recommendedTag = [
+const recommendedTag = [
   { tag: "MunichDog" },
   { tag: "petlovers" },
   { tag: "catlover" },
@@ -134,4 +120,3 @@ export default function SearchBar() {
   { tag: "catphotoshoot" },
   { tag: "catvibes" },
 ];
- */

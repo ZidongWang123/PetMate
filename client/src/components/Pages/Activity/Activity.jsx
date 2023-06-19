@@ -8,6 +8,7 @@ import PageHeader from "./PageHeader/PageHeader";
 import CreationSteps from "./CommonSteps/CreationSteps";
 import ActivityOverview from "./ActivityOverview/ActivityOverview";
 import PublishActivity from "./PublishActivity/PublishActivity";
+import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 
 const Activity = ({ activity, commonSteps, creationSteps }) => {
 
@@ -26,6 +27,8 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     const [finishAfterCommonStep, setFinishAfterCommonStep] = React.useState(false);
 
     const [allInputs, setAllInputs] = React.useState([]);
+
+    const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
 
     React.useEffect(() => {
         console.log(allInputs);
@@ -61,6 +64,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     };
 
     const onFinishCommonStep = (stepInputs) => {
+        setAllInputs([]);
         setShowCommonStepper(false);
         if (user?.result.isPrime && !finishAfterCommonStep) {
             setFinishCommonStep(true);
@@ -79,12 +83,18 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
         setShowPublishActivity(true);
 
+        console.log(allInputs);
+    };
+
+    const publishAndGoBack = (value) => {
+        setShowFeedbackMsg(true);
+        console.log(value); //get the value from PublishActivity
         //todo: async func to publish activity or not
         //if(){
+        setShowPublishActivity(false);
         setShowActivityOverview(true);
         setShowSearchBar(true);
         //}
-        console.log(allInputs);
     };
 
     return (
@@ -103,10 +113,11 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
             <CommonSteps steps={commonSteps} showStepper={showCommonStepper} onFinishCommonStep={onFinishCommonStep} />
             <CreationSteps steps={creationSteps} showStepper={showCreationStepper && finishCommonStep} onFinishCreationStep={onFinishCreationStep} />
 
-            {showPublishActivity ? (<PublishActivity activity={activity} allInputs={allInputs} />) : null}
+            {showPublishActivity ? (<PublishActivity activity={activity} allInputs={allInputs} publishAndGoBack={publishAndGoBack} isEdit={false} />) : null}
 
             {/* default show activity overview when page is loaded */}
             {showActivityOverview ? (<ActivityOverview />) : null}
+            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success'/>
         </Container >
     );
 };

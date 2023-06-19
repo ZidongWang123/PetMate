@@ -1,6 +1,7 @@
+
+
 import React from 'react';
 import useFetch from "../../Widget/DataFetch/useFetch";
-import Avatar from "@mui/material/Avatar";
 import "./MyGroup.css";
 import MyGroupUnit from './MyGroupUnit';
 
@@ -12,55 +13,17 @@ const MyGroups = () => {
   } = useFetch("http://localhost:8080/groups");
 
   return (
-    /* <div className="my-groups">
-      <h1>My Groups</h1>
-      <ul className="group-list">
-        {groups.map((group, index) => (
-          <li key={index}>{group}</li>
-        ))}
-      </ul>
-    </div> */
-    
-    <div className="fetchGroupList">
-    {error && <div>{error}</div>}
-    {isPending && <div>loading...</div>}
-    {groups && (
-      <MyGroupUnit groups={groups} title="groups"  />
-    )}
+    <div className="my-groups">
+      <h1 className="group-title">Welcome back to your Groups you joined</h1> {/* 添加标题，并设置 className */}
+      <div className="fetchGroupList">
+        {error && <div>{error}</div>}
+        {isPending && <div>loading...</div>}
+        {groups && <MyGroupUnit groups={groups} title="groups" />}
+      </div>
+
     </div>
 
   );
 };
-
-/* 
-const GroupList = ({ groups }) => {
-  return (
-    <div className="group-list">
-      {groups.map((group) => (
-        <div className="group-preview" key={group.id}>
-          <div className="group-avatar">
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          </div>
-          <div className="group-text-review">
-            <div className="group-first-row">
-              <p className="group-name">{group.name}</p>
-              <p className="group-creater">Created by:{group.creater}</p>
-              <p className="group-amount">member:{group.amount}</p>
-            </div>
-            <p className="group-intro-text">{group.intro}</p>
-            <p>
-              {group.tag.map((tagItem, index) => (
-                <span key={index} className="tag">
-                  #{tagItem}
-                </span>
-              ))}
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
- */
 
 export default MyGroups;

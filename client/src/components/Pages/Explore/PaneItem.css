@@ -1,0 +1,33 @@
+
+  .post-firstImage{
+     border-radius: 5%;
+     width:220px;
+     height:auto;
+     margin-top:10px;
+
+  }
+  .post-firstImage:hover{
+
+    cursor: pointer;
+    filter: brightness(0.8);
+
+ }
+  body.modal-open {
+    overflow: hidden;
+  }
+  .authorAvatar{
+    width: 20px;
+    height: 20px;
+    margin-right:6px;
+    border-radius: 100%;
+  }
+  .authorAvatar:hover{
+    filter:brightness(0.8);
+  }
+  .clickIcon{
+    margin-right: 5px;
+  }
+  .clickIcon:hover{
+    cursor: pointer;
+    filter: opacity(0.7);
+  }
