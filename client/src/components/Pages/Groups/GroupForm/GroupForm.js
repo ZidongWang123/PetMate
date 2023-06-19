@@ -9,18 +9,17 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useRef } from "react";
 import { useState } from "react";
+import PetsIcon from "@mui/icons-material/Pets";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 /* import { useHistory } from "react-router-dom/cjs/react-router-dom.min"; */
 
-import {
-  darkPurple,
-  orange,
-} from "../../../../constant/actionTypes";
+import { darkPurple, orange } from "../../../../constant/actionTypes";
 import InputBar from "../../../Widget/InputBar/InputBar";
 import InputTextArea from "../../../Widget/InputBar/InputTextArea";
 import InputTagBar from "../../../Widget/InputBar/InputTagBar";
+import { grey } from "@mui/material/colors";
 /* import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import { Grid } from "@mui/material";
  */
@@ -43,78 +42,38 @@ const GroupForm = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
 
+  //groupname
+
   const [name, setName] = React.useState("my groupname");
-
-  const [intro, setIntro] = React.useState("my group intro");
-
   const handleNameChange = (value) => {
     setName(value);
   };
 
-  /* 
-  const handleAvatarChange = (value) => {
-    setAvatar(value);
-  }; */
+  //tags
+
+  const [tag, setTag] = useState([]);
+  const handleTagsChange = (tags) => {
+    // 更新选中的标签状态
+
+    setTag(tags);
+    console.log(tags);
+    // 在标签数据变化时触发回调函数
+    // 可以在这里进行其他处理
+  };
+
+  //groupintro
+  const [intro, setIntro] = React.useState("");
 
   const handleIntroChange = (value) => {
     setIntro(value);
+    console.log(intro);
   };
 
-  //tag state
-  /*   const handleTagsChange = (tags) => {
-    // 更新选中的标签状态
-    selectedTagsRef.current = tags;
-    // 在标签数据变化时触发回调函数
-    // 可以在这里进行其他处理
-  }; 
-
-  const selectedTags = selectedTagsRef.current;*/
-
-  const totalSteps = () => {
-    return steps.length;
+  const handleEmojiClick = (emoji) => {
+    setIntro((prevValue) => `${prevValue}${emoji}`);
   };
 
-  const completedSteps = () => {
-    return Object.keys(completed).length;
-  };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps();
-  };
-
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-        // find the first step that has been completed
-        steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
-
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  };
+  //avatar
 
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -144,15 +103,54 @@ const GroupForm = () => {
     setSelectedFile(null);
   };
 
-  const handleTagsChange = (tags) => {
-    // 更新选中的标签状态
-   console.log(tags);
-    // 在标签数据变化时触发回调函数
-    // 可以在这里进行其他处理
+  //step related
+  const totalSteps = () => {
+    return steps.length;
+  };
+
+  const completedSteps = () => {
+    return Object.keys(completed).length;
+  };
+
+  const isLastStep = () => {
+    return activeStep === totalSteps() - 1;
+  };
+
+  const allStepsCompleted = () => {
+    return completedSteps() === totalSteps();
+  };
+
+  const handleNext = () => {
+    const newActiveStep =
+      isLastStep() && !allStepsCompleted()
+        ? // It's the last step, but not all steps have been completed,
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in completed))
+        : activeStep + 1;
+    setActiveStep(newActiveStep);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+  };
+
+  const handleComplete = () => {
+    const newCompleted = completed;
+    newCompleted[activeStep] = true;
+    setCompleted(newCompleted);
+    handleNext();
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    setCompleted({});
   };
 
   return (
-    /*  <div className="HorizontalStepper"> */
     <div>
       <div
         className="title"
@@ -168,73 +166,74 @@ const GroupForm = () => {
       >
         Create your group here!
       </div>
-      {/*       <Box sx={{ width: "100%", marginTop: 10, marginBottom: 10 }}>
-        <Stepper nonLinear activeStep={activeStep}>
-          {steps.map((step, index) => (
-            <Step key={step.label} completed={completed[index]}>
-              <StepButton color="inherit" onClick={handleStep(index)}>
-                {step.label}
-              </StepButton>
-            </Step>
-          ))}
-        </Stepper>
-      </Box> */}
+      <div
+        className="title"
+        style={{
+          fontSize: "15px",
 
-      <Box sx={{ maxWidth: 1400, margin: "0 auto", minWidth: 1000 }}>
+          textAlign: "center",
+          margin: "70px 0",
+          fontFamily: "Comic Sans MS",
+          /* fontWeight: "bold", */
+          color: "#666666",
+        }}
+      >
+        <p>Set up your groupname,</p>
+        <p>related tags, </p>
+        <p>some brief introduction,</p>
+        <p> your cute avatar </p>
+        to create your own community!!
+      </div>
+
+      <Box
+        sx={{
+          maxWidth: 1400,
+          margin: "0 auto",
+          minWidth: 1000,
+          "@media (max-width: 600px)": {
+            backgroundColor: "blue",
+          },
+        }}
+      >
         <Stepper nonLinear activeStep={activeStep} orientation="vertical">
           {steps.map((step, index) => (
             <Step key={step.label} completed={completed[index]}>
-              <StepButton onClick={handleStep(index)}>
+              <StepButton sx={{ color: darkPurple }}>
                 <Typography
                   /* variant="body1" */
                   sx={{
                     fontFamily: "Comic Sans MS",
-                    fontWeight: "bold",
+
                     fontSize: "25px",
-                    color: orange,
+                    color: darkPurple,
                   }}
+                  onClick={handleStep(index)}
                 >
+                  <PetsIcon sx={{ color: darkPurple, marginRight: 1 }} />
                   {step.label}
                 </Typography>
               </StepButton>
 
-              {/* <StepLabel
-
-                optional={
-                  index === steps.length - 1 ? (
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        fontFamily: "Comic Sans MS",
-                        fontWeight: "bold",
-                        color: darkPurple,
-                      }}
-                    >
-                      Last step
-                    </Typography>
-                  ) : null
-                } 
-              ></StepLabel> */}
-              {/*     <form onSubmit={handleSubmit}> */}
               <StepContent>
                 {activeStep === 0 && (
                   <InputBar
                     initialValue={name}
                     onInputChange={handleNameChange}
-                  /*  value={stepInputs[1]} */
-                  /*  value={name} */
+                    /*  value={stepInputs[1]} */
+                    /*  value={name} */
                   />
                 )}
                 {activeStep === 1 && (
                   <InputTagBar
-                                      
-                  onInputChange={handleTagsChange}
+                    initialValue={tag}
+                    onInputChange={handleTagsChange}
                   />
                 )}
                 {activeStep === 2 && (
                   <InputTextArea
                     initialValue={intro}
                     onInputChange={handleIntroChange}
+                    onEmojiClick={handleEmojiClick}
                   />
                 )}
                 {activeStep === 3 && (
@@ -331,29 +330,6 @@ const GroupForm = () => {
                   </div>
                 )}
 
-                {/*  {activeStep === 2 && (
-                    /*                     <InputBar
-                      type="text"
-                      required
-                      value={intro}
-                      onChange={(e) => setIntro(e.target.intro)}
-                    /> */
-                /*                     <input
-                      type="text"
-                      required
-                      value={intro}
-                      onChange={(e) => setIntro(e.target.intro)}
-                    /> 
-                  )} */}
-                {/*                 {step.input && (
-                  <input
-                    type="text"
-                    value={stepInputs[index]}
-                    onChange={(e) => handleStepInput(index, e.target.value)}
-                  />
-                )} */}
-                {/*    <Typography> {step.description} </Typography> */}
-
                 <Box sx={{ mb: 2, marginTop: 2 }}>
                   <div sx={{}}>
                     <Button
@@ -368,21 +344,34 @@ const GroupForm = () => {
                     </Button>
                     <Button
                       variant="contained"
-                      color="secondary"
-                      onClick={handleNext}
-                      sx={{ mt: 1, mr: 1, borderRadius: "100px" }}
-                      disabled={index === 3}
+                      /* color="secondary" */
+                      onClick={handleBack}
+                      sx={{
+                        mt: 1,
+                        mr: 1,
+                        borderRadius: "100px",
+                        backgroundColor: "#009999",
+
+                        color: "white",
+                      }}
+                      disabled={index === 0}
                     >
-                      {"Continue"}
+                      {"Back"}
                     </Button>
 
                     <Button
-                      disabled={index === 0}
+                      /* disabled={index === 0} */
                       variant="contained"
-                      onClick={handleBack}
-                      sx={{ mt: 1, mr: 1, borderRadius: "100px" }}
+                      onClick={handleReset}
+                      sx={{
+                        mt: 1,
+                        mr: 1,
+                        borderRadius: "100px",
+                        backgroundColor: "#67AB9F",
+                        color: "white",
+                      }}
                     >
-                      Back
+                      Reset
                     </Button>
                   </div>
                 </Box>
