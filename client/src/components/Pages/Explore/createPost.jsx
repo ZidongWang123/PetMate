@@ -1,56 +1,39 @@
-// import React, {useEffect,useState} from "react";
-// import ImageUploader from 'react-images-upload';
-
-// export default function CreatePost(){
-
-//    const [pictures,setPictures]=useState([])
-
-//    const onDrop=(pictureFiles, pictureDataURLs)=> {
-//         setPictures(pictureFiles)
-
-//     }
-
-   
-//     return (
-//         <ImageUploader
-//             withIcon={true}
-//             buttonText='Choose images'
-//             onChange={onDrop}
-//             imgExtension={['.jpg', '.gif', '.png', '.gif',"jpeg"]}
-//             maxFileSize={524288000}
-//         />
-//     );
-    
-// }
-import React from 'react';
+import React, {useEffect,useState} from "react";
 import ImageUploader from 'react-images-upload';
+import "./CreatePost.css"
+import { darkPurple, orange } from "../../../constant/actionTypes";
+import InputField from "./InputField";
+export default function CreatePost(){
 
-class CreatePost extends React.Component {
+    const [pictures,setPictures]=useState([123])
 
-    constructor(props) {
-        super(props);
-        this.state = { pictures: [] };
-        this.onDrop = this.onDrop.bind(this);
+    const onDrop=(pictureFiles, pictureDataURLs)=> {
+        setPictures(pictureFiles)
+
     }
-
-    onDrop(pictureFiles, pictureDataURLs) {
-        this.setState({
-            pictures: pictureFiles
-        });
-        console.log(3)
-        console.log(pictureFiles)
+    const onDelete=(pictureFiles, pictureDataURLs)=> {
+        setPictures(pictureFiles)
     }
-
-    render() {
-        return (
+    return (
+        <div style={{display:"flex"}}> 
+            
+            <div style={}>
+                <InputField title="topic:" isMultiline={false} height="default"></InputField>
+                <InputField title="text:" isMultiline={true} height="300px"></InputField>
+                <InputField title="tags:" isMultiline={false} height="default"></InputField>
+            </div>
             <ImageUploader
-                withIcon={true}
-                buttonText='Choose images'
-                onChange={this.onDrop}
-                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                maxFileSize={5242880}
+            fileContainerStyle={{minHeight:"620px",width:"400px",display: "flex",flexDirection:"column",justifyContent: "flex-start"}}
+            withIcon={true}
+            buttonText='Choose images'
+            withPreview={true}
+            onChange={onDrop}
+            onDelete={onDelete}
+            fileSizeError={"File size is too big!"}
+            fileTypeError={"This extension is not supported!"}
+            imgExtension={['.jpg', '.gif', '.png', '.gif',"jpeg"]}
+            maxFileSize={524288000}
             />
-        );
-    }
+        </div>     
+    );
 }
-export default CreatePost

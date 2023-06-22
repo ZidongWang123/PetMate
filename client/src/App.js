@@ -18,7 +18,7 @@ import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
 import UserPage from "./components/Pages/Explore/UserPage";
 import PostDetail from "./components/Pages/Explore/PostDetail";
-import CreatePost from "./components/Pages/Explore/createPost";
+import CreatePost from "./components/Pages/Explore/CreatePost";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
 import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
