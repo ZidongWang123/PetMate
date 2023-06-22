@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 import userRoutes from "./routes/users.js";
+import serviceRoutes from "./routes/services.js";
+import eventRoutes from "./routes/events.js";
 
 //create an instance of express
 const app = express();
@@ -17,15 +19,11 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-// log in terminal when any request happens
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
-
 //routes
 //connect the routes and app, which means the all requests with /user will be directed to the userRoutes
 app.use("/user", userRoutes);
+app.use("/services", serviceRoutes);
+app.use("/events", eventRoutes);
 
 const PORT = 100;
 const CONNECTION_URL = process.env.CONNECTION_URL;

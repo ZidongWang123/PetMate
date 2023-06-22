@@ -8,4 +8,6 @@ const serviceSchema = mongoose.Schema({
 
 });
 
-export default mongoose.model('service', serviceSchema);
+const ServiceMsg = mongoose.model('service', serviceSchema);
+
+export default ServiceMsg;
