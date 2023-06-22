@@ -1,8 +1,10 @@
 import React, {useEffect,useState} from "react";
+import React, {useEffect,useState} from "react";
 import ImageUploader from 'react-images-upload';
 import "./CreatePost.css"
 import { darkPurple, orange } from "../../../constant/actionTypes";
 import InputField from "./InputField";
+
 export default function CreatePost(){
 
     const [pictures,setPictures]=useState([123])

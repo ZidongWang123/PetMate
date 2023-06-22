@@ -1,6 +1,4 @@
 import React, {useEffect,useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import "./PaneItem.css"
 import PostDetailWindow   from './PostDetailWindow';
 import { Link } from 'react-router-dom';
@@ -11,7 +9,6 @@ const PaneItem = ({ firstImageUrl, text,avatar,name,count,tags}) => {
   const [isModalOpen,setIsModalOpen]=useState(false)
 
   const handleImgClick=(event)=>{
-    const  location=event.target.getBoundingClientRect();
     setIsModalOpen(true);
     //get the relative location of the image clicked on to the view window
   //   setWindowStyle(
