@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import creationSchema from "./creation.js";
 
 const activitySchema = mongoose.Schema({
-    creation: creationSchema, // extends creationSchema
+    ...creationSchema.obj,
 
     type: { type: String },
     petSpecies: { type: String },
