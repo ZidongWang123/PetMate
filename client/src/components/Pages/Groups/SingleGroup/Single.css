@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500');
+
 /* groups */
 
 .firstrow {
@@ -100,13 +102,13 @@
 .joined-button {
   /* 其他样式 */
   color: white;
-  font-family: 'Comic Sans MS';
+  font-family: 'Gloria Hallelujah',cursive;
   font-weight: bold;
   background-color: #F0A860;
-  border-radius: 20px;
+  border-radius: 50px;
   margin-left: 50px;
   margin-right: 10px;
-  width: 100px;
+  width: 140px;
 }
 
 .joined-button:disabled {
@@ -115,16 +117,21 @@
   cursor: not-allowed; /* 设置禁用状态的鼠标样式 */
 }
 
+.write-post-button:hover {
+  background-color: #393c7c;  /*dark purple*/
+  color: #fafafa;
+}
+
 .write-post-button {
   /* 其他样式 */
   color: white;
-  font-family: 'Comic Sans MS';
+  font-family: 'Gloria Hallelujah',cursive;
   font-weight: bold;
   background-color: #9C62F2;
-  border-radius: 20px;
+  border-radius: 50px;
   margin-left: 10px;
   margin-right: 50px;
-  width: 100px;
+  width: 140px;
 }
 
 

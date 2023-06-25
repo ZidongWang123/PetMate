@@ -1,3 +1,5 @@
+@import url('https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500');
+
 .post-details {
   width: 100%;
   padding: 20px;
@@ -70,9 +72,9 @@
 
 
 .edit-button {
-  padding: 8px 16px;
+  padding: 6px 16px;
   color: #F0A860;
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Gloria Hallelujah',cursive;
   font-weight: bold;
   border: none;
   border: 2px solid #F0A860;
@@ -94,9 +96,9 @@
 }
 
 .delete-button {
-  padding: 8px 16px;
+  padding: 6px 16px;
   color: '#3F3F3F';
-  font-family: 'Comic Sans MS', cursive;
+  font-family: 'Gloria Hallelujah',cursive;
   font-weight: bold;
   border: none;
   border: 2px solid #3F3F3F;
