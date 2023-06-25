@@ -4,12 +4,12 @@ import creationSchema from "./creation.js";
 const activitySchema = mongoose.Schema({
     ...creationSchema.obj,
 
-    type: { type: String },
-    petSpecies: { type: String },
-    location: { type: String },
     city: { type: String },
+    petSpecies: { type: String },
+    type: { type: String },
     startDate: { type: Date },
     endDate: { type: Date },
+    location: { type: String },
     status: { type: String },
 
 });

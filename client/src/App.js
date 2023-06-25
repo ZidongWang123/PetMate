@@ -17,7 +17,6 @@ import GroupForm from "./components/Pages/Groups/GroupForm/GroupForm";
 import SingleGroup1 from "./components/Pages/Groups/SingleGroup/SingleGroup1";
 import Post from "./components/Pages/Groups/Post/Post";
 import UserPage from "./components/Pages/Explore/UserPage";
-import PostDetail from "./components/Pages/Explore/PostDetail";
 import CreatePost from "./components/Pages/Explore/createPost";
 import SecondNavbar from "./components/Navbar/SecondNavbar";
 import Applied from "./components/Settings/MyActivity/Applied/Applied";

@@ -9,6 +9,8 @@ import CreationSteps from "./CommonSteps/CreationSteps";
 import ActivityOverview from "./ActivityOverview/ActivityOverview";
 import PublishActivity from "./PublishActivity/PublishActivity";
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
+import { useDispatch } from "react-redux";
+import { createService } from "../../../actions/service";
 
 const Activity = ({ activity, commonSteps, creationSteps }) => {
 
@@ -29,6 +31,8 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     const [allInputs, setAllInputs] = React.useState([]);
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         console.log(allInputs);
@@ -87,14 +91,20 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     };
 
     const publishAndGoBack = (value) => {
+        if(activity === 'service'){
+            dispatch(createService(value));
+        }
+
+        if(activity === 'event'){
+            //dispatch(createEvent(value));
+        }
+
         setShowFeedbackMsg(true);
         console.log(value); //get the value from PublishActivity
         //todo: async func to publish activity or not
-        //if(){
         setShowPublishActivity(false);
         setShowActivityOverview(true);
         setShowSearchBar(true);
-        //}
     };
 
     return (
