@@ -15,11 +15,17 @@ export const getService = async (req, res) => {
 }
 
 export const getServices = async (req, res) => {
+    const { page } = req.query;
+
     try {
-        const services = await ServiceMsg.find();
-        res.status(200).json(services);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
+        const LIMIT = 6;
+        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+        const total = await ServiceMsg.countDocuments({}); // count the total number of documents in the collection
+        const services = await ServiceMsg.find().sort({_id: -1}).limit(LIMIT).skip(startIndex); // get the posts for the current page
+        res.status(200).json({data: services, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)}); // return the posts and the number of pages
+
+    } catch(error){
+        res.status(404).json({message: error.message});
     }
 }
 

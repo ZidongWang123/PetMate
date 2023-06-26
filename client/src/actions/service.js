@@ -15,8 +15,12 @@ export const getService = (id) => async (dispatch) => {
 export const getServices = (page) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const { data: { data, currentPage, numberOfPages } } = await api.fetchServices(page);
-        dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
+
+        /* const { data: { data, currentPage, numberOfPages } } = await api.fetchServices(page);
+        dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } }); */
+
+        const { data } = await api.fetchServices(page);
+        dispatch({ type: FETCH_ALL, payload: data });
         dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);

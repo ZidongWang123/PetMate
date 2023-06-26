@@ -8,16 +8,13 @@ export default (state = { isLoading: true, services: [] }, action) => {
             return { ...state, isLoading: true };
         case END_LOADING:
             return { ...state, isLoading: false };
-        /* case FETCH_ALL:
-            return { ...state, services: action.payload.data, currentPage: action.payload.currentPage, numberOfPages: action.payload.numberOfPages }; */
         case FETCH_ALL:
-            return { ...state, services: action.payload.data};
+            return { ...state, services: action.payload.data, currentPage: action.payload.currentPage, numberOfPages: action.payload.numberOfPages };
         case FETCH_BY_SEARCH:
             return { ...state, services: action.payload };
         case FETCH_SERVICE:
             return { ...state, service: action.payload };
         case CREATE_SERVICE:
-            console.log(state, action);
             return { ...state, services: [...state.services, action.payload] };
         case UPDATE_SERVICE:
             return { ...state, services: state.services.map((service) => service._id === action.payload._id ? action.payload : service) };
