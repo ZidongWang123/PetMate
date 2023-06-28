@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { TextField, Grid } from "@mui/material";
-import { darkPurple } from "../../../constant/actionTypes";
+import { darkGray } from "../../../constant/actionTypes";
 
 const InputBar = ({ initialValue, onInputChange }) => {
-
   const [value, setValue] = useState(initialValue);
 
   const handleChange = (event) => {
@@ -40,10 +39,9 @@ const InputBar = ({ initialValue, onInputChange }) => {
         }}
         InputProps={{
           sx: {
-            fontFamily: "Comic Sans MS",
-            fontSize: "16px",
+            fontSize: "20px",
             fontWeight: "bold",
-            color: darkPurple,
+            color: darkGray,
           },
         }}
       />
