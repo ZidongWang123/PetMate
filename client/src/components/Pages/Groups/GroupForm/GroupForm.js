@@ -9,17 +9,22 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useRef } from "react";
 import { useState } from "react";
-import PetsIcon from "@mui/icons-material/Pets";
+/* import PetsIcon from "@mui/icons-material/Pets"; */
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 /* import { useHistory } from "react-router-dom/cjs/react-router-dom.min"; */
 
-import { darkPurple, orange } from "../../../../constant/actionTypes";
+import {
+  darkPurple,
+  orange,
+  brightOrange,
+  darkGray,
+} from "../../../../constant/actionTypes";
 import InputBar from "../../../Widget/InputBar/InputBar";
 import InputTextArea from "../../../Widget/InputBar/InputTextArea";
 import InputTagBar from "../../../Widget/InputBar/InputTagBar";
-import { grey } from "@mui/material/colors";
+
 /* import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import { Grid } from "@mui/material";
  */
@@ -42,9 +47,12 @@ const GroupForm = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
 
+  const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
+
   //groupname
 
-  const [name, setName] = React.useState("my groupname");
+  const [name, setName] = React.useState("");
   const handleNameChange = (value) => {
     setName(value);
   };
@@ -150,18 +158,51 @@ const GroupForm = () => {
     setCompleted({});
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // normally for refreshing the page
+
+    //create some dummy workout object => gonna send as a body of the request
+    const group = { name, tag, intro, previewImage };
+
+    const response = await fetch("http://localhost:4000/api/groups", {
+      method: "POST",
+      body: JSON.stringify(group), //changes that dummy workout object into a json string and sends that as a body
+      headers: {
+        "Content-Type": "application/json",
+      }, //to say content type should be json
+    }); //fetch request to post new data
+    const json = await response.json();
+    //when we send a post request, we handle that in backend file -> workoutController -> fire createWorkout function -> if successful, return json(workout)
+    if (!response.ok) {
+      setError(json.error); //参考workoutController:json有error property
+      setEmptyFields(json.emptyFields);
+    }
+    if (response.ok) {
+      //refresh the form, if wanting to add new one no need to delete previous one
+      setName("");
+      setTag([]);
+      setIntro("");
+      setSelectedFile(null);
+      setPreviewImage(null);
+      setError(null);
+      console.log("new group added", json);
+      /*  dispatch({ type: "CREATE_WORKOUT", payload: json }); */
+      setEmptyFields([]);
+    }
+  };
+
   return (
     <div>
       <div
         className="title"
         style={{
           fontSize: "30px",
-          color: "darkpurple",
+
           textAlign: "center",
           margin: "20px 0",
           fontFamily: "Comic Sans MS",
           fontWeight: "bold",
-          color: darkPurple,
+          color: brightOrange,
         }}
       >
         Create your group here!
@@ -175,7 +216,7 @@ const GroupForm = () => {
           margin: "70px 0",
           fontFamily: "Comic Sans MS",
           /* fontWeight: "bold", */
-          color: "#666666",
+          color: darkGray,
         }}
       >
         <p>Set up your groupname,</p>
@@ -203,13 +244,12 @@ const GroupForm = () => {
                   /* variant="body1" */
                   sx={{
                     fontFamily: "Comic Sans MS",
-
+                    fontWeight: "bold",
                     fontSize: "25px",
                     color: darkPurple,
                   }}
                   onClick={handleStep(index)}
                 >
-                  <PetsIcon sx={{ color: darkPurple, marginRight: 1 }} />
                   {step.label}
                 </Typography>
               </StepButton>
@@ -335,7 +375,11 @@ const GroupForm = () => {
                     <Button
                       variant="contained"
                       color="success"
-                      onClick={handleComplete}
+                      onClick={
+                        completedSteps() === totalSteps() - 1
+                          ? handleSubmit
+                          : handleComplete
+                      }
                       sx={{ mt: 1, mr: 1, borderRadius: "100px" }}
                     >
                       {completedSteps() === totalSteps() - 1
