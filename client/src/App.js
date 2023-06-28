@@ -23,6 +23,7 @@ import SecondNavbar from "./components/Navbar/SecondNavbar";
 import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
+import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
 
 
 const App = () => {
@@ -84,6 +85,7 @@ const App = () => {
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/userPage/:name"   element={<UserPage/>}/>
               <Route path="/createPost"   element={<CreatePost/>}/>
+              <Route path="/groups/post/editPost"   element={<EditPost/>}/>
 
               {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
 

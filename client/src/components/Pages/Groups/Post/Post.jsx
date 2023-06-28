@@ -1,6 +1,7 @@
 import React from "react";
 import "./PostDetails.css"; // 引入自定义的 CSS 样式文件
 import Avatar from "@mui/material/Avatar";
+import { Link } from 'react-router-dom';
 
 const dummyData = {
   title: "Everything you should know when adopting a large dog",
@@ -20,29 +21,32 @@ const PostDetails = () => {
         <h2 className="post-title">{title}</h2>
       </div>
       <div className="author-info">
-        <div className="author-avatar">
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        <div className="author-avatar" onClick={() => window.location.href = "http://localhost:3000/myposts"}>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </div>
         <div className="author-details">
           <span className="author-name">{author.name}</span>
           <p className="post-timestamp">Posted on {timestamp}</p>
         </div>
-        <div className="delete-button-wrapper">
-          <button 
-            className="delete-button"
-            style={{
-                color: 'white',
-                fontFamily: 'Comic Sans MS',
-                fontWeight: 'bold',
-                backgroundColor: '#F0A860',
-                borderRadius: '20px',
-                marginLeft: '50px',
-                marginRight: '10px',
-                width: '150px',
-              }}
-          >Delete
-          </button>
+        <div className="button-group"style={{ marginLeft: '700px' }}>
+          <div className="edit-button-wrapper">
+            <button className="edit-button" onClick={() => window.location.href = "http://localhost:3000/groups/post/editPost"}>
+            Edit
+            </button>
+          </div>
+          <div className="delete-button-wrapper">
+            <button 
+              className="delete-button"
+              
+            >
+              Delete
+            </button>
+          </div>
+          
         </div>
+
+
+        
       </div>
       <div className="post-content-wrapper">
         <p className="post-content">{content}</p>
