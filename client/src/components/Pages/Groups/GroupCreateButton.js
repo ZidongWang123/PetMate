@@ -5,7 +5,7 @@ import { darkPurple, orange } from "../../../constant/actionTypes";
 
 export default function GroupCreateButton() {
   return (
-    <div classname="GroupCreateButton">
+    <div className="GroupCreateButton">
       <Button
         variant="contained"
         endIcon={<Diversity1Icon />}
