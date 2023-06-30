@@ -1,45 +1,46 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif, "Gloria Hallelujah";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(245, 242, 236);
 }
 
 code {
-  font-family: 'source-code-pro', 'Menlo', 'Monaco', 'Consolas', 'Courier New', 'Comic Sans MS', 'monospace';
+  font-family: "source-code-pro", "Menlo", "Monaco", "Consolas", "Courier New",
+    "Comic Sans MS", "monospace";
 }
 
 input.MuiInputBase-input.MuiOutlinedInput-input {
-  font-family: 'Comic Sans MS' !important;
+  font-family: "Ubuntu", sans-serif !important;
 }
 
-h4.MuiTypography-root.MuiDatePickerToolbar-title{
-  font-family: 'Comic Sans MS' !important;
+h4.MuiTypography-root.MuiDatePickerToolbar-title {
+  font-family: "Comic Sans MS" !important;
 }
 
-span.MuiTypography-root{
-  font-family: 'Comic Sans MS' !important;
+span.MuiTypography-root {
+  font-family: "Comic Sans MS" !important;
 }
 
-button.MuiButtonBase-root.MuiButton-root{
-  font-family: 'Comic Sans MS' !important;
+button.MuiButtonBase-root.MuiButton-root {
+  font-family: "Gloria Hallelujah" !important;
 }
 
 div.MuiPickersCalendarHeader-label {
-  font-family: 'Comic Sans MS' !important;
+  font-family: "Comic Sans MS" !important;
 }
 
 button.MuiPickersDay-root {
-  font-family: 'Comic Sans MS' !important;
+  font-family: "Gloria Hallelujah", cursive !important;
 }
 
-h6.MuiTypography-root{
-  font-family: 'Comic Sans MS' !important;
+h6.MuiTypography-root {
+  font-family: "Comic Sans MS" !important;
 }
 
-span.MuiChip-label{
-  font-family: 'Comic Sans MS' !important;
+span.MuiChip-label {
+  font-family: "Ubuntu", sans-serif !important;
 }

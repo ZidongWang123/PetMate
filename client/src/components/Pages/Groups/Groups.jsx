@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GroupList from "./GroupList";
-import useFetch from "../../Widget/DataFetch/useFetch";
+
 import SearchBar from "../../Widget/SearchBar/SearchBar";
+
 import GroupCreateButton from "./GroupCreateButton";
 import { Link } from "react-router-dom";
-
+import "./Group.css";
 //import DateSelecter from "../../Widget/DateSelecter/DateSelecter";
 
 const Groups = () => {
-  const {
-    data: groups,
-    isPending,
-    error,
-  } = useFetch("http://localhost:8080/groups");
+  const [groups, setGroups] = useState(null);
+  useEffect(() => {
+    const fetchGroups = async () => {
+      const response = await fetch("http://localhost:100/api/groups");
+      const json = await response.json();
 
-  const groupJoin = (id) => {
-    console.log(id);
-  };
+      if (response.ok) {
+        setGroups(json);
+      }
+    };
+    fetchGroups();
+  }, []);
+  useEffect(() => {
+    console.log(groups);
+  }, [groups]);
 
   return (
     <div className="groups">
@@ -26,12 +33,9 @@ const Groups = () => {
           <GroupCreateButton />
         </Link>
       </div>
-      <div className="fetchGroupList">
-        {error && <div>{error}</div>}
-        {isPending && <div>loading...</div>}
-        {groups && (
-          <GroupList groups={groups} title="groups" groupJoin={groupJoin} />
-        )}
+      <div className="group-list">
+        {groups &&
+          groups.map((group) => <GroupList key={group._id} group={group} />)}
       </div>
     </div>
   );

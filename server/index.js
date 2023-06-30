@@ -4,9 +4,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
 import userRoutes from "./routes/users.js";
-
+import groupRoutes from "./routes/groups.js";
 //create an instance of express
 const app = express();
 //use dotenv to hide the connection url
@@ -26,6 +25,7 @@ app.use((req, res, next) => {
 //routes
 //connect the routes and app, which means the all requests with /user will be directed to the userRoutes
 app.use("/user", userRoutes);
+app.use("/api/groups", groupRoutes);
 
 const PORT = 100;
 const CONNECTION_URL = process.env.CONNECTION_URL;
