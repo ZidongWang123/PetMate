@@ -1,12 +1,12 @@
 import React from 'react';
-import PaneItem from './PaneItem';
-import pet from "../../../images/cat.jpg";
-import avatar from "../../../images/avatar.jpg"// 导入窗格项组件
-import dog1 from "../../../images/dog1.jpg"
-import dog2 from "../../../images/dog2.jpg"
-import dog3 from "../../../images/dog3.jpg"
-import dog4 from "../../../images/dog4.jpeg"
-import dog5 from "../../../images/dog5.jpeg"
+import PaneItem from '../PaneItem/PaneItem';
+import pet from "../../../../images/cat.jpg";
+import avatar from "../../../../images/avatar.jpg"// 导入窗格项组件
+import dog1 from "../../../../images/dog1.jpg"
+import dog2 from "../../../../images/dog2.jpg"
+import dog3 from "../../../../images/dog3.jpg"
+import dog4 from "../../../../images/dog4.jpeg"
+import dog5 from "../../../../images/dog5.jpeg"
 const PaneContainer = () => {
     
     const [posts,setPosts]= React.useState([[
@@ -77,11 +77,7 @@ const PaneContainer = () => {
     // const [column2, setColumn2] = useState([]);
     // const [column3, setColumn3] = useState([]);
     // const [column4, setColumn4] = useState([]);
-
-
-    
     const assignPane=(posts)=>{
-      console.log(posts)
       let postsCopy=[...posts[0]]
       
       let columns=[[...posts[1]],[...posts[2]],[...posts[3]],[...posts[4]]]
@@ -102,12 +98,8 @@ const PaneContainer = () => {
           }
       }
       return ([postsCopy,...columns])
-      // setColumn1(columns[0])
     }
     React.useEffect(() => {
-      // const items = ;
-      // console.log(items)
-      // setPosts([1,2,3,4,5])
       setPosts(assignPane)
       // 监听滚动事件
       window.addEventListener('scroll', handleScroll);

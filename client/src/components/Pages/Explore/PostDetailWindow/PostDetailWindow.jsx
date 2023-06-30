@@ -5,7 +5,7 @@ import "./PostDetailWindow.css"
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { WidthFull } from "@mui/icons-material";
-import HeartIcon from "./HeartIcon";
+import HeartIcon from "../widget/HeartIcon";
 import { Link, useNavigate } from 'react-router-dom';
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 export default function PostDetailWindow({isOpen,onClose,picture,text,avatar,name,count,tags}){
@@ -38,7 +38,6 @@ export default function PostDetailWindow({isOpen,onClose,picture,text,avatar,nam
         
         const queryParams = new URLSearchParams();
         queryParams.append('keyword', param);
-        console.log(param)
         // 导航到目标页面
         const path = '/explore';
         const url = `${path}?${queryParams.toString()}`;

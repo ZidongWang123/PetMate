@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
 import TravelExploreTwoToneIcon from "@mui/icons-material/TravelExploreTwoTone";
-import { darkPurple, orange } from "../../../constant/actionTypes";
+import { darkPurple, orange } from "../../../../constant/actionTypes";
 
 const filter = createFilterOptions();
 
