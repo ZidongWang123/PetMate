@@ -3,7 +3,7 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import SearchIcon from "@mui/icons-material/Search";
-import { InputAdornment, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
 import TravelExploreTwoToneIcon from "@mui/icons-material/TravelExploreTwoTone";
 
@@ -116,16 +116,10 @@ export default function SearchBar({ label }) {
           />
         )}
       />
-
-      {/*  <TravelExploreTwoToneIcon
-        variant="contained"
-        sx={{ marginTop: 5, marginLeft: 2, fontSize: 50, color: orange }}
-      /> */}
     </div>
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const recommendedTag = [
   { tag: "MunichDog" },
   { tag: "petlovers" },
