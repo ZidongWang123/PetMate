@@ -2,14 +2,19 @@ import * as React from "react";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
+import SearchIcon from "@mui/icons-material/Search";
+import { InputAdornment, IconButton } from "@mui/material";
 import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
 import TravelExploreTwoToneIcon from "@mui/icons-material/TravelExploreTwoTone";
-import { darkPurple, orange } from "../../../constant/actionTypes";
 
 const filter = createFilterOptions();
 
 export default function SearchBar({ label }) {
   const [value, setValue] = React.useState(null);
+
+  const handleSearch = () => {
+    console.log("search");
+  };
 
   return (
     <div
@@ -85,20 +90,37 @@ export default function SearchBar({ label }) {
           // 向右移动
           marginLeft: 5,
           marginTop: 5,
-          backgroundColor: "transparent",
+          backgroundColor: "white",
           borderRadius: "100px",
           minWidth: 800,
           maxWidth: 900,
           boxShadow: "0 5px 5px rgba(0, 0, 0, 0.1)",
         }}
         freeSolo
-        renderInput={(params) => <TextField {...params} label={label} />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            InputProps={{
+              ...params.InputProps, //显示下拉框
+              placeholder: "Search everything!",
+              startAdornment: (
+                <>
+                  <IconButton onClick={handleSearch}>
+                    <SearchIcon />
+                  </IconButton>
+                  {params.InputProps.startAdornment}
+                </>
+              ),
+            }}
+          />
+        )}
       />
 
-      <TravelExploreTwoToneIcon
+      {/*  <TravelExploreTwoToneIcon
         variant="contained"
         sx={{ marginTop: 5, marginLeft: 2, fontSize: 50, color: orange }}
-      />
+      /> */}
     </div>
   );
 }
