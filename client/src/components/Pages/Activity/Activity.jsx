@@ -9,8 +9,19 @@ import CreationSteps from "./CommonSteps/CreationSteps";
 import ActivityOverview from "./ActivityOverview/ActivityOverview";
 import PublishActivity from "./PublishActivity/PublishActivity";
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
+import { useDispatch } from "react-redux";
+import { createService } from "../../../actions/service";
+import { useLocation } from "react-router-dom";
+import Pagination from "../../Widget/Pagination/Pagination";
+import { useSelector } from "react-redux";
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 const Activity = ({ activity, commonSteps, creationSteps }) => {
+    const query = useQuery();
+    const page = query.get('page') || 1;
 
     const user = JSON.parse(localStorage.getItem('profile'));
     const [showSearchBar, setShowSearchBar] = React.useState(true);
@@ -30,9 +41,11 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
 
-    React.useEffect(() => {
-        console.log(allInputs);
-    }, [allInputs]);
+    const dispatch = useDispatch();
+
+    const { services, isLoading } = useSelector((state) => state.service);
+
+    console.log(services);
 
     const selectActivity = () => {
         setShowPrimePrivileges(false);
@@ -87,14 +100,20 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     };
 
     const publishAndGoBack = (value) => {
+        if (activity === 'service') {
+            dispatch(createService(value));
+        }
+
+        if (activity === 'event') {
+            //dispatch(createEvent(value));
+        }
+
         setShowFeedbackMsg(true);
         console.log(value); //get the value from PublishActivity
         //todo: async func to publish activity or not
-        //if(){
         setShowPublishActivity(false);
         setShowActivityOverview(true);
         setShowSearchBar(true);
-        //}
     };
 
     return (
@@ -115,9 +134,24 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
             {showPublishActivity ? (<PublishActivity activity={activity} allInputs={allInputs} publishAndGoBack={publishAndGoBack} isEdit={false} />) : null}
 
-            {/* default show activity overview when page is loaded */}
-            {showActivityOverview ? (<ActivityOverview />) : null}
-            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success'/>
+            {(activity === 'service') && showActivityOverview && services ? (
+                <div className="activities-grid">
+                    {services.map((service) => (
+                        <ActivityOverview key={service.id} activityData={service} isLoading={isLoading} />
+                    ))}
+                </div>
+            ) : null}
+
+            {/* {(activity === 'service') && showActivityOverview ? (
+                <>
+                    {services.map((service) => (
+                        <ActivityOverview activityData={service} isLoading={isLoading} />
+                    ))}
+                </>
+            ) : null} */}
+
+            <Pagination page={page} />
+            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' />
         </Container >
     );
 };

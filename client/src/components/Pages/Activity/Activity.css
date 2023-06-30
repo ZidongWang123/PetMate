@@ -6,3 +6,10 @@
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed{
     color: #9AC7BF !important;
 }
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px; /* 设置网格间距 */
+    max-height: 100%;
+}

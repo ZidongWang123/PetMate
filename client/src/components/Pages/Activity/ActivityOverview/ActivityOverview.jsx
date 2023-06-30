@@ -2,8 +2,10 @@ import { Box, Avatar, Typography, Button } from "@mui/material";
 import React from "react";
 import { brightPurple } from "../../../../constant/actionTypes";
 
-const ActivityOverview = () => {
+const ActivityOverview = ({activityData, isLoading}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
+    const formattedStartDate = new Date(activityData.startDate).toLocaleDateString();
+    const formattedEndDate = new Date(activityData.endDate).toLocaleDateString();
 
     return (
         <>
@@ -15,7 +17,7 @@ const ActivityOverview = () => {
                 borderRadius: '30px',
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
-                width: '240px',
+                width: '300px',
             }}>
                 <Box sx={{
                     display: 'flex',
@@ -35,23 +37,26 @@ const ActivityOverview = () => {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     margin: '5px 0px 5px 15px',
-                    width: '60%',
+                    width: '70%',
                 }}>
                     <Typography variant="h6">
-                        title: ''
+                        Title: {activityData.title}
                     </Typography>
                     <Typography variant="h6">
-                        date: ''
+                        StartDate: {formattedStartDate}
                     </Typography>
                     <Typography variant="h6">
-                        city: ''
+                        EndDate: {formattedEndDate}
                     </Typography>
                     <Typography variant="h6">
-                        location: ''
+                        City: {activityData.city}
                     </Typography>
                     <Typography variant="h6">
-                        status: ''
+                        Location: {activityData.location}
                     </Typography>
+                   {/*  <Typography variant="h6">
+                        Status: {activityData.status}
+                    </Typography> */}
                     <Button
                         sx={{
                             width: '100%',
