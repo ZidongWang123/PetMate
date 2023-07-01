@@ -1,8 +1,8 @@
 import React, {useEffect,useState } from 'react';
 import "./PaneItem.css"
-import PostDetailWindow   from './PostDetailWindow';
+import PostDetailWindow   from '../PostDetailWindow/PostDetailWindow';
 import { Link } from 'react-router-dom';
-import HeartIcon from './HeartIcon';
+import HeartIcon from '../widget/HeartIcon';
 
 
 const PaneItem = ({ firstImageUrl, text,avatar,name,count,tags}) => {
@@ -56,7 +56,6 @@ const PaneItem = ({ firstImageUrl, text,avatar,name,count,tags}) => {
     e.preventDefault(); // 阻止默认的滚轮行为
   };
   useEffect(() => {
-    console.log(123)
     if (isModalOpen) {
       document.addEventListener('wheel', handleWheel, { passive: false });
       document.body.classList.add('modal-open');

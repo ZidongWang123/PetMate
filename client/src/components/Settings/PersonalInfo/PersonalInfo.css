@@ -1,0 +1,20 @@
+.personalInfo-pane{
+    margin-top: 10px;
+    background-color: white;
+    width: 800px;
+    height: 630px;
+    border-radius: 20px;
+    padding: 20px 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);}
+
+.infoItem-span{
+
+    color:#F0A860;
+    font-family: ubuntun;
+    margin-left: 20px;
+
+}
+.infoItem-span:hover{
+    cursor: pointer;
+    filter: brightness(0.8);
+}

@@ -1,39 +1,19 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import PaneContainer from './PaneContainer';
-import SearchBar from './searchbarPosts';
-import Button from "@mui/material/Button";
+import PaneContainer from './PaneContainer/PaneContainer';
+import SearchBar from './widget/searchbarPosts';
+import UniformButton from './widget/UniformButton';
 import { orange } from "../../../constant/actionTypes";
 
 
 const Explore = () => {
   return(
     <div>
-      <div style={{display:"flex"}}>
+      <div style={{display:"flex",alignItems: "flex-end"}}>
         <SearchBar/>
         <Link to="/createPost">
-          <Button  variant="contained" 
-            
-            sx={{
-              height:"50px",
-              width:"150px",
-              marginTop: "45px",
-              marginLeft: 2,
-              padding: 2,
-              paddingLeft: 2,
-              paddingRight: 4,
-              borderRadius: "9999px",
-              color: "black",
-              backgroundColor: 'transparent',
-              border: 'gray',
-      
-              ":hover": {
-                color: "white",
-                backgroundColor: orange,
-              },
-            }} >create a post</Button>
+          <UniformButton width="150px" backgroundColor={orange} fontColor="white">create a post</UniformButton>
         </Link>
-       
       </div>
 
       <PaneContainer/>
