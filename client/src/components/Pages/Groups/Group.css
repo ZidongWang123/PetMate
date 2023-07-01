@@ -12,17 +12,13 @@
   margin-left: 0px;
   border-bottom: 1px solid #fafafa;
   width: 90%;
-  /*  margin-top: 100px; */
+  text-decoration: none;
 }
+
 .group-preview:hover {
   border-radius: 50px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-/* .group-preview {
-  padding: 10px;
-  margin: 10px 0;
-  border-bottom: 1px solid #fafafa;
-} */
 
 .group-avatar {
   margin-right: 20px;
@@ -30,12 +26,6 @@
 .group-avatar .MuiAvatar-root {
   width: 60px;
   height: 60px;
-}
-
-.group-text-review {
-  flex-grow: 1;
-  width: 70%;
-  margin-right: 30px;
 }
 
 .group-first-row {
@@ -50,7 +40,7 @@
   margin-right: 0px;
 }
 .group-creater {
-  margin-right: 700px;
+  margin-right: 1000px;
 } /* 调整第二个元素的左边距 */
 
 .group-first-row .group-amount {
