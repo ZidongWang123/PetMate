@@ -24,7 +24,6 @@ import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
 import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
 
-
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
@@ -69,7 +68,7 @@ const App = () => {
               <Route path="/" element={<Navigate to="/explore" />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/groups" element={<Groups />} />
-              <Route path="/groups/group1" element={<SingleGroup1 />} />
+              <Route path="/groups/:id" element={<SingleGroup1 />} />
               <Route path="/groups/create-group" element={<GroupForm />} />
               <Route path="/groups/post" element={<Post />} />
               <Route

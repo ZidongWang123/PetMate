@@ -373,30 +373,35 @@ const GroupForm = () => {
                 <Box sx={{ mb: 2, marginTop: 2 }}>
                   <div sx={{}}>
                     <Button
-                      variant="contained"
+                      /* variant="contained" */
                       color="success"
                       onClick={
                         completedSteps() === totalSteps() - 1
                           ? handleSubmit
                           : handleComplete
                       }
-                      sx={{ mt: 1, mr: 1, borderRadius: "100px" }}
+                      sx={{
+                        mt: 1,
+                        mr: 1,
+                        borderRadius: "100px",
+                        fontWeight: "bold",
+                      }}
                     >
                       {completedSteps() === totalSteps() - 1
                         ? "Finish"
                         : "Complete Step"}
                     </Button>
                     <Button
-                      variant="contained"
+                      /* variant="contained" */
                       /* color="secondary" */
                       onClick={handleBack}
                       sx={{
                         mt: 1,
                         mr: 1,
                         borderRadius: "100px",
-                        backgroundColor: "#009999",
-
-                        color: "white",
+                        /* backgroundColor: "#009999", */
+                        fontWeight: "bold",
+                        color: darkGray,
                       }}
                       disabled={index === 0}
                     >
@@ -405,14 +410,15 @@ const GroupForm = () => {
 
                     <Button
                       /* disabled={index === 0} */
-                      variant="contained"
+                      /* variant="contained" */
                       onClick={handleReset}
                       sx={{
                         mt: 1,
                         mr: 1,
                         borderRadius: "100px",
-                        backgroundColor: "#67AB9F",
-                        color: "white",
+                        /* backgroundColor: "#67AB9F", */
+                        fontWeight: "bold",
+                        color: brightOrange,
                       }}
                     >
                       Reset
