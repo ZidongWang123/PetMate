@@ -28,6 +28,7 @@ const InputTagBar = ({ initialValue, onInputChange = () => {} }) => {
     console.log(inputValue);
   };
 
+  
   return (
     <div>
       <Autocomplete
@@ -67,6 +68,7 @@ const possibleOptions = [
   "CatFood",
   "CatLitter",
   "adopting",
+  "lovelyfamily",
   "lovelyfamily",
 ];
 /* const possibleOptions = [

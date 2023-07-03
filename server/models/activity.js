@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 import creationSchema from "./creation.js";
 
 const activitySchema = mongoose.Schema({
-    ...creationSchema.obj,
+    creation: creationSchema, // extends creationSchema
 
-    city: { type: String },
-    petSpecies: { type: String },
     type: { type: String },
+    petSpecies: { type: String },
+    location: { type: String },
+    city: { type: String },
     startDate: { type: Date },
     endDate: { type: Date },
-    location: { type: String },
     status: { type: String },
 
 });

@@ -3,13 +3,12 @@ import TextField from '@mui/material/TextField';
 import { darkPurple, orange } from "../../../../constant/actionTypes";
 import { Margin } from "@mui/icons-material";
 
-export default function InputField({title,isMultiline,height,onInputChange}){
+export default function InputField({value,title,isMultiline,height,onInputChange}){
 
-    const [inputValue,setInputValue]=useState("")
+    
     const handleInput = (event) => {
-        const value = event.target.value;
-        setInputValue(value);
-        onInputChange(value); // 调用父组件传递的回调函数，并传递输入框的值
+        const inputValue = event.target.value;
+        onInputChange(inputValue); // 调用父组件传递的回调函数，并传递输入框的值
       };
     return(
         <>
@@ -21,7 +20,7 @@ export default function InputField({title,isMultiline,height,onInputChange}){
             <TextField variant="outlined" 
             multiline={isMultiline}
             onChange={handleInput}
-            value={inputValue}
+            value={value}
             InputProps={{
 
                 style:{  fontFamily: "ubuntu", // 设置字体样式

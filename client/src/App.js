@@ -81,9 +81,10 @@ const App = () => {
               <Route path="/personalInfo" element={<PersonalInfo />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/mygroups" element={<MyGroups />} />
-              <Route path="/userPage/:name" element={<UserPage />} />
-              <Route path="/createPost" element={<CreatePost />} />
-              <Route path="/groups/post/editPost" element={<EditPost />} />
+              <Route path="/userPage/:name"   element={<UserPage/>}/>
+              <Route path="/createPost"   element={<CreatePost/>}/>
+              <Route path="/groups/post/editPost"   element={<EditPost/>}/>
+              <Route path="/explore/post/editPost/:postId"   element={<CreatePost/>}/>
 
               {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
 

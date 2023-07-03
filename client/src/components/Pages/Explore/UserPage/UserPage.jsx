@@ -18,7 +18,7 @@ export default function UserPage(){
         
         // todo...
         
-        setProfil({avatar:avatar,name:"wang" ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
+        setProfil({avatar:avatar,name:name ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
 },[])
 
 

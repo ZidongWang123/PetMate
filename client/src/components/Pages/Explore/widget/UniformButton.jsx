@@ -13,7 +13,7 @@ export default function UniformButton({width,backgroundColor,fontColor,onClick,c
             width:{width},
             marginLeft: 2,
             marginBottom:"5px",
-            fontFamily:'ubuntun',
+            fontFamily:'Gloria Hallelujah',
             borderRadius: "50px",
             color: fontColor,
             backgroundColor: backgroundColor,
