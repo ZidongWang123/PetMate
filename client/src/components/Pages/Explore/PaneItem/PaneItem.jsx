@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import HeartIcon from '../widget/HeartIcon';
 
 
-const PaneItem = ({ firstImageUrl, text,avatar,name,count,tags}) => {
+const PaneItem = ({ postId="3jahkjd2198323",firstImageUrl, text,avatar,name,count,tags}) => {
   const [isModalOpen,setIsModalOpen]=useState(false)
 
   const handleImgClick=(event)=>{
@@ -73,7 +73,7 @@ const PaneItem = ({ firstImageUrl, text,avatar,name,count,tags}) => {
       <a >
         <img className="post-firstImage" src={firstImageUrl} onClick={handleImgClick}  />
       </a>
-      <PostDetailWindow  isOpen={isModalOpen} onClose={closeModal} picture={firstImageUrl} name={name} text={text} avatar={avatar
+      <PostDetailWindow  postId={postId} isOpen={isModalOpen} onClose={closeModal} picture={firstImageUrl} name={name} text={text} avatar={avatar
       } count={count} tags={tags}/>
       <div style={{padding:"8px"}}>
         <div style={{marginBottom:"10px",maxWidth:"204px"}}>
@@ -83,7 +83,7 @@ const PaneItem = ({ firstImageUrl, text,avatar,name,count,tags}) => {
         </div>
         
         <div > 
-          <Link to={`/userPage/${name}`}style={{color:"inherit",float: "left", textDecorationLine: "none"}}>
+          <Link to={`/userPage/${postId}`}style={{color:"inherit",float: "left", textDecorationLine: "none"}}>
             <img className="authorAvatar" src={avatar} alt="Image"/>
             <span >{name}</span>
           </Link>

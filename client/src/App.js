@@ -85,6 +85,7 @@ const App = () => {
               <Route path="/userPage/:name"   element={<UserPage/>}/>
               <Route path="/createPost"   element={<CreatePost/>}/>
               <Route path="/groups/post/editPost"   element={<EditPost/>}/>
+              <Route path="/explore/post/editPost/:postId"   element={<CreatePost/>}/>
 
               {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
 
