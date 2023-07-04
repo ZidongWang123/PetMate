@@ -23,7 +23,7 @@ import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
 import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
-
+import SignInWarning from "./components/Widget/ConfirmDialog/SignInWarning";
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
@@ -69,6 +69,7 @@ const App = () => {
               <Route path="/explore" element={<Explore />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/groups/:id" element={<SingleGroup1 />} />
+
               <Route path="/groups/create-group" element={<GroupForm />} />
               <Route path="/groups/post" element={<Post />} />
               <Route
@@ -81,10 +82,13 @@ const App = () => {
               <Route path="/personalInfo" element={<PersonalInfo />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/mygroups" element={<MyGroups />} />
-              <Route path="/userPage/:name"   element={<UserPage/>}/>
-              <Route path="/createPost"   element={<CreatePost/>}/>
-              <Route path="/groups/post/editPost"   element={<EditPost/>}/>
-              <Route path="/explore/post/editPost/:postId"   element={<CreatePost/>}/>
+              <Route path="/userPage/:name" element={<UserPage />} />
+              <Route path="/createPost" element={<CreatePost />} />
+              <Route path="/groups/post/editPost" element={<EditPost />} />
+              <Route
+                path="/explore/post/editPost/:postId"
+                element={<CreatePost />}
+              />
 
               {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
 
@@ -109,6 +113,7 @@ const App = () => {
               ) : (
                 <Route path="/explore" element={<Navigate to="/" />} />
               )}
+              <Route path="/warning" element={<SignInWarning />} />
             </Routes>
           </div>
           <Ads />
