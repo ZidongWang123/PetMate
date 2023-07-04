@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.js";
 
+import serviceRoutes from "./routes/service.js";
+import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
 
@@ -37,6 +39,7 @@ app.use("/explore", explorePost);
 
 app.use("/services", serviceRoutes);
 app.use("/events", eventRoutes);
+
 
 const PORT = 100;
 const CONNECTION_URL = process.env.CONNECTION_URL;
