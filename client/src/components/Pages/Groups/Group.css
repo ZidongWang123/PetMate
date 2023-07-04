@@ -48,15 +48,16 @@
 }
 .group-name {
   color: #393c7c;
-  font-size: 35px; /* 调整字体大小 */
+  font-size: 20px; /* 调整字体大小 */
   font-weight: bold; /* 加粗字体 */
   font-family: "Comic Sans MS";
 }
 .group-intro-text {
-  margin-top: 100px;
+  margin-top: 10px;
   margin-bottom: 8px;
   color: #3f3f3f;
   font-size: 15px;
+  width: 800px;
 }
 
 .tag {
