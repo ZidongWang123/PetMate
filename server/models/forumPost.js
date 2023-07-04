@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const forumPost = mongoose.Schema({
+const forumPostSchema = mongoose.Schema({
     title: String,
     message: String,
     name: String,
@@ -17,4 +17,4 @@ const forumPost = mongoose.Schema({
     },
 });
 
-export default mongoose.model('forumPost', postSchema);
+export default mongoose.model('forumPost', forumPostSchema);
