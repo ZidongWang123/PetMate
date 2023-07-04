@@ -28,6 +28,8 @@ export const createEvent = (newEvent) => API.post('/events', newEvent);
 export const updateEvent = (id, updatedEvent) => API.patch(`/events/${id}`, updatedEvent);
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
+//api for others
+
 //api for user
 //user login and register
 export const signIn = (formData) => API.post('/user/signin', formData);
