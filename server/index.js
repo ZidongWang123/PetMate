@@ -31,12 +31,11 @@ app.use((req, res, next) => {
 //connect the routes and app, which means the all requests with /user will be directed to the userRoutes
 app.use("/user", userRoutes);
 app.use("/api/groups", groupRoutes);
-<<<<<<< server/index.js
+
 app.use("/services", serviceRoutes);
 app.use("/events", eventRoutes);
 
 app.use("/explore",explorePost);
->>>>>>> server/index.js
 
 const PORT = 100;
 const CONNECTION_URL = process.env.CONNECTION_URL;
