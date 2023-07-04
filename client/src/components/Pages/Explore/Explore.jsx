@@ -11,9 +11,9 @@ const Explore = () => {
     <div>
       <div style={{display:"flex",alignItems: "flex-end"}}>
         <SearchBar/>
-        <Link to="/createPost">
-          <UniformButton width="150px" backgroundColor={orange} fontColor="white">create a post</UniformButton>
-        </Link>
+          <Link to="/createPost">
+            <UniformButton width="150px" backgroundColor={orange} fontColor="white">create a post</UniformButton>
+          </Link>
       </div>
 
       <PaneContainer/>
