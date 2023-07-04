@@ -2,10 +2,8 @@ import { Box, Avatar, Typography, Button } from "@mui/material";
 import React from "react";
 import { brightPurple } from "../../../../constant/actionTypes";
 
-const ActivityOverview = ({activityData, isLoading}) => {
+const ActivityOverview = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
-    const formattedStartDate = new Date(activityData.startDate).toLocaleDateString();
-    const formattedEndDate = new Date(activityData.endDate).toLocaleDateString();
 
     return (
         <>
@@ -17,8 +15,7 @@ const ActivityOverview = ({activityData, isLoading}) => {
                 boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.1)',
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
-                width: '300px',
-                backgroundColor: 'white',
+                width: '240px',
             }}>
                 <Box sx={{
                     display: 'flex',
@@ -38,26 +35,23 @@ const ActivityOverview = ({activityData, isLoading}) => {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     margin: '5px 0px 5px 15px',
-                    width: '70%',
+                    width: '60%',
                 }}>
                     <Typography variant="h6">
-                        Title: {activityData.title}
+                        title: ''
                     </Typography>
                     <Typography variant="h6">
-                        StartDate: {formattedStartDate}
+                        date: ''
                     </Typography>
                     <Typography variant="h6">
-                        EndDate: {formattedEndDate}
+                        city: ''
                     </Typography>
                     <Typography variant="h6">
-                        City: {activityData.city}
+                        location: ''
                     </Typography>
                     <Typography variant="h6">
-                        Location: {activityData.location}
+                        status: ''
                     </Typography>
-                   {/*  <Typography variant="h6">
-                        Status: {activityData.status}
-                    </Typography> */}
                     <Button
                         sx={{
                             width: '100%',

@@ -1,17 +1,18 @@
 import React from "react";
 import "./Single.css"; // 引入自定义的CSS样式文件
 import SearchBar from "./searchbarGroup";
-import Avatar from "@mui/material/Avatar";
+import SingleGroupDetail from "./SingleGroupDetail.jsx";
+
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 import { Link } from "react-router-dom";
 
 export const orange = "#F0A860";
 
 const ForumPost = ({ topic, date, author }) => (
-  <div className="forum-post">
+  <div className="single-forum-post">
     <Link to="/groups/post">{topic}</Link>
-    <div className="post-date">{date}</div>
-    <div className="post-author">{author}</div>
+    <div className="single-post-date">{date}</div>
+    <div className="single-post-author">{author}</div>
   </div>
 );
 
@@ -23,11 +24,11 @@ const Forum = () => {
   ];
 
   return (
-    <div className="forum">
-      <div className="forum-header">
-        <div className="header-topic">Topics</div>
-        <div className="header-date">Date</div>
-        <div className="header-author">Author</div>
+    <div className="single-forum">
+      <div className="single-forum-header">
+        <div className="single-header-topic">Topics</div>
+        <div className="single-header-date">Date</div>
+        <div className="single-header-author">Author</div>
       </div>
       {dummyData.map((data, index) => (
         <ForumPost
@@ -41,56 +42,14 @@ const Forum = () => {
   );
 };
 
-const GroupDetails = () => {
-  return (
-    <div className="group-details">
-      <div className="group-info">
-        <div className="group-first-row">
-          <div className="group-avatar">
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          </div>
-          <div className="group-text">
-            <div className="group-name-creater">
-              <span className="group-name">LargeDogMunich</span>
-              <span className="group-creater">Created by: Sarah</span>
-              <span className="group-createtime">On: May 27, 2023</span>
-              <span className="group-amount">Member: 100</span>
-              <p className="group-intro">
-                Here is a group specified for large dog. Let's share raising
-                experience, your story, and anything you can't wait to post with
-                everybody!
-              </p>
-              <div className="group-tags">
-                {/* 小组标签 */}
-                <span className="tag">#Munich</span>
-                <span className="tag">#LargeDog</span>
-                <span className="tag">#Bogenhausen</span>
-                <span className="tag">#Marienplatz</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="group-button">
-          <button className="joined-button" disabled>
-            Joined
-          </button>
-          <Link to="/groups/:id/create-post">
-            <button className="write-post-button">Write a Post</button>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const App = () => (
   <div>
-    <SearchBar /> {/* 将 SearchBar 放在一个容器中 */}
+    {/*  <SearchBar /> */}
+    {/* 将 SearchBar 放在一个容器中 */}
     {/* {posts.map((post, index) => (
       <Post key={index} title={post.title} content={post.content} />
     ))} */}
-    <GroupDetails />
+    <SingleGroupDetail />
     <Forum />
   </div>
 );

@@ -1,19 +1,10 @@
-import React, { useState } from "react";
-import { TextField, Grid } from "@mui/material";
-import { darkPurple } from "../../../constant/actionTypes";
+import { TextField } from "@mui/material";
+import { darkGray } from "../../../constant/actionTypes";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 
 const InputTextArea = ({ initialValue, onInputChange, onEmojiClick }) => {
-  /*  const [value, setValue] = useState(initialValue); */
-  /*  const addEmoji = (emoji) => () => {
-    setValue((prevValue) => `${prevValue}${emoji}`);
-  }; */
-  /*   const handleClick = (emoji) => () => {
-    setValue((prevValue) => `${prevValue}${emoji}`);
-    onEmojiClick(emoji);
-  }; */
   const handleChange = (event) => {
     const newValue = event.target.value;
 
@@ -42,10 +33,10 @@ const InputTextArea = ({ initialValue, onInputChange, onEmojiClick }) => {
       }}
       InputProps={{
         sx: {
-          fontFamily: "Comic Sans MS",
-          fontSize: "16px",
+          fontFamily: "'Ubuntu', sans-serif",
+          fontSize: "20px",
           fontWeight: "bold",
-          color: darkPurple,
+          color: darkGray,
         },
         endAdornment: (
           <InputAdornment position="end">

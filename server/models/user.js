@@ -1,25 +1,23 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-    id: { type: String },
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 
-    //default attributes
-    address: { type: String, default: '' },
-    intro: { type: String, default: '' },
-    plz: { type: String, default: '' },
-    avatar: { type: String, default: '' },
+  //default attributes
+  address: { type: String, default: "" },
+  intro: { type: String, default: "" },
+  plz: { type: String, default: "" },
+  avatar: { type: String, default: "" },
 
-    // is prime user status
-    isPrime: { type: Boolean, default: true }, // todo： add prime user status
+  // is prime user status
+  isPrime: { type: Boolean, default: true }, // todo： add prime user status
 
-    //member attributes
-    subscriptionId: { type: String },
-    startTime: { type: Date },
-    dueTime: { type: Date },
+  //member attributes
+  subscriptionId: { type: String },
+  startTime: { type: Date },
+  dueTime: { type: Date },
 });
 
-
-export default mongoose.model('User', userSchema);
+export default mongoose.model("User", userSchema);

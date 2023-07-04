@@ -1,0 +1,12 @@
+.fileContainer{
+    height:530px;
+    width:450px;
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    box-shadow:2px 2px 4px rgba(0, 0, 0, 0.2);
+    overflow:auto
+}
+.fileContainer::-webkit-scrollbar{
+    display: none;
+}

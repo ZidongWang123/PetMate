@@ -5,10 +5,10 @@ import "./PostDetailWindow.css"
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { WidthFull } from "@mui/icons-material";
-import HeartIcon from "./HeartIcon";
+import HeartIcon from "../widget/HeartIcon";
 import { Link, useNavigate } from 'react-router-dom';
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-export default function PostDetailWindow({isOpen,onClose,picture,text,avatar,name,count,tags}){
+import { faEdit,faTrash } from '@fortawesome/free-solid-svg-icons'
+export default function PostDetailWindow({postId,isOpen,onClose,picture,text,avatar,name,count,tags}){
     const authName="licxzc";
     const handleDragStart = (e) => e.preventDefault();
     const pictures=[picture,picture,picture,picture]
@@ -33,12 +33,11 @@ export default function PostDetailWindow({isOpen,onClose,picture,text,avatar,nam
       const delta = event.deltaY;
       divRef.current.scrollTop += delta;
     };
-
+    
     const handleLink=(param)=>{
         
         const queryParams = new URLSearchParams();
         queryParams.append('keyword', param);
-        console.log(param)
         // 导航到目标页面
         const path = '/explore';
         const url = `${path}?${queryParams.toString()}`;
@@ -104,7 +103,14 @@ export default function PostDetailWindow({isOpen,onClose,picture,text,avatar,nam
                     <HeartIcon postID={5} count={count}/>
                 </span>
                 <span style={{float:"right"}}>
-                    {name===authName&&<FontAwesomeIcon className="clickIcon" icon={faTrash} onClick={deletePost}> </FontAwesomeIcon>}
+                {name===authName&&
+                <Link to={`/explore/post/editPost/${postId}`}>
+                    <FontAwesomeIcon className="clickIcon" icon={faEdit} > </FontAwesomeIcon>
+                </Link>
+                }
+                {name===authName&&<FontAwesomeIcon className="clickIcon" icon={faTrash} onClick={deletePost} color="black"> </FontAwesomeIcon>}
+
+
                 </span>
             </div>
         </div>

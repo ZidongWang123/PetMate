@@ -84,3 +84,7 @@
     filter: brightness(0.8);
 
   }
+  .clickIcon{
+    margin-right: 5px;
+    margin-left: 5px;
+  }
