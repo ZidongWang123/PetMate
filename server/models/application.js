@@ -5,6 +5,4 @@ const applicationSchema = mongoose.Schema({
     isApproved: { type: Boolean },
     introduction: { type: String },
 
-    userId: { type: String },
-    activityId: { type: String },
-});
+}, {timestamps: true});

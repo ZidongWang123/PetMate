@@ -1,7 +1,7 @@
-import PaneContainer from "./PaneContainer";
+import PaneContainer from "../PaneContainer/PaneContainer";
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import avatar from "../../../images/avatar.jpg"
+import avatar from "../../../../images/avatar.jpg"
 import "./UserPage.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +18,7 @@ export default function UserPage(){
         
         // todo...
         
-        setProfil({avatar:avatar,name:"wang" ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
+        setProfil({avatar:avatar,name:name ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
 },[])
 
 

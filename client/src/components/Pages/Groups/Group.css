@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-/* groups */
-/* group-preview/ list */
+@import url("https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu");
+
 .group-list {
   margin-top: 20px;
+  font-family: "Ubuntu";
 }
 .group-preview {
   display: flex;
@@ -12,16 +12,13 @@
   margin-left: 0px;
   border-bottom: 1px solid #fafafa;
   width: 90%;
-  /*  margin-top: 100px; */
+  text-decoration: none;
 }
+
 .group-preview:hover {
+  border-radius: 50px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-/* .group-preview {
-  padding: 10px;
-  margin: 10px 0;
-  border-bottom: 1px solid #fafafa;
-} */
 
 .group-avatar {
   margin-right: 20px;
@@ -31,39 +28,35 @@
   height: 60px;
 }
 
-.group-text-review {
-  flex-grow: 1;
-  width: 70%;
-  margin-right: 30px;
-}
-
 .group-first-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 
 .group-first-row p {
+  color: #999999;
   margin-right: 0px;
 }
-.group-first-row .group-creater {
-  margin-right: 300px; /* 调整第二个元素的左边距 */
-}
+.group-creater {
+  margin-right: 1000px;
+} /* 调整第二个元素的左边距 */
+
 .group-first-row .group-amount {
   margin-right: 20px;
-  color: #999999;
 }
-
 .group-name {
   color: #393c7c;
-  font-size: 20px; /* 调整字体大小 */
+  font-size: 35px; /* 调整字体大小 */
   font-weight: bold; /* 加粗字体 */
+  font-family: "Comic Sans MS";
 }
 .group-intro-text {
-  margin-top: -5px;
+  margin-top: 100px;
   margin-bottom: 8px;
-  color: #666666;
+  color: #3f3f3f;
+  font-size: 15px;
 }
 
 .tag {
@@ -71,20 +64,26 @@
   margin-right: 12px;
   padding: 4px 0px;
   color: #ff8000;
+  font-family: "Comic Sans MS";
 }
 
-.group-button {
+.grouplist-button {
   padding: 8px 16px; /* 上下宽一点的内边距 */
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
-  border-radius: 8px; /* 圆角 */
+
   background-color: transparent; /* 背景色透明 */
   color: #393c7c;
-  border-color: #393c7c;
+
   cursor: pointer;
+  font-family: "Gloria Hallelujah", cursive;
+  border-radius: 50px;
+
+  border-color: transparent;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-.group-button:hover {
+.grouplist-button:hover {
   /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
-  background-color: #393c7c;
+  background-color: #f0a860;
   color: #fafafa;
 }
