@@ -1,5 +1,6 @@
 import React, {useEffect,useState} from "react";
 //import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 import "./CreatePost.css"
 import { darkPurple, orange,darkGray } from "../../../../constant/actionTypes";
 import InputField from "../widget/InputField";
