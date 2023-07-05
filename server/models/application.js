@@ -5,4 +5,8 @@ const applicationSchema = mongoose.Schema({
     isApproved: { type: Boolean },
     introduction: { type: String },
 
-}, {timestamps: true});
+    userId: { type: String },
+    activityId: { type: String },
+});
+
+export default mongoose.model('application', applicationSchema);
