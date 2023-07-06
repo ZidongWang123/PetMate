@@ -10,44 +10,7 @@ const PaneItem = ({ postId="3jahkjd2198323",firstImageUrl, text,avatar,name,coun
 
   const handleImgClick=(event)=>{
     setIsModalOpen(true);
-    //get the relative location of the image clicked on to the view window
-  //   setWindowStyle(
-  //     {
-  //       position: "fixed",
-  //       backgroundColor: "rgba(245, 242, 236,0.98)",
-  //       display: "flex",
-  //       justifyContent: "center", /* 水平居中 */
-  //       alignItems: "center",
-        
-  //       left:`${location.left}px`,
-  //       top:`${location.top}px`,
-  //       right:`${location.right}px`,
-  //       bottom:`${location.bottom}px`,
-  //       // width:"100%",
-  //       // height:"100%",
-  //       opacity:1,
-  //       transitionProperty: "width,height, opacity",
-  //       transitionDuration: "3s",
-  //       transform: "scale(0.5)"
-  //     }
-  //   )
-  // //   requestAnimationFrame(() => {
-  // //     setWindowStyle({
-  // //       position: "fixed",
-  // //       backgroundColor: "rgba(245, 242, 236,0.98)",
-  // //       display: "flex",
-  // //       justifyContent: "center", /* 水平居中 */
-  // //       alignItems: "center",
-  // //       left: 0,
-  // //       top: 0,
-  // //       width: "100%",
-  // //       height: "100%",
-  // //       opacity: "1",
-  // //       transitionProperty: "width,height, opacity",
-  // //       transitionDuration: "3s",
 
-  // //     });
-  // //   })
   }
   const closeModal = () => {
     setIsModalOpen(false);

@@ -1,23 +1,25 @@
 import mongoose from "mongoose";
 import  forumPostSchema from "./forumPost.js";
+import User from "./user.js"
 
 const explorePostSchema = new mongoose.Schema({
+  creator:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User"
+  },
   title: String,
-  message: String,
-  name: String,
-  creator: String,
-  tags: [String],
-  selectedFile: String,
-  likes: {
-      type: [String],
-      default: []
-  },
+  text: String,
+  tags: String,
+  likes: 
+      [{type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'}],
+  
   createdAt: {
-      type: Date,
-      default: new Date()
+      type: Number,
+      default: Date.now()
   },
-  id:{type:String,required:true},
-  pictures:{type:[],required:true,default:[]}
+  pictures:{type:[],required:true,default:[]},
 });
 
-export default mongoose.model("explorePost", explorePostSchema);
+
+export default mongoose.model("ExplorePost", explorePostSchema);

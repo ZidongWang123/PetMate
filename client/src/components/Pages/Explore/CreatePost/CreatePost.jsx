@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from "react";
-// import ImageUploader from 'react-images-upload';
+import ImageUploader from 'react-images-upload';
 import "./CreatePost.css"
 import { darkPurple, orange,darkGray } from "../../../../constant/actionTypes";
 import InputField from "../widget/InputField";
@@ -8,19 +8,25 @@ import { Link, useNavigate,useParams } from 'react-router-dom';
 import dog1 from "../../../../images/dog1.jpg"
 import dog2 from "../../../../images/dog2.jpg"
 import dog3 from "../../../../images/dog3.jpg" 
-
+import * as apis from "../../../../api";
+import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg.jsx"
 
 
 export default function CreatePost(){
 
+    
+    const user = JSON.parse(localStorage.getItem('profile'));
     const{postId} = useParams();
-    console.log(postId)
-
     const [pictures,setPictures]=useState([])
     const [title,setTitle]=useState("")
     const [text,setText]=useState("")
     const [tags,setTags]=useState([])
     const navigate=useNavigate()
+    const [isFeedbackMsg,setIsFeedbackMsg]=useState(false)
+    const [FeedbackMsg,setFeedbackMsg]=useState("")
+    const handelFeedbackMsgConfirm_=()=>{
+        setIsFeedbackMsg(true)
+    }
 
     const handleTitleChange=(value)=>{
         setTitle(value)
@@ -38,11 +44,27 @@ export default function CreatePost(){
     const onDelete=(pictureFiles, pictureDataURLs)=> {
         setPictures(pictureDataURLs)
     }
-    const onSubmit=()=>{
-        // send the post to the database
-        // {todo}
+    const onSubmit=async()=>{
+        try{
 
-        //
+            const res=await apis.createExplorePost({title,text,tags,pictures,creator:user._id})
+            if(res.status=200){
+                setFeedbackMsg(res.data.message)
+                navigate("/")
+            }
+            else if(res.status=500){
+                setFeedbackMsg(res.data.message)
+            }
+            else{
+                setFeedbackMsg("Unknown error, try again")
+            }
+            
+        }catch(error){
+             // todo //
+             setFeedbackMsg("Unknown error, try again")
+        }
+
+        
     }
 
     const onCancel=()=>{
@@ -81,7 +103,7 @@ export default function CreatePost(){
                 margin:"10px 0",
                 color:darkPurple
                 }}>{"Pictures:"}</h2>
-                {/* <ImageUploader
+                <ImageUploader
                 withIcon={false}
                 buttonText='Choose images'
                 withPreview={true}
@@ -93,7 +115,7 @@ export default function CreatePost(){
                 imgExtension={['.jpg', '.gif', '.png', '.gif',"jpeg"]}
                 maxFileSize={524288000}
                 defaultImages={pictures}
-                /> */}
+                />
                 <div style={{display:"flex",float:"right"}}> 
                     <UniformButton width="100px"  backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
                     <UniformButton width="100px"  backgroundColor={orange} fontColor="white" onClick={onSubmit}>

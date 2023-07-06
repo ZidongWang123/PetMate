@@ -11,8 +11,6 @@ import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
 
-import serviceRoutes from "./routes/service.js";
-import eventRoutes from "./routes/event.js";
 
 //create an instance of express
 const app = express();

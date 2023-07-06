@@ -6,8 +6,9 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { Dayjs } from 'dayjs';
+import { modifyPofil } from "../../../api";
 
-export default function DateItem({attribute,title,onConfirmChange}){
+export default function DateItem({attribute,userId,title,onConfirmChange}){
 
 
     const normTitle=title.charAt(0).toUpperCase() + title.slice(1)
@@ -15,9 +16,19 @@ export default function DateItem({attribute,title,onConfirmChange}){
     const[isEdit,setIsEdit]=React.useState(false)
 
 
-    const handleConfirmClick = () => {
-        onConfirmChange(title,currentValue.format("MM-DD-YYYY"))
-        setIsEdit(false);
+    const handleConfirmClick = async() => {
+
+        try{
+            const res=await modifyPofil(`/user/modify/${userId}`,{[title]:currentValue.toDate()})
+            if(res.status===200){
+                setIsEdit(false);
+                onConfirmChange(title,currentValue.toDate())
+            }
+        }catch(error){
+
+        }
+        
+        
 
         //update the data in the database
 
@@ -51,7 +62,7 @@ export default function DateItem({attribute,title,onConfirmChange}){
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker 
                         onChange={(newValue) => setCurrentValue(newValue)}
-                        value={currentValue}
+                        value={null}
                         slotProps={{textField:{InputProps:{style:{padding:"0px",width:"100px"}},variant:"standard"}}}
                     />
                 </LocalizationProvider>:
@@ -60,7 +71,7 @@ export default function DateItem({attribute,title,onConfirmChange}){
                     fontSize: '15px', // 设置字体大小
                     fontWeight: 'bold', // 设置字体粗细}
                 }}>
-                    {attribute}
+                    {dayjs(attribute).format("MM-DD-YYYY")}
                 </span>}
                 <div style={{marginLeft:"auto",marginRight:"20px",display:"flex" }}>
                     {!isEdit?

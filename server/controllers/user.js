@@ -72,3 +72,21 @@ export const signup = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+
+
+
+export const modifyProfil=async(req,res)=>{
+  const userId = req.params.userId;
+  const updatedInfo = req.body;
+  try{
+    await User.findByIdAndUpdate(userId, updatedInfo)
+    res.status(200).json(res.json({ message: 'successfully updated' }))
+
+  }catch(error){
+    res.status(500).json({ message: 'Failed to update user' });
+  }
+  
+
+
+}

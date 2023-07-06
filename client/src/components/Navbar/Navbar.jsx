@@ -30,7 +30,7 @@ const settings = ['Personal Info', 'My posts', 'My groups', 'My events', 'My ser
 const myService = ['Applied Services', 'Created Services'];
 const myEvent = ['Applied Events', 'Created Events'];
 
-function Navbar({handleSecNavbar}) {
+function Navbar({ handleSecNavbar }) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -44,7 +44,7 @@ function Navbar({handleSecNavbar}) {
         setActiveButton(page);
         localStorage.setItem('ActiveButton', page);
         navigate(`/${page.toLowerCase()}`);
-        handleSecNavbar([],'');
+        handleSecNavbar([], '');
     };
 
     const handleOpenNavMenu = (event) => {
@@ -60,19 +60,17 @@ function Navbar({handleSecNavbar}) {
     };
 
     const handleCloseUserMenu = (setting) => {
-        setActiveButton(null);
-        localStorage.setItem('ActiveButton', null);
-        if (typeof setting === 'string' && (setting !== 'My services' || setting !== 'My events')) {
+        if (typeof setting === 'string' && setting !== 'My services' && setting !== 'My events' && setting !== 'Logout') {
             navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
         }
         setAnchorElUser(null);
 
-        if(setting === 'My services') {
+        if (setting === 'My services') {
             handleSecNavbar(myService, 'My services');
             navigate(`/appliedservices`);
         }
 
-        if(setting === 'My events') {
+        if (setting === 'My events') {
             handleSecNavbar(myEvent, 'My events');
             navigate(`/appliedevents`);
         }
@@ -118,7 +116,7 @@ function Navbar({handleSecNavbar}) {
     }, [location]);
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: paleYellow, borderBottom:'1px solid gray' }}>
+        <AppBar position="static" sx={{ backgroundColor: paleYellow, borderBottom: '1px solid gray' }}>
             <Container maxWidth="xxl" className="container">
                 <Toolbar disableGutters={true}>
 
@@ -287,7 +285,6 @@ function Navbar({handleSecNavbar}) {
                                                     dialogColor='#6f0000'
                                                     buttonColor='red'
                                                     onConfirm={logout}
-
                                                 />) : (
                                                 < Typography sx={{
                                                     fontFamily: 'Comic Sans MS',
