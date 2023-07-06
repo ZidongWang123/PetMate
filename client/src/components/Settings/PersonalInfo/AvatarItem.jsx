@@ -64,7 +64,7 @@ export default function AvatarItem({attribute,title,onConfirmChange}){
                 </h4>
                 <Avatar
                     src={attribute}
-                    style={{ width: "50px", height: "auto" }}
+                    style={{ width: "50px", height: "50px" }}
                 />
                 <Modal
                     slotProps={{

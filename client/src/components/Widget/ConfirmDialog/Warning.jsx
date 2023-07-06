@@ -12,25 +12,24 @@ import { darkPurple, orange, brightGreen } from "../../../constant/actionTypes";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { useNavigate } from "react-router-dom";
 
-export default function ConfirmDialog({ text, pic, page }) {
-  const navigate = useNavigate();
-  const [open, setOpen] = React.useState(true);
+export default function ConfirmDialog({ text, pic, page ,isOpen,onConfirm,onCancel}) {
 
-  const handleClose = () => {
-    setOpen(false);
-    navigate(-1);
-  };
 
-  const handleCancel = async () => {
-    //await onCancel();
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   navigate(-1);
+  // };
+
+  // const handleCancel = async () => {
+  //   //await onCancel();
+  //   setOpen(false);
+  // };
 
   return (
     <div>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={onCancel}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -54,13 +53,13 @@ export default function ConfirmDialog({ text, pic, page }) {
             >
               {text}
             </DialogContentText>
-            <img src={pic} alt="Image" className="signin-image" />
+            <img src={pic}  alt="Image" className="signin-image" />
           </Box>
         </DialogContent>
         <DialogActions>
-          <Link to="/groups">
+      
             <Button
-              onClick={handleCancel}
+              onClick={onCancel}
               sx={{
                 fontWeight: "bold",
                 textTransform: "none",
@@ -71,10 +70,10 @@ export default function ConfirmDialog({ text, pic, page }) {
             >
               Cancel
             </Button>
-          </Link>
-          <Link to={page}>
+
+  
             <Button
-              onClick={handleCancel}
+              onClick={onConfirm}
               autoFocus
               sx={{
                 fontWeight: "bold",
@@ -86,7 +85,7 @@ export default function ConfirmDialog({ text, pic, page }) {
             >
               Sure
             </Button>
-          </Link>
+      
         </DialogActions>
       </Dialog>
     </div>

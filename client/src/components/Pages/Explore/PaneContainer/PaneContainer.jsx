@@ -7,7 +7,7 @@ import dog2 from "../../../../images/dog2.jpg"
 import dog3 from "../../../../images/dog3.jpg"
 import dog4 from "../../../../images/dog4.jpeg"
 import dog5 from "../../../../images/dog5.jpeg"
-const PaneContainer = () => {
+const PaneContainer = ({userId}) => {
     
     const [posts,setPosts]= React.useState([[
       // request data from backend and initialize the four columns

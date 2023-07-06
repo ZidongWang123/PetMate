@@ -11,14 +11,14 @@ import { fontSize } from "@mui/system";
 
 
 export default function UserPage(){
-    const{name} = useParams();
+    const{userId} = useParams();
     const [profil,setProfil]=useState([])
     useEffect(()=>{
         // request profil data here and set the variable profil
         
         // todo...
         
-        setProfil({avatar:avatar,name:name ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
+        setProfil({avatar:avatar,name:userId ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
 },[])
 
 
@@ -44,7 +44,7 @@ export default function UserPage(){
             </div>
 
 
-          <PaneContainer></PaneContainer>
+          <PaneContainer userId={userId}></PaneContainer>
         </div>
     )
 }
