@@ -243,7 +243,10 @@ function Navbar({handleSecNavbar}) {
                                 />
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, marginLeft: '20px' }}>
-                                        <Avatar alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
+                                        { user.result.avatar ? 
+                                        (<Avatar src={user.result.avatar} />) : 
+                                        (<Avatar src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>)}
+                                        {/* todo: show the avatar not the name of user */}
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
