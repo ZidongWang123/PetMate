@@ -1,5 +1,8 @@
 import React, {useEffect,useState} from "react";
-import ImageUploader from 'react-images-upload';
+
+//import ImageUploader from 'react-images-upload';
+
+
 import "./CreatePost.css"
 import { darkPurple, orange,darkGray } from "../../../../constant/actionTypes";
 import InputField from "../widget/InputField";
@@ -103,7 +106,7 @@ export default function CreatePost(){
                 margin:"10px 0",
                 color:darkPurple
                 }}>{"Pictures:"}</h2>
-                <ImageUploader
+                {/* <ImageUploader
                 withIcon={false}
                 buttonText='Choose images'
                 withPreview={true}
@@ -115,7 +118,7 @@ export default function CreatePost(){
                 imgExtension={['.jpg', '.gif', '.png', '.gif',"jpeg"]}
                 maxFileSize={524288000}
                 defaultImages={pictures}
-                />
+                /> */}
                 <div style={{display:"flex",float:"right"}}> 
                     <UniformButton width="100px"  backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
                     <UniformButton width="100px"  backgroundColor={orange} fontColor="white" onClick={onSubmit}>
