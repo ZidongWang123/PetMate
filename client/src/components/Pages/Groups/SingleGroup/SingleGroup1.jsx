@@ -5,6 +5,7 @@ import SingleGroupDetail from "./SingleGroupDetail.jsx";
 
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 import { Link } from "react-router-dom";
+import SignInWarning from "../../../Widget/ConfirmDialog/SignInWarning";
 
 export const orange = "#F0A860";
 
@@ -42,16 +43,30 @@ const Forum = () => {
   );
 };
 
-const App = () => (
-  <div>
-    {/*  <SearchBar /> */}
-    {/* 将 SearchBar 放在一个容器中 */}
-    {/* {posts.map((post, index) => (
-      <Post key={index} title={post.title} content={post.content} />
-    ))} */}
-    <SingleGroupDetail />
-    <Forum />
-  </div>
-);
+const SignleGroup1 = () => {
+  const user = JSON.parse(localStorage.getItem("profile"));
 
-export default App;
+  if (!user) {
+    return <SignInWarning />;
+  }
+  return (
+    <div>
+      <SingleGroupDetail />
+      <Forum />
+    </div>
+  );
+
+  {
+    /*  <SearchBar /> */
+  }
+  {
+    /* 将 SearchBar 放在一个容器中 */
+  }
+  {
+    /* {posts.map((post, index) => (
+      <Post key={index} title={post.title} content={post.content} />
+    ))} */
+  }
+};
+
+export default SignleGroup1;

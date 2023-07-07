@@ -18,6 +18,13 @@ export const FETCH_POST = 'FETCH_POST';
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
 
+export const FETCH_ALLGROUPS = "FETCH_ALLGROUPS";
+export const FETCH_MY_GROUPS = "FETCH_MY_GROUPS";
+export const CREATE_GROUP = "CREATE_GROUP";
+export const UPDATE_GROUP = "UPDATE_GROUP";
+export const DELETE_GROUP = "DELETE_GROUP";
+export const JOIN_GROUP = "JOIN_GROUP";
+
 //font color and background color
 export const paleYellow = "rgb(245, 242, 236)";
 export const darkPurple = "#393c7c";

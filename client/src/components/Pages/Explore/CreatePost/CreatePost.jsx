@@ -1,124 +1,115 @@
-import React, {useEffect,useState} from "react";
-
-//import ImageUploader from 'react-images-upload';
-
-
-import "./CreatePost.css"
-import { darkPurple, orange,darkGray } from "../../../../constant/actionTypes";
+import React, { useEffect, useState } from "react";
+/* import ImageUploader from "react-images-upload"; */
+import "./CreatePost.css";
+import { darkPurple, orange } from "../../../../constant/actionTypes";
 import InputField from "../widget/InputField";
 import UniformButton from "../widget/UniformButton";
-import { Link, useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import dog1 from "../../../../images/dog1.jpg"
 import dog2 from "../../../../images/dog2.jpg"
-import dog3 from "../../../../images/dog3.jpg" 
+import dog3 from "../../../../images/dog3.jpg"
 import * as apis from "../../../../api";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg.jsx"
+const severityOptions = { success: "success", failure: "error" }
 
 
+export default function CreatePost() {
 
-const severityOptions={success:"success",failure:"error"}
 
-
-export default function CreatePost(){
-
-    
     const user = JSON.parse(localStorage.getItem('profile'));
-    const{postId} = useParams();
-    const [pictures,setPictures]=useState([])
-    const [title,setTitle]=useState("")
-    const [text,setText]=useState("")
-    const [tags,setTags]=useState([])
-    const navigate=useNavigate()
-    const [isFeedbackMsg,setIsFeedbackMsg]=useState(false)
-    const [Msg,setMsg]=useState("")
-    const [severity,setSeverity]=useState("")
+    const { postId } = useParams();
+    const [pictures, setPictures] = useState([])
+    const [title, setTitle] = useState("")
+    const [text, setText] = useState("")
+    const [tags, setTags] = useState([])
+    const navigate = useNavigate()
+    const [isFeedbackMsg, setIsFeedbackMsg] = useState(false)
+    const [Msg, setMsg] = useState("")
+    const [severity, setSeverity] = useState("")
 
 
-    const handleTitleChange=(value)=>{
+    const handleTitleChange = (value) => {
         setTitle(value)
     }
-    const handleTextChange=(value)=>{
+    const handleTextChange = (value) => {
         setText(value)
     }
-    const handleTagsChange=(value)=>{
+    const handleTagsChange = (value) => {
         setTags(value)
     }
-    const onDrop=(pictureFiles, pictureDataURLs)=> {
+    const onDrop = (pictureFiles, pictureDataURLs) => {
         setPictures(pictureDataURLs)
 
     }
-    const onDelete=(pictureFiles, pictureDataURLs)=> {
+    const onDelete = (pictureFiles, pictureDataURLs) => {
         setPictures(pictureDataURLs)
     }
-    const handelfeebackMsgClose=()=>{
+    const handelfeebackMsgClose = () => {
         setIsFeedbackMsg(false)
 
     }
-    const onSubmit=async()=>{
-        try{
+    const onSubmit = async () => {
+        try {
 
-            const res=await apis.createExplorePost({title,text,tags,pictures,creator:user._id})
-            if(res.status=200){
+            const res = await apis.createExplorePost({ title, text, tags, pictures, creator: user._id })
+            if (res.status = 200) {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
-                
+
                 navigate("/")
             }
-            else if(res.status=500){
+            else if (res.status = 500) {
                 setMsg(res.data.message)
                 setSeverity(severityOptions.failure)
             }
-            else{
+            else {
                 setSeverity(severityOptions.failure)
                 setMsg("Unknown error, try again")
             }
             setIsFeedbackMsg(true)
-            
-        }catch(error){
-             // todo //
-             setSeverity(severityOptions.failure)
-             setMsg("Unknown error, try again")
-             setIsFeedbackMsg(true)
+
+        } catch (error) {
+            setSeverity(severityOptions.failure)
+            setMsg("Unknown error, try again")
+            setIsFeedbackMsg(true)
         }
 
-        
+
     }
 
-    const onCancel=()=>{
+    const onCancel = () => {
         // 导航到目标页面
-        const url = '/explore';
+        const url = "/explore";
         navigate(url);
-
-    }
-    useEffect(()=>{
-        if(postId){
+    };
+    useEffect(() => {
+        if (postId) {
             /* *****************************************
-                request post data according to postId 
-
-                then set all states
-
-            ******************************************/
-        setTitle("this is a title")
-        setTags(["tag1","tag2","tag3"])
-        setText("This is a text")
-        setPictures([dog1,dog2,dog3])
+                      request post data according to postId 
+      
+                      then set all states
+      
+                  ******************************************/
+            setTitle("this is a title");
+            setTags(["tag1", "tag2", "tag3"]);
+            setText("This is a text");
+            setPictures([dog1, dog2, dog3]);
         }
-
-    },[])
+    }, []);
 
     return (
-        <div style={{display:"flex"}}> 
-            
-            <div style={{marginRight:"50px" }}>
+        <div style={{ display: "flex" }}>
+
+            <div style={{ marginRight: "50px" }}>
                 <InputField title="Title:" value={title} isMultiline={false} height="default" onInputChange={handleTitleChange}></InputField>
                 <InputField title="Text:" value={text} isMultiline={true} height="350px" onInputChange={handleTextChange}></InputField>
                 <InputField title="Tags:" isMultiline={false} height="default" onInputChange={handleTagsChange}></InputField>
             </div>
             <div>
                 <h2 style={{
-                fontFamily:"Comic Sans MS",
-                margin:"10px 0",
-                color:darkPurple
+                    fontFamily: "Comic Sans MS",
+                    margin: "10px 0",
+                    color: darkPurple
                 }}>{"Pictures:"}</h2>
                 {/* <ImageUploader
                 withIcon={false}
@@ -133,16 +124,16 @@ export default function CreatePost(){
                 maxFileSize={524288000}
                 defaultImages={pictures}
                 /> */}
-                <div style={{display:"flex",float:"right"}}> 
-                    <UniformButton width="100px"  backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
-                    <UniformButton width="100px"  backgroundColor={orange} fontColor="white" onClick={onSubmit}>
-                        {postId?"confirm":"post"}
+                <div style={{ display: "flex", float: "right" }}>
+                    <UniformButton width="100px" backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
+                    <UniformButton width="100px" backgroundColor={orange} fontColor="white" onClick={onSubmit}>
+                        {postId ? "confirm" : "post"}
                     </UniformButton>
                 </div>
 
             </div>
             <FeedbackMsg status={isFeedbackMsg} severity={severity} message={Msg} onClose={handelfeebackMsgClose}></FeedbackMsg>
 
-        </div>     
+        </div>
     );
 }

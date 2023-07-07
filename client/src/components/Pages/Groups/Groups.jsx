@@ -1,44 +1,42 @@
-import React, { useEffect, useState } from "react";
-import GroupList from "./GroupList";
+import React from "react";
+
 import SearchBar from "../../Widget/SearchBar/SearchBar";
-import { useWorkoutsContext } from "../../../hooks/useWorkoutsContext";
 
 import GroupCreateButton from "./GroupCreateButton";
 import { Link } from "react-router-dom";
 import "./Group.css";
+import { useDispatch } from "react-redux";
+import { getGroups } from "../../../actions/group";
+
+import { useSelector } from "react-redux";
+import GroupList from "./GroupList";
 
 const Groups = () => {
-  const { workouts: groups, dispatch } = useWorkoutsContext();
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    const fetchGroups = async () => {
-      const response = await fetch("http://localhost:100/api/groups");
-      const json = await response.json();
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
-        setIsLoading(false);
-      }
-    };
-    fetchGroups();
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getGroups());
   }, [dispatch]);
-  useEffect(() => {
-    console.log(groups);
-  }, [groups]);
+  const { groups, joined } = useSelector((state) => state.groups);
 
   return (
     <div className="groups">
       <div style={{ display: "flex", alignItems: "center" }}>
         <SearchBar />
-        <Link to="/groups/create-group">
+        <Link to={user ? "/groups/create-group" : "/warning"}>
           <GroupCreateButton />
         </Link>
       </div>
       <div className="group-list">
-        {!isLoading &&
-          groups.map((group) => <GroupList key={group._id} group={group} />)}
+        {Array.isArray(groups) ? (
+          groups.map((group) => (
+            <GroupList key={group._id} group={group} isjoined={joined} />
+          ))
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </div>
   );

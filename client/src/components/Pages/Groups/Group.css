@@ -3,15 +3,19 @@
 .group-list {
   margin-top: 20px;
   font-family: "Ubuntu";
+
+  flex-wrap: wrap;
 }
 .group-preview {
   display: flex;
+  position: relative;
   align-items: center;
-  padding: 10px 10px;
+  padding-left: 50px;
+  padding-top: 20px;
   margin: 10px 0;
-  margin-left: 0px;
+  margin-left: 30px;
   border-bottom: 1px solid #fafafa;
-  width: 90%;
+  width: 715px;
   text-decoration: none;
 }
 
@@ -20,46 +24,53 @@
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
-.group-avatar {
+.group-preview .group-avatar {
+  display: flex;
+  align-items: center;
   margin-right: 20px;
 }
-.group-avatar .MuiAvatar-root {
+.group-preview .group-avatar .MuiAvatar-root {
   width: 60px;
   height: 60px;
 }
 
-.group-first-row {
+.group-preview .group-first-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.group-first-row p {
+.group-preview .group-first-row p {
+  width: 70%;
   color: #999999;
-  margin-right: 0px;
 }
-.group-creater {
-  margin-right: 1000px;
+.group-preview .group-creater {
+  /* margin-right: 100px; */
+  white-space: nowrap;
+  margin-right: 50px;
+  /* margin-left: 100px; */
 } /* 调整第二个元素的左边距 */
 
-.group-first-row .group-amount {
-  margin-right: 20px;
+.group-preview .group-first-row .group-amount {
+  /* margin-right: 20px; */
+  padding-right: 50px;
 }
-.group-name {
+.group-preview .group-name {
+  display: flex;
+  align-items: center;
   color: #393c7c;
-  font-size: 35px; /* 调整字体大小 */
+  font-size: 20px; /* 调整字体大小 */
   font-weight: bold; /* 加粗字体 */
   font-family: "Comic Sans MS";
 }
-.group-intro-text {
-  margin-top: 100px;
+.group-preview .group-intro-text {
+  margin-top: 10px;
   margin-bottom: 8px;
   color: #3f3f3f;
   font-size: 15px;
 }
 
-.tag {
+.group-preview .tag {
   display: inline-block;
   margin-right: 12px;
   padding: 4px 0px;
@@ -67,14 +78,18 @@
   font-family: "Comic Sans MS";
 }
 
-.grouplist-button {
+.group-preview .grouplist-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
   padding: 8px 16px; /* 上下宽一点的内边距 */
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
 
   background-color: transparent; /* 背景色透明 */
   color: #393c7c;
-
+  width: 100px;
   cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
   border-radius: 50px;
@@ -82,7 +97,7 @@
   border-color: transparent;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-.grouplist-button:hover {
+.group-preview .grouplist-button:hover {
   /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
   background-color: #f0a860;
   color: #fafafa;
