@@ -6,7 +6,7 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { Dayjs } from 'dayjs';
-import { modifyPofil } from "../../../api";
+import { modifyPersonalInfo } from "../../../api";
 
 export default function DateItem({attribute,userId,title,onConfirmChange}){
 
@@ -19,13 +19,13 @@ export default function DateItem({attribute,userId,title,onConfirmChange}){
     const handleConfirmClick = async() => {
 
         try{
-            const res=await modifyPofil(`/user/modify/${userId}`,{[title]:currentValue.toDate()})
+            const res=await modifyPersonalInfo(userId,{[title]:currentValue.toDate()})
             if(res.status===200){
                 setIsEdit(false);
                 onConfirmChange(title,currentValue.toDate())
             }
         }catch(error){
-
+   
         }
         
         
@@ -62,7 +62,7 @@ export default function DateItem({attribute,userId,title,onConfirmChange}){
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker 
                         onChange={(newValue) => setCurrentValue(newValue)}
-                        value={null}
+                        value={currentValue}
                         slotProps={{textField:{InputProps:{style:{padding:"0px",width:"100px"}},variant:"standard"}}}
                     />
                 </LocalizationProvider>:
@@ -71,7 +71,7 @@ export default function DateItem({attribute,userId,title,onConfirmChange}){
                     fontSize: '15px', // 设置字体大小
                     fontWeight: 'bold', // 设置字体粗细}
                 }}>
-                    {dayjs(attribute).format("MM-DD-YYYY")}
+                    {attribute&&dayjs(attribute).format("MM-DD-YYYY")}
                 </span>}
                 <div style={{marginLeft:"auto",marginRight:"20px",display:"flex" }}>
                     {!isEdit?

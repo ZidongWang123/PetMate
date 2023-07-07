@@ -36,4 +36,5 @@ export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 
 export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost)
-export const modifyPofil=(id,data)=>API.put(`/user/modify/${id}`,data)
+export const modifyPersonalInfo=(id,data)=>API.put(`/user/modifyPersonalInfo/${id}`,data)
+export const getPersonalInfo=(id)=>API.get(`/user/getPersonalInfo/${id}`)

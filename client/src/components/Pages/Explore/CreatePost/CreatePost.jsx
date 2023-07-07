@@ -15,6 +15,10 @@ import * as apis from "../../../../api";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg.jsx"
 
 
+
+const severityOptions={success:"success",failure:"error"}
+
+
 export default function CreatePost(){
 
     
@@ -26,10 +30,9 @@ export default function CreatePost(){
     const [tags,setTags]=useState([])
     const navigate=useNavigate()
     const [isFeedbackMsg,setIsFeedbackMsg]=useState(false)
-    const [FeedbackMsg,setFeedbackMsg]=useState("")
-    const handelFeedbackMsgConfirm_=()=>{
-        setIsFeedbackMsg(true)
-    }
+    const [Msg,setMsg]=useState("")
+    const [severity,setSeverity]=useState("")
+
 
     const handleTitleChange=(value)=>{
         setTitle(value)
@@ -47,24 +50,35 @@ export default function CreatePost(){
     const onDelete=(pictureFiles, pictureDataURLs)=> {
         setPictures(pictureDataURLs)
     }
+    const handelfeebackMsgClose=()=>{
+        setIsFeedbackMsg(false)
+
+    }
     const onSubmit=async()=>{
         try{
 
             const res=await apis.createExplorePost({title,text,tags,pictures,creator:user._id})
             if(res.status=200){
-                setFeedbackMsg(res.data.message)
+                setSeverity(severityOptions.success)
+                setMsg(res.data.message)
+                
                 navigate("/")
             }
             else if(res.status=500){
-                setFeedbackMsg(res.data.message)
+                setMsg(res.data.message)
+                setSeverity(severityOptions.failure)
             }
             else{
-                setFeedbackMsg("Unknown error, try again")
+                setSeverity(severityOptions.failure)
+                setMsg("Unknown error, try again")
             }
+            setIsFeedbackMsg(true)
             
         }catch(error){
              // todo //
-             setFeedbackMsg("Unknown error, try again")
+             setSeverity(severityOptions.failure)
+             setMsg("Unknown error, try again")
+             setIsFeedbackMsg(true)
         }
 
         
@@ -127,6 +141,7 @@ export default function CreatePost(){
                 </div>
 
             </div>
+            <FeedbackMsg status={isFeedbackMsg} severity={severity} message={Msg} onClose={handelfeebackMsgClose}></FeedbackMsg>
 
         </div>     
     );

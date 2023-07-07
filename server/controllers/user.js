@@ -74,19 +74,30 @@ export const signup = async (req, res) => {
 };
 
 
+export const getPersonalInfo=async (req,res)=>{
 
+  const userId = req.params.userId;
+  try{
+    const result = await User.findById(userId).exec();
+    if (result) {
+      res.status(200).json({result, message: 'personal info got' });
+    } else {
+      res.status(404).json({ message: 'user not found' });
+    }
 
-export const modifyProfil=async(req,res)=>{
+  }catch(error){
+    res.status(500).json({ message: 'Failed to get personal infomation' });
+  }
+}
+
+export const modifyPersonalInfo=async(req,res)=>{
   const userId = req.params.userId;
   const updatedInfo = req.body;
   try{
     await User.findByIdAndUpdate(userId, updatedInfo)
-    res.status(200).json(res.json({ message: 'successfully updated' }))
+    res.status(200).json({ message: 'successfully updated'} )
 
   }catch(error){
-    res.status(500).json({ message: 'Failed to update user' });
+    res.status(500).json({ message: 'Failed to update personal information' });
   }
-  
-
-
 }

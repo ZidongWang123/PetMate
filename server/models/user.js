@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
   // is prime user status
   isPrime: { type: Boolean, default: true }, // todo： add prime user status
 
-  sex: { type: Boolean, default: undefined },
+  sex: { type: String, default: undefined },
   birthday: { type: Date, default: undefined },
 
   //member attributes

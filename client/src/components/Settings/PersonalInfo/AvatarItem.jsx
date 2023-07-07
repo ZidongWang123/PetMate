@@ -5,8 +5,9 @@ import { Modal } from "@mui/material";
 import { orange,darkPurple } from "../../../constant/actionTypes";
 import UniformButton from "../../Pages/Explore/widget/UniformButton";
 import { BorderBottom } from "@mui/icons-material";
+import { modifyPersonalInfo } from "../../../api";
 
-export default function AvatarItem({attribute,title,onConfirmChange}){
+export default function AvatarItem({attribute,userId,title,onConfirmChange}){
    
     const normTitle=title.charAt(0).toUpperCase() + title.slice(1)
     const [openModal, setOpenModal] = useState(false);
@@ -27,14 +28,23 @@ export default function AvatarItem({attribute,title,onConfirmChange}){
     avatarEditorRef = ed;
     };
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
     if (avatarEditorRef) {
         const canvasScaled = avatarEditorRef.getImageScaledToCanvas();
         const croppedImg = canvasScaled.toDataURL();
-        onConfirmChange(title,croppedImg)
-        setPreview(null)
-        setZoom(1)
-        setOpenModal(false)
+
+        try{
+            const res=await modifyPersonalInfo(userId,{[title]:croppedImg})
+            if(res.status===200){
+                onConfirmChange(title,croppedImg)
+                setPreview(null)
+                setZoom(1)
+                setOpenModal(false)
+            }
+        }catch(error){
+   
+        }
+
         
     }
     };
@@ -43,7 +53,6 @@ export default function AvatarItem({attribute,title,onConfirmChange}){
         if(e.target.files&& e.target.files.length>0){
             let url = URL.createObjectURL(e.target.files[0]);
             setPreview(url);
-            console.log(url)
             e.target.value = '';
             setOpenModal(true)
         }

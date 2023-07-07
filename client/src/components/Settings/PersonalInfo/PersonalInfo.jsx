@@ -1,13 +1,11 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PersonalInfo.css"
 import { darkPurple,orange } from "../../../constant/actionTypes";
-import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
 import InfoItem from "./InfoItem.jsx";
 import DateItem from "./DateItem";
-import avatar from "../../../images/avatar.jpg"
 import AvatarItem from "./AvatarItem";
-
+import {getPersonalInfo } from "../../../api";
+import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 const FixedInfo=({title,children})=>{
 
 
@@ -40,24 +38,43 @@ const FixedInfo=({title,children})=>{
 
 }
 
+const sexOptions=["male","female","other","unspecified"]
+const msg={successful:"successfully updated",failure:"fail to update, interal server error"}
+const severity={success:"success",failure:"error"}
 const PersonalInfo = () => {
     const[userInfo,setUserInfo]=useState({})
+    const[isFeedbackMsg,setIsFeedbackMsg]=useState(false)
 
-    
+
+    const handelfeebackMsgClose=()=>{
+        setIsFeedbackMsg(false)
+    }
 
     const onInfoUpdate= (key,attributeValue)=>{
-
-       
     
        setUserInfo(()=>({...userInfo, [key]:attributeValue}))
+       setIsFeedbackMsg(true)
     }
-    const sexOptions=["male","female","other","unspecified"]
-    useEffect(()=>{
-
-
-        const user = JSON.parse(localStorage.getItem('profile'));
     
-        setUserInfo(user.result)
+
+    const fetcbPersonalInfo=async(userId)=>{
+        try{
+
+            const res= await getPersonalInfo(userId);
+            if(res.status===200){
+                setUserInfo(res.data.result)
+            }
+            else{
+                console.log("unknown error when getting personal i")
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
+    useEffect( ()=>{
+
+        const userId = JSON.parse(localStorage.getItem('profile')).result._id;
+        fetcbPersonalInfo(userId)
         
     },[])
 
@@ -72,7 +89,7 @@ const PersonalInfo = () => {
             marginBottom:"0"
             }}>Personal Information:</h2>
            
-            <AvatarItem attribute={userInfo.avatar} title={"avatar"} onConfirmChange={onInfoUpdate} ></AvatarItem>
+            <AvatarItem attribute={userInfo.avatar} userId={userInfo._id} title={"avatar"} onConfirmChange={onInfoUpdate} ></AvatarItem>
             <FixedInfo title="Email">{userInfo.email}</FixedInfo>
            
             <InfoItem attribute={userInfo.name} userId={userInfo._id} title={"name"} onConfirmChange={onInfoUpdate} inputLength={30} inputWidth={"230px"}></InfoItem>
@@ -82,7 +99,9 @@ const PersonalInfo = () => {
             <InfoItem attribute={userInfo.intro} userId={userInfo._id} title={"intro"} onConfirmChange={onInfoUpdate} inputLength={60} inputWidth={"460px"}></InfoItem>
             {userInfo.isPrime&&
            <FixedInfo title="Prime"></FixedInfo>
+
             }
+            <FeedbackMsg status={isFeedbackMsg} severity={severity.success} message={msg.successful} onClose={handelfeebackMsgClose}></FeedbackMsg>
         </div>
 
     );

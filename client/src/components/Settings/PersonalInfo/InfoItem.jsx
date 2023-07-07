@@ -5,10 +5,12 @@ import Button from "@mui/material/Button";
 import { auto } from "@popperjs/core";
 import { display, fontFamily, width } from "@mui/system";
 import MenuItem from '@mui/material/MenuItem';
+import { modifyPersonalInfo } from "../../../api";
 
 
 
-export default function InfoItem({attribute,title,onConfirmChange,select,selectItems,inputLength,inputWidth}){
+
+export default function InfoItem({attribute,userId,title,onConfirmChange,select,selectItems,inputLength,inputWidth}){
 
 
     const normTitle=title.charAt(0).toUpperCase() + title.slice(1)
@@ -16,13 +18,19 @@ export default function InfoItem({attribute,title,onConfirmChange,select,selectI
     const[isEdit,setIsEdit]=useState(false)
 
 
-    const handleConfirmClick = () => {
+    const handleConfirmClick =async () => {
 
-        onConfirmChange(title,currentValue)
-        setIsEdit(false);
+        try{
+            const res=await modifyPersonalInfo(userId,{[title]:currentValue})
+            if(res.status===200){
+                setIsEdit(false);
+                onConfirmChange(title,currentValue)
+            }
+        }catch(error){
 
-        //update the data in the database
-      };
+        console.log(error)
+        };
+    }
     const onChange=(event)=>{
         setCurrentValue(event.target.value);
     }

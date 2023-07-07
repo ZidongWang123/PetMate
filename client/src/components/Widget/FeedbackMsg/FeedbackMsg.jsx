@@ -15,24 +15,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
  * @param {status, message, severity} param0 status: boolean, message: string, severity: error | warning | info | success
  * @returns 
  */
-const FeedbackMsg = ({ status, message, severity }) => {
-    const [open, setOpen] = React.useState(false);
+const FeedbackMsg = ({ status, message, severity, onClose}) => {
 
-    React.useEffect(() => {
-        setOpen(status);
-    }, [status]);
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpen(false);
-    };
 
     return (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}>
-            <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+        <Snackbar open={status} onClose={onClose} autoHideDuration={2000}  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}>
+            <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
                 {message}
             </Alert>
         </Snackbar>
