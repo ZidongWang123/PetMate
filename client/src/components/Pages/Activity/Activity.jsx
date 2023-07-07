@@ -41,6 +41,8 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
 
+    const [showPagination, setShowPagination] = React.useState(true);
+
     const dispatch = useDispatch();
 
     const { services, isLoading } = useSelector((state) => state.service);
@@ -79,6 +81,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
         }
 
         setShowActivityOverview(false);
+        setShowPagination(false);
     };
 
     const onFinishCommonStep = (stepInputs) => {
@@ -118,6 +121,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
         setShowPublishActivity(false);
         setShowActivityOverview(true);
         setShowSearchBar(true);
+        setShowPagination(true);
     };
 
     return (
@@ -146,20 +150,8 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
                 </div>
             ) : null}
 
-            {/* {(activity === 'service') && showActivityOverview ? (
-                <>
-                    {services.map((service) => (
-                        <ActivityOverview activityData={service} isLoading={isLoading} />
-                    ))}
-                </>
-            ) : null} */}
-
-            <Pagination page={page} />
+            {showPagination ? (<Pagination page={page} />) : null}
             <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' />
-
-            {/* default show activity overview when page is loaded */}
-            {showActivityOverview ? (<ActivityOverview />) : null}
-            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success'/>
         </Container >
     );
 };

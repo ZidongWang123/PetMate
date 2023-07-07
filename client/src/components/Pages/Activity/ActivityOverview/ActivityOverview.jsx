@@ -12,25 +12,28 @@ const ActivityOverview = ({ activityData, isLoading }) => {
         <>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'flex-start',
+                flexDirection: 'column',
                 borderRadius: '20px',
                 boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.1)',
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
                 width: '300px',
                 backgroundColor: 'white',
-
+                alignItems: 'center',
+                justifyContent: 'space-between',
             }}>
                 <Box sx={{
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     alignItems: 'center',
                     alignSelf: 'center',
-                    padding: '1opx'
+                    marginTop: '15px',
                 }}>
                     <Avatar alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
-                    <Typography variant="h6">
+                    <Typography variant="h6"
+                    sx={{
+                        marginLeft: '10px',
+                    }}>
                         {user?.result.name}
                     </Typography>
                 </Box>
@@ -40,7 +43,7 @@ const ActivityOverview = ({ activityData, isLoading }) => {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     margin: '5px 0px 5px 15px',
-                    width: '70%',
+                    width: '90%',
                 }}>
                     <Typography variant="h6">
                         Title: {activityData.title}
@@ -57,16 +60,17 @@ const ActivityOverview = ({ activityData, isLoading }) => {
                     <Typography variant="h6">
                         Location: {activityData.location}
                     </Typography>
+                </Box>
                     <Button
                         sx={{
-                            width: '100%',
+                            width: '70%',
                             backgroundColor: brightPurple,
                             color: 'white',
                             borderRadius: '20px',
+                            marginBottom: '15px',
                         }}>
                         Choose
                     </Button>
-                </Box>
             </Box>
         </>
     );
