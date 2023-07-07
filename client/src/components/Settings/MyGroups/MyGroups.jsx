@@ -2,33 +2,30 @@ import React from "react";
 //import useFetch from "../../Widget/DataFetch/useFetch";
 import "./MyGroup.css";
 import MyGroupUnit from "./MyGroupUnit";
-import { useState, useEffect } from "react";
-import { useWorkoutsContext } from "../../../hooks/useWorkoutsContext";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getMyGroups } from "../../../actions/group";
+/* import { useWorkoutsContext } from "../../../hooks/useWorkoutsContext"; */
 
 const MyGroups = () => {
-  const { workouts: groups, dispatch } = useWorkoutsContext();
-  const [isLoading, setIsLoading] = useState(true);
+  /*  const { workouts: groups, dispatch } = useWorkoutsContext(); */
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const fetchGroups = async () => {
-      const response = await fetch("http://localhost:100/api/groups");
-      const json = await response.json();
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
-        setIsLoading(false);
-      }
-    };
-    fetchGroups();
+    dispatch(getMyGroups());
   }, [dispatch]);
-  useEffect(() => {
-    console.log(groups);
-  }, [groups]);
+  const { groups: mygroups } = useSelector((state) => state.groups);
+  console.log(mygroups);
   return (
     <div className="myGroupList">
-      {!isLoading &&
-        groups.map((group) => <MyGroupUnit key={group._id} group={group} />)}
+      {Array.isArray(mygroups) ? (
+        mygroups.map((group) => (
+          <MyGroupUnit key={group.groupId} group={group} />
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };

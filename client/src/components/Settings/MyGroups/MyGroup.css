@@ -17,7 +17,8 @@
   justify-content: center;
   text-align: center;
   margin-bottom: 10px;
-  flex: 0 0 calc(33.33% - 10px); /* 调整每个单元格的宽度，这里设置为三列 */
+  width: 200px;
+  height: 200px;
   margin-right: 10px; /* 调整每个单元格之间的右边距 */
   padding: 30px 30px;
   overflow: hidden;
@@ -65,5 +66,11 @@
 .owner-comment {
   margin-top: 5px;
   color: #ff8000;
+  font-family: "Gloria Hallelujah", cursive;
+}
+
+.join-comment {
+  margin-top: 5px;
+  color: darkslategray;
   font-family: "Gloria Hallelujah", cursive;
 }
