@@ -42,7 +42,7 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                 variant="outlined"
                                 onKeyPress={handleKeyPressTags}
                                 fullWidth
-                                InputProps={{
+                                inputProps={{
                                     placeholder: 'Type and press enter to add a tags',
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -56,7 +56,7 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                     fontFamily: 'Cosmic Sans MS',
                                     marginTop: '20px',
                                     borderRadius: '50px',
-                                    backgroundColor: '#f5f5f5',
+                                    backgroundColor: 'white',
                                     border: '1px solid black',
                                     width: "100%",
                                     minWidth: 300,
@@ -70,7 +70,7 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                         whiteSpace: 'nowrap',
                                         alignSelf: 'center',
                                     }}>
-                                        Sign In to discover more!
+                                        Login for more privileges!
                                     </Typography>
                                 ) : (<Button onClick={handleFindMore} sx={{
                                     marginTop: '20px',
@@ -80,7 +80,7 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                     border: '1px solid black',
                                     backgroundColor: 'inherit',
                                     width: '200px',
-                                }}>Discover More!</Button>)
+                                }}>More privileges!</Button>)
                             }
                         </div >
                         <div className="chips-header">

@@ -10,6 +10,18 @@
 .activities-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px; /* 设置网格间距 */
+    grid-gap: 5px;
     max-height: 100%;
 }
+
+@media (max-width: 1280px) {
+    .activities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 630px) {
+    .activities-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
