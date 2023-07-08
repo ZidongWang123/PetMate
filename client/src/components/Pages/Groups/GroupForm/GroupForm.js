@@ -25,6 +25,7 @@ import InputBar from "../../../Widget/InputBar/InputBar";
 import InputTextArea from "../../../Widget/InputBar/InputTextArea";
 import InputTagBar from "../../../Widget/InputBar/InputTagBar";
 import { createGroup } from "../../../../actions/group";
+import InputAvatar from "../../../Widget/InputBar/InputAvatar";
 
 /* import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import { Grid } from "@mui/material";
@@ -102,34 +103,8 @@ const GroupForm = () => {
 
   //avatar
 
-  const fileInputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-
-  const handleFileSelect = () => {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = "image/*"; // 只接受图片类型的文件
-    fileInput.addEventListener("change", handleFileChange);
-    fileInput.click();
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    setGroupData({ ...groupData, selectedFile: file });
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-    console.log(file);
-    // 处理选择的文件
-  };
-  const handleFileReset = () => {
-    // 删除选中的文件和预览图像
-    setSelectedFile(null);
+  const onImageUpdate = (value) => {
+    setGroupData({ ...groupData, selectedFile: value });
   };
 
   //step related
@@ -285,96 +260,11 @@ const GroupForm = () => {
                     />
                   )}
                   {activeStep === 3 && (
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        margin: "0 20px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          /* margin: "40px 0", */
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          onClick={handleFileSelect}
-                          endIcon={<AddPhotoAlternateIcon />}
-                          sx={{
-                            /*  marginTop: 5, */
-                            marginLeft: 2,
-                            marginRight: 5,
-                            marginBottom: 2,
-                            padding: 2,
-                            paddingLeft: 2,
-                            paddingRight: 2,
-                            borderRadius: "200px",
-                            color: darkPurple,
-                            backgroundColor: "white",
-                            border: orange,
-
-                            ":hover": {
-                              backgroundColor: orange,
-                              color: "white",
-                            },
-                          }}
-                        >
-                          select pics
-                        </Button>
-
-                        <Button
-                          variant="contained"
-                          onClick={handleFileReset}
-                          sx={{
-                            /*  marginTop: 5, */
-                            marginLeft: 2,
-                            marginRight: 5,
-                            padding: 2,
-                            paddingLeft: 2,
-                            paddingRight: 2,
-                            borderRadius: "200px",
-                            color: darkPurple,
-                            backgroundColor: "white",
-                            border: orange,
-                            width: 150,
-
-                            ":hover": {
-                              backgroundColor: orange,
-                              color: "white",
-                            },
-                          }}
-                        >
-                          reset
-                        </Button>
-                      </div>
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        style={{ display: "none" }}
-                        onChange={handleFileChange}
+                    <div>
+                      <InputAvatar
+                        attribute={groupData.selectedFile}
+                        onConfirmChange={onImageUpdate}
                       />
-                      {selectedFile && (
-                        <div>
-                          <h2
-                            style={{
-                              color: darkPurple,
-                              fontFamily: "Comic Sans MS",
-                              fontSize: 15,
-                            }}
-                          >
-                            preview image
-                          </h2>
-                          <img
-                            src={previewImage}
-                            alt="预览图像"
-                            style={{ maxWidth: "150px", maxHeight: "150px" }}
-                          />
-                        </div>
-                      )}
                     </div>
                   )}
 

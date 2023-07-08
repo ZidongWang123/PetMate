@@ -1,7 +1,7 @@
 @import url("https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu");
 
 .group-list {
-  margin-top: 20px;
+  margin-top: 40px;
   font-family: "Ubuntu";
 
   flex-wrap: wrap;
@@ -13,14 +13,16 @@
   padding-left: 50px;
   padding-top: 20px;
   margin: 10px 0;
-  margin-left: 30px;
+  margin-left: 75px;
   border-bottom: 1px solid #fafafa;
-  width: 715px;
+  width: 800px;
   text-decoration: none;
+  background-color: #ebebeb;
+  border-radius: 50px;
+  cursor: pointer;
 }
 
 .group-preview:hover {
-  border-radius: 50px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,14 +32,15 @@
   margin-right: 20px;
 }
 .group-preview .group-avatar .MuiAvatar-root {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
 }
 
 .group-preview .group-first-row {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  margin-left: 20px;
 }
 
 .group-preview .group-first-row p {
@@ -48,6 +51,7 @@
   /* margin-right: 100px; */
   white-space: nowrap;
   margin-right: 50px;
+
   /* margin-left: 100px; */
 } /* 调整第二个元素的左边距 */
 
@@ -62,12 +66,14 @@
   font-size: 20px; /* 调整字体大小 */
   font-weight: bold; /* 加粗字体 */
   font-family: "Comic Sans MS";
+  margin-left: 20px;
 }
 .group-preview .group-intro-text {
   margin-top: 10px;
   margin-bottom: 8px;
   color: #3f3f3f;
   font-size: 15px;
+  margin-left: 20px;
 }
 
 .group-preview .tag {
@@ -76,6 +82,7 @@
   padding: 4px 0px;
   color: #ff8000;
   font-family: "Comic Sans MS";
+  margin-left: 20px;
 }
 
 .group-preview .grouplist-button {
@@ -87,7 +94,7 @@
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
 
-  background-color: transparent; /* 背景色透明 */
+  background-color: #fafafa; /* 背景色透明 */
   color: #393c7c;
   width: 100px;
   cursor: pointer;
@@ -99,6 +106,6 @@
 }
 .group-preview .grouplist-button:hover {
   /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
-  background-color: #f0a860;
+  background-color: #393c7c;
   color: #fafafa;
 }

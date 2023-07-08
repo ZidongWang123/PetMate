@@ -18,8 +18,8 @@
 }
 
 .single-group-avatar .MuiAvatar-root {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
 }
 
 .group-description {
@@ -33,7 +33,7 @@
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 4px;
-  font-family: "Comic Sans MS", cursive;
+  font-family: "Comic Sans MS";
 }
 
 .single-group-creater,
@@ -101,14 +101,14 @@
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
 
-  background-color: #ffffff;
+  background-color: #9c62f2;
 
   cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
   border-radius: 50px;
 
   border-color: transparent;
-  color: #9c62f2;
+  color: #ffffff;
 }
 .joined-button:hover {
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
@@ -128,14 +128,14 @@
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
 
-  background-color: #ffffff;
+  background-color: #f0a860;
 
   cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
   border-radius: 50px;
 
   border-color: transparent;
-  color: #f0a860;
+  color: #ffffff;
 }
 
 .single-group-button:hover {

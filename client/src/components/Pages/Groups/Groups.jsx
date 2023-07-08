@@ -3,16 +3,54 @@ import React from "react";
 import SearchBar from "../../Widget/SearchBar/SearchBar";
 
 import GroupCreateButton from "./GroupCreateButton";
-import { Link } from "react-router-dom";
 import "./Group.css";
 import { useDispatch } from "react-redux";
 import { getGroups } from "../../../actions/group";
 
 import { useSelector } from "react-redux";
 import GroupList from "./GroupList";
+import { useNavigate } from "react-router-dom";
+import Warning from "../../Widget/ConfirmDialog/Warning.jsx";
+import signInPic from "../../../images/dabengou/SignInPic.jpg";
+import bePrimePic from "../../../images/dabengou/BePrimePic.jpg";
+
+const subscribeText = "Come subscribing first!";
+const LoginText = "Please log in first!";
 
 const Groups = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
+
+  const navigate = useNavigate();
+  const [text, setText] = React.useState("");
+  const [pic, setPic] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+  const onClick = () => {
+    console.log("Clicked");
+    if (user && user.result.isPrime) {
+      navigate("/groups/create-group");
+    } else if (user) {
+      setText(subscribeText);
+      setPic(bePrimePic);
+      setIsOpen(true);
+    } else {
+      setText(LoginText);
+      setPic(signInPic);
+      setIsOpen(true);
+      console.log("not logged in");
+    }
+  };
+
+  const onConfirm = () => {
+    setIsOpen(false);
+    if (user) {
+      navigate("/explore");
+    } else {
+      navigate("/auth");
+    }
+  };
+  const onCancel = () => {
+    setIsOpen(false);
+  };
 
   const dispatch = useDispatch();
 
@@ -25,9 +63,14 @@ const Groups = () => {
     <div className="groups">
       <div style={{ display: "flex", alignItems: "center" }}>
         <SearchBar />
-        <Link to={user ? "/groups/create-group" : "/warning"}>
-          <GroupCreateButton />
-        </Link>
+        <Warning
+          isOpen={isOpen}
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+          pic={pic}
+          text={text}
+        ></Warning>
+        <GroupCreateButton onClick={onClick}></GroupCreateButton>
       </div>
       <div className="group-list">
         {Array.isArray(groups) ? (
