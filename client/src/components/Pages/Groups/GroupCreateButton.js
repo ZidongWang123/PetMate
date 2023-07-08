@@ -3,27 +3,29 @@ import Button from "@mui/material/Button";
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 import { darkPurple, orange } from "../../../constant/actionTypes";
 
-export default function GroupCreateButton() {
+export default function GroupCreateButton({ onClick }) {
   return (
     <div className="GroupCreateButton">
       <Button
         variant="contained"
         endIcon={<Diversity1Icon />}
+        onClick={onClick}
         sx={{
-          marginTop: 5,
+          marginTop: 3,
           marginLeft: 2,
-          padding: 2,
+
           paddingLeft: 2,
           paddingRight: 4,
           borderRadius: "200px",
-          color: darkPurple,
+          color: "white",
           backgroundColor: "transparent",
           border: orange,
+          backgroundColor: orange,
+          width: "200px",
 
-          ":hover": {
-            backgroundColor: orange,
+          /*  ":hover": {
             color: "white",
-          },
+          }, */
         }}
       >
         Create your group!

@@ -31,11 +31,10 @@ const GroupList = ({ group, isJoined }) => {
 
   return (
     <div className="group-preview" key={group._id}>
+      <div className="group-avatar">
+        <Avatar alt="Remy Sharp" src={group.selectedFile} />
+      </div>
       <Link style={{ textDecoration: "none" }} to={`/groups/${group._id}`}>
-        <div className="group-avatar">
-          <Avatar alt="Remy Sharp" src={group.imageURL} />
-        </div>
-
         <div className="group-name">{group.groupName}</div>
         <div className="group-text-review">
           <div className="group-first-row">
@@ -53,6 +52,7 @@ const GroupList = ({ group, isJoined }) => {
           </p>
         </div>
       </Link>
+
       <div>
         {user &&
           (user.result._id === group.creatorId ? (

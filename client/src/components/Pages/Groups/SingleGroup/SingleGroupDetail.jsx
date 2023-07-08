@@ -55,7 +55,7 @@ const SingleGroupDetail = () => {
         <div className="single-group-info" key={singleGroup._id}>
           <div className="firstrow">
             <div className="single-group-avatar">
-              <Avatar alt="Remy Sharp" src={"/static/images/avatar/1.jpg"} />
+              <Avatar alt="Remy Sharp" src={singleGroup.selectedFile} />
             </div>
             <div className="group-description">
               <div className="single-group-name-creater">
