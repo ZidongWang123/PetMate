@@ -1,3 +1,8 @@
-.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
-    border-radius: 20px !important;
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  border-radius: 20px !important;
+}
+
+.warning-image {
+  width: 100px;
+  height: 100px;
 }

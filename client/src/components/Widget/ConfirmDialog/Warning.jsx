@@ -53,7 +53,7 @@ export default function ConfirmDialog({ text, pic, page ,isOpen,onConfirm,onCanc
             >
               {text}
             </DialogContentText>
-            <img src={pic}  alt="Image" className="signin-image" />
+            <img src={pic}  alt="Image" className="warning-image" />
           </Box>
         </DialogContent>
         <DialogActions>
