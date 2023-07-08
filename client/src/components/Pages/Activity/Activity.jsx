@@ -47,12 +47,13 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
     const { services, isLoading } = useSelector((state) => state.service);
 
-    console.log(services);
-
-
     React.useEffect(() => {
         console.log(allInputs);
     }, [allInputs]);
+
+    const handelfeebackMsgClose = () => {
+        setShowFeedbackMsg(false)
+    }
 
     const selectActivity = () => {
         setShowPrimePrivileges(false);
@@ -151,7 +152,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
             ) : null}
 
             {showPagination ? (<Pagination page={page} />) : null}
-            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' />
+            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' onClose={handelfeebackMsgClose} />
         </Container >
     );
 };
