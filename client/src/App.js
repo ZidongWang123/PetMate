@@ -23,6 +23,7 @@ import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
 import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
+
 import { CreateGroup } from "./components/Pages/Groups/GroupForm/CreateGroup";
 import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
 import Home from "./components/Pages/Groups/Post/Home";
@@ -88,7 +89,8 @@ const App = () => {
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/userPage/:userId" element={<UserPage />} />
               <Route path="/explore/post/create" element={<CreatePost />} />
-              <Route path="/groups/post/editPost" element={<EditPost />} />
+              <Route path="/groups/post/editPost/:id"   element={<EditPost/>}/>
+
               <Route
                 path="/explore/post/editPost/:postId"
                 element={<CreatePost />}
