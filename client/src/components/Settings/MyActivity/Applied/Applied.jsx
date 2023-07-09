@@ -6,7 +6,7 @@ const Applied = ({activityType}) => {
         <div style={{
             width: '100%',
         }}>
-            <ActivityCard activityType={activityType} isApply={true}/>
+            {/* <ActivityCard activityType={activityType} isApply={true}/> */}
         </div>
     );
 }

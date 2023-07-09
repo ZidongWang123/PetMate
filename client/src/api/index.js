@@ -14,13 +14,12 @@ API.interceptors.request.use((req) => {
 
 //api for services
 export const fetchService = (id) => API.get(`/services/${id}`);
-export const fetchServices = (page) => API.get(`/services?page=${page}`);
+export const fetchServices = (page,  userId = null) => API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ''}`);
 export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);
 // user login and register
 
 export const createService = (newService) => API.post("/services", newService);
-export const updateService = (id, updatedService) =>
-  API.patch(`/services/${id}`, updatedService);
+export const updateService = (id, updatedService) => API.patch(`/services/${id}`, updatedService);
 export const deleteService = (id) => API.delete(`/services/${id}`);
 
 //api for events

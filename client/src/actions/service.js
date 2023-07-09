@@ -1,4 +1,4 @@
-import { FETCH_ALL, FETCH_SERVICE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, CREATE_SERVICE, UPDATE_SERVICE, DELETE_SERVICE, FETCH_USER_SERVICE } from '../constant/actionTypes';
+import { FETCH_ALL_SERVICE, FETCH_ALL_CREATED_SERVICE, FETCH_SERVICE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, CREATE_SERVICE, UPDATE_SERVICE, DELETE_SERVICE, FETCH_USER_SERVICE } from '../constant/actionTypes';
 import * as api from '../api';
 
 export const getService = (id) => async (dispatch) => {
@@ -12,11 +12,15 @@ export const getService = (id) => async (dispatch) => {
     }
 }
 
-export const getServices = (page) => async (dispatch) => {
+export const getServices = (page, userId = null) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await api.fetchServices(page);
-        dispatch({ type: FETCH_ALL, payload: data });
+        const { data } = await api.fetchServices(page, userId);
+        if (userId) {
+            dispatch({ type: FETCH_ALL_CREATED_SERVICE, payload: data });
+        } else {
+            dispatch({ type: FETCH_ALL_SERVICE, payload: data });
+        }
         dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);

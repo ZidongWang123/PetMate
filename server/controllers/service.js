@@ -15,17 +15,28 @@ export const getService = async (req, res) => {
 }
 
 export const getServices = async (req, res) => {
-    const { page } = req.query;
-
+    const { page, userId } = req.query;
     try {
-        const LIMIT = 6;
-        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
-        const total = await ServiceMsg.countDocuments({}); // count the total number of documents in the collection
-        const services = await ServiceMsg.find().sort({_id: -1}).limit(LIMIT).skip(startIndex); // get the posts for the current page
-        res.status(200).json({data: services, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)}); // return the posts and the number of pages
+        let LIMIT;
+        let startIndex;
+        let services;
+        let total;
+        if (userId) {
+            LIMIT = 2;
+            startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+            total = await ServiceMsg.countDocuments({ creator: userId }); // count the total number of documents in the collection
+            services = await ServiceMsg.find({ creator: userId }).sort({ _id: -1 }).limit(LIMIT).skip(startIndex); // get the posts for the current page
+            res.status(200).json({ data: services, currentPageCreatedServices: Number(page), numberOfPagesCreatedServices: Math.ceil(total / LIMIT) }); // return the posts and the number of pages
+        } else {
+            LIMIT = 6;
+            startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+            total = await ServiceMsg.countDocuments({}); // count the total number of documents in the collection
+            services = await ServiceMsg.find().sort({ _id: -1 }).skip(startIndex).limit(LIMIT); // get the posts for the current page
+            res.status(200).json({ data: services, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) }); // return the posts and the number of pages
+        }
 
-    } catch(error){
-        res.status(404).json({message: error.message});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }
 
@@ -75,13 +86,30 @@ export const createService = async (req, res) => {
 
 export const updateService = async (req, res) => {
     const { id: _id } = req.params;
-    const service = req.body;
+    const [city, petSpecies, type, startDate, endDate, title, location, price, content ] = req.body;
+    const updatedService = {
+        city,
+        petSpecies,
+        type,
+        startDate,
+        endDate,
+        title,
+        location,
+        price,
+        content
+    };
 
-    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No service with that id');
+    try {
+        const service = await ServiceMsg.findById(_id);
+        if (!service) {
+            return res.status(404).send('No service found with that id');
+        }
+        const updated = await ServiceMsg.findByIdAndUpdate(_id, updatedService, { new: true });
 
-    const updatedService = await ServiceMsg.findByIdAndUpdate(_id, { ...post, _id }, { new: true });
-
-    res.json(updatedService);
+        res.status(200).json({ message: 'successfully updated' })
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to update service' });
+    }
 }
 
 export const deleteService = async (req, res) => {
