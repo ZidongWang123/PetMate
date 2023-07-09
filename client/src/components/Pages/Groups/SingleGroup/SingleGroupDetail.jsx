@@ -98,7 +98,7 @@ const SingleGroupDetail = () => {
                 Join Now
               </button>
             )}
-            <Link to="/groups/:id/create-post">
+            <Link to={`/groups/${singleGroup._id}/create-post`}>
               <button className="write-post-button">Write a Post</button>
             </Link>
           </div>

@@ -60,7 +60,7 @@ const GroupList = ({ group }) => {
               edit
             </button>
           ) : group.members && group.members.includes(user.result._id) ? (
-            <Link to="/groups/:id/create-post">
+            <Link to={`/groups/${group._id}/create-post`}>
               <button className="grouplist-button">Write a Post</button>
             </Link>
           ) : (
