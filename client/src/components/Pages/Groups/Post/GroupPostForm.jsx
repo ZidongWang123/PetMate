@@ -9,6 +9,9 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useRef } from "react";
 import { useState } from "react";
+import {  useNavigate, useSearchParams,useParams } from "react-router-dom";
+import { poArticlesInfo } from "../../../../api/user"
+import { FormData } from "../../../../util/index"
 import PetsIcon from "@mui/icons-material/Pets";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -41,7 +44,7 @@ const steps = [
 const GroupPostForm = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
-
+ 
   //groupname
 
   const [name, setName] = React.useState("");
@@ -78,7 +81,9 @@ const GroupPostForm = () => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-
+  let params = useParams()
+  const groupId = params['id'];
+  const navigate= useNavigate()
   const handleFileSelect = () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
@@ -137,12 +142,29 @@ const GroupPostForm = () => {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-
-  const handleComplete = () => {
+  const poArticlesInfoRequest= async(article)=>{
+    await poArticlesInfo(article)
+  }
+  const handleComplete = async () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
+    
     setCompleted(newCompleted);
     handleNext();
+    if(allStepsCompleted()===true){
+     
+      const article={
+        "title":name,
+        "content":intro,
+        "tags":tag,
+        "imageURL":previewImage,
+        "creater":"Sarah",
+        "g_id":groupId
+      }
+      poArticlesInfoRequest(article)
+      navigate(`/groups/${groupId}`)
+      // console.log(name,tag,intro,previewImage);
+    }
   };
 
   const handleReset = () => {
@@ -226,7 +248,7 @@ const GroupPostForm = () => {
                 {activeStep === 1 && (
                   <InputTagBar
                     initialValue={tag}
-                    onInputChange={handleTagsChange}
+                    onTagsChange={handleTagsChange}
                   />
                 )}
                 {activeStep === 2 && (

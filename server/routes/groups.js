@@ -21,9 +21,10 @@ router.get("/mygroups", auth, getMyGroups);
 
 //GET a single group
 router.get("/:id", auth, getGroup);
-//Join a group
 
+//Join a group
 router.post("/:id/joinGroup", auth, joinGroup);
+
 //POST a new group
 router.post("/", auth, createGroup);
 

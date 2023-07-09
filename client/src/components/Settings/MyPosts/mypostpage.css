@@ -1,8 +1,17 @@
 .userPageProfil{
-    margin: o auto;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
-    direction: "row"
+    direction: "row";
+
+    
+}
+.myPosts{
+    width: 80%;
+    /* display: flex;
+    justify-content: center; */
+
+    
 }
 .forum-post {
     display: flex;
