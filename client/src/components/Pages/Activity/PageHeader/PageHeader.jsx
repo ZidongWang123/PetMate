@@ -42,9 +42,9 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                 variant="outlined"
                                 onKeyPress={handleKeyPressTags}
                                 fullWidth
-                                inputprops={{
+                                InputProps={{
                                     placeholder: 'Type and press enter to add a tags',
-                                    endadornment: (
+                                    endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton onClick={handleSearch}>
                                                 <SearchIcon />

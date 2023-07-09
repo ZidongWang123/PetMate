@@ -26,6 +26,9 @@ import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
 
 import { CreateGroup } from "./components/Pages/Groups/GroupForm/CreateGroup";
 import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
+import ActivityPage from "./components/Pages/Activity/ActivityPage/ActivityPage";
+import Subscription from "./components/Navbar/Subscription";
+
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
@@ -93,8 +96,8 @@ const App = () => {
                 path="/explore/post/editPost/:postId"
                 element={<CreatePost />}
               />
-
-              {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
+              <Route path="/service/:id"   element={<ActivityPage/>}/>
+              <Route path="/subscription"   element={<Subscription/>}/>
 
               <Route
                 path="/appliedevents"

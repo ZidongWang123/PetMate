@@ -151,7 +151,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
                 </div>
             ) : null}
 
-            {showPagination ? (<Pagination page={page} path = {'service'}/>) : null}
+            {showPagination ? (<Pagination page={page} path={'service'} />) : null}
             <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' onClose={handelfeebackMsgClose} />
         </Container >
     );

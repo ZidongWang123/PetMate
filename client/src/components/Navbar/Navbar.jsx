@@ -226,24 +226,12 @@ function Navbar({ handleSecNavbar }) {
                         {user ? (
                             <Box sx={{ flexGrow: 0, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <Subscription
-                                    button="Join us!"
-                                    title="Be our membership now!"
-                                    contentText={`
-                                                    Sharing Posts and Building Groups!
-                                                    Creating Events and Sharing Services!
-                                                    Higher Exposure in Explore!
-                                                    Pure Mode! No Ads!
-                                                    ...
-                                                    
-                                                    More benefits of membership are waiting for you!
-                                        `}
-                                    style={{ marginRight: '10px' }}
                                 />
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, marginLeft: '20px' }}>
-                                        { user.result.avatar ? 
-                                        (<Avatar src={user.result.avatar} />) : 
-                                        (<Avatar src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>)}
+                                        {user.result.avatar ?
+                                            (<Avatar src={user.result.avatar} />) :
+                                            (<Avatar src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>)}
                                         {/* todo: show the avatar not the name of user */}
                                     </IconButton>
                                 </Tooltip>

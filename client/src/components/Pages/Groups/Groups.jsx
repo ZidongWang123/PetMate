@@ -44,10 +44,10 @@ const Groups = () => {
 
   const onConfirm = () => {
     setIsOpen(false);
-    if (user) {
-      navigate("/explore");
-    } else {
+    if (!user) {
       navigate("/auth");
+    } else if(user && !user.result.isPrime){
+      navigate("/subscription");
     }
   };
   const onCancel = () => {
