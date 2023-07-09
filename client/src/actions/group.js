@@ -5,6 +5,7 @@ import {
   FETCH_MY_GROUPS,
   JOIN_GROUP,
   DELETE_GROUP,
+  UPDATE_GROUP,
 } from "../constant/actionTypes";
 import * as api from "../api/index.js";
 export const getGroups = () => async (dispatch) => {
@@ -68,6 +69,15 @@ export const deleteGroup = (id) => async (dispatch) => {
   try {
     await api.deleteGroup(id);
     dispatch({ type: DELETE_GROUP, payload: id });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateGroup = (id, groupData) => async (dispatch) => {
+  try {
+    const { data } = await api.updateService(id, groupData);
+    dispatch({ type: UPDATE_GROUP, payload: data });
   } catch (error) {
     console.log(error);
   }
