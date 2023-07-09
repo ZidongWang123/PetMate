@@ -1,9 +1,20 @@
+/*
+ * @Author: xiehuan 1208044257@qq.com
+ * @Date: 2023-07-09 13:44:19
+ * @LastEditors: xiehuan 1208044257@qq.com
+ * @LastEditTime: 2023-07-09 15:03:18
+ * @FilePath: \prototype\client\src\components\Pages\Groups\Groups.jsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import React from "react";
 
 import SearchBar from "../../Widget/SearchBar/SearchBar";
 
 import GroupCreateButton from "./GroupCreateButton";
+
+import { Link } from "react-router-dom";
 import "./Group.css";
+
 import { useDispatch } from "react-redux";
 import { getGroups } from "../../../actions/group";
 
@@ -84,3 +95,7 @@ const Groups = () => {
 };
 
 export default Groups;
+
+
+
+

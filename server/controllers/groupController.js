@@ -29,7 +29,7 @@ const getGroups = async (req, res) => {
 
 const getGroup = async (req, res) => {
   const { id } = req.params;
-
+  console.log("获取群组信息");
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such group" });
   }

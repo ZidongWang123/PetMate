@@ -1,5 +1,19 @@
 @import url('https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500');
 
+.editContent{
+  width: 97%;
+  font-family: 'Cosmic Sans MS'!important;
+}
+.image_show,.image_show img{
+  margin-top: 10px;
+ 
+}
+.button-wrapper {
+  display: flex;
+}
+.button-wrapper button{
+  margin: 0 10px;
+}
 .post-details {
     width: 100%;
     padding: 20px;

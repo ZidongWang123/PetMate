@@ -9,8 +9,9 @@ import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 
-import { fontSize } from "@mui/system";
-
+import {getUserArticles} from "../../../api/user"
+import {FormData} from "../../../util/index"
+import TableFilter  from "../../Widget/TableFilter/TableFilter";
 const ForumPost = ({ post, group, date, author }) => (
   <div className="forum-post">
     <div className="post-list">
@@ -57,11 +58,67 @@ const Forum = () => {
 export default function MyPost(){
     const{name} = useParams();
     const [profil,setProfil]=useState([])
+    const [articleList,setArticleList]=useState([])
+
+    const columns = [
+
+      {
+        field: 'Topics',
+        headerName: 'Topics', 
+        width:300,
+        renderCell:(params) => (
+          
+           
+            <Link
+           to={`/groups/post/${params.row.id}`}
+            >
+              {params.row.Topics}
+            </Link>
+        ),
+  
+      },
+      {
+        field: 'Groups',
+        headerName: 'Groups', 
+        width:200,
+        renderCell:(params) => (
+           
+            <Link
+           to={`/groups/${params.row.g_id}`}
+            >
+              {params.row.Groups}
+            </Link>
+        ),
+  
+      },
+      {
+        field: 'Date',
+        headerName: 'Date', 
+        width:200,
+  
+  
+      },
+      {
+        field: 'Author',
+        headerName: 'Author',
+        width:200,
+  
+      }
+     
+      
+    ];
+    const getUserArticlesRequest=async()=>{
+          const articleListResulet=await getUserArticles()
+          const articles=articleListResulet.map(item=>{
+            return {"id":item._id,"g_id":item.g_id._id,"Topics":item.title,"Groups":item.g_id.groupName,"Date":FormData(item.date),"Author":item.u_id.name}
+          })
+          setArticleList(articles)
+    }
     useEffect(()=>{
         // request profil data here and set the variable profil
         
         // todo...
-        
+        getUserArticlesRequest()
         setProfil({avatar:avatar,name:"wang" ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
 },[])
 
@@ -69,7 +126,7 @@ export default function MyPost(){
     return(
         
 
-        <div>
+        <div  className="myPosts">
             <div className="userPageProfil">
                 <img src={profil.avatar} style={{width:"140px",borderRadius:"50%",marginBottom:"20px",marginTop:"10px",marginRight:"10px"}}></img>
                 <div>
@@ -86,10 +143,14 @@ export default function MyPost(){
                 </div>
 
             </div>
-
-            <Forum />
-
+            <div >
+            {articleList.length!=0&&<TableFilter data={articleList }  columns={columns}></TableFilter>}
+            </div>
+            {/* <Forum /> */}
+          
+           
         </div>
+        
     
     )
 }
