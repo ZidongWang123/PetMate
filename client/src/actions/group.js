@@ -4,11 +4,13 @@ import {
   FETCH_GROUP,
   FETCH_MY_GROUPS,
   JOIN_GROUP,
+  DELETE_GROUP,
 } from "../constant/actionTypes";
 import * as api from "../api/index.js";
 export const getGroups = () => async (dispatch) => {
   try {
     const { data } = await api.fetchGroups();
+    console.log(data);
     /* console.log(data); */
     dispatch({ type: FETCH_ALLGROUPS, payload: data });
   } catch (error) {
@@ -44,7 +46,7 @@ export const createGroup = (group) => async (dispatch) => {
     console.log("group here");
     const { data } = await api.createGroup(group);
 
-    /*   console.log("have data now", data); */
+    console.log("api create succeed", data);
     dispatch({ type: CREATE_GROUP, payload: data });
   } catch (error) {
     console.log(error.message);
@@ -59,5 +61,14 @@ export const joinGroup = (id, newMemberData) => async (dispatch) => {
     console.log("dispatch succeed");
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+export const deleteGroup = (id) => async (dispatch) => {
+  try {
+    await api.deleteGroup(id);
+    dispatch({ type: DELETE_GROUP, payload: id });
+  } catch (error) {
+    console.log(error);
   }
 };

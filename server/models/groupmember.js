@@ -5,8 +5,9 @@ const Schema = mongoose.Schema;
 const groupmemberSchema = new Schema(
   {
     groupId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "Group",
     },
     groupName: {
       type: String,
@@ -14,7 +15,7 @@ const groupmemberSchema = new Schema(
     },
 
     creatorId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     creatorName: {
@@ -23,7 +24,7 @@ const groupmemberSchema = new Schema(
     },
 
     memberId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     memberName: {

@@ -1,7 +1,14 @@
 @import url("https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500");
 
 /* groups */
-
+.single-group-info {
+  background-color: #ebebeb;
+  border-radius: 50px;
+  padding-top: 20px;
+  padding-left: 20px;
+  margin-top: 20px;
+  padding-bottom: 15px;
+}
 .firstrow {
   display: flex;
   align-items: center;
@@ -85,8 +92,6 @@
 }
 
 .single-group-button {
-  margin-top: 10px;
-  padding: 8px 16px; /* 上下宽一点的内边距 */
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
   border-radius: 8px; /* 圆角 */
@@ -95,32 +100,38 @@
   border-color: #393c7c;
   cursor: pointer;
   margin-left: 700px;
+  display: grid;
+  grid-template-columns: auto 1fr;
 }
 .joined-button {
   padding: 8px 16px; /* 上下宽一点的内边距 */
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
-
-  background-color: #9c62f2;
+  width: 100px;
+  background-color: #ffffff;
 
   cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
   border-radius: 50px;
 
   border-color: transparent;
-  color: #ffffff;
+  color: #9c62f2;
 }
 .joined-button:hover {
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+  background-color: #393c7c;
+  color: #fafafa;
 }
-.joined-button:disabled {
-  /* 其他样式 */
-  opacity: 0.6; /* 设置禁用状态的透明度 */
-  cursor: not-allowed; /* 设置禁用状态的鼠标样式 */
+button:disabled {
+  /* 添加你想要的禁用样式 */
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
-
 .write-post-button:hover {
   box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.1);
+  background-color: #393c7c;
+  color: #fafafa;
 }
 
 .write-post-button {
@@ -128,14 +139,15 @@
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
 
-  background-color: #f0a860;
-
+  background-color: #ffffff;
+  width: 100px;
   cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
   border-radius: 50px;
 
   border-color: transparent;
-  color: #ffffff;
+  color: #ff8000;
+  justify-self: end;
 }
 
 .single-group-button:hover {

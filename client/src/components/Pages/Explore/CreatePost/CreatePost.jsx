@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
-/* import ImageUploader from "react-images-upload"; */
-import "./CreatePost.css";
-import { darkPurple, orange } from "../../../../constant/actionTypes";
+import React, {useEffect,useState} from "react";
+
+// import ImageUploader from 'react-images-upload';
+
+
+import "./CreatePost.css"
+import { darkPurple, orange,darkGray } from "../../../../constant/actionTypes";
 import InputField from "../widget/InputField";
+import InputTagBar from "../../../Widget/InputBar/InputTagBar";
 import UniformButton from "../widget/UniformButton";
 import { useNavigate, useParams } from 'react-router-dom';
 import dog1 from "../../../../images/dog1.jpg"
@@ -56,7 +60,12 @@ export default function CreatePost() {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
 
-                navigate("/")
+                setTimeout(()=>{
+
+                    navigate("/")
+
+                },1000)     
+                
             }
             else if (res.status = 500) {
                 setMsg(res.data.message)
@@ -102,8 +111,23 @@ export default function CreatePost() {
 
             <div style={{ marginRight: "50px" }}>
                 <InputField title="Title:" value={title} isMultiline={false} height="default" onInputChange={handleTitleChange}></InputField>
-                <InputField title="Text:" value={text} isMultiline={true} height="350px" onInputChange={handleTextChange}></InputField>
-                <InputField title="Tags:" isMultiline={false} height="default" onInputChange={handleTagsChange}></InputField>
+                <h2 style={{
+                    fontFamily:"Comic Sans MS",
+                    color:darkPurple,
+                    margin:"10px 0"
+                }}>
+                    Tags:
+                </h2>
+                <InputTagBar 
+                    onTagsChange={handleTagsChange}
+                    width="450px" 
+                    borderRadius="10px" 
+                    height="90px"
+                    where="explorePost"
+                >
+                </InputTagBar>
+                <InputField title="Text:" value={text} isMultiline={true} height="300px" onInputChange={handleTextChange}></InputField>
+
             </div>
             <div>
                 <h2 style={{

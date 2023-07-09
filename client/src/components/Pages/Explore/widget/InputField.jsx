@@ -38,7 +38,7 @@ export default function InputField({value,title,isMultiline,height,onInputChange
                 "::-webkit-scrollbar":{
                     display: "none"
                 },
-                boxShadow:"1px 1px 4px rgba(0, 0, 0, 0.2)"
+                boxShadow:"1px 3px 5px rgba(0, 0, 0, 0.2)"
             }}/>
 
         </>
