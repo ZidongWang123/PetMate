@@ -81,7 +81,7 @@ const GroupPostForm = () => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  let params= useParams()
+  let params = useParams()
   const groupId = params['id'];
   const navigate= useNavigate()
   const handleFileSelect = () => {
@@ -159,7 +159,6 @@ const GroupPostForm = () => {
         "tags":tag,
         "imageURL":previewImage,
         "creater":"Sarah",
-        "u_id":"649fd8f390bc7369fea13558",
         "g_id":groupId
       }
       poArticlesInfoRequest(article)
