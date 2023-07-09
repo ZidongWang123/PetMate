@@ -150,6 +150,7 @@ const GroupForm = () => {
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
     handleNext();
+    console.log(allStepsCompleted);
   };
 
   const handleReset = () => {

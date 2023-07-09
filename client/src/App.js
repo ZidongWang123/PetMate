@@ -23,7 +23,7 @@ import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
 import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
-
+import Home from "./components/Pages/Groups/Post/Home";
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
@@ -65,12 +65,16 @@ const App = () => {
           <Ads />
           <div className="routes">
             <Routes>
+
               <Route path="/" element={<Navigate to="/explore" />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/groups/:id" element={<SingleGroup1 />} />
               <Route path="/groups/create-group" element={<GroupForm />} />
-              <Route path="/groups/post" element={<Post />} />
+              <Route path="/groups/post/:id" element={<Post />} />
+              
+              <Route path="/workouts" element={<Home />} />
+
               <Route
                 path="/groups/:id/create-post"
                 element={<GroupPostForm />}
@@ -83,7 +87,7 @@ const App = () => {
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/userPage/:userId"   element={<UserPage/>}/>
               <Route path="/explore/post/create"   element={<CreatePost/>}/>
-              <Route path="/groups/post/editPost"   element={<EditPost/>}/>
+              <Route path="/groups/post/editPost/:id"   element={<EditPost/>}/>
               <Route path="/explore/post/editPost/:postId"   element={<CreatePost/>}/>
 
               {/* <Route path="/explore/postDetail" element={<PostDetail />} /> */}
