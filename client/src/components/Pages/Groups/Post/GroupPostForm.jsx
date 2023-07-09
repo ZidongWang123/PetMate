@@ -248,7 +248,7 @@ const GroupPostForm = () => {
                 {activeStep === 1 && (
                   <InputTagBar
                     initialValue={tag}
-                    onInputChange={handleTagsChange}
+                    onTagsChange={handleTagsChange}
                   />
                 )}
                 {activeStep === 2 && (
