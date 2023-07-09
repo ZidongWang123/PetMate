@@ -26,7 +26,6 @@ import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
 
 import { CreateGroup } from "./components/Pages/Groups/GroupForm/CreateGroup";
 import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
-import Home from "./components/Pages/Groups/Post/Home";
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
@@ -76,7 +75,6 @@ const App = () => {
               <Route path="/groups/:id/edit-group" element={<EditGroup />} />
               <Route path="/groups/post/:id" element={<Post />} />
 
-              <Route path="/workouts" element={<Home />} />
               <Route
                 path="/groups/:id/create-post"
                 element={<GroupPostForm />}
