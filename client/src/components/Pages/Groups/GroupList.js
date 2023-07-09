@@ -2,17 +2,13 @@
 import ListItemText from "@mui/material/ListItemText"; */
 import Avatar from "@mui/material/Avatar";
 import "./Group.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { joinGroup } from "../../../actions/group";
 import { useDispatch } from "react-redux";
 
 const GroupList = ({ group }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
-
-  const handleEdit = () => {
-    console.log("edit");
-  };
 
   const handleJoinGroup = () => {
     console.log("join");
@@ -56,9 +52,9 @@ const GroupList = ({ group }) => {
       <div>
         {user &&
           (user.result._id === group.creatorId ? (
-            <button className="grouplist-button" onClick={handleEdit}>
-              edit
-            </button>
+            <Link to={`/groups/${group._id}/edit-group`}>
+              <button className="grouplist-button">edit</button>
+            </Link>
           ) : group.members && group.members.includes(user.result._id) ? (
             <Link to={`/groups/${group._id}/create-post`}>
               <button className="grouplist-button">Write a Post</button>
