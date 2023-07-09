@@ -45,7 +45,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
     const dispatch = useDispatch();
 
-    const { services, isLoading } = useSelector((state) => state.service);
+    const { services } = useSelector((state) => state.service);
 
     React.useEffect(() => {
         console.log(allInputs);
@@ -146,7 +146,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
             {(activity === 'service') && showActivityOverview && services ? (
                 <div className="activities-grid">
                     {services.map((service) => (
-                        <ActivityOverview key={service.id} activityData={service} isLoading={isLoading} />
+                        <ActivityOverview key={service.id} activityData={service}/>
                     ))}
                 </div>
             ) : null}

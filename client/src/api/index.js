@@ -47,11 +47,11 @@ export const deleteGroup = (id) => API.delete(`/api/groups/${id}`);
 export const joinGroup = (id, newMember) =>
   API.post(`/api/groups/${id}/joinGroup`, newMember);
 
-//api for user
 //user login and register
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 
+//api for user
 export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost)
 export const modifyPersonalInfo=(id,data)=>API.put(`/user/modifyPersonalInfo/${id}`,data)
 export const getPersonalInfo=(id)=>API.get(`/user/getPersonalInfo/${id}`)

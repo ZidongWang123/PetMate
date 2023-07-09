@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Pagination, PaginationItem } from '@mui/material';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,12 +7,10 @@ import { getServices } from "../../../actions/service";
 
 const Paginate = ({ page }) => {
     const { numberOfPages } = useSelector((state) => state.service);
-    console.log(numberOfPages);
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (page) dispatch(getServices(page));
-        console.log(page);
     }, [dispatch, page]);
 
 
