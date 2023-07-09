@@ -57,7 +57,7 @@ const Groups = () => {
   React.useEffect(() => {
     dispatch(getGroups());
   }, [dispatch]);
-  const { groups, joined } = useSelector((state) => state.groups);
+  const { groups } = useSelector((state) => state.groups);
 
   return (
     <div className="groups">
@@ -74,9 +74,7 @@ const Groups = () => {
       </div>
       <div className="group-list">
         {Array.isArray(groups) ? (
-          groups.map((group) => (
-            <GroupList key={group._id} group={group} isjoined={joined} />
-          ))
+          groups.map((group) => <GroupList key={group._id} group={group} />)
         ) : (
           <div>Loading...</div>
         )}

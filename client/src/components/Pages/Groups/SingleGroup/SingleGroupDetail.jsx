@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { getGroup } from "../../../../actions/group";
+import { getGroup, joinGroup } from "../../../../actions/group";
+
 const SingleGroupDetail = () => {
   /* const { user } = useAuthContext(); */
   const { id } = useParams();
@@ -15,38 +16,31 @@ const SingleGroupDetail = () => {
   const [loading, setLoading] = useState(true);
 
   const user = JSON.parse(localStorage.getItem("profile"));
-  const token = user?.token;
+
   const { groups: singleGroup } = useSelector((state) => state.groups);
+
   useEffect(() => {
     dispatch(getGroup(id));
     setLoading(false);
   }, [dispatch, id]);
 
-  /* useEffect(() => {
-    const fetchSingleGroup = async () => {
-      const response = await fetch("http://localhost:100/api/groups/" + id, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const json = await response.json();
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
-        console.log(singleGroup);
-        setLoading(false);
-      }
-    };
+  const handleEdit = () => {
+    console.log("edit");
+  };
 
-    if (user) {
-      fetchSingleGroup();
-    }
-  }, [dispatch, user._id]); */
-  /*   useEffect(() => {
-    console.log(singleGroup);
-  }, [singleGroup]); */
+  const handleJoinGroup = () => {
+    console.log("join");
+    const groupMemberData = {
+      groupName: singleGroup.groupName,
+      groupId: singleGroup._id,
+      creatorName: singleGroup.creatorName,
+      creatorId: singleGroup.creatorId,
+      memberName: user.result.name,
+      memberId: user.result._id,
+    };
+    dispatch(joinGroup(singleGroup._id, groupMemberData));
+  };
+
   return (
     <div className="group-details">
       {loading ? (
@@ -90,7 +84,20 @@ const SingleGroupDetail = () => {
           </div>
 
           <div className="single-group-button">
-            <button className="joined-button">Join now</button>
+            {user.result._id === singleGroup.creatorId ? (
+              <button className="joined-button" onClick={handleEdit}>
+                Edit
+              </button>
+            ) : singleGroup.members &&
+              singleGroup.members.includes(user.result._id) ? (
+              <button className="joined-button" disabled>
+                Joined
+              </button>
+            ) : (
+              <button className="joined-button" onClick={handleJoinGroup}>
+                Join Now
+              </button>
+            )}
             <Link to="/groups/:id/create-post">
               <button className="write-post-button">Write a Post</button>
             </Link>

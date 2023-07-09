@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { joinGroup } from "../../../actions/group";
 import { useDispatch } from "react-redux";
 
-const GroupList = ({ group, isJoined }) => {
+const GroupList = ({ group }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
 
@@ -59,7 +59,16 @@ const GroupList = ({ group, isJoined }) => {
             <button className="grouplist-button" onClick={handleEdit}>
               edit
             </button>
-          ) : isJoined ? (
+          ) : group.members && group.members.includes(user.result._id) ? (
+            <Link to="/groups/:id/create-post">
+              <button className="grouplist-button">Write a Post</button>
+            </Link>
+          ) : (
+            <button className="grouplist-button" onClick={handleJoinGroup}>
+              Join Now
+            </button>
+          ))}
+        {/*  isJoined ? (
             <Link
               style={{ textDecoration: "none" }}
               className="grouplist-button"
@@ -67,11 +76,7 @@ const GroupList = ({ group, isJoined }) => {
             >
               Post now!
             </Link>
-          ) : (
-            <button className="grouplist-button" onClick={handleJoinGroup}>
-              Join Now
-            </button>
-          ))}
+          ) : */}
       </div>
     </div>
   );

@@ -4,10 +4,27 @@ import Groupmember from "../models/groupmember.js";
 
 // get all groups
 const getGroups = async (req, res) => {
-  const groups = await Group.find({}).sort({ createdAt: -1 });
+  try {
+    const groups = await Group.find({}).sort({ createdAt: -1 });
 
-  //send that as jsono back to the browser/clients
-  res.status(200).json(groups);
+    // 获取每个组的成员ID
+    const groupIds = groups.map((group) => group._id);
+    const groupMembers = await Groupmember.find({ groupId: { $in: groupIds } });
+
+    // 将成员ID添加到每个组的成员属性
+    const groupsWithMembers = groups.map((group) => {
+      const members = groupMembers
+        .filter((member) => member.groupId.equals(group._id))
+        .map((member) => member.memberId);
+      return { ...group.toObject(), members };
+    });
+
+    // 将包含成员ID的组列表作为 JSON 发送回浏览器/客户端
+    res.status(200).json(groupsWithMembers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const getGroup = async (req, res) => {
@@ -24,7 +41,13 @@ const getGroup = async (req, res) => {
       return res.status(404).json({ error: "No such group" });
     }
 
-    res.status(200).json(group);
+    const groupMembers = await Groupmember.find({ groupId: id });
+
+    // 将成员ID添加到每个组的成员属性
+    const members = groupMembers.map((member) => member.memberId);
+    const groupWithMembers = { ...group.toObject(), members };
+
+    res.status(200).json(groupWithMembers);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -32,21 +55,23 @@ const getGroup = async (req, res) => {
 };
 const getMyGroups = async (req, res) => {
   const userId = req.userId;
+  /* try {
+    const myGroups = await Groupmember.find({ memberId: userId });
+
+    // 返回小组信息给客户端
+    res.status(200).json(myGroups);
+  } */
   try {
-    /*   // 使用 Groupmember 模型查询用户所属的小组
-    const groupmembers = await Groupmember.find({ memberId: userId });
+    const myGroups = await Groupmember.find({ memberId: userId }).populate(
+      "groupId"
+    );
 
-    // 从每个 groupmember 中获取 groupId
-    const groupIds = groupmembers.map((groupmember) => groupmember.groupId);
-
-    // 使用 Group 模型查询包含指定 groupIds 的小组，并将其关联到 groupmembers
-    const myGroups = await Group.find({ _id: { $in: groupIds } }); */
-    const myGroups = await Groupmember.find({ memberId: userId }).populate({
-      path: "groupId",
-      select: "selectedFile",
+    const myGroupsWithFiles = myGroups.map((groupMember) => {
+      const group = groupMember.groupId;
+      return { ...group.toObject(), selectedFile: group.selectedFile };
     });
 
-    res.status(200).json(myGroups);
+    res.status(200).json(myGroupsWithFiles);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch user groups" });
   }
@@ -73,27 +98,30 @@ const createGroup = async (req, res) => {
       newGroupMessage._id,
       { $inc: { groupcount: 1 } } // 增加 groupcount 值
     );
-    res.status(201).json(newGroupMessage, newGroupmember);
+    res.status(201).json(newGroupMessage);
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(409).json(error);
   }
 };
 
 // delete a group
 const deleteGroup = async (req, res) => {
   const { id } = req.params;
+  const userId = req.userId;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send("No group with that id");
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such group" });
+  if (Group.creatorId === userId) {
+    // 如果 userId 等于 creatorId，则删除 Group 文档
+    try {
+      await Group.findOneAndDelete({ _id: id });
+      await Groupmember.findOneAndDelete({ groupId: id });
+    } catch (error) {
+      res.status(409).json(error);
+    }
   }
-
-  const group = await Group.findOneAndDelete({ _id: id });
-
-  if (!group) {
-    return res.status(404).json({ error: "No such group" });
-  }
-
-  res.status(200).json(workout);
+  await Groupmember.findOneAndDelete({ groupId: id, memberId: userId });
+  res.status(200).json({ message: "Group deleted successfully" });
 };
 
 // update a workout
