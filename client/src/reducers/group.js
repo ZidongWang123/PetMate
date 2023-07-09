@@ -5,6 +5,7 @@ import {
   FETCH_MY_GROUPS,
   JOIN_GROUP,
   DELETE_GROUP,
+  UPDATE_GROUP,
 } from "../constant/actionTypes";
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -35,6 +36,13 @@ export default (state = { joined: false, groups: [] }, action) => {
       return {
         ...state,
         groups: state.groups.filter((w) => w._id !== action.payload),
+      };
+    case UPDATE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.map((group) =>
+          group._id === action.payload._id ? action.payload : group
+        ),
       };
     default:
       return state;
