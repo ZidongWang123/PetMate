@@ -4,28 +4,27 @@ const Schema = mongoose.Schema;
 
 const groupSchema = new Schema(
   {
-    title: {
+    groupName: {
       type: String,
       required: true,
     },
     tags: {
       type: [String],
-      required: true,
     },
     intro: {
       type: String,
-      required: true,
     },
-    imageURL: {
+    selectedFile: {
       type: String,
-      required: true,
     },
-    numbers: {
+    creatorName: {
+      type: String,
+    },
+    creatorId: {
+      type: String,
+    },
+    groupcount: {
       type: Number,
-    },
-    creator: {
-      type: String,
-      required: true,
     },
   },
   { timestamps: true }

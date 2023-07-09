@@ -1,22 +1,32 @@
+//-----------------login related constant--------------
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
 
+
+//-----------------service related constant--------------
 export const CREATE_SERVICE = 'CREATE_SERVICE';
 export const UPDATE_SERVICE = 'UPDATE_SERVICE';
 export const DELETE_SERVICE = 'DELETE_SERVICE';
 export const FETCH_SERVICE = 'FETCH_SERVICE';
-
 export const FETCH_ALL = 'FETCH_ALL';
 export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
-export const LIKE = 'LIKE';
+export const FETCH_USER_SERVICE = 'FETCH_USER_SERVICE';
 
+export const START_LOADING = "START_LOADING";
+export const END_LOADING = "END_LOADING";
+
+//-----------------group related constant-----------------
+export const LIKE = 'LIKE';
 export const FETCH_EVENT = 'FETCH_EVENT';
 export const FETCH_APPLY = 'FETCH_APPLY';
 export const FETCH_GROUP = 'FETCH_GROUP';
 export const FETCH_POST = 'FETCH_POST';
-
-export const START_LOADING = "START_LOADING";
-export const END_LOADING = "END_LOADING";
+export const FETCH_ALLGROUPS = "FETCH_ALLGROUPS";
+export const FETCH_MY_GROUPS = "FETCH_MY_GROUPS";
+export const CREATE_GROUP = "CREATE_GROUP";
+export const UPDATE_GROUP = "UPDATE_GROUP";
+export const DELETE_GROUP = "DELETE_GROUP";
+export const JOIN_GROUP = "JOIN_GROUP";
 
 //font color and background color
 export const paleYellow = "rgb(245, 242, 236)";

@@ -6,10 +6,12 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.js";
 
+
 import serviceRoutes from "./routes/service.js";
 import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
+
 
 //create an instance of express
 const app = express();

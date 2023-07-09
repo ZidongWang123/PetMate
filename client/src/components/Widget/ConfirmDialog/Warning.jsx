@@ -12,9 +12,14 @@ import { darkPurple, orange, brightGreen } from "../../../constant/actionTypes";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { useNavigate } from "react-router-dom";
 
-export default function ConfirmDialog({ text, pic, page ,isOpen,onConfirm,onCancel}) {
-
-
+export default function ConfirmDialog({
+  text,
+  pic,
+  page,
+  isOpen,
+  onConfirm,
+  onCancel,
+}) {
   // const handleClose = () => {
   //   setOpen(false);
   //   navigate(-1);
@@ -49,43 +54,41 @@ export default function ConfirmDialog({ text, pic, page ,isOpen,onConfirm,onCanc
                 textTransform: "none",
                 fontSize: "30px",
                 fontWeight: "bold",
+                textAlign: "center",
               }}
             >
               {text}
             </DialogContentText>
-            <img src={pic}  alt="Image" className="signin-image" />
+            <img src={pic} alt="Image" className="warning-image" />
           </Box>
         </DialogContent>
         <DialogActions>
-      
-            <Button
-              onClick={onCancel}
-              sx={{
-                fontWeight: "bold",
-                textTransform: "none",
-                fontSize: "25px",
-                color: darkPurple,
-                borderRadius: "10px",
-              }}
-            >
-              Cancel
-            </Button>
+          <Button
+            onClick={onCancel}
+            sx={{
+              fontWeight: "bold",
+              textTransform: "none",
+              fontSize: "25px",
+              color: darkPurple,
+              borderRadius: "10px",
+            }}
+          >
+            Cancel
+          </Button>
 
-  
-            <Button
-              onClick={onConfirm}
-              autoFocus
-              sx={{
-                fontWeight: "bold",
-                textTransform: "none",
-                fontSize: "25px",
-                color: orange,
-                borderRadius: "10px",
-              }}
-            >
-              Sure
-            </Button>
-      
+          <Button
+            onClick={onConfirm}
+            autoFocus
+            sx={{
+              fontWeight: "bold",
+              textTransform: "none",
+              fontSize: "25px",
+              color: orange,
+              borderRadius: "10px",
+            }}
+          >
+            Sure
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

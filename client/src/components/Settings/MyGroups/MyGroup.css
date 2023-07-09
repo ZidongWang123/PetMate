@@ -1,96 +1,81 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 /* groups */
 /* group-preview/ list */
-.group-list {
-  margin-top: 20px;
-}
-.group-preview {
+.myGroupList {
+  margin-top: 100px;
   display: flex;
-  align-items: center;
-  padding: 10px 10px;
-  margin: 10px 0;
-  margin-left: 0px;
-  border-bottom: 1px solid #fafafa;
-  width: 90%;
-  /*  margin-top: 100px; */
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-.group-preview:hover {
+.myGroupUnit {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 10px;
+  width: 200px;
+  height: 200px;
+  margin-right: 10px; /* 调整每个单元格之间的右边距 */
+  padding: 30px 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.myGroupUnit:hover {
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-/* .group-preview {
-  padding: 10px;
-  margin: 10px 0;
-  border-bottom: 1px solid #fafafa;
-} */
+/* 
+.mygroup-avatar {
+  /*  margin-left: 3px; 
+} 
+}*/
 
-.group-avatar {
-  margin-right: 20px;
-}
-.group-avatar .MuiAvatar-root {
-  width: 60px;
-  height: 60px;
+.mygroup-avatar .MuiAvatar-root {
+  width: 100px;
+  height: 100px;
 }
 
-.group-text-review {
-  flex-grow: 1;
-  width: 70%;
-  margin-right: 30px;
-}
-
-.group-first-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.mygroup-title {
+  margin-top: 10px;
+  color: #393c7c;
+  font-size: 20px;
+  font-weight: bold;
   margin-bottom: 4px;
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 设置文本显示的最大行数 */
+  -webkit-box-orient: vertical;
 }
 
-.group-first-row p {
-  margin-right: 0px;
+.delete-mygroup {
+  position: absolute;
+  top: 10px; /* 调整图标相对于单元格顶部的距离 */
+  right: 10px; /* 调整图标相对于单元格右侧的距离 */
+  visibility: hidden;
+  color: grey;
 }
-.group-first-row .group-creater {
-  margin-right: 300px; /* 调整第二个元素的左边距 */
+.myGroupUnit:hover .delete-mygroup {
+  visibility: visible;
 }
-.group-first-row .group-amount {
-  margin-right: 20px;
-  color: #999999;
-}
-
-.group-name {
-  color: #393c7c;
-  font-size: 20px; /* 调整字体大小 */
-  font-weight: bold; /* 加粗字体 */
-}
-.group-intro-text {
-  margin-top: -5px;
-  margin-bottom: 8px;
-  color: #666666;
-}
-
-.tag {
-  display: inline-block;
-  margin-right: 12px;
-  padding: 4px 0px;
-  color: #ff8000;
-}
-
-.group-button {
-  padding: 8px 16px; /* 上下宽一点的内边距 */
-  font-size: 16px; /* 字体大小 */
-  margin: 4px 8px; /* 左右和上下宽一点的外边距 */
-  border-radius: 8px; /* 圆角 */
-  background-color: transparent; /* 背景色透明 */
-  color: #393c7c;
-  border-color: #393c7c;
+.delete-mygroup:hover {
+  color: #000000; /* 悬停时添加圆形阴影效果 */
   cursor: pointer;
-  margin-left: auto;
 }
-.group-button:hover {
-  /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
-  background-color: #393c7c;
-  color: #fafafa;
+
+.owner-comment {
+  margin-top: 5px;
+  color: #ff8000;
+  font-family: "Gloria Hallelujah", cursive;
 }
-.group-title {
-  color: #393c7c;
-  font-family: 'Comic Sans MS', cursive;
-  text-align: center;
+
+.join-comment {
+  margin-top: 5px;
+  color: darkslategray;
+  font-family: "Gloria Hallelujah", cursive;
 }

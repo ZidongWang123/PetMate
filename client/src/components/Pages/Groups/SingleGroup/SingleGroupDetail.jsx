@@ -1,43 +1,46 @@
 import Avatar from "@mui/material/Avatar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useWorkoutsContext } from "../../../../hooks/useWorkoutsContext";
+/* import { useWorkoutsContext } from "../../../../hooks/useWorkoutsContext"; */
 /* import { useAuthContext } from "../../../../hooks/useAuthContext"; */
 import { Link } from "react-router-dom";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { formatDistanceToNow } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+import { getGroup, joinGroup } from "../../../../actions/group";
+
 const SingleGroupDetail = () => {
   /* const { user } = useAuthContext(); */
   const { id } = useParams();
-  const { workouts: singleGroup, dispatch } = useWorkoutsContext();
+  const dispatch = useDispatch();
+  /*   const { workouts: singleGroup, dispatch } = useWorkoutsContext(); */
   const [loading, setLoading] = useState(true);
+
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const { groups: singleGroup } = useSelector((state) => state.groups);
+
   useEffect(() => {
-    const fetchSingleGroup = async () => {
-      const response = await fetch(
-        "http://localhost:100/api/groups/" + id
-        /* {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      } */
-      );
-      const json = await response.json();
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
-        console.log(singleGroup);
-        setLoading(false);
-      }
+    dispatch(getGroup(id));
+    setLoading(false);
+  }, [dispatch, id]);
+
+  const handleEdit = () => {
+    console.log("edit");
+  };
+
+  const handleJoinGroup = () => {
+    console.log("join");
+    const groupMemberData = {
+      groupName: singleGroup.groupName,
+      groupId: singleGroup._id,
+      creatorName: singleGroup.creatorName,
+      creatorId: singleGroup.creatorId,
+      memberName: user.result.name,
+      memberId: user.result._id,
     };
-    fetchSingleGroup();
-    /*    if (user) {
-      fetchSingleGroup();
-    } */
-  }, [dispatch]);
-  useEffect(() => {
-    console.log(singleGroup);
-  }, [singleGroup]);
+    dispatch(joinGroup(singleGroup._id, groupMemberData));
+  };
+
   return (
     <div className="group-details">
       {loading ? (
@@ -46,17 +49,19 @@ const SingleGroupDetail = () => {
         <div className="single-group-info" key={singleGroup._id}>
           <div className="firstrow">
             <div className="single-group-avatar">
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <Avatar alt="Remy Sharp" src={singleGroup.selectedFile} />
             </div>
             <div className="group-description">
               <div className="single-group-name-creater">
-                <span className="single-group-name">{singleGroup.title}</span>
+                <span className="single-group-name">
+                  {singleGroup.groupName}
+                </span>
                 <span className="single-group-creater">
-                  Created by: {singleGroup.creator}
+                  Created by: {singleGroup.creatorName}
                 </span>
 
                 <span className="single-group-amount">
-                  Member: {singleGroup.numbers}
+                  Member: {singleGroup.groupcount}
                 </span>
                 <p className="single-group-intro">{singleGroup.intro}</p>
                 <p>
@@ -68,17 +73,32 @@ const SingleGroupDetail = () => {
                     ))}
                 </p>
                 <p>
-                  {formatDistanceToNow(new Date(singleGroup.createdAt), {
-                    addSuffix: true,
-                  })}
+                  {singleGroup.createdAt &&
+                    formatDistanceToNow(new Date(singleGroup.createdAt), {
+                      addSuffix: true,
+                    })}
+                  {/*  {singleGroup.createdAt} */}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="single-group-button">
-            <button className="joined-button">Join now</button>
-            <Link to="/groups/:id/create-post">
+            {user.result._id === singleGroup.creatorId ? (
+              <button className="joined-button" onClick={handleEdit}>
+                Edit
+              </button>
+            ) : singleGroup.members &&
+              singleGroup.members.includes(user.result._id) ? (
+              <button className="joined-button" disabled>
+                Joined
+              </button>
+            ) : (
+              <button className="joined-button" onClick={handleJoinGroup}>
+                Join Now
+              </button>
+            )}
+            <Link to={`/groups/${singleGroup._id}/create-post`}>
               <button className="write-post-button">Write a Post</button>
             </Link>
           </div>

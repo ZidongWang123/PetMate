@@ -1,8 +1,8 @@
-import { FETCH_ALL, FETCH_BY_SEARCH, FETCH_SERVICE, CREATE_SERVICE, UPDATE_SERVICE, DELETE_SERVICE, START_LOADING, END_LOADING } from '../constant/actionTypes';
+import { FETCH_ALL, FETCH_BY_SEARCH, FETCH_SERVICE, CREATE_SERVICE, UPDATE_SERVICE, DELETE_SERVICE, START_LOADING, END_LOADING, FETCH_USER_SERVICE } from '../constant/actionTypes';
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state = { isLoading: true, services: [] }, action) => {
+export default (state = { isLoading: true, services: [], servicesCreator: null}, action) => {
     switch (action.type) {
         case START_LOADING:
             return { ...state, isLoading: true };
@@ -20,6 +20,8 @@ export default (state = { isLoading: true, services: [] }, action) => {
             return { ...state, services: state.services.map((service) => service._id === action.payload._id ? action.payload : service) };
         case DELETE_SERVICE:
             return { ...state, services: state.services.filter((service) => service._id !== action.payload) };
+        case FETCH_USER_SERVICE:
+            return { ...state, servicesCreator: action.payload };
         default:
             return state;
         //break;

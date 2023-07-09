@@ -1,28 +1,36 @@
 import express from "express";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
 import {
   getGroups,
   getGroup,
+  getMyGroups,
   createGroup,
   deleteGroup,
   updateGroup,
+  joinGroup,
 } from "../controllers/groupController.js";
 
 //GET all groups
 router.get("/", getGroups);
 
-//GET a single group
-router.get("/:id", getGroup);
+//GET my group
+router.get("/mygroups", auth, getMyGroups);
 
+//GET a single group
+router.get("/:id", auth, getGroup);
+//Join a group
+
+router.post("/:id/joinGroup", auth, joinGroup);
 //POST a new group
-router.post("/", createGroup);
+router.post("/", auth, createGroup);
 
 //DELETE a group
-router.delete("/:id", deleteGroup);
+router.delete("/:id", auth, deleteGroup);
 
 //UPDATE a group
-router.patch("/:id", updateGroup);
+router.patch("/:id", auth, updateGroup);
 
 export default router;
