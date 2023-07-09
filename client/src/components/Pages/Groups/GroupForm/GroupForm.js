@@ -56,7 +56,7 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
     // 更新选中的标签状态
 
     setGroupData({ ...groupData, tags: tags });
-    console.log(groupData);
+    console.log(groupData.tags);
     // 在标签数据变化时触发回调函数
     // 可以在这里进行其他处理
   };
