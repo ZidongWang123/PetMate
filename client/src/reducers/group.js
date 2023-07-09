@@ -4,6 +4,7 @@ import {
   FETCH_GROUP,
   FETCH_MY_GROUPS,
   JOIN_GROUP,
+  DELETE_GROUP,
 } from "../constant/actionTypes";
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -29,6 +30,11 @@ export default (state = { joined: false, groups: [] }, action) => {
           }
           return group;
         }),
+      };
+    case DELETE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.filter((w) => w._id !== action.payload),
       };
     default:
       return state;
