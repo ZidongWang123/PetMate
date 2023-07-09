@@ -9,7 +9,7 @@ const explorePostSchema = new mongoose.Schema({
   },
   title: String,
   text: String,
-  tags: String,
+  tags: [String],
   likes: 
       [{type: mongoose.Schema.Types.ObjectId,
         ref: 'User'}],

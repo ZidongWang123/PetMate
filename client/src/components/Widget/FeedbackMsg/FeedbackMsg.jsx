@@ -16,10 +16,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
  * @returns 
  */
 const FeedbackMsg = ({ status, message, severity, onClose}) => {
-
+   
 
     return (
-        <Snackbar open={status} onClose={onClose} autoHideDuration={2000}  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}>
+        <Snackbar open={status} onClose={onClose} autoHideDuration={3000}  anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}>
             <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
                 {message}
             </Alert>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { getRecommendTags } from "../../../api";
 /* import useAutocomplete from "@mui/base/useAutocomplete";
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -14,62 +15,97 @@ import {
 import { Autocomplete } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
-const InputTagBar = ({ initialValue, onInputChange = () => {} }) => {
-  const [selectedValues, setSelectedValues] = useState([]);
-  const [inputValue, setInputValue] = useState(initialValue);
+const InputTagBar = ({ tags, onTagsChange,where="group",width=900,borderRadius="100px",height="default"}) => {
 
-  useEffect(() => {
-    setInputValue(selectedValues.join(", "));
-  }, [selectedValues, onInputChange]);
+  const [inputValue,setInputValue]=useState("")
+  const [options,setOptions]=useState([])
 
-  const handleChange = (event, values) => {
-    setSelectedValues(values);
-    onInputChange(values);
-    console.log(inputValue);
-  };
+  const handleTagChange = (e,tags) => {
+    onTagsChange(tags)
+  }
+  
+  const handleInputChange=(e)=>{
 
+    setInputValue(e.target.value)
+    console.log(e.target.value)
+
+    
+  }
+  const onClose=(e)=>{
+    setInputValue("")
+  }
+    useEffect(()=>{
+
+    const updateOptions=async ()=>{
+      try{
+        const res=await getRecommendTags(inputValue,where)
+        if(res.status=200){
+          tags=res.data.result
+          if(tags.length===0){
+            setOptions([inputValue])
+          }
+          else{
+            setOptions(tags)
+          }
+      }
+      else if(res.status=500){
+        console.log("internal server error")
+      }
+      else{
+        console.log("Unknown error, try again")
+      }
+ 
+      }catch(error){
+        console.log(error)
+      }
+
+    }
+    if(inputValue){
+      updateOptions()
+    }
+    
+
+
+  },[inputValue])
   
   return (
     <div>
       <Autocomplete
         multiple
         id="tags-standard"
-        options={possibleOptions}
+        onClose={onClose}
+        options={options}
         getOptionLabel={(option) => option}
-        defaultValue={[]}
-        value={initialValue} // 设置 Autocomplete 的值为输入值
-        onChange={handleChange} // 处理输入值变化的函数
+        value={tags} // 设置 Autocomplete 的值为输入值
+        onChange={handleTagChange} // 处理输入值变化的函数
+    
         renderInput={(params) => (
           <TextField
             {...params}
+            
             /* label="Multiple values" */
             placeholder="your tags"
-            value={initialValue} // 设置 TextField 的值为输入值
-            onChange={(event) => setInputValue(event.target.value)}
+            value={inputValue} // 设置 TextField 的值为输入值
+            onChange={handleInputChange}
           />
         )}
         sx={{
           backgroundColor: "white",
-          borderRadius: "100px",
-          minWidth: 800,
-          maxWidth: 900,
+          borderRadius:{borderRadius},
+          width: {width},
           boxShadow: "0 5px 5px rgba(0, 0, 0, 0.1)",
+          height:{height},
+          overflow: "auto",
+          "::-webkit-scrollbar":{
+              display: "none"
+          },
         }}
       />
     </div>
   );
 };
 const possibleOptions = [
-  "Munich",
-  "LargeDog",
-  "Bogenhausen",
-  "Marienplatz",
-  "DogFood",
-  "CatFood",
-  "CatLitter",
-  "adopting",
-  "lovelyfamily",
-  "lovelyfamily",
+
 ];
 /* const possibleOptions = [
   { title: "Munich", id: 1 },
