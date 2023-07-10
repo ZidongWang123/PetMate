@@ -17,6 +17,8 @@
 }
 .group-details {
   font-family: "Ubuntu";
+  width: 1000px;
+  margin-bottom: 50px;
 }
 
 .single-group-avatar {
@@ -35,10 +37,10 @@
   flex-grow: 1;
 }
 
-.single-forum-post>div ,.single-forum-header>div{
+.single-forum-post > div,
+.single-forum-header > div {
   flex: 1;
 }
-
 
 .single-header-date {
   position: relative; /* 开启相对定位 */
@@ -49,7 +51,6 @@
   position: relative; /* 开启相对定位 */
   left: 40px; /* 向左移动的距离 */
 }
-
 
 .single-group-name {
   color: #393c7c;
@@ -188,18 +189,17 @@ button:disabled {
   border-bottom: 1px solid #ccc;
 }
 
-
 /* Post date */
-.single-post-date,.single-header-date {
+.single-post-date,
+.single-header-date {
   /* width: 120px; */
   text-align: center;
   margin-left: 20px;
-
-  
 }
 
 /* Post author */
-.single-post-author,.single-header-author {
+.single-post-author,
+.single-header-author {
   /* width: 200px; */
   text-align: right;
 }
@@ -223,7 +223,6 @@ button:disabled {
   position: relative; /* 开启相对定位 */
   left: -10px; /* 向左移动的距离 */
 }
-
 
 /* Column names */
 .column-names {
