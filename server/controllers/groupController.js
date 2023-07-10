@@ -68,7 +68,11 @@ const getMyGroups = async (req, res) => {
 
     const myGroupsWithFiles = myGroups.map((groupMember) => {
       const group = groupMember.groupId;
-      return { ...group.toObject(), selectedFile: group.selectedFile };
+      return {
+        ...group.toObject(),
+        selectedFile: group.selectedFile,
+        groupId: group._id,
+      };
     });
 
     res.status(200).json(myGroupsWithFiles);
