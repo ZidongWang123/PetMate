@@ -17,14 +17,10 @@ const groupSchema = new Schema(
     selectedFile: {
       type: String,
     },
-    creatorName: {
-      type: String,
-    },
+
     creatorId: {
-      type: String,
-    },
-    groupcount: {
-      type: Number,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   { timestamps: true }

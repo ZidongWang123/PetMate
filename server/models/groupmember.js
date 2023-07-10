@@ -9,27 +9,17 @@ const groupmemberSchema = new Schema(
       required: true,
       ref: "Group",
     },
-    groupName: {
-      type: String,
-      required: true,
-    },
 
     creatorId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-    },
-    creatorName: {
-      type: String,
-      required: true,
+      ref: "User",
     },
 
     memberId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-    },
-    memberName: {
-      type: String,
-      required: true,
+      ref: "User",
     },
   },
   { timestamps: true }

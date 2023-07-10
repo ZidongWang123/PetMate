@@ -46,7 +46,7 @@ const Groups = () => {
     setIsOpen(false);
     if (!user) {
       navigate("/auth");
-    } else if(user && !user.result.isPrime){
+    } else if (user && !user.result.isPrime) {
       navigate("/subscription");
     }
   };
@@ -55,11 +55,14 @@ const Groups = () => {
   };
 
   const dispatch = useDispatch();
-
+  const { groups, isLoading } = useSelector((state) => state.groups);
   React.useEffect(() => {
     dispatch(getGroups());
   }, [dispatch]);
-  const { groups } = useSelector((state) => state.groups);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // 显示加载中的提示
+  }
 
   return (
     <div className="groups">

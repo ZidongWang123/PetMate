@@ -5,7 +5,9 @@ import Groupmember from "../models/groupmember.js";
 // get all groups
 const getGroups = async (req, res) => {
   try {
-    const groups = await Group.find({}).sort({ createdAt: -1 });
+    const groups = await Group.find({})
+      .sort({ createdAt: -1 })
+      .populate("creatorId", "name");
 
     // 获取每个组的成员ID
     const groupIds = groups.map((group) => group._id);
@@ -16,7 +18,9 @@ const getGroups = async (req, res) => {
       const members = groupMembers
         .filter((member) => member.groupId.equals(group._id))
         .map((member) => member.memberId);
-      return { ...group.toObject(), members };
+      const groupCount = members.length;
+      const creatorName = group.creatorId ? group.creatorId.name : null;
+      return { ...group.toObject(), creatorName, members, groupCount };
     });
 
     // 将包含成员ID的组列表作为 JSON 发送回浏览器/客户端
@@ -35,8 +39,8 @@ const getGroup = async (req, res) => {
   }
 
   try {
-    const group = await Group.findById(id);
-
+    const group = await Group.findById(id).populate("creatorId", "name");
+    const creatorName = group.creatorId ? group.creatorId.name : null;
     if (!group) {
       return res.status(404).json({ error: "No such group" });
     }
@@ -45,7 +49,13 @@ const getGroup = async (req, res) => {
 
     // 将成员ID添加到每个组的成员属性
     const members = groupMembers.map((member) => member.memberId);
-    const groupWithMembers = { ...group.toObject(), members };
+    const groupCount = members.length;
+    const groupWithMembers = {
+      ...group.toObject(),
+      creatorName,
+      members,
+      groupCount,
+    };
 
     res.status(200).json(groupWithMembers);
   } catch (error) {
@@ -68,7 +78,12 @@ const getMyGroups = async (req, res) => {
 
     const myGroupsWithFiles = myGroups.map((groupMember) => {
       const group = groupMember.groupId;
-      return { ...group.toObject(), selectedFile: group.selectedFile };
+      return {
+        ...group.toObject(),
+        selectedFile: group.selectedFile,
+        groupId: group._id,
+        groupName: group.groupName,
+      };
     });
 
     res.status(200).json(myGroupsWithFiles);
@@ -82,11 +97,10 @@ const createGroup = async (req, res) => {
   const group = req.body;
   const newGroupMessage = new Group({ ...group, creatorId: req.userId });
   const newGroupmember = new Groupmember({
-    groupName: newGroupMessage.groupName,
     groupId: newGroupMessage._id,
-    creatorName: newGroupMessage.creatorName,
+
     creatorId: newGroupMessage.creatorId,
-    memberName: newGroupMessage.creatorName,
+
     memberId: newGroupMessage.creatorId,
   });
   try {
@@ -111,17 +125,24 @@ const deleteGroup = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send("No group with that id");
 
-  if (Group.creatorId === userId) {
-    // 如果 userId 等于 creatorId，则删除 Group 文档
-    try {
-      await Group.findOneAndDelete({ _id: id });
-      await Groupmember.findOneAndDelete({ groupId: id });
-    } catch (error) {
-      res.status(409).json(error);
+  try {
+    const group = await Group.findById(id);
+    if (!group) return res.status(404).send("No group with that id");
+
+    if (group.creatorId.toString() === userId) {
+      // 如果 userId 等于 creatorId，则删除 Group 文档
+      try {
+        await Group.findByIdAndRemove(id);
+        await Groupmember.deleteMany({ groupId: id });
+      } catch (error) {
+        res.status(409).json(error);
+      }
     }
+    await Groupmember.findOneAndDelete({ groupId: id, memberId: userId });
+    res.status(200).json({ message: "Group deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
   }
-  await Groupmember.findOneAndDelete({ groupId: id, memberId: userId });
-  res.status(200).json({ message: "Group deleted successfully" });
 };
 
 // update a workout
@@ -163,7 +184,7 @@ const joinGroup = async (req, res) => {
   try {
     await newMember.save();
     const { groupId } = groupMemberData;
-    await Group.findOneAndUpdate({ _id: groupId }, { $inc: { groupcount: 1 } });
+    /*     await Group.findOneAndUpdate({ _id: groupId }, { $inc: { groupcount: 1 } }); */
     res.status(201).json(groupMemberData);
   } catch (error) {
     res.status(500).json({ error: error.message });
