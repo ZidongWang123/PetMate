@@ -15,7 +15,7 @@ export const CreateGroup = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const handleCreate = async () => {
-    dispatch(createGroup({ ...groupData, creatorName: user?.result?.name }));
+    dispatch(createGroup({ ...groupData }));
   };
   return (
     <GroupForm
