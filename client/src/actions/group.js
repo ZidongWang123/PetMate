@@ -6,14 +6,18 @@ import {
   JOIN_GROUP,
   DELETE_GROUP,
   UPDATE_GROUP,
+  START_LOADING,
+  END_LOADING,
 } from "../constant/actionTypes";
 import * as api from "../api/index.js";
 export const getGroups = () => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data } = await api.fetchGroups();
     console.log(data);
     /* console.log(data); */
     dispatch({ type: FETCH_ALLGROUPS, payload: data });
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error.message);
   }
@@ -24,6 +28,7 @@ export const getGroup = (id) => async (dispatch) => {
     const { data } = await api.fetchGroup(id);
 
     dispatch({ type: FETCH_GROUP, payload: data });
+
     console.log(data);
   } catch (error) {
     console.log(error.message);
