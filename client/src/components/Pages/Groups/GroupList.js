@@ -76,9 +76,11 @@ const GroupList = ({ group }) => {
     // 获取最新的group信息
   };
 
-  const isMember = group.members && group.members.includes(user.result._id);
+  const isMember =
+    user && group.members && group.members.includes(user.result._id);
+  const isCreator = user && group.creatorName === user.result.name;
   const containerStyle = {
-    backgroundColor: isMember ? "#ffd396c8" : "#ebebeb",
+    backgroundColor: isCreator ? "#ffd396c8" : isMember ? "#e5daff" : "#ebebeb",
     // 其他样式属性
   };
 
@@ -98,8 +100,14 @@ const GroupList = ({ group }) => {
         <div className="group-name">{group.groupName}</div>
         <div className="group-text-review">
           <div className="group-first-row">
-            <p className="group-creater">Created by:{group.creatorName}</p>
-            <p className="group-amount">member:{group.groupcount}</p>
+            <div>
+              {group.creatorName === user.result.name ? (
+                <p className="group-creater">Created by: You</p>
+              ) : (
+                <p className="group-creater">Created by: {group.creatorName}</p>
+              )}
+            </div>
+            <p className="group-amount">member:{group.groupCount}</p>
           </div>
           <p className="group-intro-text">{group.intro}</p>
           <p>

@@ -85,11 +85,10 @@ const SingleGroupDetail = () => {
   const handleJoinGroup = async () => {
     console.log("join");
     const groupMemberData = {
-      groupName: singleGroup.groupName,
       groupId: singleGroup._id,
-      creatorName: singleGroup.creatorName,
+
       creatorId: singleGroup.creatorId,
-      memberName: user.result.name,
+
       memberId: user.result._id,
     };
     await dispatch(joinGroup(singleGroup._id, groupMemberData));
@@ -116,7 +115,7 @@ const SingleGroupDetail = () => {
                 </span>
 
                 <span className="single-group-amount">
-                  Member: {singleGroup.groupcount}
+                  Member: {singleGroup.groupCount}
                 </span>
                 <p className="single-group-intro">{singleGroup.intro}</p>
                 <p>
