@@ -148,6 +148,9 @@ const GroupList = ({ group }) => {
           {user && isCreator && timeDifference <= 3600000 && (
             <div className="new-group-note">YOUR NEW GROUP!</div>
           )}
+          {user && !isCreator && timeDifference <= 3600000 && (
+            <div className="new-group-note">NEW GROUP!</div>
+          )}
           {group.password && (
             <LockIcon sx={{ color: "#30263b", marginLeft: "5px" }} />
           )}
