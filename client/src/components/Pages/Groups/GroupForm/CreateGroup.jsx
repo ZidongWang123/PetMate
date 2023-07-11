@@ -5,7 +5,7 @@ import GroupForm from "./GroupForm";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { useNavigate } from "react-router-dom";
 import JoinGroup from "../../../../images/dabengou/JoinGroup.jpg";
-import InputDialog from "../../../Widget/ConfirmDialog/InputDialog";
+import Warning from "../../../Widget/ConfirmDialog/Warning";
 
 export const CreateGroup = () => {
   const [groupData, setGroupData] = useState({
@@ -68,7 +68,7 @@ export const CreateGroup = () => {
         severity="success"
         onClose={handelfeebackMsgClose}
       />
-      <InputDialog
+      <Warning
         isOpen={isOpen}
         onConfirm={onConfirm}
         onCancel={onCancel}
