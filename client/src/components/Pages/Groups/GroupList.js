@@ -10,6 +10,7 @@ import Warning from "../../Widget/ConfirmDialog/Warning.jsx";
 import signInPic from "../../../images/dabengou/SignInPic.jpg";
 import JoinGroup from "../../../images/dabengou/JoinGroup.jpg";
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
+import LockIcon from "@mui/icons-material/Lock";
 const LoginText = "Go to log in and explore more!";
 
 const severityOptions = { success: "success", failure: "error" };
@@ -21,28 +22,52 @@ const GroupList = ({ group }) => {
   const [text, setText] = useState("");
   const [pic, setPic] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
+  const [inputText, setInputText] = useState("");
   const [isFeedbackMsg, setIsFeedbackMsg] = useState(false);
   const [Msg, setMsg] = useState("");
   const [severity, setSeverity] = useState("");
   const handelfeebackMsgClose = () => {
     setIsFeedbackMsg(false);
   };
+  /* const Gpassword = group.password; */
 
   const onClick = () => {
     console.log("Clicked");
-    if (user) {
-      setText(`DO you want to join Group ${group.groupName}?`);
+    if (user && group.members.includes(user.result._id)) {
+      navigate(`/groups/${group._id}`);
+      setInputText("");
+    } else if (user && group.password) {
+      setInputText("your password");
+      setText("please input the password:");
       setPic(JoinGroup);
       setIsOpen(true);
+      console.log(isOpen);
+      console.log("set ok");
+    } else if (user) {
+      navigate(`/groups/${group._id}`);
+      setInputText("");
     } else {
       setText(LoginText);
       setPic(signInPic);
       setIsOpen(true);
-      /* console.log("not logged in"); */
+      setInputText("");
+      console.log("not logged in");
     }
   };
-  const des = user ? `/groups/${group._id}` : "#";
+
+  const handleJoin = () => {
+    if (user && group.password) {
+      setInputText("your password");
+      setText("please input the password:");
+      setPic(JoinGroup);
+      setIsOpen(true);
+    } else {
+      setText(`DO you want to join Group ${group.groupName}?`);
+      setPic(JoinGroup);
+      setIsOpen(true);
+    }
+  };
+  /*  const des = user ? `/groups/${group._id}` : "#"; */
   const onConfirm = () => {
     setIsOpen(false);
     if (!user) {
@@ -61,7 +86,24 @@ const GroupList = ({ group }) => {
   const onCancel = () => {
     setIsOpen(false);
   };
+  const verifyGroup = async () => {
+    try {
+      const response = await verifyGroup(group._id, inputText);
 
+      // 根据后端的响应进行处理
+      if (response.status === 200) {
+        // 密码验证成功，执行相应操作
+        handleJoinGroup();
+        // 其他操作...
+      } else {
+        // 密码验证失败，执行相应操作
+        setSeverity(severityOptions.failure);
+        setMsg("password incorrectly");
+        setIsFeedbackMsg(true);
+        // 其他操作...
+      }
+    } catch (error) {}
+  };
   const handleJoinGroup = async () => {
     console.log("join");
     const groupMemberData = {
@@ -78,11 +120,14 @@ const GroupList = ({ group }) => {
 
   const isMember =
     user && group.members && group.members.includes(user.result._id);
-  const isCreator = user && group.creatorName === user.result.name;
+  const isCreator = user && group.creatorRefId === user.result._id;
   const containerStyle = {
-    backgroundColor: isCreator ? "#ffd396c8" : isMember ? "#e5daff" : "#ebebeb",
+    backgroundColor: isCreator ? "#fef3e8" : isMember ? "#f6e8fe" : "#ebebeb",
     // 其他样式属性
   };
+  const createdAt = new Date(group.createdAt);
+  const currentTime = new Date();
+  const timeDifference = currentTime - createdAt;
 
   return (
     <div className="group-preview" key={group._id} style={containerStyle}>
@@ -92,16 +137,25 @@ const GroupList = ({ group }) => {
         onCancel={onCancel}
         pic={pic}
         text={text}
+        initialText={inputText}
       ></Warning>
       <div className="group-avatar">
         <Avatar alt="Remy Sharp" src={group.selectedFile} />
       </div>
-      <Link style={{ textDecoration: "none" }} onClick={onClick} to={des}>
-        <div className="group-name">{group.groupName}</div>
+      <div style={{ textDecoration: "none" }} onClick={onClick}>
+        <div className="group-name-container">
+          <div className="group-name">{group.groupName}</div>
+          {user && isCreator && timeDifference <= 3600000 && (
+            <div className="new-group-note">YOUR NEW GROUP!</div>
+          )}
+          {group.password && (
+            <LockIcon sx={{ color: "#30263b", marginLeft: "5px" }} />
+          )}
+        </div>
         <div className="group-text-review">
           <div className="group-first-row">
             <div>
-              {group.creatorName === user.result.name ? (
+              {user && group.creatorName === user.result.name ? (
                 <p className="group-creater">Created by: You</p>
               ) : (
                 <p className="group-creater">Created by: {group.creatorName}</p>
@@ -119,18 +173,18 @@ const GroupList = ({ group }) => {
               ))}
           </p>
         </div>
-      </Link>
+      </div>
 
       <div>
-        <Warning
+        {/*  <Warning
           isOpen={isOpen}
           onConfirm={onConfirm}
           onCancel={onCancel}
           pic={pic}
           text={text}
-        ></Warning>
+        ></Warning> */}
         {user &&
-          (user.result._id === group.creatorId ? (
+          (user.result._id === group.creatorRefId ? (
             <Link to={`/groups/${group._id}/edit-group`}>
               <button className="grouplist-button">edit</button>
             </Link>
@@ -139,7 +193,7 @@ const GroupList = ({ group }) => {
               <button className="grouplist-button">Write a Post</button>
             </Link>
           ) : (
-            <button className="grouplist-button" onClick={onClick}>
+            <button className="grouplist-button" onClick={handleJoin}>
               Join Now
             </button>
           ))}

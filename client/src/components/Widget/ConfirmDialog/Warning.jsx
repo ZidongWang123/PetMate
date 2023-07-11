@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./ConfirmDialog.css";
 
@@ -12,14 +12,20 @@ import { darkPurple, orange, brightGreen } from "../../../constant/actionTypes";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { useNavigate } from "react-router-dom";
 
-export default function ConfirmDialog({
+export default function Warning({
   text,
   pic,
-  page,
+
   isOpen,
   onConfirm,
   onCancel,
+  initialText,
 }) {
+  const [inputText, setInputText] = React.useState(initialText);
+  /*   console.log("inputtext:", inputText); */
+  const handleChange = (event) => {
+    setInputText(event.target.value);
+  };
   // const handleClose = () => {
   //   setOpen(false);
   //   navigate(-1);
@@ -60,6 +66,9 @@ export default function ConfirmDialog({
               {text}
             </DialogContentText>
             <img src={pic} alt="Image" className="warning-image" />
+            {initialText && (
+              <TextField value={inputText} onChange={handleChange} />
+            )}
           </Box>
         </DialogContent>
         <DialogActions>

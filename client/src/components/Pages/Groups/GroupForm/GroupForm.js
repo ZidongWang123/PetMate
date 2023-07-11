@@ -144,13 +144,8 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
     e.preventDefault(); // normally for refreshing the page
     console.log("IM HERE", groupData);
     handleSubmit();
-    handleReset();
   };
-  /*  const response = await createGroup(groupData);
-    const data = await response.json();
-    if (response.ok) {
-      console.log("new workout added", data);
-    } */
+
   return (
     <div>
       <div
