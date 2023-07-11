@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { brightPurple, darkPurple, orange, darkGray } from "../../../constant/actionTypes";
+import { brightPurple, orange, darkGray } from "../../../constant/actionTypes";
 
-const Application = () => {
+const Application = (application) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     return (
         <Box sx={{

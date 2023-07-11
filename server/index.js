@@ -1,11 +1,3 @@
-/*
- * @Author: xiehuan 1208044257@qq.com
- * @Date: 2023-06-30 11:20:53
- * @LastEditors: xiehuan 1208044257@qq.com
- * @LastEditTime: 2023-07-01 14:01:33
- * @FilePath: \prototype\server\index.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 //import all the dependencies
 import express from "express";
 import bodyParser from "body-parser";
@@ -19,6 +11,7 @@ import serviceRoutes from "./routes/service.js";
 import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
+import applicationRoutes from "./routes/application.js";
 
 import articleRoutes  from "./routes/article.js"
 //create an instance of express
@@ -40,6 +33,7 @@ app.use("/explore", explorePost);
 
 app.use("/services", serviceRoutes);
 app.use("/events", eventRoutes);
+app.use("/applications", applicationRoutes);
 
 app.use("/api/articles", articleRoutes);
 const PORT = 100;

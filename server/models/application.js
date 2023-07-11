@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const applicationSchema = mongoose.Schema({
-    id: { type: String },
-    isApproved: { type: Boolean },
+    status: { type: String},
     introduction: { type: String },
 
-    userId: { type: String },
+    creatorId: { type: String },
     activityId: { type: String },
+    applicantId: { type: String },
 });
 
 export default mongoose.model('application', applicationSchema);

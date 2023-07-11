@@ -7,22 +7,28 @@ import { brightPurple } from "../../../../constant/actionTypes";
 import { fetchPersonalInfo } from "../../../../actions/service";
 import { Avatar } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { TextareaAutosize } from "@mui/material";
+import { TextareaAutosize, Tooltip } from "@mui/material";
+import { createApplication } from "../../../../api";
+import { useNavigate } from "react-router-dom";
+import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 
 const ActivityPage = () => {
+    const user = JSON.parse(localStorage.getItem('profile'));
     const dispatch = useDispatch();
     const { id } = useParams();
+    const navigate = useNavigate();
+
+    const currentPath = window.location.pathname; //get the current path
 
     //set the introduction of the application
     const [value, setValue] = React.useState('');
 
     const handleChange = (event) => {
         const newValue = event.target.value;
+        console.log(newValue);
         setValue(newValue);
     };
 
-    console.log(id);
-    //dispatch(getService(id));
     React.useEffect(() => {
         if (id) {
             dispatch(getService(id));
@@ -45,8 +51,18 @@ const ActivityPage = () => {
     const { servicesCreator } = useSelector((state) => state.service);
     //console.log(service, servicesCreator);
 
+    const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+
+    const handelfeebackMsgClose = () => {
+        currentPath.includes('service') ? navigate('/service') : navigate('/event');
+        setShowFeedbackMsg(false)
+    }
+
     const handleApply = () => {
-        //create a new application api
+        if (user.result._id && service && service.service && service.service.creator && service.service._id) {
+            createApplication([ value, service.service.creator, service.service._id, user.result._id ]);
+            setShowFeedbackMsg(true)
+        }
     };
 
     return (
@@ -62,10 +78,10 @@ const ActivityPage = () => {
                 justifyContent: 'space-between',
                 height: '100%',
 
-                '@media (max-width: 600px)': { 
+                '@media (max-width: 600px)': {
                     padding: '5px 5px 5px 5px',
                     margin: '5px 10px 5px 10px',
-                  },
+                },
             }}>
                 {/* box for avatar username and apply */}
                 <Box sx={{
@@ -81,6 +97,7 @@ const ActivityPage = () => {
                         display: 'flex',
                         flexDirection: 'row',
                         width: '30%',
+                        alignItems: 'center',
                     }}>
                         {servicesCreator && (
                             servicesCreator.result.avatar ? (
@@ -119,16 +136,16 @@ const ActivityPage = () => {
                     marginTop: '20px',
                     width: '100%',
 
-                    '@media (max-width: 600px)': { 
+                    '@media (max-width: 960px)': {
                         flexDirection: 'column',
-                      },
+                    },
                 }}>
                     <Box sx={{
                         width: '300px',
 
-                        '@media (max-width: 600px)': { 
+                        '@media (max-width: 600px)': {
                             width: '100%',
-                          },
+                        },
                     }}>
                         {service ? (
                             <Box sx={{
@@ -142,9 +159,14 @@ const ActivityPage = () => {
                                     <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
                                         Title:
                                     </Typography>
-                                    <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                    {/* <Typography variant="h6" sx={{ textAlign: 'end' }}>
                                         {service.service.title}
-                                    </Typography>
+                                    </Typography> */}
+                                    <Tooltip title={service.service.title}>
+                                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                            {service.service.title}
+                                        </Typography>
+                                    </Tooltip>
                                 </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
@@ -196,9 +218,11 @@ const ActivityPage = () => {
                                     <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
                                         Location:
                                     </Typography>
-                                    <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                                        {service.service.location}
-                                    </Typography>
+                                    <Tooltip title={service.service.location}>
+                                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                            {service.service.location}
+                                        </Typography>
+                                    </Tooltip>
                                 </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
@@ -211,10 +235,17 @@ const ActivityPage = () => {
                                 </div>
                             </Box>) : null}
                     </Box>
+
+                    {/* box for content */}
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         flexGrow: 1,
+                        width: '60%',
+
+                        '@media (max-width: 600px)': {
+                            width: '100%',
+                        },
                     }}>
                         {service ? (
                             <>
@@ -229,9 +260,9 @@ const ActivityPage = () => {
                                         width: '100%',
                                     }}
                                 >
-                                <Typography variant="h6" >
-                                    {service.service.content}
-                                </Typography>
+                                    <Typography variant="h6" >
+                                        {service.service.content}
+                                    </Typography>
                                 </Box>
                             </>
                         ) : null}
@@ -269,6 +300,7 @@ const ActivityPage = () => {
                     />
                 </Box>
             </Box>
+            <FeedbackMsg status={showFeedbackMsg} message='Sucessful applied' severity='success' onClose={handelfeebackMsgClose} />
         </>
     );
 }

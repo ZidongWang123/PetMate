@@ -16,6 +16,11 @@ export const FETCH_USER_SERVICE = 'FETCH_USER_SERVICE';
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
 
+//-----------------event related constant-----------------
+
+//-----------------application related constant-----------
+export const FETCH_ALL_APPLICATIONS = 'FETCH_ALL_APPLICATIONS';
+
 //-----------------group related constant-----------------
 export const LIKE = 'LIKE';
 export const FETCH_EVENT = 'FETCH_EVENT';

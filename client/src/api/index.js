@@ -16,7 +16,6 @@ API.interceptors.request.use((req) => {
 export const fetchService = (id) => API.get(`/services/${id}`);
 export const fetchServices = (page,  userId = null) => API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ''}`);
 export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);
-// user login and register
 
 export const createService = (newService) => API.post("/services", newService);
 export const updateService = (id, updatedService) => API.patch(`/services/${id}`, updatedService);
@@ -33,7 +32,14 @@ export const updateEvent = (id, updatedEvent) =>
   API.patch(`/events/${id}`, updatedEvent);
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
-//api for others
+//api for applications
+export const fetchApplicationsByApplicantId = (applicantId) => API.get(`/applications/${applicantId}`);
+export const fetchApplicationsByActivityId = (activityId) =>
+  API.get(`/applications?&activityId=${activityId}`);
+export const createApplication = (newApplication) =>  
+  API.post("/applications", newApplication);
+export const updateApplication = (id, updatedApplication) =>
+  API.patch(`/applications/${id}`, updatedApplication);
 
 //api for groups
 export const fetchGroups = () => API.get("/api/groups");

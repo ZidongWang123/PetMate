@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { orange, brightPurple } from "../../../constant/actionTypes";
+import { useNavigate } from "react-router-dom";
 
 const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit }) => {
+    const navigate = useNavigate();
 
     const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
     const formattedEndDate = new Date(activityData?.endDate).toLocaleDateString();
@@ -10,6 +12,11 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
     const handleEdit = (activityType, activityData) => {
         console.log(activityType, activityData);
         onEdit(activityType, activityData);
+    }
+
+    const getApplications = (activityType, activityData) => {
+            console.log(activityType, activityData);
+            navigate(`/applications/${activityData._id}`)
     }
 
     return (
@@ -204,7 +211,8 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                             backgroundColor: brightPurple,
                             color: 'white',
                             borderRadius: '20px',
-                        }}>
+                        }}
+                        onClick={() => getApplications(activityType, activityData)}>
                         Application
                     </Button>
                 </Box>) : null}

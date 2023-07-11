@@ -28,6 +28,7 @@ import { CreateGroup } from "./components/Pages/Groups/GroupForm/CreateGroup";
 import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
 import ActivityPage from "./components/Pages/Activity/ActivityPage/ActivityPage";
 import Subscription from "./components/Navbar/Subscription";
+import Applications from "./components/Settings/Application/Applications";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -90,14 +91,14 @@ const App = () => {
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/userPage/:userId" element={<UserPage />} />
               <Route path="/explore/post/create" element={<CreatePost />} />
-              <Route path="/groups/post/editPost/:id"   element={<EditPost/>}/>
+              <Route path="/groups/post/editPost/:id" element={<EditPost />} />
 
               <Route
                 path="/explore/post/editPost/:postId"
                 element={<CreatePost />}
               />
-              <Route path="/service/:id"   element={<ActivityPage/>}/>
-              <Route path="/subscription"   element={<Subscription/>}/>
+              <Route path="/service/:id" element={<ActivityPage />} />
+              <Route path="/subscription" element={<Subscription />} />
 
               <Route
                 path="/appliedevents"
@@ -115,6 +116,12 @@ const App = () => {
                 path="/createdservices"
                 element={<Created activityType={activityTypes[1]} />}
               />
+
+              <Route
+                path="/applications/:id"
+                element={<Applications />}
+              />
+
               {!user ? (
                 <Route path="/auth" element={<Auth />} />
               ) : (
