@@ -36,21 +36,43 @@ const SingleGroup1 = () => {
     {
       field: "Topics",
       headerName: "Topics",
-      width: 400,
+      flex: 1,
       renderCell: (params) => (
-        <Link to={`/groups/post/${params.row.id}`}>{params.row.Topics}</Link>
+        <Link to={`/groups/post/${params.row.id}`} style={{ textDecoration:'none'}}>{params.row.Topics}</Link>
       ),
     },
     {
       field: "Date",
       headerName: "Date",
-      width: 400,
+      flex: 1,
+   
     },
     {
       field: "Author",
       headerName: "Author",
-      width: 400,
+      flex: 1,
+      renderCell: (params) => (
+        <Link to={`/myposts/${params.row.u_id}`} style={{ textDecoration:'none'}}>{params.row.Author}</Link>
+      ),
     },
+    {
+      field: 'Tags',
+      headerName: 'Tags', 
+      width:300,
+      renderCell:(params) => (
+         
+      
+          <div>
+          {params.row.Tags.map(item=>{
+            return <span className="single-tag">#{item}</span>
+          })}
+          </div>
+            
+         
+      ),
+
+    },
+   
   ];
   //请求群组下面所有的文章
   const getGroupsArticlesRequest = async () => {
@@ -63,6 +85,8 @@ const SingleGroup1 = () => {
             Topics: item.title,
             Date: FormData(item.date),
             Author: item.u_id.name,
+            u_id:item.u_id._id,
+            Tags:item.tags
           };
         })
       : [];
@@ -85,9 +109,9 @@ const SingleGroup1 = () => {
       <SingleGroupDetail />
       {/* {articles.length!=0&&<Forum articles={articles}/>} */}
       {/* {articles.length!=0&&<BasicTable data={articles} columns={columns}></BasicTable>} */}
-      {articles.length != 0 && (
+
         <TableFilter columns={columns} data={articles}></TableFilter>
-      )}
+ 
     </div>
   );
 };

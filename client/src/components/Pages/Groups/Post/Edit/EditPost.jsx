@@ -87,6 +87,10 @@ import Input from '../../../../Widget/Input/Input'
         navigate(`/groups/post/${articlesId}`,  { replace: true })
         
       }
+      const onGoBack=()=>{
+
+        navigate(-1);
+      }
       const handleTitleChange = (value) => {
         
         setTitleValue(value)
@@ -128,7 +132,7 @@ import Input from '../../../../Widget/Input/Input'
   
             <div className="author-details">
               <span className="author-name">{article.u_id.name}</span>
-              <p className="post-timestamp">Posted on   {FormData(article.updated_at)   }</p>
+              <p className="post-timestamp">{article.updated_at==article.date?"Posted on":"Edit on"}     {FormData(article.updated_at)   }</p>
             </div>
             
             <input type="file"   ref={fileInputRef}
@@ -141,7 +145,7 @@ import Input from '../../../../Widget/Input/Input'
               </div>
               
               <div className="discard-button-wrapper">
-                <button className="discard-button">Discard</button>
+                <button className="discard-button" onClick={()=>{onGoBack()}}>Discard</button>
               </div>
             </div>
           </div>
