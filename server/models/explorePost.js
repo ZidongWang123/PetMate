@@ -3,7 +3,7 @@ import  forumPostSchema from "./forumPost.js";
 import User from "./user.js"
 
 const explorePostSchema = new mongoose.Schema({
-  creator:{
+  creatorId:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"User"
   },

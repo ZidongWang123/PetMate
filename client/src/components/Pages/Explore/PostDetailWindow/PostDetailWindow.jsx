@@ -8,14 +8,46 @@ import { WidthFull } from "@mui/icons-material";
 import HeartIcon from "../widget/HeartIcon";
 import { Link, useNavigate } from 'react-router-dom';
 import { faEdit,faTrash } from '@fortawesome/free-solid-svg-icons'
-export default function PostDetailWindow({postId,isOpen,onClose,picture,text,avatar,name,count,tags}){
-    const authName="licxzc";
+import { orange } from "../../../../constant/actionTypes";
+import { Avatar } from "@mui/material";
+export default function PostDetailWindow({post,isOpen,onClose}){
+    
+    const user = JSON.parse(localStorage.getItem('profile'));
     const handleDragStart = (e) => e.preventDefault();
-    const pictures=[picture,picture,picture,picture]
+    const pictures=post.pictures
     const pictureItems=[]
     const navigate = useNavigate();
+
+    const handleImageLoad = (event) => {
+        const img = event.target;
+        const aspectRatio = img.width / img.height;
+        let width = 'auto';
+        let height = 'auto';
+    
+        if (aspectRatio < 1) {
+          height = '420px';
+        } else {
+          width = '420px';
+        }
+    
+        img.style.width = width;
+        img.style.height = height;
+      };
+
     pictures.map((item,index)=>{
-        pictureItems.push( <img className="pictureDetail" src={item}  onDragStart={handleDragStart} role="presentation" />)
+        pictureItems.push(
+            <div style={{display:"flex",height:"420px",justifyContent:"center",alignItems:"center"}}>
+                <img 
+                    className="pictureDetail" 
+                    src={item} 
+                    onLoad={handleImageLoad} 
+                    onDragStart={handleDragStart} 
+                    role="presentation" 
+                />
+                
+            </div>
+            
+        )
     })
 
     const divRef = useRef(null);
@@ -56,43 +88,63 @@ export default function PostDetailWindow({postId,isOpen,onClose,picture,text,ava
         <div className="arrowLeft" onClick={onClose}>
             <FontAwesomeIcon icon={faArrowLeft} />
         </div>
-        <div className="modal-content" style={{marginTop:"20px"}}>
-                <AliceCarousel mouseTracking items={pictureItems}/>
+        <div className="modal-content" >
+                <AliceCarousel 
+                    
+                    mouseTracking
+                    autoPlay 
+                    autoPlayStrategy="all" 
+                    autoPlayInterval={1000}
+                    items={pictureItems}
+                />
         </div>
-        <div style={{marginRight:"50px",height:"520",width:"420",position:"relative"}}>
+        <div style={{marginRight:"50px",height:"520",width:"420",position:"relative",marginLeft:"10px"}}>
 
             <div className="showDetail">
-                <Link to={`/userPage/${name}`}style={{color:"inherit",textDecorationLine: "none"}} onClick={onClose}>
+                <Link to={`/userPage/${post.creatorId}`}style={{color:"inherit",textDecorationLine: "none"}} onClick={onClose}>
                     <div style={{display:"flex",alignItems:"center"}}>
-                        <img className="authorAvatar" style={{width: "30px",height:"30px"}} src={avatar} ></img>
-                        <span>{name}</span>
+                        <Avatar 
+                            src={post.creator.avatar} 
+                            sx={{
+                            width:"30px",
+                            height:"30px",
+                            
+                            ":hover": {
+                                cursor: "pointer",
+                                filter: "brightness(0.8)"
+                            }
+                            }}>
+                        </Avatar>
+                        <span style={{
+                            fontFamily: "Comic Sans MS",
+                            marginLeft:"5px",
+                            fontSize:"16px",
+                            color:"rgb(100,100,100)"}}
+                        >
+                            {post.creator.name}
+                        </span>
                     </div>
                 </Link>
 
                 <div className="contentWindow" onWheel={handleScroll} ref={divRef}>
-                    <h3 style={{wordBreak: "break-word"}}>{text}</h3>
-                    <p style={{wordBreak: "break-word"}}>sadsasdpasdadasddsadadsdadadasdsadsadasdadxxxxxxxxxxxxxxxxxxxxxxxxssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssxxxxsadsasdpasdadasddsadadsdadadasdsadsadasdadxxxxxxxxxxxxxxxxxxxxxxxx
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssxxxxsadsasdpasdadasddsadadsdadadasdsadsadasdadxxxxxxxxxxxxxxxxxxxxxxxx
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-                    ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssxxxx</p>
+                    <h3 style={{wordBreak: "break-word"}}>{post.title}</h3>
+                    <p style={{wordBreak: "break-word"}}>{post.text}</p>
                     <div>
-                        {tags.map((item,index) => (
-                            <span className="tagInPosts"  onClick={()=>handleLink(item)}>#{item}</span>
+                        {post.tags.map((item,index) => (
+                            <span
+                                style={{
+                                    color: orange,
+                                    display:"inline-block"
+                                    
+                                }}
+                                className="tagInPosts"
+                                onClick={
+                                    ()=>handleLink(item)
+                                }
+                            >
+                                #{item}
+                            </span>
                         )
-
                         )}
                     </div>
                 </div>
@@ -100,17 +152,21 @@ export default function PostDetailWindow({postId,isOpen,onClose,picture,text,ava
             </div>
             <div className="endElement" >
                 <span>
-                    <HeartIcon postID={5} count={count}/>
+                    <HeartIcon count={post.likes.length}/>
                 </span>
                 <span style={{float:"right"}}>
-                {name===authName&&
-                <Link to={`/explore/post/editPost/${postId}`}>
+                {post.creatorId===user?._id&&
+                <Link to={`/explore/post/editPost/${post._id}`}>
                     <FontAwesomeIcon className="clickIcon" icon={faEdit} > </FontAwesomeIcon>
                 </Link>
                 }
-                {name===authName&&<FontAwesomeIcon className="clickIcon" icon={faTrash} onClick={deletePost} color="black"> </FontAwesomeIcon>}
-
-
+                {post.creatorId===user?._id&&
+                <FontAwesomeIcon 
+                    className="clickIcon" 
+                    icon={faTrash} 
+                    onClick={deletePost} 
+                    color="black"> 
+                </FontAwesomeIcon>}
                 </span>
             </div>
         </div>

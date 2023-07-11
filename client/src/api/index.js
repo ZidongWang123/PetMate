@@ -56,3 +56,4 @@ export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost
 export const modifyPersonalInfo=(id,data)=>API.put(`/user/modifyPersonalInfo/${id}`,data)
 export const getPersonalInfo=(id)=>API.get(`/user/getPersonalInfo/${id}`)
 export const getRecommendTags=(keyword,where)=>API.get(`/explore/getRecommendTags/${keyword}/${where}`)
+export const getPosts=(data)=>(API.get("/explore/getPosts",{params:data}))

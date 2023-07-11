@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from "react";
 
-// import ImageUploader from 'react-images-upload';
+import ImageUploader from 'react-images-upload';
 
 
 import "./CreatePost.css"
@@ -20,7 +20,7 @@ const severityOptions = { success: "success", failure: "error" }
 export default function CreatePost() {
 
 
-    const user = JSON.parse(localStorage.getItem('profile'));
+    const user = JSON.parse(localStorage.getItem('profile')).result;
     const { postId } = useParams();
     const [pictures, setPictures] = useState([])
     const [title, setTitle] = useState("")
@@ -55,16 +55,17 @@ export default function CreatePost() {
     const onSubmit = async () => {
         try {
 
-            const res = await apis.createExplorePost({ title, text, tags, pictures, creator: user._id })
+            console.log(user._id)
+            const res = await apis.createExplorePost({ title, text, tags, pictures, creatorId: user._id })
             if (res.status = 200) {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
 
-                setTimeout(()=>{
+                // setTimeout(()=>{
 
-                    navigate("/")
+                //     navigate("/")
 
-                },1000)     
+                // },1000)     
                 
             }
             else if (res.status = 500) {
@@ -135,7 +136,7 @@ export default function CreatePost() {
                     margin: "10px 0",
                     color: darkPurple
                 }}>{"Pictures:"}</h2>
-                {/* <ImageUploader
+                <ImageUploader
                 withIcon={false}
                 buttonText='Choose images'
                 withPreview={true}
@@ -147,7 +148,7 @@ export default function CreatePost() {
                 imgExtension={['.jpg', '.gif', '.png', '.gif',"jpeg"]}
                 maxFileSize={524288000}
                 defaultImages={pictures}
-                /> */}
+                />
                 <div style={{ display: "flex", float: "right" }}>
                     <UniformButton width="100px" backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
                     <UniformButton width="100px" backgroundColor={orange} fontColor="white" onClick={onSubmit}>
