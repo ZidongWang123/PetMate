@@ -26,9 +26,9 @@ export const getGroups = () => async (dispatch) => {
 export const getGroup = (id) => async (dispatch) => {
   try {
     const { data } = await api.fetchGroup(id);
-
+    dispatch({ type: START_LOADING });
     dispatch({ type: FETCH_GROUP, payload: data });
-
+    dispatch({ type: END_LOADING });
     console.log(data);
   } catch (error) {
     console.log(error.message);
@@ -81,7 +81,8 @@ export const deleteGroup = (id) => async (dispatch) => {
 
 export const updateGroup = (id, groupData) => async (dispatch) => {
   try {
-    const { data } = await api.updateService(id, groupData);
+    const { data } = await api.updateGroup(id, groupData);
+
     dispatch({ type: UPDATE_GROUP, payload: data });
   } catch (error) {
     console.log(error);
