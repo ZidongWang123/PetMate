@@ -56,7 +56,7 @@ export default function MyPost(){
       {
         field: 'Date',
         headerName: 'Date', 
-        width:100,
+        width:150,
   
   
       },
