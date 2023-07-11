@@ -32,4 +32,4 @@ export const delArticles = (articlesId,formData={}) => API.delete(`/api/articles
 export const paArticlesInfo = (articlesId,formData={}) => API.patch(`/api/articles/${articlesId}`, formData);
 export const poArticlesInfo = (formData={}) => API.post(`/api/articles/`, formData);
 
-export const getUserArticles = ( formData={}) => API.get(`/user/articles`, formData);
+export const getUserArticles = ( userId,formData={}) => API.get(`/user/articles/${userId}`, formData);

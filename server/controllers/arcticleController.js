@@ -11,9 +11,10 @@ const getArticle = async (req, res) => {
   
   const query={"_id": id}
 
-  const articlesResulet = await articles.findOne(query).populate('u_id', 'name')
+  const articlesResulet = await articles.findOne(query).populate('u_id', 'name').lean()
+  articlesResulet['editFlag']=articlesResulet.u_id._id==req.userId
 
-  console.log(query,"query");
+  console.log(typeof articlesResulet);
   console.log("articlesResulet",articlesResulet);
   res.status(200).json(articlesResulet);
 };

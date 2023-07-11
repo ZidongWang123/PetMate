@@ -1,6 +1,7 @@
 import Group from "../models/group.js";
 import mongoose from "mongoose";
 import Groupmember from "../models/groupmember.js";
+import bcrypt from "bcryptjs";
 
 // get all groups
 const getGroups = async (req, res) => {
@@ -20,7 +21,14 @@ const getGroups = async (req, res) => {
         .map((member) => member.memberId);
       const groupCount = members.length;
       const creatorName = group.creatorId ? group.creatorId.name : null;
-      return { ...group.toObject(), creatorName, members, groupCount };
+      const creatorRefId = group.creatorId ? group.creatorId._id : null;
+      return {
+        ...group.toObject(),
+        creatorName,
+        creatorRefId,
+        members,
+        groupCount,
+      };
     });
 
     // 将包含成员ID的组列表作为 JSON 发送回浏览器/客户端
@@ -41,6 +49,7 @@ const getGroup = async (req, res) => {
   try {
     const group = await Group.findById(id).populate("creatorId", "name");
     const creatorName = group.creatorId ? group.creatorId.name : null;
+    const creatorRefId = group.creatorId ? group.creatorId._id : null;
     if (!group) {
       return res.status(404).json({ error: "No such group" });
     }
@@ -55,6 +64,7 @@ const getGroup = async (req, res) => {
       creatorName,
       members,
       groupCount,
+      creatorRefId,
     };
 
     res.status(200).json(groupWithMembers);
@@ -72,9 +82,9 @@ const getMyGroups = async (req, res) => {
     res.status(200).json(myGroups);
   } */
   try {
-    const myGroups = await Groupmember.find({ memberId: userId }).populate(
-      "groupId"
-    );
+    const myGroups = await Groupmember.find({ memberId: userId })
+      .sort({ createdAt: -1 })
+      .populate("groupId");
 
     const myGroupsWithFiles = myGroups.map((groupMember) => {
       const group = groupMember.groupId;
@@ -94,8 +104,19 @@ const getMyGroups = async (req, res) => {
 
 // create new Group
 const createGroup = async (req, res) => {
-  const group = req.body;
-  const newGroupMessage = new Group({ ...group, creatorId: req.userId });
+  const { password, ...group } = req.body;
+  const encryptedPassword = password
+    ? await bcrypt.hash(password, 12).catch((error) => {
+        console.log(error);
+        throw new Error("Error hashing password");
+      })
+    : null;
+
+  const newGroupMessage = new Group({
+    ...group,
+    creatorId: req.userId,
+    password: encryptedPassword,
+  });
   const newGroupmember = new Groupmember({
     groupId: newGroupMessage._id,
 
@@ -107,11 +128,6 @@ const createGroup = async (req, res) => {
     await newGroupMessage.save();
     await newGroupmember.save();
 
-    // 更新 Group 的 groupcount 字段
-    await Group.findByIdAndUpdate(
-      newGroupMessage._id,
-      { $inc: { groupcount: 1 } } // 增加 groupcount 值
-    );
     res.status(201).json(newGroupMessage);
   } catch (error) {
     res.status(409).json(error);
@@ -153,8 +169,8 @@ const updateGroup = async (req, res) => {
     return res.status(404).json({ error: "No such workout" });
   }
 
-  const group = await Group.findOneAndUpdate(
-    { _id: id },
+  const group = await Group.findByIdAndUpdate(
+    id,
     { ...req.body },
     { new: true }
   );
@@ -190,6 +206,29 @@ const joinGroup = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+const verifyGroup = async (req, res) => {
+  const { _id, password } = req.body;
+
+  try {
+    const existingUser = await Group.findOne(_id);
+
+    if (!existingUser)
+      return res.status(404).json({ message: "User doesn't exist." });
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordCorrect)
+      return res.status(400).json({ message: "Invalid credentials." });
+
+    res.status(200).json({ result: existingUser });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
 export {
   getGroups,
   getGroup,
@@ -198,4 +237,5 @@ export {
   deleteGroup,
   updateGroup,
   joinGroup,
+  verifyGroup,
 };

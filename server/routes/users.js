@@ -8,6 +8,6 @@ router.post('/signin', signin );
 router.post('/signup', signup );
 router.put("/modifyPersonalInfo/:userId",modifyPersonalInfo)
 router.get("/getPersonalInfo/:userId",getPersonalInfo)
-router.get('/articles', auth,getArticles );
+router.get('/articles/:userId', auth,getArticles );
 
 export default router;

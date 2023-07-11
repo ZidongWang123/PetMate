@@ -106,14 +106,20 @@ export const modifyPersonalInfo=async(req,res)=>{
 
 export const getArticles=async(req, res)=>{
     
+  console.log(req.params);
 
-
-
-  const query={"u_id": req.userId}
+  const {userId}=req.params
+  const query={"u_id": userId}
   console.log(query,"query");
-  const articlesResulet = await articles.find(query).populate('g_id', 'groupName').populate('u_id', 'name')
+  
 
+  try{
+    const articlesResulet = await articles.find(query).populate('g_id', 'groupName').populate('u_id', 'name')
+    res.status(200).json(articlesResulet);
 
-  console.log("articlesResulet",articlesResulet);
-  res.status(200).json(articlesResulet);
+  }catch(error){
+    res.status(500).json({ message: 'Failed to update personal information' });
+  }
+
+  
 }

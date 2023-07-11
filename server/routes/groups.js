@@ -11,6 +11,7 @@ import {
   deleteGroup,
   updateGroup,
   joinGroup,
+  verifyGroup,
 } from "../controllers/groupController.js";
 
 //GET all groups
@@ -24,6 +25,7 @@ router.get("/:id", auth, getGroup);
 
 //Join a group
 router.post("/:id/joinGroup", auth, joinGroup);
+router.post("/:id/verifyGroup", auth, verifyGroup);
 
 //POST a new group
 router.post("/", auth, createGroup);

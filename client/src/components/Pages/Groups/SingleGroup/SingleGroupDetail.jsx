@@ -78,9 +78,9 @@ const SingleGroupDetail = () => {
     setIsOpen(false);
   };
 
-  const handleEdit = () => {
+  /*   const handleEdit = () => {
     console.log("edit");
-  };
+  }; */
 
   const handleJoinGroup = async () => {
     console.log("join");
@@ -150,9 +150,14 @@ const SingleGroupDetail = () => {
             onClose={handelfeebackMsgClose}
           ></FeedbackMsg>
           <div className="single-group-button">
-            {user.result._id === singleGroup.creatorId ? (
-              <button className="joined-button" onClick={handleEdit}>
-                Edit
+            {user.result._id === singleGroup.creatorRefId ? (
+              <button className="joined-button">
+                <Link
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to={`/groups/${singleGroup._id}/edit-group`}
+                >
+                  Edit
+                </Link>
               </button>
             ) : singleGroup.members &&
               singleGroup.members.includes(user.result._id) ? (
@@ -165,9 +170,20 @@ const SingleGroupDetail = () => {
               </button>
             )}
 
-            <Link to={`/groups/${singleGroup._id}/create-post`}>
-              <button className="write-post-button">Write a Post</button>
-            </Link>
+            <button
+              className="write-post-button"
+              disabled={
+                singleGroup.members &&
+                !singleGroup.members.includes(user.result._id)
+              }
+            >
+              <Link
+                to={`/groups/${singleGroup._id}/create-post`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Write a Post
+              </Link>
+            </button>
           </div>
         </div>
       )}

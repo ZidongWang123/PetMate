@@ -117,8 +117,6 @@
   border-color: #393c7c;
   cursor: pointer;
   margin-left: 700px;
-  display: grid;
-  grid-template-columns: auto 1fr;
 }
 .joined-button {
   padding: 8px 16px; /* 上下宽一点的内边距 */

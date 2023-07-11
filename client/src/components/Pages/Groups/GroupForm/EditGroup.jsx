@@ -3,43 +3,65 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGroup, updateGroup } from "../../../../actions/group";
 import { useEffect } from "react";
 import GroupForm from "./GroupForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
+
 export const EditGroup = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [groupData, setGroupData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [showFeedbackMsg, setShowFeedbackMsg] = useState(false);
+  const navigate = useNavigate();
+  const handelfeebackMsgClose = () => {
+    setShowFeedbackMsg(false);
+  };
+
   useEffect(() => {
-    dispatch(getGroup(id));
+    dispatch(getGroup(id)).then(() => {
+      setLoading(false);
+    });
   }, [dispatch, id]);
   const { groups: singleGroup } = useSelector((state) => state.groups);
   useEffect(() => {
-    if (singleGroup) {
+    if (!loading && singleGroup) {
       setGroupData({
         groupName: singleGroup.groupName,
         tags: singleGroup.tags,
         intro: singleGroup.intro,
         selectedFile: singleGroup.selectedFile,
       });
-      setIsLoading(false);
+      setLoading(false);
     }
   }, [singleGroup]);
 
   /*   const groups = useSelector((state) => state.groups); */
-  const user = JSON.parse(localStorage.getItem("profile"));
+  /*   const user = JSON.parse(localStorage.getItem("profile")); */
 
   const handleEdit = async () => {
-    dispatch(updateGroup({ ...groupData, creatorName: user?.result?.name }));
+    dispatch(updateGroup(id, groupData));
+    setTimeout(() => {
+      navigate(`/groups/${id}`);
+    }, 600);
+    setShowFeedbackMsg(true);
   };
   return (
     <>
-      {!isLoading && groupData ? (
+      {!loading && groupData ? (
         <GroupForm
           groupData={groupData}
           setGroupData={setGroupData}
           handleSubmit={handleEdit}
         />
-      ) : null}
+      ) : (
+        <div>Loading...</div>
+      )}
+      <FeedbackMsg
+        status={showFeedbackMsg}
+        message="Update successfully"
+        severity="success"
+        onClose={handelfeebackMsgClose}
+      />
     </>
   );
 };

@@ -9,6 +9,13 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+.my-group-subtitle {
+  margin-left: 20px;
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: bold;
+  font-size: large;
+  align-items: center;
+}
 .myGroupUnit {
   position: relative;
   display: flex;
@@ -28,11 +35,12 @@
 .myGroupUnit:hover {
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-/* 
+
 .mygroup-avatar {
-  /*  margin-left: 3px; 
-} 
-}*/
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 30px;
+}
 
 .mygroup-avatar .MuiAvatar-root {
   width: 100px;
@@ -48,9 +56,7 @@
   font-family: "Comic Sans MS", cursive;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* 设置文本显示的最大行数 */
-  -webkit-box-orient: vertical;
+  width: 150px;
 }
 
 .delete-mygroup {
