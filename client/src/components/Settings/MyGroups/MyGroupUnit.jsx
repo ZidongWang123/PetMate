@@ -10,6 +10,7 @@ import DelGroup from "../../../images/dabengou/DelGroup.jpg";
 import ExitGroupPic from "../../../images/dabengou/ExitGroupPic.jpg";
 import { useDispatch } from "react-redux";
 import { deleteGroup } from "../../../actions/group";
+import LockIcon from "@mui/icons-material/Lock";
 
 const MyGroupUnit = ({ group }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -57,9 +58,14 @@ const MyGroupUnit = ({ group }) => {
       </div>
       <Link style={{ textDecoration: "none" }} to={`/groups/${group.groupId}`}>
         <div className="mygroup-avatar">
-          <Avatar alt="Remy Sharp" src={group.selectedFile} />
+          <Avatar src={group.selectedFile} />
         </div>
-        <div className="mygroup-title">{group.groupName}</div>
+        <div className="mygroup-title">
+          {group.groupName}
+          {group.password && (
+            <LockIcon sx={{ color: "#30263b", marginLeft: "5px" }} />
+          )}
+        </div>
 
         <div>
           {group.creatorId === user.result._id ? (

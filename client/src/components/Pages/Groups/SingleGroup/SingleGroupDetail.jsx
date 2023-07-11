@@ -1,44 +1,98 @@
 import Avatar from "@mui/material/Avatar";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 /* import { useWorkoutsContext } from "../../../../hooks/useWorkoutsContext"; */
 /* import { useAuthContext } from "../../../../hooks/useAuthContext"; */
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroup, joinGroup } from "../../../../actions/group";
+import Warning from "../../../Widget/ConfirmDialog/Warning.jsx";
+import signInPic from "../../../../images/dabengou/SignInPic.jpg";
+import JoinGroup from "../../../../images/dabengou/JoinGroup.jpg";
+import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
+const LoginText = "Go to log in and explore more!";
+const severityOptions = { success: "success", failure: "error" };
 
 const SingleGroupDetail = () => {
   /* const { user } = useAuthContext(); */
   const { id } = useParams();
   const dispatch = useDispatch();
-  /*   const { workouts: singleGroup, dispatch } = useWorkoutsContext(); */
+
+  const { groups: singleGroup } = useSelector((state) => state.groups);
+  const fetchGroup = useCallback(async () => {
+    await dispatch(getGroup(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    fetchGroup();
+    setLoading(false);
+  }, [fetchGroup]);
+
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
 
   const user = JSON.parse(localStorage.getItem("profile"));
+  const [text, setText] = useState("");
+  const [pic, setPic] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { groups: singleGroup } = useSelector((state) => state.groups);
-
-  useEffect(() => {
-    dispatch(getGroup(id));
-    setLoading(false);
-  }, [dispatch, id]);
-
-  const handleEdit = () => {
-    console.log("edit");
+  const [isFeedbackMsg, setIsFeedbackMsg] = useState(false);
+  const [Msg, setMsg] = useState("");
+  const [severity, setSeverity] = useState("");
+  const handelfeebackMsgClose = () => {
+    setIsFeedbackMsg(false);
   };
 
-  const handleJoinGroup = () => {
+  const onClick = () => {
+    console.log("Clicked");
+    if (user) {
+      setText(`DO you want to join Group ${singleGroup.groupName}?`);
+      setPic(JoinGroup);
+      setIsOpen(true);
+    } else {
+      setText(LoginText);
+      setPic(signInPic);
+      setIsOpen(true);
+      /* console.log("not logged in"); */
+    }
+  };
+
+  const onConfirm = () => {
+    setIsOpen(false);
+    if (!user) {
+      navigate("/auth");
+    } else {
+      handleJoinGroup();
+      setSeverity(severityOptions.success);
+      setMsg("Join Successfully");
+
+      /* setTimeout(() => {
+        navigate(`/groups/${singleGroup._id}`);
+      }, 800); */
+      setIsFeedbackMsg(true);
+    }
+  };
+  const onCancel = () => {
+    setIsOpen(false);
+  };
+
+  /*   const handleEdit = () => {
+    console.log("edit");
+  }; */
+
+  const handleJoinGroup = async () => {
     console.log("join");
     const groupMemberData = {
-      groupName: singleGroup.groupName,
       groupId: singleGroup._id,
-      creatorName: singleGroup.creatorName,
+
       creatorId: singleGroup.creatorId,
-      memberName: user.result.name,
+
       memberId: user.result._id,
     };
-    dispatch(joinGroup(singleGroup._id, groupMemberData));
+    await dispatch(joinGroup(singleGroup._id, groupMemberData));
+    fetchGroup();
   };
 
   return (
@@ -61,7 +115,7 @@ const SingleGroupDetail = () => {
                 </span>
 
                 <span className="single-group-amount">
-                  Member: {singleGroup.groupcount}
+                  Member: {singleGroup.groupCount}
                 </span>
                 <p className="single-group-intro">{singleGroup.intro}</p>
                 <p>
@@ -82,11 +136,28 @@ const SingleGroupDetail = () => {
               </div>
             </div>
           </div>
-
+          <Warning
+            isOpen={isOpen}
+            onConfirm={onConfirm}
+            onCancel={onCancel}
+            pic={pic}
+            text={text}
+          ></Warning>
+          <FeedbackMsg
+            status={isFeedbackMsg}
+            severity={severity}
+            message={Msg}
+            onClose={handelfeebackMsgClose}
+          ></FeedbackMsg>
           <div className="single-group-button">
-            {user.result._id === singleGroup.creatorId ? (
-              <button className="joined-button" onClick={handleEdit}>
-                Edit
+            {user.result._id === singleGroup.creatorRefId ? (
+              <button className="joined-button">
+                <Link
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to={`/groups/${singleGroup._id}/edit-group`}
+                >
+                  Edit
+                </Link>
               </button>
             ) : singleGroup.members &&
               singleGroup.members.includes(user.result._id) ? (
@@ -94,13 +165,25 @@ const SingleGroupDetail = () => {
                 Joined
               </button>
             ) : (
-              <button className="joined-button" onClick={handleJoinGroup}>
+              <button className="joined-button" onClick={onClick}>
                 Join Now
               </button>
             )}
-            <Link to={`/groups/${singleGroup._id}/create-post`}>
-              <button className="write-post-button">Write a Post</button>
-            </Link>
+
+            <button
+              className="write-post-button"
+              disabled={
+                singleGroup.members &&
+                !singleGroup.members.includes(user.result._id)
+              }
+            >
+              <Link
+                to={`/groups/${singleGroup._id}/create-post`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Write a Post
+              </Link>
+            </button>
           </div>
         </div>
       )}

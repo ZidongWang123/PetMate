@@ -3,7 +3,9 @@ import React from "react";
 import SearchBar from "../../Widget/SearchBar/SearchBar";
 
 import GroupCreateButton from "./GroupCreateButton";
+
 import "./Group.css";
+
 import { useDispatch } from "react-redux";
 import { getGroups } from "../../../actions/group";
 
@@ -42,10 +44,10 @@ const Groups = () => {
 
   const onConfirm = () => {
     setIsOpen(false);
-    if (user) {
-      navigate("/explore");
-    } else {
+    if (!user) {
       navigate("/auth");
+    } else if (user && !user.result.isPrime) {
+      navigate("/subscription");
     }
   };
   const onCancel = () => {
@@ -53,11 +55,14 @@ const Groups = () => {
   };
 
   const dispatch = useDispatch();
-
+  const { groups, isLoading } = useSelector((state) => state.groups);
   React.useEffect(() => {
     dispatch(getGroups());
   }, [dispatch]);
-  const { groups } = useSelector((state) => state.groups);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // 显示加载中的提示
+  }
 
   return (
     <div className="groups">

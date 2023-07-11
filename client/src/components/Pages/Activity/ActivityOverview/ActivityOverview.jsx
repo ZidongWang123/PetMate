@@ -4,13 +4,15 @@ import { brightPurple } from "../../../../constant/actionTypes";
 import { useDispatch } from "react-redux";
 import { fetchPersonalInfo } from "../../../../actions/service";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ActivityOverview = ({ activityData }) => {
-    const user = JSON.parse(localStorage.getItem('profile'));
+    //const user = JSON.parse(localStorage.getItem('profile'));
     const formattedStartDate = new Date(activityData.startDate).toLocaleDateString();
     const formattedEndDate = new Date(activityData.endDate).toLocaleDateString();
     const dispatch = useDispatch();
-
+    const navigator = useNavigate();
+    
     React.useEffect(() => {
         if (activityData) {
             dispatch(fetchPersonalInfo(activityData.creator));
@@ -18,7 +20,12 @@ const ActivityOverview = ({ activityData }) => {
     }, [dispatch, activityData]);
 
     const { servicesCreator } = useSelector((state) => state.service);
-    console.log('creator: ', servicesCreator);
+    //有个问题：一页中的activityoverview的头像都是一样的cao
+
+    const handleChoose = (id) => {
+        const activity = 'service'
+        navigator(`/${activity}/${id}`);
+    }
 
     return (
         <>
@@ -41,9 +48,13 @@ const ActivityOverview = ({ activityData }) => {
                     alignSelf: 'center',
                     marginTop: '15px',
                 }}>
-                    {servicesCreator && <Avatar src={servicesCreator.result.avatar} 
-                    sx={{border: '0.1px solid gray', }}
-                    />}
+                    {servicesCreator && (
+                        servicesCreator.result.avatar ? (
+                            <Avatar src={servicesCreator.result.avatar} sx={{ border: '0.1px solid gray' }} />
+                        ) : (
+                            <Avatar sx={{ border: '0.1px solid gray' }}>{servicesCreator.result.name.charAt(0)}</Avatar>
+                        )
+                    )}
                     <Typography variant="h6"
                         sx={{
                             marginLeft: '10px',
@@ -120,7 +131,8 @@ const ActivityOverview = ({ activityData }) => {
                         color: 'white',
                         borderRadius: '20px',
                         marginBottom: '15px',
-                    }}>
+                    }}
+                    onClick={() => handleChoose(activityData._id)}>
                     Choose
                 </Button>
             </Box>

@@ -1,4 +1,3 @@
-
 //import PaneContainer from "./PaneContainer";
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
@@ -9,59 +8,104 @@ import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 
-import { fontSize } from "@mui/system";
+import {getUserArticles} from "../../../api/user"
+import {FormData} from "../../../util/index"
+import TableFilter  from "../../Widget/TableFilter/TableFilter";
 
-const ForumPost = ({ post, group, date, author }) => (
-  <div className="forum-post">
-    <div className="post-list">
-      <div className="post">
-      <Link to="/groups/post">{post}</Link>
-      </div>
-      <div className="group">
-        <Link to="/groups/group1">{group}</Link>
-      </div>
-      <div className="post-date">{date}</div>
-      <div className="post-author">{author}</div>
-    </div>
-  </div>
-);
 
-const Forum = () => {
-  const dummyData = [
-    { post: "xxx", group: "Group 1", date: "2023-05-01", author: "Sarah" },
-    { post: "xxx", group: "Group 1", date: "2023-05-02", author: "Author 2" },
-    { post: "xxx", group: "Group 1", date: "2023-05-03", author: "Author 3" },
-  ];
 
-  return (
-    <div className="forum">
-      <div className="forum-header">
-        <div className="header-post">Posts</div>
-        <div className="header-group">Groups</div>
-        <div className="header-date">Date</div>
-        <div className="header-author">Author</div>
-      </div>
-      {dummyData.map((data, index) => (
-        <ForumPost
-          key={index}
-          post={data.post}
-          group={data.group}
-          date={data.date}
-          author={data.author}
-        />
-      ))}
-    </div>
-  );
-};
 
 export default function MyPost(){
-    const{name} = useParams();
+    const params = useParams();
+    console.log(JSON.parse(window.localStorage.getItem("profile")).result,"7777");
+    const userId=params.userId|| JSON.parse(window.localStorage.getItem("profile")).result._id 
     const [profil,setProfil]=useState([])
+    const [articleList,setArticleList]=useState([])
+
+    const columns = [
+
+      {
+        field: 'Topics',
+        headerName: 'Topics', 
+        width:200,
+        renderCell:(params) => (
+          
+           
+            <Link
+           to={`/groups/post/${params.row.id}`} style={{ textDecoration:'none'}}
+            >
+              {params.row.Topics}
+            </Link>
+        ),
+  
+      },
+      {
+        field: 'Groups',
+        headerName: 'Groups', 
+        width:100,
+        renderCell:(params) => (
+           
+            <Link
+           to={`/groups/${params.row.g_id}`}
+            >
+              {params.row.Groups}
+            </Link>
+        ),
+  
+      },
+      {
+        field: 'Date',
+        headerName: 'Date', 
+        width:150,
+  
+  
+      },
+      {
+        field: 'Author',
+        headerName: 'Author',
+        width:200,
+  
+      },
+      {
+        field: 'Tags',
+        headerName: 'Tags', 
+        width:300,
+        renderCell:(params) => (
+           
+        
+            <div>
+            {params.row.Tags.map(item=>{
+              return <span className="single-tag">#{item}</span>
+            })}
+            </div>
+              
+           
+        ),
+  
+      },
+     
+      
+    ];
+    const getUserArticlesRequest=async(userId)=>{
+      try {
+        const articleListResulet=await getUserArticles(userId)
+     
+        const articles=articleListResulet.map(item=>{
+       
+          return {"id":item._id,"g_id":item.g_id._id,"Topics":item.title,"Groups":item.g_id.groupName,"Date":FormData(item.date),"Author":item.u_id.name,"Tags":item.tags}
+        })
+        setArticleList(articles)
+      } catch (error) {
+        console.log(error);
+      }
+        
+    }
     useEffect(()=>{
         // request profil data here and set the variable profil
         
         // todo...
-        
+       
+        getUserArticlesRequest(userId)
         setProfil({avatar:avatar,name:"wang" ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
 },[])
 
@@ -69,7 +113,7 @@ export default function MyPost(){
     return(
         
 
-        <div>
+        <div  className="myPosts">
             <div className="userPageProfil">
                 <img src={profil.avatar} style={{width:"140px",borderRadius:"50%",marginBottom:"20px",marginTop:"10px",marginRight:"10px"}}></img>
                 <div>
@@ -86,10 +130,14 @@ export default function MyPost(){
                 </div>
 
             </div>
-
-            <Forum />
-
+            <div >
+          <TableFilter data={articleList }  columns={columns}></TableFilter>
+            </div>
+            {/* <Forum /> */}
+          
+           
         </div>
+        
     
     )
 }

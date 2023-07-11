@@ -14,9 +14,8 @@ API.interceptors.request.use((req) => {
 
 //api for services
 export const fetchService = (id) => API.get(`/services/${id}`);
-export const fetchServices = (page) => API.get(`/services?page=${page}`);
+export const fetchServices = (page,  userId = null) => API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ''}`);
 export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);
-// user login and register
 
 export const createService = (newService) => API.post("/services", newService);
 export const updateService = (id, updatedService) =>
@@ -34,7 +33,14 @@ export const updateEvent = (id, updatedEvent) =>
   API.patch(`/events/${id}`, updatedEvent);
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
-//api for others
+//api for applications
+export const fetchApplicationsByApplicantId = (applicantId) => API.get(`/applications/${applicantId}`);
+export const fetchApplicationsByActivityId = (activityId) =>
+  API.get(`/applications?&activityId=${activityId}`);
+export const createApplication = (newApplication) =>  
+  API.post("/applications", newApplication);
+export const updateApplication = (id, updatedApplication) =>
+  API.patch(`/applications/${id}`, updatedApplication);
 
 //api for groups
 export const fetchGroups = () => API.get("/api/groups");
@@ -46,10 +52,12 @@ export const updateGroup = (id, updatedGroup) =>
 export const deleteGroup = (id) => API.delete(`/api/groups/${id}`);
 export const joinGroup = (id, newMember) =>
   API.post(`/api/groups/${id}/joinGroup`, newMember);
+export const verifyGroup = (id, psw) =>
+  API.post(`/api/groups/${id}/verifyGroup`, psw);
 
 //user login and register
-export const signIn = (formData) => API.post('/user/signin', formData);
-export const signUp = (formData) => API.post('/user/signup', formData);
+export const signIn = (formData) => API.post("/user/signin", formData);
+export const signUp = (formData) => API.post("/user/signup", formData);
 
 //api for user
 export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost)

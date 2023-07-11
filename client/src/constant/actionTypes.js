@@ -8,12 +8,18 @@ export const CREATE_SERVICE = 'CREATE_SERVICE';
 export const UPDATE_SERVICE = 'UPDATE_SERVICE';
 export const DELETE_SERVICE = 'DELETE_SERVICE';
 export const FETCH_SERVICE = 'FETCH_SERVICE';
-export const FETCH_ALL = 'FETCH_ALL';
+export const FETCH_ALL_SERVICE = 'FETCH_ALL_SERVICE';
+export const FETCH_ALL_CREATED_SERVICE = 'FETCH_ALL_CREATED_SERVICE';
 export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
 export const FETCH_USER_SERVICE = 'FETCH_USER_SERVICE';
 
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
+
+//-----------------event related constant-----------------
+
+//-----------------application related constant-----------
+export const FETCH_ALL_APPLICATIONS = 'FETCH_ALL_APPLICATIONS';
 
 //-----------------group related constant-----------------
 export const LIKE = 'LIKE';

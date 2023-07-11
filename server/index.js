@@ -11,8 +11,9 @@ import serviceRoutes from "./routes/service.js";
 import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
+import applicationRoutes from "./routes/application.js";
 
-
+import articleRoutes  from "./routes/article.js"
 //create an instance of express
 const app = express();
 //use dotenv to hide the connection url
@@ -32,8 +33,9 @@ app.use("/explore", explorePost);
 
 app.use("/services", serviceRoutes);
 app.use("/events", eventRoutes);
+app.use("/applications", applicationRoutes);
 
-
+app.use("/api/articles", articleRoutes);
 const PORT = 100;
 const CONNECTION_URL = process.env.CONNECTION_URL;
 

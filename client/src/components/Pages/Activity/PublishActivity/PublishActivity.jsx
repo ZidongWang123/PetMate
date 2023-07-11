@@ -7,9 +7,9 @@ import DateSelecter from "../../../Widget/DateSelecter/DateSelecter";
 
 const prefix = ['City: ', 'Pet species: ', '', 'Start date: ', 'End date: ', 'Title: ', 'Location: ', 'Price: ']
 
-export default function PublishActivity({ activity, allInputs, publishAndGoBack, isEdit }) {
+export default function PublishActivity({ activity, allInputs, publishAndGoBack, isEdit, content }) {
 
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = React.useState(content);
 
     const handleChange = (event) => {
         const newValue = event.target.value;
@@ -28,11 +28,8 @@ export default function PublishActivity({ activity, allInputs, publishAndGoBack,
 
     const saveDate = (date, index) => {
         const newDate = date;
-        console.log(newDate);
-        console.log(index);
         const updatedInputs = [...inputs];
         updatedInputs[index] = newDate;
-        console.log(updatedInputs);
         setInputs(updatedInputs);
     };
 
@@ -42,7 +39,8 @@ export default function PublishActivity({ activity, allInputs, publishAndGoBack,
     }
 
     const confirmEdit = () => {
-        //todo
+        const updatedInputs = [...inputs, value];
+        publishAndGoBack(updatedInputs);
     }
 
     //big todo here about how to get the data from the backend

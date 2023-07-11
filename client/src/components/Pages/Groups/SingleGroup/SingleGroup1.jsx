@@ -1,72 +1,119 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Single.css"; // 引入自定义的CSS样式文件
-import SearchBar from "./searchbarGroup";
+//import SearchBar from "../../../Widget/searchBar";
+//import SearchBar from "../../Widget/searchBar/searchBar";
+import SearchBar from "../../../Widget/SearchBar/SearchBar";
 import SingleGroupDetail from "./SingleGroupDetail.jsx";
 
+/* import Avatar from "@mui/material/Avatar";
+import BasicTable from "../../../Widget/TableBar/TableBar"; */
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
-import { Link } from "react-router-dom";
-import SignInWarning from "../../../Widget/ConfirmDialog/SignInWarning";
+import { Link, useParams } from "react-router-dom";
+import { getGroupsArticles, getGroupInfo } from "../../../../api/user";
+import { FormData } from "../../../../util/index";
+import TableFilter from "../../../Widget/TableFilter/TableFilter";
 
 export const orange = "#F0A860";
 
-const ForumPost = ({ topic, date, author }) => (
-  <div className="single-forum-post">
-    <Link to="/groups/post">{topic}</Link>
-    <div className="single-post-date">{date}</div>
-    <div className="single-post-author">{author}</div>
-  </div>
-);
-
-const Forum = () => {
-  const dummyData = [
-    { topic: "Topic 1", date: "2023-05-01", author: "Sarah" },
-    { topic: "Topic 2", date: "2023-05-02", author: "Author 2" },
-    { topic: "Topic 3", date: "2023-05-03", author: "Author 3" },
-  ];
-
-  return (
-    <div className="single-forum">
-      <div className="single-forum-header">
-        <div className="single-header-topic">Topics</div>
-        <div className="single-header-date">Date</div>
-        <div className="single-header-author">Author</div>
-      </div>
-      {dummyData.map((data, index) => (
-        <ForumPost
-          key={index}
-          topic={data.topic}
-          date={data.date}
-          author={data.author}
-        />
-      ))}
-    </div>
-  );
-};
-
-const SignleGroup1 = () => {
+// TODO
+/* const GroupDetails = ({ group, id }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
   if (!user) {
     return <SignInWarning />;
   }
+
+  return <SingleGroupDetail />;
+}; */
+const SingleGroup1 = () => {
+  const [articles, setArticles] = useState([]);
+  const [group, setGroup] = useState([]);
+  let params = useParams();
+  console.log(params, "params");
+  const groupId = params["id"];
+
+  const columns = [
+    {
+      field: "Topics",
+      headerName: "Topics",
+      flex: 1,
+      renderCell: (params) => (
+        <Link to={`/groups/post/${params.row.id}`} style={{ textDecoration:'none'}}>{params.row.Topics}</Link>
+      ),
+    },
+    {
+      field: "Date",
+      headerName: "Date",
+      flex: 1,
+   
+    },
+    {
+      field: "Author",
+      headerName: "Author",
+      flex: 1,
+      renderCell: (params) => (
+        <Link to={`/myposts/${params.row.u_id}`} style={{ textDecoration:'none'}}>{params.row.Author}</Link>
+      ),
+    },
+    {
+      field: 'Tags',
+      headerName: 'Tags', 
+      width:300,
+      renderCell:(params) => (
+         
+      
+          <div>
+          {params.row.Tags.map(item=>{
+            return <span className="single-tag">#{item}</span>
+          })}
+          </div>
+            
+         
+      ),
+
+    },
+   
+  ];
+  //请求群组下面所有的文章
+  const getGroupsArticlesRequest = async () => {
+    const articlesResulet = await getGroupsArticles(groupId);
+    console.log(articlesResulet, "articlesResulet");
+    const articles = articlesResulet.length
+      ? articlesResulet.map((item) => {
+          return {
+            id: item._id,
+            Topics: item.title,
+            Date: FormData(item.date),
+            Author: item.u_id.name,
+            u_id:item.u_id._id,
+            Tags:item.tags
+          };
+        })
+      : [];
+    setArticles(articles);
+  };
+  //请求群组信息
+  const getGroupInfoRequest = async () => {
+    const groupResulet = await getGroupInfo(groupId);
+    console.log(groupResulet, "groupResulet");
+    setGroup(groupResulet);
+  };
+  useEffect(() => {
+    getGroupsArticlesRequest();
+    getGroupInfoRequest();
+  }, []);
+
   return (
     <div>
+      <SearchBar />
       <SingleGroupDetail />
-      <Forum />
+      {/* {articles.length!=0&&<Forum articles={articles}/>} */}
+      {/* {articles.length!=0&&<BasicTable data={articles} columns={columns}></BasicTable>} */}
+
+        <TableFilter columns={columns} data={articles}></TableFilter>
+ 
     </div>
   );
-
-  {
-    /*  <SearchBar /> */
-  }
-  {
-    /* 将 SearchBar 放在一个容器中 */
-  }
-  {
-    /* {posts.map((post, index) => (
-      <Post key={index} title={post.title} content={post.content} />
-    ))} */
-  }
 };
 
-export default SignleGroup1;
+export default SingleGroup1;

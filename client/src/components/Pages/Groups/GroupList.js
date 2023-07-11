@@ -2,19 +2,109 @@
 import ListItemText from "@mui/material/ListItemText"; */
 import Avatar from "@mui/material/Avatar";
 import "./Group.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { joinGroup } from "../../../actions/group";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import Warning from "../../Widget/ConfirmDialog/Warning.jsx";
+import signInPic from "../../../images/dabengou/SignInPic.jpg";
+import JoinGroup from "../../../images/dabengou/JoinGroup.jpg";
+import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
+import LockIcon from "@mui/icons-material/Lock";
+const LoginText = "Go to log in and explore more!";
+
+const severityOptions = { success: "success", failure: "error" };
 
 const GroupList = ({ group }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [text, setText] = useState("");
+  const [pic, setPic] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [inputText, setInputText] = useState("");
+  const [isFeedbackMsg, setIsFeedbackMsg] = useState(false);
+  const [Msg, setMsg] = useState("");
+  const [severity, setSeverity] = useState("");
+  const handelfeebackMsgClose = () => {
+    setIsFeedbackMsg(false);
+  };
+  /* const Gpassword = group.password; */
 
-  const handleEdit = () => {
-    console.log("edit");
+  const onClick = () => {
+    console.log("Clicked");
+    if (user && group.members.includes(user.result._id)) {
+      navigate(`/groups/${group._id}`);
+      setInputText("");
+    } else if (user && group.password) {
+      setInputText("your password");
+      setText("please input the password:");
+      setPic(JoinGroup);
+      setIsOpen(true);
+      console.log(isOpen);
+      console.log("set ok");
+    } else if (user) {
+      navigate(`/groups/${group._id}`);
+      setInputText("");
+    } else {
+      setText(LoginText);
+      setPic(signInPic);
+      setIsOpen(true);
+      setInputText("");
+      console.log("not logged in");
+    }
   };
 
-  const handleJoinGroup = () => {
+  const handleJoin = () => {
+    if (user && group.password) {
+      setInputText("your password");
+      setText("please input the password:");
+      setPic(JoinGroup);
+      setIsOpen(true);
+    } else {
+      setText(`DO you want to join Group ${group.groupName}?`);
+      setPic(JoinGroup);
+      setIsOpen(true);
+    }
+  };
+  /*  const des = user ? `/groups/${group._id}` : "#"; */
+  const onConfirm = () => {
+    setIsOpen(false);
+    if (!user) {
+      navigate("/auth");
+    } else {
+      handleJoinGroup();
+      setSeverity(severityOptions.success);
+      setMsg("Join Successfully");
+
+      setTimeout(() => {
+        navigate(`/groups/${group._id}`);
+      }, 800);
+      setIsFeedbackMsg(true);
+    }
+  };
+  const onCancel = () => {
+    setIsOpen(false);
+  };
+  const verifyGroup = async () => {
+    try {
+      const response = await verifyGroup(group._id, inputText);
+
+      // 根据后端的响应进行处理
+      if (response.status === 200) {
+        // 密码验证成功，执行相应操作
+        handleJoinGroup();
+        // 其他操作...
+      } else {
+        // 密码验证失败，执行相应操作
+        setSeverity(severityOptions.failure);
+        setMsg("password incorrectly");
+        setIsFeedbackMsg(true);
+        // 其他操作...
+      }
+    } catch (error) {}
+  };
+  const handleJoinGroup = async () => {
     console.log("join");
     const groupMemberData = {
       groupName: group.groupName,
@@ -25,21 +115,56 @@ const GroupList = ({ group }) => {
       memberId: user.result._id,
     };
     dispatch(joinGroup(group._id, groupMemberData));
+    // 获取最新的group信息
   };
-  /*   const isJoined = useSelector((state) => state.joined);
-  console.log(isJoined); */
+
+  const isMember =
+    user && group.members && group.members.includes(user.result._id);
+  const isCreator = user && group.creatorRefId === user.result._id;
+  const containerStyle = {
+    backgroundColor: isCreator ? "#fef3e8" : isMember ? "#f6e8fe" : "#ebebeb",
+    // 其他样式属性
+  };
+  const createdAt = new Date(group.createdAt);
+  const currentTime = new Date();
+  const timeDifference = currentTime - createdAt;
 
   return (
-    <div className="group-preview" key={group._id}>
+    <div className="group-preview" key={group._id} style={containerStyle}>
+      <Warning
+        isOpen={isOpen}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        pic={pic}
+        text={text}
+        initialText={inputText}
+      ></Warning>
       <div className="group-avatar">
         <Avatar alt="Remy Sharp" src={group.selectedFile} />
       </div>
-      <Link style={{ textDecoration: "none" }} to={`/groups/${group._id}`}>
-        <div className="group-name">{group.groupName}</div>
+      <div style={{ textDecoration: "none" }} onClick={onClick}>
+        <div className="group-name-container">
+          <div className="group-name">{group.groupName}</div>
+          {user && isCreator && timeDifference <= 3600000 && (
+            <div className="new-group-note">YOUR NEW GROUP!</div>
+          )}
+          {user && !isCreator && timeDifference <= 3600000 && (
+            <div className="new-group-note">NEW GROUP!</div>
+          )}
+          {group.password && (
+            <LockIcon sx={{ color: "#30263b", marginLeft: "5px" }} />
+          )}
+        </div>
         <div className="group-text-review">
           <div className="group-first-row">
-            <p className="group-creater">Created by:{group.creatorName}</p>
-            <p className="group-amount">member:{group.groupcount}</p>
+            <div>
+              {user && group.creatorName === user.result.name ? (
+                <p className="group-creater">Created by: You</p>
+              ) : (
+                <p className="group-creater">Created by: {group.creatorName}</p>
+              )}
+            </div>
+            <p className="group-amount">member:{group.groupCount}</p>
           </div>
           <p className="group-intro-text">{group.intro}</p>
           <p>
@@ -51,32 +176,36 @@ const GroupList = ({ group }) => {
               ))}
           </p>
         </div>
-      </Link>
+      </div>
 
       <div>
+        {/*  <Warning
+          isOpen={isOpen}
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+          pic={pic}
+          text={text}
+        ></Warning> */}
         {user &&
-          (user.result._id === group.creatorId ? (
-            <button className="grouplist-button" onClick={handleEdit}>
-              edit
-            </button>
+          (user.result._id === group.creatorRefId ? (
+            <Link to={`/groups/${group._id}/edit-group`}>
+              <button className="grouplist-button">edit</button>
+            </Link>
           ) : group.members && group.members.includes(user.result._id) ? (
             <Link to={`/groups/${group._id}/create-post`}>
               <button className="grouplist-button">Write a Post</button>
             </Link>
           ) : (
-            <button className="grouplist-button" onClick={handleJoinGroup}>
+            <button className="grouplist-button" onClick={handleJoin}>
               Join Now
             </button>
           ))}
-        {/*  isJoined ? (
-            <Link
-              style={{ textDecoration: "none" }}
-              className="grouplist-button"
-              to={`/groups/${group._id}/create-post`}
-            >
-              Post now!
-            </Link>
-          ) : */}
+        <FeedbackMsg
+          status={isFeedbackMsg}
+          severity={severity}
+          message={Msg}
+          onClose={handelfeebackMsgClose}
+        ></FeedbackMsg>
       </div>
     </div>
   );

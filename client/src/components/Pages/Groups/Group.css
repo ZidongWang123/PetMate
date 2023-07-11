@@ -14,10 +14,10 @@
   padding-top: 20px;
   margin: 10px 0;
   margin-left: 75px;
-  border-bottom: 1px solid #fafafa;
+  /*   border-bottom: 1px solid #f6e8fe; */
   width: 800px;
   text-decoration: none;
-  background-color: #ebebeb;
+
   border-radius: 50px;
   cursor: pointer;
 }
@@ -45,7 +45,7 @@
 
 .group-preview .group-first-row p {
   width: 70%;
-  color: #999999;
+  color: #5c5c5c;
 }
 .group-preview .group-creater {
   /* margin-right: 100px; */
@@ -67,6 +67,16 @@
   font-weight: bold; /* 加粗字体 */
   font-family: "Comic Sans MS";
   margin-left: 20px;
+}
+.group-name-container {
+  display: flex;
+  align-items: center;
+}
+.new-group-note {
+  all: initial;
+  margin-left: 10px;
+  font-weight: bold;
+  color: #ea5d32;
 }
 .group-preview .group-intro-text {
   margin-top: 10px;

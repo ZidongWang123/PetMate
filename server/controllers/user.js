@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 import User from "../models/user.js";
-
+import articles from "../models/article.js";
 export const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -100,4 +100,26 @@ export const modifyPersonalInfo=async(req,res)=>{
   }catch(error){
     res.status(500).json({ message: 'Failed to update personal information' });
   }
+}
+
+
+
+export const getArticles=async(req, res)=>{
+    
+  console.log(req.params);
+
+  const {userId}=req.params
+  const query={"u_id": userId}
+  console.log(query,"query");
+  
+
+  try{
+    const articlesResulet = await articles.find(query).populate('g_id', 'groupName').populate('u_id', 'name')
+    res.status(200).json(articlesResulet);
+
+  }catch(error){
+    res.status(500).json({ message: 'Failed to update personal information' });
+  }
+
+  
 }

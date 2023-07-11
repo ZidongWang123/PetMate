@@ -5,10 +5,22 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {paleYellow,darkPurple,orange} from '../../constant/actionTypes'
+import { paleYellow, darkPurple, orange } from '../../constant/actionTypes'
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function Subscription({ button, title, contentText }) {
+export default function Subscription() {
     const [open, setOpen] = React.useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (location.pathname === '/subscription') {
+            setOpen(true);
+        } else {
+            setOpen(false);
+        }
+    }, [location]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -19,11 +31,12 @@ export default function Subscription({ button, title, contentText }) {
     };
 
     const handleClose = () => {
+        navigate("/explore");
         setOpen(false);
     };
 
     return (
-        <div>
+        <div style={{ marginRight: '10px' }}>
             <Button onClick={handleClickOpen}
                 sx={{
                     fontFamily: 'Comic Sans MS',
@@ -32,7 +45,7 @@ export default function Subscription({ button, title, contentText }) {
                     textTransform: 'none',
                     fontSize: '20px',
                 }}>
-                {button}
+                Join us!
             </Button>
             <Dialog
                 open={open}
@@ -54,7 +67,7 @@ export default function Subscription({ button, title, contentText }) {
                         display: 'flex',
                         borderBottom: '1px solid',
                     }}>
-                    {title}
+                    Be our membership now!
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description"
@@ -64,7 +77,15 @@ export default function Subscription({ button, title, contentText }) {
                             fontSize: '17px',
                             whiteSpace: 'pre-line',
                         }}>
-                        {contentText}
+                        
+                        Sharing Posts and Building Groups!
+                        Creating Events and Sharing Services!
+                        Higher Exposure in Explore!
+                        Pure Mode! No Ads!
+                        ...
+
+                        More benefits of membership are waiting for you!
+                        
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions

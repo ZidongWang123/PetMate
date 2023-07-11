@@ -1,8 +1,23 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { orange, brightPurple } from "../../../constant/actionTypes";
+import { useNavigate } from "react-router-dom";
 
-const ActivityCard = ({ activityType, isApply, isCreate }) => {
+const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit }) => {
+    const navigate = useNavigate();
+
+    const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
+    const formattedEndDate = new Date(activityData?.endDate).toLocaleDateString();
+
+    const handleEdit = (activityType, activityData) => {
+        console.log(activityType, activityData);
+        onEdit(activityType, activityData);
+    }
+
+    const getApplications = (activityType, activityData) => {
+            console.log(activityType, activityData);
+            navigate(`/applications/${activityData._id}`)
+    }
 
     return (
         <>
@@ -10,10 +25,12 @@ const ActivityCard = ({ activityType, isApply, isCreate }) => {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                border: '1px solid black',
                 borderRadius: '30px',
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
+                //width: '80%',
+                backgroundColor: 'white',
+                boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.1)',
             }}>
                 <Box sx={{
                     display: 'flex',
@@ -22,36 +39,89 @@ const ActivityCard = ({ activityType, isApply, isCreate }) => {
                     margin: '15px 30px 15px 30px',
                     width: '40%',
                 }}>
-                    <Typography variant="h6">
-                        title: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        creator: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        pet type: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        {activityType} type: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        date: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        city: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        location: ''
-                    </Typography>
-                    <Typography variant="h6">
-                        status: ''
-                    </Typography>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            Title:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {activityData?.title}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            City:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {activityData?.city}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            PetSpecies:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {activityData?.petSpecies}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            Type:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {activityData?.type}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            StartDate:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {formattedStartDate}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            EndDate:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {formattedEndDate}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            Location:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {activityData?.location}
+                        </Typography>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                            Status:
+                        </Typography>
+                        <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                            {activityData?.status}
+                        </Typography>
+                    </div>
+
                     {activityType === 'services' ? (
-                        <>
-                            <Typography variant="h6">
-                                price: ''
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                                Price:
                             </Typography>
-                        </>
+                            <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                {activityData?.price}
+                            </Typography>
+                        </div>
+
                     ) : null}
                     {activityType === 'events' ? (
                         <>
@@ -73,16 +143,14 @@ const ActivityCard = ({ activityType, isApply, isCreate }) => {
                     justifyContent: 'space-between',
                     height: '320px',
                 }}>
-                    <Typography variant="h6" sx={{
-                        height: '10%',
-                    }}>
-                        description of the {activityType}:
+                    <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                        Description of the {activityType}:
                     </Typography>
                     <Typography variant="h6" sx={{
                         wordWrap: 'break-word',
                         maxWidth: '100%',
                     }} >
-                        HIHIHIHIHIHIHIHIHIHIHHIHIHIHIHIHIHIHIHIHIHIHIHHIHIHIHIHIHIHIHIHIHIHIHIHHIHIHIHIHIHIHIHIHIHIHIHIHHIHI
+                        {activityData?.content}
                     </Typography>
 
                     {isApply ? (
@@ -96,27 +164,27 @@ const ActivityCard = ({ activityType, isApply, isCreate }) => {
                             boxSizing: 'border-box',
                         }}>
                             <Button
-                            sx={{
-                                width: '30%',
-                                backgroundColor: orange,
-                                color: 'white',
-                                borderRadius: '20px',
-                            }}>
+                                sx={{
+                                    width: '30%',
+                                    backgroundColor: orange,
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}>
                                 Apply
                             </Button>
                             {/* todo: if applied, show text, applied or approved */}
                             <Button
-                            sx={{
-                                width: '30%',
-                                backgroundColor: brightPurple,
-                                color: 'white',
-                                borderRadius: '20px',
-                            }}>
+                                sx={{
+                                    width: '30%',
+                                    backgroundColor: brightPurple,
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}>
                                 Withdraw
                             </Button>
                         </Box>) : null}
 
-                        {isCreate ? (
+                    {isCreate ? (
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'row',
@@ -127,29 +195,31 @@ const ActivityCard = ({ activityType, isApply, isCreate }) => {
                             boxSizing: 'border-box',
                         }}>
                             <Button
-                            sx={{
-                                width: '30%',
-                                backgroundColor: orange,
-                                color: 'white',
-                                borderRadius: '20px',
-                            }}>
-                                Edit
-                            </Button>
+                                sx={{
+                                    width: '40%',
+                                    backgroundColor: orange,
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}
+                                onClick={() => handleEdit(activityType, activityData)}>
+                            Edit
+                        </Button>
                             {/* todo: if applied, show text, applied or approved */}
-                            <Button
-                            sx={{
-                                width: '30%',
-                                backgroundColor: brightPurple,
-                                color: 'white',
-                                borderRadius: '20px',
-                            }}>
-                                Application
-                            </Button>
-                        </Box>) : null}
+                    <Button
+                        sx={{
+                            width: '40%',
+                            backgroundColor: brightPurple,
+                            color: 'white',
+                            borderRadius: '20px',
+                        }}
+                        onClick={() => getApplications(activityType, activityData)}>
+                        Application
+                    </Button>
+                </Box>) : null}
 
-                </Box>
+            </Box>
 
-            </Box >
+        </Box >
         </>
     );
 }

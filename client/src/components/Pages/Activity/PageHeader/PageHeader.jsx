@@ -42,7 +42,7 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                 variant="outlined"
                                 onKeyPress={handleKeyPressTags}
                                 fullWidth
-                                inputProps={{
+                                InputProps={{
                                     placeholder: 'Type and press enter to add a tags',
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -92,7 +92,7 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                     sx={{
                                         fontFamily: 'Cosmic Sans MS',
                                     }}
-                                    inputProps={{ fontFamily: 'Cosmic Sans MS' }}
+                                    inputprops={{ fontFamily: 'Cosmic Sans MS' }}
                                 />
                             ))}
                         </div>

@@ -5,11 +5,18 @@ import {
   FETCH_MY_GROUPS,
   JOIN_GROUP,
   DELETE_GROUP,
+  UPDATE_GROUP,
+  START_LOADING,
+  END_LOADING,
 } from "../constant/actionTypes";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state = { joined: false, groups: [] }, action) => {
+export default (state = { isLoading: true, groups: [] }, action) => {
   switch (action.type) {
+    case START_LOADING:
+      return { ...state, isLoading: true };
+    case END_LOADING:
+      return { ...state, isLoading: false };
     case FETCH_ALLGROUPS:
       return { ...state, groups: action.payload };
     case FETCH_GROUP:
@@ -35,6 +42,13 @@ export default (state = { joined: false, groups: [] }, action) => {
       return {
         ...state,
         groups: state.groups.filter((w) => w._id !== action.payload),
+      };
+    case UPDATE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.map((group) =>
+          group._id === action.payload._id ? action.payload : group
+        ),
       };
     default:
       return state;

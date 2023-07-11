@@ -6,12 +6,9 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { useRef } from "react";
+
 import { useState } from "react";
 import { Fragment } from "react";
-import { useDispatch } from "react-redux";
-
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 /* import { useHistory } from "react-router-dom/cjs/react-router-dom.min"; */
 
@@ -24,7 +21,7 @@ import {
 import InputBar from "../../../Widget/InputBar/InputBar";
 import InputTextArea from "../../../Widget/InputBar/InputTextArea";
 import InputTagBar from "../../../Widget/InputBar/InputTagBar";
-import { createGroup } from "../../../../actions/group";
+
 import InputAvatar from "../../../Widget/InputBar/InputAvatar";
 
 /* import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
@@ -45,27 +42,7 @@ const steps = [
   },
 ];
 
-const GroupForm = () => {
-  const [groupData, setGroupData] = useState({
-    groupName: "",
-    tags: [],
-    intro: "",
-    selectedFile: "",
-  });
-  const dispatch = useDispatch();
-  /*   const groups = useSelector((state) => state.groups); */
-  const user = JSON.parse(localStorage.getItem("profile"));
-  const token = user?.token;
-
-  /*  useEffect(() => {
-    if (groups) setGroupData(groups);
-  }, [groups]);
- */
-  /* const { dispatch } = useWorkoutsContext(); */
-
-  /*   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]); */
-
+const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
   //groupname
 
   const handleNameChange = (value) => {
@@ -79,7 +56,7 @@ const GroupForm = () => {
     // 更新选中的标签状态
 
     setGroupData({ ...groupData, tags: tags });
-    console.log(groupData);
+    console.log(groupData.tags);
     // 在标签数据变化时触发回调函数
     // 可以在这里进行其他处理
   };
@@ -163,17 +140,12 @@ const GroupForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault(); // normally for refreshing the page
     console.log("IM HERE", groupData);
-    dispatch(createGroup({ ...groupData, creatorName: user?.result?.name }));
-    handleReset();
+    handleSubmit();
   };
-  /*  const response = await createGroup(groupData);
-    const data = await response.json();
-    if (response.ok) {
-      console.log("new workout added", data);
-    } */
+
   return (
     <div>
       <div
@@ -248,8 +220,8 @@ const GroupForm = () => {
                   )}
                   {activeStep === 1 && (
                     <InputTagBar
-                      initialValue={groupData.tags}
-                      onInputChange={handleTagsChange}
+                      tags={groupData.tags}
+                      onTagsChange={handleTagsChange}
                     />
                   )}
                   {activeStep === 2 && (
@@ -275,7 +247,7 @@ const GroupForm = () => {
                         color="success"
                         onClick={
                           completedSteps() === totalSteps() - 1
-                            ? handleSubmit
+                            ? handleCreate
                             : handleComplete
                         }
                         sx={{

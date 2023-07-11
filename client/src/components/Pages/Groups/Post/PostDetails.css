@@ -119,6 +119,14 @@
 .post-content-wrapper {
   margin-bottom: 20px;
   font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  border: solid #ccc 1px;
+  padding: 30px;
+  height: 100%;
+  border-radius: 20px;
+  width: 1400px;
+  background-color: #ebe6e6;
+  align-items: center;
+
 
 }
 

@@ -146,12 +146,12 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
             {(activity === 'service') && showActivityOverview && services ? (
                 <div className="activities-grid">
                     {services.map((service) => (
-                        <ActivityOverview key={service.id} activityData={service}/>
+                        <ActivityOverview key={service._id} activityData={service}/>
                     ))}
                 </div>
             ) : null}
 
-            {showPagination ? (<Pagination page={page} />) : null}
+            {showPagination ? (<Pagination page={page} path={'service'} />) : null}
             <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' onClose={handelfeebackMsgClose} />
         </Container >
     );
