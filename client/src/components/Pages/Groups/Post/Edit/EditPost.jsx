@@ -169,8 +169,8 @@ import Input from '../../../../Widget/Input/Input'
           
             <div className="image_show">
             <div className="button-wrapper">
-                <button className="discard-button" onClick={()=>{onEditUploadImage()}} >Uploadimage</button>
-                <button className="discard-button" onClick={()=>{onDeleteUploadImage()}} >Deleteimage</button>
+                <button className="discard-button" onClick={()=>{onEditUploadImage()}} >Upload Image</button>
+                <button className="discard-button" onClick={()=>{onDeleteUploadImage()}} >Delete Image</button>
           
                 <Input name="width" defaultValue={width} label="Width" handleChange={handleWidthChange} type="text" />
                 <Input name="height" defaultValue={height}   label="Height" handleChange={handleHeightChange} type="text" />
