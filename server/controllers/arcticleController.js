@@ -25,8 +25,8 @@ const getGroupArticle = async (req, res) => {
     g_id: id,
   };
 
-  console.log("查询", query);
-  const Articles = await articles.find(query).populate("u_id", "name");
+  console.log("Search", query);
+  const Articles = await articles.find(query).populate('u_id', 'name avatar');
 
   res.status(200).json(Articles);
 };
@@ -76,14 +76,13 @@ const deleteArticle = async (req, res) => {
   res.status(200).json(articlesResulet);
 };
 
-// update a workout
 const updateArticle = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such Article" });
   }
-  console.log(req.body, "修改");
+  console.log(req.body, "Changed");
   const article = await articles.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!article) {
@@ -93,11 +92,10 @@ const updateArticle = async (req, res) => {
   res.status(200).json(article);
 };
 
-// create new Group
 const createArticle = async (req, res) => {
   const { title, tags, content, imageURL, creator, g_id } = req.body;
   const u_id = req.userId;
-  //detect which field is empty when sending post request
+
   let emptyFields = [];
 
   if (!title) {
@@ -109,9 +107,7 @@ const createArticle = async (req, res) => {
   if (!content) {
     emptyFields.push("content");
   }
-  if (!imageURL) {
-    emptyFields.push("imageURL");
-  }
+  
   if (!u_id) {
     emptyFields.push("u_id");
   }
@@ -128,7 +124,7 @@ const createArticle = async (req, res) => {
 
   // add doc to db
   try {
-    const group = await articles.create({
+    const Articles = await articles.create({
       u_id,
       g_id,
       title,
@@ -137,7 +133,7 @@ const createArticle = async (req, res) => {
       imageURL,
       creator,
     });
-    res.status(200).json(articles);
+    res.status(200).json(Articles);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
