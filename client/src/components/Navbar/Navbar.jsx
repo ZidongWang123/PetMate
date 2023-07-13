@@ -41,10 +41,12 @@ function Navbar({ handleSecNavbar }) {
     const location = useLocation();
 
     const pageNavigate = (page) => {
+        console.log(page)
         setActiveButton(page);
         localStorage.setItem('ActiveButton', page);
         navigate(`/${page.toLowerCase()}`);
         handleSecNavbar([], '');
+        window.location.reload();
     };
 
     const handleOpenNavMenu = (event) => {
@@ -207,11 +209,11 @@ function Navbar({ handleSecNavbar }) {
                                 onClick={() => pageNavigate(page)}
                                 sx={{
                                     fontFamily: 'Comic Sans MS',
-                                    color: darkPurple,
-                                    backgroundColor: 'white',
+                                    color: activeButton === page ? 'white' : darkPurple,
+                                    backgroundColor: activeButton === page ? darkPurple : 'white',
                                     display: 'block',
                                     fontWeight: 800,
-                                    textDecoration: activeButton === page ? 'underline !important' : 'none',
+                                    /* textDecoration: activeButton === page ? 'underline !important' : 'none', */
                                     textDecorationThickness: '2px !important',
                                     textDecorationSkipInk: 'none !important',
                                     textUnderlineOffset: '4px !important',
