@@ -19,7 +19,6 @@ const articleSchema = new Schema(
     },
     imageURL: {
       type: String,
-      required: true,
     },
     
     u_id:{
