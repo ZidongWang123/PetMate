@@ -116,7 +116,7 @@ function Navbar({ handleSecNavbar }) {
     }, [location]);
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: paleYellow, borderBottom: '1px solid gray' }}>
+        <AppBar position="static" sx={{ backgroundColor: 'white', borderBottom: '1px solid gray' }}>
             <Container maxWidth="xxl" className="container">
                 <Toolbar disableGutters={true}>
 
@@ -208,7 +208,7 @@ function Navbar({ handleSecNavbar }) {
                                 sx={{
                                     fontFamily: 'Comic Sans MS',
                                     color: darkPurple,
-                                    backgroundColor: paleYellow,
+                                    backgroundColor: 'white',
                                     display: 'block',
                                     fontWeight: 800,
                                     textDecoration: activeButton === page ? 'underline !important' : 'none',
