@@ -10,9 +10,10 @@ import Typography from "@mui/material/Typography";
 import { useRef } from "react";
 import { useState } from "react";
 import {  useNavigate, useSearchParams,useParams } from "react-router-dom";
-import { poArticlesInfo } from "../../../../api/user"
+import { poArticlesInfo } from "../../../../api"
 import { FormData } from "../../../../util/index"
 import PetsIcon from "@mui/icons-material/Pets";
+import "./GroupPostForm.css"
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
@@ -59,7 +60,7 @@ const GroupPostForm = () => {
     // 更新选中的标签状态
 
     setTag(tags);
-    console.log(tags);
+    //console.log(tags);
     // 在标签数据变化时触发回调函数
     // 可以在这里进行其他处理
   };
@@ -143,7 +144,11 @@ const GroupPostForm = () => {
     setActiveStep(step);
   };
   const poArticlesInfoRequest= async(article)=>{
-    await poArticlesInfo(article)
+    try {
+      await poArticlesInfo(article)
+    } catch (error) {
+      
+    }
   }
   const handleComplete = async () => {
     const newCompleted = completed;
@@ -162,8 +167,9 @@ const GroupPostForm = () => {
         "g_id":groupId
       }
       poArticlesInfoRequest(article)
-      navigate(`/groups/${groupId}`)
-      // console.log(name,tag,intro,previewImage);
+      setTimeout(()=>{
+        navigate(`/groups/${groupId}`)
+      },1000)      // console.log(name,tag,intro,previewImage);
     }
   };
 
@@ -171,9 +177,20 @@ const GroupPostForm = () => {
     setActiveStep(0);
     setCompleted({});
   };
-
+  const onBack=()=>{
+    navigate(-1)
+    //console.log("返回");
+  }
   return (
-    <div>
+    <div style={{position:"relative"}}>
+       <div className="button-wrapper-group" >
+            <button
+              className="Back-button"
+              onClick={() => onBack()}
+            >
+              Back
+            </button>
+          </div>
       <div
         className="title"
         style={{
@@ -249,6 +266,8 @@ const GroupPostForm = () => {
                   <InputTagBar
                     initialValue={tag}
                     onTagsChange={handleTagsChange}
+                    where="articles"
+
                   />
                 )}
                 {activeStep === 2 && (
