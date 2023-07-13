@@ -14,8 +14,10 @@ API.interceptors.request.use((req) => {
 
 //api for services
 export const fetchService = (id) => API.get(`/services/${id}`);
-export const fetchServices = (page,  userId = null) => API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ''}`);
-export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);
+export const fetchServices = (page, userId = null) =>
+  API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ""}`);
+export const fetchServicesBySearch = ({ tags }) =>
+  API.get(`/services/search?tags=${tags}`);
 
 export const createService = (newService) => API.post("/services", newService);
 export const updateService = (id, updatedService) =>
@@ -34,10 +36,11 @@ export const updateEvent = (id, updatedEvent) =>
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
 //api for applications
-export const fetchApplicationsByApplicantId = (applicantId) => API.get(`/applications/${applicantId}`);
+export const fetchApplicationsByApplicantId = (applicantId) =>
+  API.get(`/applications/${applicantId}`);
 export const fetchApplicationsByActivityId = (activityId) =>
   API.get(`/applications?&activityId=${activityId}`);
-export const createApplication = (newApplication) =>  
+export const createApplication = (newApplication) =>
   API.post("/applications", newApplication);
 export const updateApplication = (id, updatedApplication) =>
   API.patch(`/applications/${id}`, updatedApplication);
@@ -47,6 +50,8 @@ export const fetchGroups = () => API.get("/api/groups");
 export const fetchGroup = (id) => API.get(`/api/groups/${id}`);
 export const fetchMyGroups = () => API.get("/api/groups/mygroups");
 export const createGroup = (newGroup) => API.post("/api/groups", newGroup);
+export const addGroupPassword = (id, psw) =>
+  API.patch(`/api/groups/${id}`, psw);
 export const updateGroup = (id, updatedGroup) =>
   API.patch(`/api/groups/${id}`, updatedGroup);
 export const deleteGroup = (id) => API.delete(`/api/groups/${id}`);
@@ -60,8 +65,16 @@ export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
 
 //api for user
-export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost)
-export const modifyPersonalInfo=(id,data)=>API.put(`/user/modifyPersonalInfo/${id}`,data)
-export const getPersonalInfo=(id)=>API.get(`/user/getPersonalInfo/${id}`)
-export const getRecommendTags=(keyword,where)=>API.get(`/explore/getRecommendTags/${keyword}/${where}`)
-export const getPosts=(data)=>(API.get("/explore/getPosts",{params:data}))
+export const createExplorePost = (newPost) =>
+  API.post("/explore/createPost", newPost);
+export const modifyPersonalInfo = (id, data) =>
+  API.put(`/user/modifyPersonalInfo/${id}`, data);
+export const getPersonalInfo = (id) => API.get(`/user/getPersonalInfo/${id}`);
+export const getRecommendTags = (keyword, where) =>
+  API.get(`/explore/getRecommendTags/${keyword}/${where}`);
+export const getPosts = (data) =>
+  API.get("/explore/getPosts", { params: data });
+
+//api for search
+export const fetchGroupsBySearch = (searchQuery) =>
+  API.get(`/api/groups/search?searchQuery=${searchQuery.search}`);

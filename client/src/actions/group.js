@@ -47,15 +47,32 @@ export const getMyGroups = () => async (dispatch) => {
   }
 };
 
+/* export const getGroupBySearch = () => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const {
+      data: { data },
+    } = await api.fetchGroupsBySearch();
+    dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+}; */
+
 export const createGroup = (group) => async (dispatch) => {
   try {
     console.log("group here");
     const { data } = await api.createGroup(group);
+    const groupId = data._id;
 
     console.log("api create succeed", data);
+    console.log("action", groupId);
     dispatch({ type: CREATE_GROUP, payload: data });
+    return groupId;
   } catch (error) {
-    console.log(error.message);
+    console.log("action", error);
+    throw error;
   }
 };
 
@@ -82,6 +99,15 @@ export const deleteGroup = (id) => async (dispatch) => {
 export const updateGroup = (id, groupData) => async (dispatch) => {
   try {
     const { data } = await api.updateGroup(id, groupData);
+
+    dispatch({ type: UPDATE_GROUP, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addGroupPassword = (id, groupData) => async (dispatch) => {
+  try {
+    const { data } = await api.addGroupPassword(id, groupData);
 
     dispatch({ type: UPDATE_GROUP, payload: data });
   } catch (error) {
