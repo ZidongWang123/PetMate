@@ -3,7 +3,7 @@ import useFetch from "../../../Widget/DataFetch/useFetch";
 import "./PostDetails.css"; // 引入自定义的 CSS 样式文件
 import Avatar from "@mui/material/Avatar";
 import {  useNavigate, useParams } from "react-router-dom";
-import { getArticlesInfo, delArticles } from "../../../../api/user"
+import { getArticlesInfo, delArticles } from "../../../../api"
 import { FormData } from "../../../../util/index"
 //import { Link } from 'react-router-dom';
 
@@ -12,19 +12,22 @@ const PostDetails = () => {
   const navigate = useNavigate();
   let params = useParams()
   const articlesId = params['id'];
-  const onDeleteArticle = async () => {
-    delArticlesRequest()
-  }
+ 
   const getArticlesInfoRequest = async () => {
-    const articleResulet = await getArticlesInfo(articlesId)
+    const {data:articleResulet} = await getArticlesInfo(articlesId)
     setArticle(articleResulet)
 
   }
-  const delArticlesRequest = async () => {
-    await delArticles(articlesId)
-
+  const onDeleteArticle = async (id) => {
+    await delArticles(id)
+    onGoBack()
 
   }
+  const onGoBack=()=>{
+
+    navigate(-1);
+  }
+ 
   const onEditArticle = async (id) => {
     navigate(`/groups/post/EditPost/${id}`)
 
@@ -46,16 +49,16 @@ const PostDetails = () => {
       </div>
       <div className="author-info">
         <div className="author-avatar" onClick={() =>onGoMyposts(article.u_id._id) }>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt="Remy Sharp" src={article.u_id.avatar} />
         </div>
         <div className="author-details">
           <span className="author-name">{article.u_id.name}</span>
-          <p className="post-timestamp">{article.updated_at==article.date?"Posted on":"Edit on"} {FormData(article.updated_at)}</p>
+          <p className="post-timestamp">{article.updated_at==article.date?"Posted on":"Edited on"} {FormData(article.updated_at)}</p>
           <p >      {article.tags.map(item=>{
             return <span className="single-tag">#{item}</span>
           })}</p>
         </div>
-        {article.editFlag&&(<div className="button-group" style={{ marginLeft: '700px' }}>
+        {article.editFlag&&(<div className="button-group" style={{ marginLeft: '500px' }}>
           <div className="edit-button-wrapper">
             <button className="edit-button" onClick={() => onEditArticle(article._id)} >
               Edit
@@ -69,7 +72,12 @@ const PostDetails = () => {
               Delete
             </button>
           </div>
-
+          <button
+              className="delete-button"
+              onClick={() => onGoBack()}
+            >
+              Back
+            </button>
         </div>)}
       </div>
       <div className="post-content-wrapper">

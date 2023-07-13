@@ -9,7 +9,10 @@ import SingleGroupDetail from "./SingleGroupDetail.jsx";
 import BasicTable from "../../../Widget/TableBar/TableBar"; */
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 import { Link, useParams } from "react-router-dom";
-import { getGroupsArticles, fetchArticlesBySearch } from "../../../../api/user";
+import {
+  getGroupsArticles,
+  fetchArticlesBySearch,
+} from "../../../../api/index";
 import { FormData } from "../../../../util/index";
 import TableFilter from "../../../Widget/TableFilter/TableFilter";
 
