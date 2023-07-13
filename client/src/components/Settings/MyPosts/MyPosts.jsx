@@ -8,7 +8,6 @@ import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import { getPersonalInfo } from "../../../api";
-
 import {getUserArticles} from "../../../api"
 import {FormData} from "../../../util/index"
 import TableFilter  from "../../Widget/TableFilter/TableFilter";
@@ -18,7 +17,7 @@ import TableFilter  from "../../Widget/TableFilter/TableFilter";
 
 export default function MyPost(){
     const params = useParams();
-    console.log(JSON.parse(window.localStorage.getItem("profile")).result,"7777");
+    //console.log(JSON.parse(window.localStorage.getItem("profile")).result,"7777");
     const userId=params.userId|| JSON.parse(window.localStorage.getItem("profile")).result._id 
     const [profil,setProfil]=useState([])
     const [articleList,setArticleList]=useState([])
@@ -34,8 +33,6 @@ export default function MyPost(){
         headerName: 'Topics', 
         width:200,
         renderCell:(params) => (
-          
-           
             <Link
            to={`/groups/post/${params.row.id}`} style={{ textDecoration:'none'}}
             >
@@ -49,35 +46,28 @@ export default function MyPost(){
         headerName: 'Groups', 
         width:100,
         renderCell:(params) => (
-           
             <Link
            to={`/groups/${params.row.g_id}`}
             >
               {params.row.Groups}
             </Link>
         ),
-  
       },
       {
         field: 'Date',
         headerName: 'Date', 
         width:150,
-  
-  
       },
       {
         field: 'Author',
         headerName: 'Author',
         width:200,
-  
       },
       {
         field: 'Tags',
         headerName: 'Tags', 
         width:300,
         renderCell:(params) => (
-           
-        
             <div>
             {params.row.Tags.map(item=>{
               return <span className="single-tag">#{item}</span>
@@ -91,7 +81,6 @@ export default function MyPost(){
      
       
     ];
-
     const getUserInfo=async(userId)=>{
       try{
     
@@ -107,10 +96,9 @@ export default function MyPost(){
     }
 
     }
-
     const getUserArticlesRequest=async(userId)=>{
       try {
-        const articleListResulet=await getUserArticles(userId)
+        const {data:articleListResulet}=await getUserArticles(userId)
      
         const articles=articleListResulet.map(item=>{
        
@@ -118,7 +106,7 @@ export default function MyPost(){
         })
         setArticleList(articles)
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
         
     }
@@ -127,7 +115,6 @@ export default function MyPost(){
         
         // todo...
         getUserInfo(userId)
-
         getUserArticlesRequest(userId)
         setProfil({avatar:avatar,name:"wang" ,intro:"my name is zidong, I like cats",totalLikeCount:5,id:"12312321",location:"munich",gender:"male"})
 },[])
@@ -164,7 +151,6 @@ export default function MyPost(){
                     <div>{} <span style={{color:"gray"}}>likes</span>
                     </div>
                 </div>
-
 
             </div>
             <div >
