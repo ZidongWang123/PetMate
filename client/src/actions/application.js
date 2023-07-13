@@ -21,7 +21,6 @@ export const updateApplication = async (activityId, application) => {
 export const getApplicationsByActivityId = async (activityId) => {
     try {
         const {data} = await api.fetchApplicationsByActivityId(activityId);
-        console.log(data)
         return data;
     } catch (error) {
         console.log(error);
@@ -34,5 +33,15 @@ export const getApplicationsByApplicantId = async (activityId) => {
         return { data }
     } catch (error) {
         console.log(error);
+    }
+}
+
+
+export const fetchPersonalInfo = async (userId) => {
+    try {
+        const { data } = await api.getPersonalInfo(userId);
+        return { data }
+    } catch (error) {
+        console.log(error)
     }
 }

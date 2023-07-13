@@ -2,40 +2,42 @@ import React from "react";
 import Application from "./Application";
 import { useParams } from "react-router-dom";
 import { getApplicationsByActivityId } from "../../../actions/application.js";
-import Pagination from "../../Widget/Pagination/Pagination";
-import { useLocation } from "react-router-dom";
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
+import { Box } from "@mui/material";
 
 const Applications = () => {
-
-    const query = useQuery();
-    const page = query.get('page') || 1;
-    console.log(page);
-
-
     const { id } = useParams();
-    let applications;
-    getApplicationsByActivityId(id).then((items) => {
-        applications = items.data;
-        console.log(applications);
-    })
+    const [applications, setApplications] = React.useState(null);
+
+    React.useEffect(() => {
+        getApplicationsByActivityId(id)
+        .then((items) => {
+          setApplications(items.data);
+        })
         .catch((error) => {
-            console.log(error);
+          console.log(error);
         });
+    }, [])
+
+    if (!applications) {
+        return <div>Loading...</div>;
+      }
 
     return (
-        <div>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width:'100%'
+            }}
+        >
             {applications ? (
-                <>
+                <div>
                     {applications.map((application) => (
-                        <Application application={application} />
+                        <Application key={application._id} application={application} />
                     ))}
-                </>
+                </div>
             ) : null}
-        </div>
+        </Box>
     );
 }
 

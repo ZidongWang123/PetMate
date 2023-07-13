@@ -4,9 +4,9 @@ import { getApplicationsByActivityId, createApplication, updateApplication } fro
 
 const router = express.Router();
 
-router.get("/:id", auth, getApplicationsByActivityId);
+//router.get("/:id", auth, getApplicationsByActivityId);
 router.get("/", auth, getApplicationsByActivityId);
 router.post("/", auth, createApplication);
-router.patch("/:id", auth, updateApplication);
+router.patch("/:id", updateApplication);
 
 export default router;

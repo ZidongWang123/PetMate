@@ -18,29 +18,25 @@ export const fetchServices = (page,  userId = null) => API.get(`/services?page=$
 export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);
 
 export const createService = (newService) => API.post("/services", newService);
-export const updateService = (id, updatedService) =>
-  API.patch(`/services/${id}`, updatedService);
+export const updateService = (id, updatedService) => API.patch(`/services/${id}`, updatedService);
 export const deleteService = (id) => API.delete(`/services/${id}`);
 
 //api for events
-export const fetchEvent = (id) => API.get(`/events/${id}`);
-export const fetchEvents = (page) => API.get(`/events?page=${page}`);
-export const fetchEventsBySearch = ({ tags }) =>
-  API.get(`/events/search?tags=${tags}`);
+// export const fetchEvent = (id) => API.get(`/events/${id}`);
+// export const fetchEvents = (page) => API.get(`/events?page=${page}`);
+// export const fetchEventsBySearch = ({ tags }) =>
+//   API.get(`/events/search?tags=${tags}`);
 
-export const createEvent = (newEvent) => API.post("/events", newEvent);
-export const updateEvent = (id, updatedEvent) =>
-  API.patch(`/events/${id}`, updatedEvent);
-export const deleteEvent = (id) => API.delete(`/events/${id}`);
+// export const createEvent = (newEvent) => API.post("/events", newEvent);
+// export const updateEvent = (id, updatedEvent) =>
+//   API.patch(`/events/${id}`, updatedEvent);
+// export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
 //api for applications
 export const fetchApplicationsByApplicantId = (applicantId) => API.get(`/applications/${applicantId}`);
-export const fetchApplicationsByActivityId = (activityId) =>
-  API.get(`/applications?&activityId=${activityId}`);
-export const createApplication = (newApplication) =>  
-  API.post("/applications", newApplication);
-export const updateApplication = (id, updatedApplication) =>
-  API.patch(`/applications/${id}`, updatedApplication);
+export const fetchApplicationsByActivityId = (activityId) => API.get(`/applications?&activityId=${activityId}`);
+export const createApplication = (newApplication) => API.post("/applications", newApplication);
+export const updateApplication = (id, updatedApplication) => API.patch(`/applications/${id}`, updatedApplication);
 
 //api for groups
 export const fetchGroups = () => API.get("/api/groups");

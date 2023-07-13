@@ -13,9 +13,7 @@ export const getApplicationsByApplicant = async (req, res) => {
 export const getApplicationsByActivityId = async (req, res) => {
     const { activityId } = req.query;
     try {
-        console.log(activityId)
         const applications = await Application.find({ activityId: activityId }).sort({ _id: -1 }); // get the posts for the current page
-        console.log(applications)
         res.status(200).json({ data: applications}); // return the posts and the number of pages
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -24,9 +22,9 @@ export const getApplicationsByActivityId = async (req, res) => {
 
 export const updateApplication = async (req, res) => {
     const { id: _id } = req.params;
-    const [ status ] = req.body;
+    const { status, introduction, creatorId, activityId, applicantId } = req.body;
     const updatedApplication = {
-        status
+        status, introduction, creatorId, activityId, applicantId 
     };
 
     try {

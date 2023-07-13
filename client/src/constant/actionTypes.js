@@ -19,7 +19,9 @@ export const END_LOADING = "END_LOADING";
 //-----------------event related constant-----------------
 
 //-----------------application related constant-----------
-export const FETCH_ALL_APPLICATIONS = 'FETCH_ALL_APPLICATIONS';
+export const PENDING = 'pending';
+export const APPROVED = 'approved'
+export const REJECT = 'rejected';
 
 //-----------------group related constant-----------------
 export const LIKE = 'LIKE';
