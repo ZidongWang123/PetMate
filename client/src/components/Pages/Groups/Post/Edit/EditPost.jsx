@@ -30,7 +30,7 @@ import Input from '../../../../Widget/Input/Input'
         const {data:articlesInfoResulet}=await getArticlesInfo(articlesId)   
         setArticle(articlesInfoResulet)
         setContent(articlesInfoResulet.content)
-        console.log(articlesInfoResulet.title);
+        //console.log(articlesInfoResulet.title);
         setTitleValue(articlesInfoResulet.title)
         setPreviewImage(articlesInfoResulet.imageURL)
         setWidth(articlesInfoResulet.imageWidth||'200')
@@ -43,7 +43,7 @@ import Input from '../../../../Widget/Input/Input'
         //   // const edito = editor.current.getInstance();
         //   // const textStyle = edito.createTextStyle({ fontName: "Arial", fontSize: "medium" });
         //   // edito.command(e => e.applyTextStyle(textStyle));
-        //   console.log(editor.getConfig());
+        //   //console.log(editor.getConfig());
         // }
        
        },[])
@@ -65,7 +65,7 @@ import Input from '../../../../Widget/Input/Input'
     
         const reader = new FileReader();
         reader.onload = () => {
-          console.log(reader.result);
+          //console.log(reader.result);
           setPreviewImage(reader.result);
         };
         reader.readAsDataURL(file);
@@ -82,11 +82,12 @@ import Input from '../../../../Widget/Input/Input'
         article.imageURL=previewImage
         article.imageWidth=width
         article.imageHeight=height
-        console.log(article);
-        paArticlesInfoReuest(article._id,article)  
+        //console.log(article);
+        paArticlesInfoReuest(article._id,article) 
         setTimeout(()=>{
           navigate(`/groups/post/${articlesId}`)
         },1000) 
+        
         
       }
       const onGoBack=()=>{
@@ -129,7 +130,7 @@ import Input from '../../../../Widget/Input/Input'
      
           <div className="author-info">
             <div className="author-avatar">
-            <Avatar alt="Remy Sharp" src={article.u_id.avatar}/>
+              <Avatar alt="Remy Sharp" src={article.u_id.avatar}/>
             </div>
   
             <div className="author-details">
@@ -171,8 +172,8 @@ import Input from '../../../../Widget/Input/Input'
           
             <div className="image_show">
             <div className="button-wrapper">
-                <button className="discard-button" onClick={()=>{onEditUploadImage()}} >Upload Image</button>
-                <button className="discard-button" onClick={()=>{onDeleteUploadImage()}} >Delete Image</button>
+                <button className="Image-button" onClick={()=>{onEditUploadImage()}} >Upload Image</button>
+                <button className="Image-button" onClick={()=>{onDeleteUploadImage()}} >Delete Image</button>
           
                 <Input name="width" defaultValue={width} label="Width" handleChange={handleWidthChange} type="text" />
                 <Input name="height" defaultValue={height}   label="Height" handleChange={handleHeightChange} type="text" />
