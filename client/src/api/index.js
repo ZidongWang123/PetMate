@@ -78,3 +78,12 @@ export const getPosts = (data) =>
 //api for search
 export const fetchGroupsBySearch = (searchQuery) =>
   API.get(`/api/groups/search?searchQuery=${searchQuery.search}`);
+
+export const getGroups = (formData={}) => API.get('/api/groups', formData);
+export const getGroupsArticles = (groupId,formData={}) => API.get(`/api/articles/getGroups/${groupId}`, formData);
+export const getGroupInfo = (groupId,formData={}) => API.get(`/api/groups/${groupId}`, formData);
+export const getArticlesInfo = (articlesId,formData={}) => API.get(`/api/articles/${articlesId}`, formData);
+export const delArticles = (articlesId,formData={}) => API.delete(`/api/articles/${articlesId}`, formData);
+export const paArticlesInfo = (articlesId,formData={}) => API.patch(`/api/articles/${articlesId}`, formData);
+export const poArticlesInfo = (formData={}) => API.post(`/api/articles/`, formData);
+export const getUserArticles = ( userId,formData={}) => API.get(`/user/articles/${userId}`, formData);
