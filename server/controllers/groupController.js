@@ -1,6 +1,7 @@
 import Group from "../models/group.js";
 import mongoose from "mongoose";
 import Groupmember from "../models/groupmember.js";
+import articles from "../models/article.js";
 import bcrypt from "bcryptjs";
 
 // get all groups
@@ -104,34 +105,58 @@ const getMyGroups = async (req, res) => {
 
 // create new Group
 const createGroup = async (req, res) => {
-  const { password, ...group } = req.body;
-  const encryptedPassword = password
-    ? await bcrypt.hash(password, 12).catch((error) => {
-        console.log(error);
-        throw new Error("Error hashing password");
-      })
-    : null;
-
-  const newGroupMessage = new Group({
-    ...group,
-    creatorId: req.userId,
-    password: encryptedPassword,
-  });
-  const newGroupmember = new Groupmember({
-    groupId: newGroupMessage._id,
-
-    creatorId: newGroupMessage.creatorId,
-
-    memberId: newGroupMessage.creatorId,
-  });
   try {
+    const { ...group } = req.body;
+    const exists = await Group.findOne({
+      groupName: { $regex: `^${group.groupName}$`, $options: "i" },
+    });
+    if (exists) {
+      return res.status(409).json({ error: "groupName already in use" });
+    }
+
+    const newGroupMessage = new Group({
+      ...group,
+      creatorId: req.userId,
+      password: "",
+    });
+
+    const newGroupmember = new Groupmember({
+      groupId: newGroupMessage._id,
+      creatorId: req.userId,
+      memberId: req.userId,
+    });
+
     await newGroupMessage.save();
     await newGroupmember.save();
 
     res.status(201).json(newGroupMessage);
   } catch (error) {
-    res.status(409).json(error);
+    res.status(500).json({ error: error.message });
   }
+};
+
+const addGroupPassword = async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such workout" });
+  }
+  const encryptedPassword = await bcrypt.hash(password, 12).catch((error) => {
+    console.log(error);
+    throw new Error("Error hashing password");
+  });
+
+  const group = await Group.findByIdAndUpdate(
+    id,
+    { password: encryptedPassword },
+    { new: true }
+  );
+
+  if (!group) {
+    return res.status(404).json({ error: "No such workout" });
+  }
+
+  res.status(200).json(group);
 };
 
 // delete a group
@@ -150,6 +175,7 @@ const deleteGroup = async (req, res) => {
       try {
         await Group.findByIdAndRemove(id);
         await Groupmember.deleteMany({ groupId: id });
+        await articles.deleteMany({ g_id: id });
       } catch (error) {
         res.status(409).json(error);
       }
@@ -234,6 +260,7 @@ export {
   getGroup,
   getMyGroups,
   createGroup,
+  addGroupPassword,
   deleteGroup,
   updateGroup,
   joinGroup,

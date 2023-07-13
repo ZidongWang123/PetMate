@@ -12,6 +12,7 @@ import {
   updateGroup,
   joinGroup,
   verifyGroup,
+  addGroupPassword,
 } from "../controllers/groupController.js";
 
 //GET all groups
@@ -35,5 +36,7 @@ router.delete("/:id", auth, deleteGroup);
 
 //UPDATE a group
 router.patch("/:id", auth, updateGroup);
+
+router.patch("/:id", auth, addGroupPassword);
 
 export default router;
