@@ -9,25 +9,14 @@ import SingleGroupDetail from "./SingleGroupDetail.jsx";
 import BasicTable from "../../../Widget/TableBar/TableBar"; */
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 import { Link, useParams } from "react-router-dom";
-import { getGroupsArticles, getGroupInfo } from "../../../../api/user";
+import { getGroupsArticles, fetchArticlesBySearch } from "../../../../api/user";
 import { FormData } from "../../../../util/index";
 import TableFilter from "../../../Widget/TableFilter/TableFilter";
 
 export const orange = "#F0A860";
 
-// TODO
-/* const GroupDetails = ({ group, id }) => {
-  const user = JSON.parse(localStorage.getItem("profile"));
-
-  if (!user) {
-    return <SignInWarning />;
-  }
-
-  return <SingleGroupDetail />;
-}; */
 const SingleGroup1 = () => {
   const [articles, setArticles] = useState([]);
-  const [group, setGroup] = useState([]);
   let params = useParams();
   console.log(params, "params");
   const groupId = params["id"];
@@ -38,80 +27,105 @@ const SingleGroup1 = () => {
       headerName: "Topics",
       flex: 1,
       renderCell: (params) => (
-        <Link to={`/groups/post/${params.row.id}`} style={{ textDecoration:'none'}}>{params.row.Topics}</Link>
+        <Link
+          to={`/groups/post/${params.row.id}`}
+          style={{ textDecoration: "none" }}
+        >
+          {params.row.Topics}
+        </Link>
       ),
     },
     {
       field: "Date",
       headerName: "Date",
       flex: 1,
-   
     },
     {
       field: "Author",
       headerName: "Author",
       flex: 1,
       renderCell: (params) => (
-        <Link to={`/myposts/${params.row.u_id}`} style={{ textDecoration:'none'}}>{params.row.Author}</Link>
+        <Link
+          to={`/myposts/${params.row.u_id}`}
+          style={{ textDecoration: "none" }}
+        >
+          {params.row.Author}
+        </Link>
       ),
     },
     {
-      field: 'Tags',
-      headerName: 'Tags', 
-      width:300,
-      renderCell:(params) => (
-         
-      
-          <div>
-          {params.row.Tags.map(item=>{
-            return <span className="single-tag">#{item}</span>
+      field: "Tags",
+      headerName: "Tags",
+      width: 300,
+      renderCell: (params) => (
+        <div>
+          {params.row.Tags.map((item) => {
+            return <span className="single-tag">#{item}</span>;
           })}
-          </div>
-            
-         
+        </div>
       ),
-
     },
-   
   ];
   //请求群组下面所有的文章
   const getGroupsArticlesRequest = async () => {
     const articlesResulet = await getGroupsArticles(groupId);
-    console.log(articlesResulet, "articlesResulet");
-    const articles = articlesResulet.length
-      ? articlesResulet.map((item) => {
+    /* console.log(articlesResulet, "articlesResulet"); */
+    setArticles(
+      articlesResulet &&
+        articlesResulet.map((item) => {
           return {
             id: item._id,
             Topics: item.title,
             Date: FormData(item.date),
             Author: item.u_id.name,
-            u_id:item.u_id._id,
-            Tags:item.tags
+            u_id: item.u_id._id,
+            Tags: item.tags,
           };
         })
-      : [];
-    setArticles(articles);
+    );
   };
-  //请求群组信息
-  const getGroupInfoRequest = async () => {
-    const groupResulet = await getGroupInfo(groupId);
-    console.log(groupResulet, "groupResulet");
-    setGroup(groupResulet);
-  };
+  const topicsArray = articles.map((article) => article.Topics);
+
   useEffect(() => {
     getGroupsArticlesRequest();
-    getGroupInfoRequest();
   }, []);
 
+  const searchArticles = async (value) => {
+    console.log("searchvalue", value);
+    const articlesResulet = await fetchArticlesBySearch(groupId, value);
+    console.log("articlesbysearch", articlesResulet);
+
+    setArticles(
+      articlesResulet &&
+        articlesResulet.map((item) => {
+          return {
+            id: item._id,
+            Topics: item.title,
+            Date: FormData(item.date),
+            Author: item.u_id.name,
+            u_id: item.u_id._id,
+            Tags: item.tags,
+          };
+        })
+    );
+  };
+  const searchPost = async (value) => {
+    console.log("from parent components", value);
+    /*  await searchArticles(value); */
+    if (value) {
+      searchArticles(value);
+    } else {
+      getGroupsArticlesRequest();
+    }
+    /*  getArticlesBySearch(groupId,value); */
+  };
   return (
     <div>
-      <SearchBar />
-      <SingleGroupDetail />
-      {/* {articles.length!=0&&<Forum articles={articles}/>} */}
-      {/* {articles.length!=0&&<BasicTable data={articles} columns={columns}></BasicTable>} */}
+      <SearchBar results={topicsArray} searchPost={searchPost} />
 
-        <TableFilter columns={columns} data={articles}></TableFilter>
- 
+      <SingleGroupDetail />
+
+      <TableFilter columns={columns} data={articles}></TableFilter>
     </div>
   );
 };

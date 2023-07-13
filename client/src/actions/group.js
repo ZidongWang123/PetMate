@@ -3,6 +3,7 @@ import {
   CREATE_GROUP,
   FETCH_GROUP,
   FETCH_MY_GROUPS,
+  FETCH_GROUPS_BY_SEARCH,
   JOIN_GROUP,
   DELETE_GROUP,
   UPDATE_GROUP,
@@ -47,18 +48,19 @@ export const getMyGroups = () => async (dispatch) => {
   }
 };
 
-/* export const getGroupBySearch = () => async (dispatch) => {
+export const getGroupsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const {
       data: { data },
-    } = await api.fetchGroupsBySearch();
-    dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+    } = await api.fetchGroupsBySearch(searchQuery);
+    console.log(data);
+    dispatch({ type: FETCH_GROUPS_BY_SEARCH, payload: data });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
-}; */
+};
 
 export const createGroup = (group) => async (dispatch) => {
   try {

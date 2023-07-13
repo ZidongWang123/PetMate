@@ -77,4 +77,4 @@ export const getPosts = (data) =>
 
 //api for search
 export const fetchGroupsBySearch = (searchQuery) =>
-  API.get(`/api/groups/search?searchQuery=${searchQuery.search}`);
+  API.get(`/api/groups/search?searchQuery=${searchQuery || "none"}`);

@@ -6,6 +6,7 @@ const router = express.Router();
 import {
   getGroups,
   getGroup,
+  getGroupsBySearch,
   getMyGroups,
   createGroup,
   deleteGroup,
@@ -15,6 +16,8 @@ import {
   addGroupPassword,
 } from "../controllers/groupController.js";
 
+//GET search groups
+router.get("/search", getGroupsBySearch);
 //GET all groups
 router.get("/", getGroups);
 

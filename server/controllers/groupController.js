@@ -40,6 +40,25 @@ const getGroups = async (req, res) => {
   }
 };
 
+const getGroupsBySearch = async (req, res) => {
+  const { searchQuery } = req.query;
+
+  try {
+    const title = new RegExp(searchQuery, "i"); // Test test TEST -> test
+
+    const groups = await Group.find({
+      $or: [{ groupName: title }, { intro: title }, { tags: { $in: title } }], // find groups that match either or
+    });
+    /*   const groups = await Group.find({
+      groupName: title, // find groups that match either or
+    }); */
+
+    res.json({ data: groups });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 const getGroup = async (req, res) => {
   const { id } = req.params;
   console.log("获取群组信息");
@@ -258,6 +277,7 @@ const verifyGroup = async (req, res) => {
 export {
   getGroups,
   getGroup,
+  getGroupsBySearch,
   getMyGroups,
   createGroup,
   addGroupPassword,

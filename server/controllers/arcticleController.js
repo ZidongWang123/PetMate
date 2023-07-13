@@ -1,5 +1,3 @@
-
-
 import articles from "../models/article.js";
 
 import mongoose from "mongoose";
@@ -8,27 +6,57 @@ import mongoose from "mongoose";
 const getArticle = async (req, res) => {
   const { id } = req.params;
 
-  
-  const query={"_id": id}
+  const query = { _id: id };
 
-  const articlesResulet = await articles.findOne(query).populate('u_id', 'name').lean()
-  articlesResulet['editFlag']=articlesResulet.u_id._id==req.userId
+  const articlesResulet = await articles
+    .findOne(query)
+    .populate("u_id", "name")
+    .lean();
+  articlesResulet["editFlag"] = articlesResulet.u_id._id == req.userId;
 
   console.log(typeof articlesResulet);
-  console.log("articlesResulet",articlesResulet);
+  console.log("articlesResulet", articlesResulet);
   res.status(200).json(articlesResulet);
 };
 //查询这个群组下面的所有文章
 const getGroupArticle = async (req, res) => {
   const { id } = req.params;
-  const query={
-    g_id:id
-  }
-  
-  console.log("查询",query);
-  const Articles = await articles.find(query).populate('u_id', 'name');
+  const query = {
+    g_id: id,
+  };
+
+  console.log("查询", query);
+  const Articles = await articles.find(query).populate("u_id", "name");
 
   res.status(200).json(Articles);
+};
+
+const getArticlesBySearch = async (req, res) => {
+  const { groupId } = req.params;
+  const { searchQuery } = req.query;
+
+  try {
+    const title = new RegExp(searchQuery, "i"); // Test test TEST -> test
+
+    const Articles = await articles
+      .find({
+        $and: [
+          { g_id: groupId },
+          {
+            $or: [
+              { title: title },
+              { content: title },
+              { tags: { $in: [title] } },
+            ],
+          },
+        ], // find groups that match either or
+      })
+      .populate("u_id", "name");
+
+    res.status(200).json(Articles);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
 
 // delete a group
@@ -49,13 +77,13 @@ const deleteArticle = async (req, res) => {
 };
 
 // update a workout
-const updateArticle= async (req, res) => {
+const updateArticle = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such Article" });
   }
-  console.log(req.body,"修改");
+  console.log(req.body, "修改");
   const article = await articles.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!article) {
@@ -67,8 +95,8 @@ const updateArticle= async (req, res) => {
 
 // create new Group
 const createArticle = async (req, res) => {
-  const { title, tags, content, imageURL, creator,g_id } = req.body;
-  const u_id=req.userId
+  const { title, tags, content, imageURL, creator, g_id } = req.body;
+  const u_id = req.userId;
   //detect which field is empty when sending post request
   let emptyFields = [];
 
@@ -115,5 +143,11 @@ const createArticle = async (req, res) => {
   }
 };
 
-
-export { getArticle,getGroupArticle,deleteArticle,updateArticle,createArticle};
+export {
+  getArticle,
+  getGroupArticle,
+  getArticlesBySearch,
+  deleteArticle,
+  updateArticle,
+  createArticle,
+};

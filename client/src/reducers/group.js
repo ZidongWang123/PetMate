@@ -3,7 +3,7 @@ import {
   CREATE_GROUP,
   FETCH_GROUP,
   FETCH_MY_GROUPS,
-  JOIN_GROUP,
+  FETCH_GROUPS_BY_SEARCH,
   DELETE_GROUP,
   UPDATE_GROUP,
   START_LOADING,
@@ -19,25 +19,14 @@ export default (state = { isLoading: true, groups: [] }, action) => {
       return { ...state, isLoading: false };
     case FETCH_ALLGROUPS:
       return { ...state, groups: action.payload };
+    case FETCH_GROUPS_BY_SEARCH:
+      return { ...state, groups: action.payload };
     case FETCH_GROUP:
       return { ...state, groups: action.payload };
     case FETCH_MY_GROUPS:
       return { ...state, groups: action.payload };
     case CREATE_GROUP:
       return { ...state, groups: [...state.groups, action.payload] };
-    case JOIN_GROUP:
-      return {
-        ...state,
-        groups: state.groups.map((group) => {
-          if (group._id === action.payload._id) {
-            return {
-              ...group,
-              joined: true,
-            };
-          }
-          return group;
-        }),
-      };
     case DELETE_GROUP:
       return {
         ...state,
