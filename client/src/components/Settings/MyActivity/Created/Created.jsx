@@ -49,7 +49,6 @@ const Created = ({ activityType }) => {
     const publishAndGoBack = (value) => {
         //const newActivityAfterEdit;
         if (activity === 'service') {
-            console.log(activityId, value);
             dispatch(updateService(activityId, value));
         }
 

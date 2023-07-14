@@ -28,9 +28,7 @@ const Application = ({ application }) => {
     const handleApprove = async () => {
         application.status = APPROVED;
         if (application) {
-            console.log(application)
             item = await updateApplication(application._id, application);
-            console.log(item, item.data.message)
         }
         setShowFeedbackMsg(true);
     }
@@ -38,9 +36,7 @@ const Application = ({ application }) => {
     const handleReject = async () => {
         application.status = REJECT;
         if (application) {
-            console.log(application)
             item = await updateApplication(application._id, application);
-            console.log(item, item.data.message)
         }
         setShowFeedbackMsg(true);
     }

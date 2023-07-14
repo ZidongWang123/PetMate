@@ -1,4 +1,5 @@
 import Application from "../models/application.js";
+import mongoose from "mongoose";
 
 export const getApplicationsByApplicantId = async (req, res) => {
     const { id: _applicantId} = req.params;
@@ -87,6 +88,17 @@ export const createApplication = async (req, res) => {
     }
 }
 
+export const deleteApplication = async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    //
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send("No application with that id");
+  
+    await Application.findByIdAndRemove(id);
+    
+    res.json({ message: "Application deleted successfully" });
+  };
 
 
 

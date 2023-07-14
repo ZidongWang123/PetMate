@@ -106,13 +106,12 @@ const PageHeader = ({
               <Button
                 onClick={handleFindMore}
                 sx={{
-                  marginTop: "20px",
                   marginLeft: "20px",
-                  borderRadius: "50px",
                   color: darkGray,
                   border: "1px solid black",
                   backgroundColor: "inherit",
                   width: "200px",
+                  height: "80%"
                 }}
               >
                 More privileges!

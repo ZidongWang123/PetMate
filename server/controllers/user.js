@@ -105,12 +105,9 @@ export const modifyPersonalInfo=async(req,res)=>{
 
 
 export const getArticles=async(req, res)=>{
-    
-  console.log(req.params);
 
   const {userId}=req.params
   const query={"u_id": userId}
-  console.log(query,"query");
   
 
   try{

@@ -13,9 +13,6 @@ const getArticle = async (req, res) => {
     .populate("u_id", "name avatar")
     .lean();
   articlesResulet["editFlag"] = articlesResulet.u_id._id == req.userId;
-
-  console.log(typeof articlesResulet);
-  console.log("articlesResulet", articlesResulet);
   res.status(200).json(articlesResulet);
 };
 //查询这个群组下面的所有文章
@@ -25,7 +22,6 @@ const getGroupArticle = async (req, res) => {
     g_id: id,
   };
 
-  console.log("Search", query);
   const Articles = await articles.find(query).populate("u_id", "name avatar");
 
   res.status(200).json(Articles);
@@ -82,7 +78,7 @@ const updateArticle = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such Article" });
   }
-  console.log(req.body, "Changed");
+
   const article = await articles.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!article) {

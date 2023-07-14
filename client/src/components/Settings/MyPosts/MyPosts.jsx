@@ -17,7 +17,6 @@ import TableFilter  from "../../Widget/TableFilter/TableFilter";
 
 export default function MyPost(){
     const params = useParams();
-    //console.log(JSON.parse(window.localStorage.getItem("profile")).result,"7777");
     const userId=params.userId|| JSON.parse(window.localStorage.getItem("profile")).result._id 
     const [profil,setProfil]=useState([])
     const [articleList,setArticleList]=useState([])
@@ -88,11 +87,8 @@ export default function MyPost(){
         if(res.status===200){
             setUserInfo(res.data.result)
         }
-        else{
-            //console.log("unknown error when getting personal infomation")
-        }
     }catch(error){
-        //console.log(error)
+        console.log(error)
     }
 
     }
@@ -106,7 +102,7 @@ export default function MyPost(){
         })
         setArticleList(articles)
       } catch (error) {
-        //console.log(error);
+        console.log(error);
       }
         
     }

@@ -70,14 +70,10 @@ export const getServicesBySorting = async (req, res) => {
         startDate: { $gte: currentDate },
       };
       sortingOptions = { startDate: 1 };
-      /* sortingOptions = { createdAt: 1 }; */
-      console.log(sorting); // 根据与当前日期的差值进行排序
     } else if (sorting === "descending") {
       sortingOptions = { price: -1 };
-      console.log(sorting);
     } else if (sorting === "ascending") {
       sortingOptions = { price: 1 };
-      console.log(sorting);
     }
     LIMIT = 6;
     startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page

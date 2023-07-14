@@ -2,25 +2,43 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { orange, brightPurple, PENDING, APPROVED, REJECT } from "../../../constant/actionTypes";
 import { useNavigate } from "react-router-dom";
+import ConfirmDialog from '../../Widget/ConfirmDialog/ConfirmDialog';
+import { useDispatch } from "react-redux";
+import { deleteService } from "../../../actions/service.js"
+import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 
 const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw }) => {
     const navigate = useNavigate();
 
     const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
     const formattedEndDate = new Date(activityData?.endDate).toLocaleDateString();
+    const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+    const dispatch = useDispatch();
 
     const handleEdit = (activityType, activityData) => {
-        console.log(activityType, activityData);
         onEdit(activityType, activityData);
     }
 
     const getApplications = (activityType, activityData) => {
-        console.log(activityType, activityData);
         navigate(`/applications/${activityData._id}`)
     }
 
-    const deleteApplication = () => {
-        withdraw();
+    const deleteApplication = (id) => {
+        withdraw(id);
+    }
+
+    const deleteActivity = () => {
+        try {
+            dispatch(deleteService(activityData._id));
+
+            setShowFeedbackMsg(true);
+        } catch (error) {
+            console.log('logout:', error);
+        }
+    };
+
+    const handelfeebackMsgClose = () => {
+        window.location.reload()
     }
 
     return (
@@ -32,7 +50,6 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                 borderRadius: '30px',
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
-                //width: '80%',
                 flexGrow: 1,
                 backgroundColor: 'white',
                 boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.1)',
@@ -179,7 +196,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                                         ? 'red'
                                         : 'gray'
                             }} >
-                             {activityData.applicationStatus === PENDING ? 'Your application still ' : 'This application is '} {activityData.applicationStatus}!
+                                {activityData.applicationStatus === PENDING ? 'Your application still ' : 'This application is '} {activityData.applicationStatus}!
                             </Typography>
                             {/* todo: if applied, show text, applied or approved */}
                             <Button
@@ -189,7 +206,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                                     color: 'white',
                                     borderRadius: '20px',
                                 }}
-                                onClick={deleteApplication}
+                                onClick={()=>{deleteApplication(activityData.applicationId)}}
                             >
                                 Withdraw
                             </Button>
@@ -201,13 +218,12 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                             flexDirection: 'row',
                             height: '10%',
                             width: '100%',
-                            padding: '0px 20px 0px 20px',
                             justifyContent: 'space-between',
                             boxSizing: 'border-box',
                         }}>
                             <Button
                                 sx={{
-                                    width: '40%',
+                                    width: '30%',
                                     backgroundColor: orange,
                                     color: 'white',
                                     borderRadius: '20px',
@@ -215,10 +231,10 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                                 onClick={() => handleEdit(activityType, activityData)}>
                                 Edit
                             </Button>
-                            {/* todo: if applied, show text, applied or approved */}
+
                             <Button
                                 sx={{
-                                    width: '40%',
+                                    width: '30%',
                                     backgroundColor: brightPurple,
                                     color: 'white',
                                     borderRadius: '20px',
@@ -226,7 +242,39 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                                 onClick={() => getApplications(activityType, activityData)}>
                                 Application
                             </Button>
+
+                            {/* <Button
+                                sx={{
+                                    width: '30%',
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}
+                                onClick={() => handleDelete(activityType, activityData)}>
+                                Delete
+                            </Button> */}
+                            <ConfirmDialog
+                                fontSize='20px'
+                                padding='0px'
+                                button='Delete'
+                                title="Confirm Delete"
+                                contentText={`
+
+                                                                    Are you sure you want to delete this activity?
+
+                                                                `}
+                                dialogColor='#6f0000'
+                                buttonColor='red'
+                                onConfirm={deleteActivity}
+                            />
                         </Box>) : null}
+
+                    <FeedbackMsg
+                        status={showFeedbackMsg}
+                        message="Sucessful published"
+                        severity="success"
+                        onClose={handelfeebackMsgClose}
+                    />
 
                 </Box>
 

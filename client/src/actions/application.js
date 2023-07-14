@@ -45,3 +45,11 @@ export const fetchPersonalInfo = async (userId) => {
         console.log(error)
     }
 }
+
+export const deleteApplication = async (id) => {
+    try {
+        await api.deleteApplication(id);
+      } catch (error) {
+        console.log(error);
+      }
+}

@@ -15,8 +15,6 @@ import { makeStyles } from '@mui/material/styles';
 
 const rows = []
 export default function BasicTable({ data, columns }) {
-  // const classes = useStyles();
-  console.log(data);
   const TableContent = data.map((row) => {
 
     return <TableRow
@@ -24,7 +22,6 @@ export default function BasicTable({ data, columns }) {
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
     {columns.map(column => {
-        console.log(column);
        if(column=="Topics"){
         return <TableCell key={column}><Link to={`/groups/post/${row.id}`}>{row[column]}</Link></TableCell>
       }else if(column=="Groups"){

@@ -7,7 +7,6 @@ import Group from '../models/group.js'
 export const postCreate = async (req, res) => {
     
     let post=req.body
-    console.log(post)
     post.creatorId=new mongoose.Types.ObjectId(post.creatorId)
     try {
         await ExplorePost.create(post)
@@ -21,14 +20,11 @@ export const getRecommendTags=async(req,res)=>{
     const filteredList=[]
     const keyword = req.params.keyword;
     const where=req.params.where
-    console.log(keyword)
     try {
         let documents=[]
         if(where==="explorePost"){
         
             documents=await ExplorePost.find({},"tags")
-
-            console.log(documents)
         }
         else if(where==="group"){
             documents=await Group.find({},"tags")
@@ -118,10 +114,6 @@ export const getExplorePosts=async(req,res)=>{
                 $unwind:"$creator"
             }
         ])
-
-        
-        
-        console.log(newPosts.length)
 
         return res.status(200).json({result: newPosts, message: "Successfully got tagsList" })
     } catch (error) {

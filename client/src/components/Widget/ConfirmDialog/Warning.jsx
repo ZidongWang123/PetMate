@@ -22,7 +22,6 @@ export default function Warning({
   initialText,
 }) {
   const [inputText, setInputText] = React.useState(initialText);
-  /*   console.log("inputtext:", inputText); */
   const handleChange = (event) => {
     setInputText(event.target.value);
   };

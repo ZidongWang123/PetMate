@@ -45,7 +45,7 @@ const ActivityOverview = ({ activityData }) => {
           justifyContent: "space-between",
         }}
       >
-        {/* <Box
+        <Box
           sx={{
             display: "flex",
             flexDirection: "row",
@@ -73,7 +73,7 @@ const ActivityOverview = ({ activityData }) => {
           >
             {servicesCreator?.result.name}
           </Typography>
-        </Box> */}
+        </Box>
 
         <Box
           sx={{

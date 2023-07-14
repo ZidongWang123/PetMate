@@ -17,10 +17,7 @@ const Paginate = ({ page, userId = null, path, sorting }) => {
 
   React.useEffect(() => {
     if (page && userId === null && sorting) {
-      console.log("from Pagination", sorting);
-
       dispatch(getServicesBySorting(page, sorting));
-      console.log("dispatch successfully", sorting);
     } else if ((page && userId === null) || sorting === null) {
       dispatch(getServices(page)); //get all services
     } else if (page && userId) {

@@ -33,7 +33,6 @@ const SingleGroup1 = () => {
   const [articles, setArticles] = useState([]);
   const [group, setGroup] = useState([]);
   let params = useParams();
-  console.log(params, "params");
   const groupId = params["id"];
 
   const columns = [
@@ -84,7 +83,6 @@ const SingleGroup1 = () => {
   //请求群组下面所有的文章
   const getGroupsArticlesRequest = async () => {
     const { data: articlesResulet } = await getGroupsArticles(groupId);
-    console.log(articlesResulet, "articlesResulet");
     const articles = articlesResulet.length
       ? articlesResulet.map((item) => {
           return {
@@ -113,13 +111,10 @@ const SingleGroup1 = () => {
     /*  getGroupInfoRequest(); */
   }, []);
   const searchArticles = async (value) => {
-    console.log("searchvalue", value);
     const { data: articlesResults } = await fetchArticlesBySearch(
       groupId,
       value
     );
-    console.log("articlesbysearch", articlesResults);
-
     const searchArticles = articlesResults.length
       ? articlesResults.map((item) => {
           return {
@@ -135,7 +130,6 @@ const SingleGroup1 = () => {
     setArticles(searchArticles);
   };
   const searchPost = async (value) => {
-    console.log("from parent components", value);
     /*  await searchArticles(value); */
     if (value) {
       searchArticles(value);

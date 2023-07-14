@@ -15,7 +15,6 @@ export default function SearchBar({ results, searchPost }) {
   };
 
   const handleSearch = () => {
-    console.log(value);
     searchPost(value);
   };
 

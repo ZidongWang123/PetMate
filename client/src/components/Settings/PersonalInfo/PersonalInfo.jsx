@@ -64,9 +64,6 @@ const PersonalInfo = () => {
             if(res.status===200){
                 setUserInfo(res.data.result)
             }
-            else{
-                console.log("unknown error when getting personal i")
-            }
         }catch(error){
             console.log(error)
         }

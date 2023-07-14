@@ -1,9 +1,10 @@
 import React from "react";
 import ActivityCard from "../ActivityCard";
-import { getApplicationsByApplicantId } from "../../../../actions/application.js";
+import { getApplicationsByApplicantId, deleteApplication } from "../../../../actions/application.js";
 import { getServiceByApplication } from "../../../../actions/service.js";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../../Widget/Pagination/Pagination";
+import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 
 
 function useQuery() {
@@ -19,22 +20,31 @@ const Applied = ({ activityType }) => {
 
     const [appliedServices, setAppliedServices] = React.useState([]);
 
+    const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+
     const query = useQuery();
     const page = query.get('page') || 1;
+
+    const handelfeebackMsgClose = () => {
+        window.location.reload()
+    }
 
     React.useEffect(() => {
         getApplicationsByApplicantId(applicantId)
             .then((item) => {
-                const activities = item.data.data.map((element) => 
+                if (item) {
+                    const activities = item.data.data.map((element) =>
                     ({
-                    activityId: element.activityId,
-                    applicationStatus: element.status
-                     })
-                
-                );
-                const uniActivities = Array.from(new Set(activities));
-                setActiIds(uniActivities);
-                setDataLoaded(true);
+                        activityId: element.activityId,
+                        applicationId: element._id,
+                        applicationStatus: element.status
+                    })
+
+                    );
+                    const uniActivities = Array.from(new Set(activities));
+                    setActiIds(uniActivities);
+                    setDataLoaded(true);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -44,7 +54,8 @@ const Applied = ({ activityType }) => {
     React.useEffect(() => {
         actiIds.forEach((activity) => {
             getServiceByApplication(activity.activityId).then((item) => {
-                item.data.applicationStatus = activity.applicationStatus; 
+                item.data.applicationStatus = activity.applicationStatus;
+                item.data.applicationId = activity.applicationId;
                 setAppliedServices(prev => {
                     if (prev.some(service => JSON.stringify(service) === JSON.stringify(item.data))) {
                         return prev;
@@ -64,9 +75,12 @@ const Applied = ({ activityType }) => {
         console.log(appliedServices)
     }, [appliedServices])
 
-    const withdraw = () => {
-        console.log('mmmmm')
-        //delete application api
+    const withdraw = (id) => {
+        deleteApplication(id)
+        if (id) {
+            setShowFeedbackMsg(true);
+        }
+
     }
 
     return (
@@ -78,15 +92,21 @@ const Applied = ({ activityType }) => {
 
         }}>
             {(activityType === 'services') && appliedServices ? (
-                    <>
-                        <div>
-                            {appliedServices.map((service) => (
-                                <ActivityCard key={service._id} activityType={activityType} isApply={true} activityData={service} withdraw={withdraw} />
-                            ))}
-                        </div>
-                        <Pagination page={page} userId={user.result._id} path={'appliedservices'} />
-                    </>
-                ) : null}
+                <>
+                    <div>
+                        {appliedServices.map((service) => (
+                            <ActivityCard key={service._id} activityType={activityType} isApply={true} activityData={service} withdraw={withdraw} />
+                        ))}
+                    </div>
+                    <Pagination page={page} userId={user.result._id} path={'appliedservices'} />
+                </>
+            ) : null}
+            <FeedbackMsg
+                status={showFeedbackMsg}
+                message="Sucessful published"
+                severity="success"
+                onClose={handelfeebackMsgClose}
+            />
         </div>
     );
 }
