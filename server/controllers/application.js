@@ -1,9 +1,10 @@
 import Application from "../models/application.js";
 
-export const getApplicationsByApplicant = async (req, res) => {
-    const { applicantId } = req.query;
+export const getApplicationsByApplicantId = async (req, res) => {
+    const { id: _applicantId} = req.params;
+    
     try {
-        const applications = await Application.find({ applicantId: applicantId }).sort({ _id: -1 }); // get the posts for the current page
+        const applications = await Application.find({ applicantId: _applicantId }).sort({ _id: -1 }); // get the posts for the current page
         res.status(200).json({ data: applications }); // return the posts and the number of pages
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -40,7 +41,7 @@ export const updateApplication = async (req, res) => {
     }
 }
 
-export const createApplication = async (req, res) => {
+/* export const createApplication = async (req, res) => {
     const [introduction, creatorId, activityId, applicantId] = req.body;
 
     const newApplication = new Application({
@@ -57,4 +58,37 @@ export const createApplication = async (req, res) => {
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
+} */
+
+export const createApplication = async (req, res) => {
+    const [ introduction, creatorId, activityId, applicantId ] = req.body;
+
+    try {
+        let application = await Application.findOne({ applicantId, activityId, creatorId });
+
+        if (application) {
+            application.introduction = introduction;
+            application.status = 'pending';
+            await application.save();
+            res.status(200).json({ message: 'Successfully updated existing application', application });
+        } else {
+            const newApplication = new Application({
+                status: 'pending',
+                introduction,
+                creatorId,
+                activityId,
+                applicantId,
+            });
+            await newApplication.save();
+            res.status(201).json(newApplication);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
+
+
+
+
+
+

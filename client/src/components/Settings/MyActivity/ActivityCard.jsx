@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { orange, brightPurple } from "../../../constant/actionTypes";
+import { orange, brightPurple, PENDING, APPROVED, REJECT } from "../../../constant/actionTypes";
 import { useNavigate } from "react-router-dom";
 
-const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit }) => {
+const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw }) => {
     const navigate = useNavigate();
 
     const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
@@ -15,8 +15,12 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
     }
 
     const getApplications = (activityType, activityData) => {
-            console.log(activityType, activityData);
-            navigate(`/applications/${activityData._id}`)
+        console.log(activityType, activityData);
+        navigate(`/applications/${activityData._id}`)
+    }
+
+    const deleteApplication = () => {
+        withdraw();
     }
 
     return (
@@ -29,6 +33,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
                 //width: '80%',
+                flexGrow: 1,
                 backgroundColor: 'white',
                 boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.1)',
             }}>
@@ -115,7 +120,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                     {activityType === 'services' ? (
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
-                                Price:
+                                Price (euro/day):
                             </Typography>
                             <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                                 {activityData?.price}
@@ -159,19 +164,23 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                             flexDirection: 'row',
                             height: '10%',
                             width: '100%',
-                            padding: '0px 20px 0px 20px',
                             justifyContent: 'space-between',
                             boxSizing: 'border-box',
+                            alignItem: 'center'
                         }}>
-                            <Button
-                                sx={{
-                                    width: '30%',
-                                    backgroundColor: orange,
-                                    color: 'white',
-                                    borderRadius: '20px',
-                                }}>
-                                Apply
-                            </Button>
+                            <Typography variant="h6" sx={{
+                                wordWrap: 'break-word',
+                                maxWidth: '100%',
+                                flexGrow: 1,
+                                fontSize: '18px',
+                                color: activityData.applicationStatus === APPROVED
+                                    ? 'green'
+                                    : activityData.applicationStatus === REJECT
+                                        ? 'red'
+                                        : 'gray'
+                            }} >
+                             {activityData.applicationStatus === PENDING ? 'Your application still ' : 'This application is '} {activityData.applicationStatus}!
+                            </Typography>
                             {/* todo: if applied, show text, applied or approved */}
                             <Button
                                 sx={{
@@ -179,7 +188,9 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                                     backgroundColor: brightPurple,
                                     color: 'white',
                                     borderRadius: '20px',
-                                }}>
+                                }}
+                                onClick={deleteApplication}
+                            >
                                 Withdraw
                             </Button>
                         </Box>) : null}
@@ -202,24 +213,24 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                                     borderRadius: '20px',
                                 }}
                                 onClick={() => handleEdit(activityType, activityData)}>
-                            Edit
-                        </Button>
+                                Edit
+                            </Button>
                             {/* todo: if applied, show text, applied or approved */}
-                    <Button
-                        sx={{
-                            width: '40%',
-                            backgroundColor: brightPurple,
-                            color: 'white',
-                            borderRadius: '20px',
-                        }}
-                        onClick={() => getApplications(activityType, activityData)}>
-                        Application
-                    </Button>
-                </Box>) : null}
+                            <Button
+                                sx={{
+                                    width: '40%',
+                                    backgroundColor: brightPurple,
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}
+                                onClick={() => getApplications(activityType, activityData)}>
+                                Application
+                            </Button>
+                        </Box>) : null}
 
-            </Box>
+                </Box>
 
-        </Box >
+            </Box >
         </>
     );
 }

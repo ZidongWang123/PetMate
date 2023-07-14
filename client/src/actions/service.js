@@ -1,6 +1,15 @@
 import { FETCH_ALL_SERVICE, FETCH_ALL_CREATED_SERVICE, FETCH_SERVICE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, CREATE_SERVICE, UPDATE_SERVICE, DELETE_SERVICE, FETCH_USER_SERVICE } from '../constant/actionTypes';
 import * as api from '../api';
 
+export const getServiceByApplication = async (id) => {
+    try {
+        const { data } = await api.fetchService(id);
+        return { data }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getService = (id) => async (dispatch) => {
     try {
         const { data } = await api.fetchService(id);

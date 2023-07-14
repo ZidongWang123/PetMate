@@ -27,9 +27,9 @@ export const getApplicationsByActivityId = async (activityId) => {
     }
 }
 
-export const getApplicationsByApplicantId = async (activityId) => {
+export const getApplicationsByApplicantId = async (applicantId) => {
     try {
-        const { data } = await api.fetchApplicationsByApplicantId(activityId);
+        const { data } = await api.fetchApplicationsByApplicantId(applicantId);
         return { data }
     } catch (error) {
         console.log(error);
