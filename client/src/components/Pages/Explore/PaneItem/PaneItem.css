@@ -15,15 +15,6 @@
   body.modal-open {
     overflow: hidden;
   }
-  .authorAvatar{
-    width: 20px;
-    height: 20px;
-    margin-right:6px;
-    border-radius: 100%;
-  }
-  .authorAvatar:hover{
-    filter:brightness(0.8);
-  }
 
   .clickIcon:hover{
     cursor: pointer;

@@ -4,7 +4,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 import "../PaneItem/PaneItem.css"
 
-const HeartIcon=({postID,count})=>{
+const HeartIcon=({count})=>{
 
     // check whether the author is in the list of likes
       // todo

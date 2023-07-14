@@ -14,8 +14,12 @@ API.interceptors.request.use((req) => {
 
 //api for services
 export const fetchService = (id) => API.get(`/services/${id}`);
-export const fetchServices = (page,  userId = null) => API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ''}`);
-export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);
+export const fetchServices = (page, userId = null) =>
+  API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ""}`);
+export const fetchServicesBySearch = ({ tags }) =>
+  API.get(`/services/search?tags=${tags}`);
+export const fetchServicesBySorting = (page, sorting) =>
+  API.get(`/services/sorting?page=${page}&sorting=${sorting}`);
 
 export const createService = (newService) => API.post("/services", newService);
 export const updateService = (id, updatedService) => API.patch(`/services/${id}`, updatedService);
@@ -43,6 +47,8 @@ export const fetchGroups = () => API.get("/api/groups");
 export const fetchGroup = (id) => API.get(`/api/groups/${id}`);
 export const fetchMyGroups = () => API.get("/api/groups/mygroups");
 export const createGroup = (newGroup) => API.post("/api/groups", newGroup);
+export const addGroupPassword = (id, psw) =>
+  API.patch(`/api/groups/${id}`, psw);
 export const updateGroup = (id, updatedGroup) =>
   API.patch(`/api/groups/${id}`, updatedGroup);
 export const deleteGroup = (id) => API.delete(`/api/groups/${id}`);
@@ -63,3 +69,32 @@ export const modifyPersonalInfo = (id, data) =>
 export const getPersonalInfo = (id) => API.get(`/user/getPersonalInfo/${id}`);
 export const getRecommendTags = (keyword, where) =>
   API.get(`/explore/getRecommendTags/${keyword}/${where}`);
+export const getPosts = (data) =>
+  API.get("/explore/getPosts", { params: data });
+
+//api for articles
+export const getGroups = (formData = {}) => API.get("/api/groups", formData);
+export const getGroupsArticles = (groupId, formData = {}) =>
+  API.get(`/api/articles/getGroups/${groupId}`, formData);
+export const getGroupInfo = (groupId, formData = {}) =>
+  API.get(`/api/groups/${groupId}`, formData);
+export const getArticlesInfo = (articlesId, formData = {}) =>
+  API.get(`/api/articles/${articlesId}`, formData);
+export const delArticles = (articlesId, formData = {}) =>
+  API.delete(`/api/articles/${articlesId}`, formData);
+export const paArticlesInfo = (articlesId, formData = {}) =>
+  API.patch(`/api/articles/${articlesId}`, formData);
+export const poArticlesInfo = (formData = {}) =>
+  API.post(`/api/articles/`, formData);
+export const getUserArticles = (userId, formData = {}) =>
+  API.get(`/user/articles/${userId}`, formData);
+
+//api for search
+export const fetchGroupsBySearch = (searchQuery) =>
+  API.get(`/api/groups/search?searchQuery=${searchQuery || "none"}`);
+export const fetchArticlesBySearch = (groupId, searchQuery) =>
+  API.get(
+    `/api/articles/getGroups/${groupId}/search?searchQuery=${
+      searchQuery || "none"
+    }`
+  );

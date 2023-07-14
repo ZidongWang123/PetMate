@@ -7,87 +7,23 @@ import dog2 from "../../../../images/dog2.jpg"
 import dog3 from "../../../../images/dog3.jpg"
 import dog4 from "../../../../images/dog4.jpeg"
 import dog5 from "../../../../images/dog5.jpeg"
-const PaneContainer = ({userId}) => {
+import { getPosts } from '../../../../api';
+const PaneContainer = ({userId="",keyword="",where="explore"}) => {
     
-    const [posts,setPosts]= React.useState([[
-      // request data from backend and initialize the four columns
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,{ firstImageUrl:pet, text:"today I went to asdasdsadasdasddddddddddddd",avatar:avatar,name:"wang",count:4,tags:["dog","play","munich","fun","friend","pets","cat","group","pets","cat","group"] } ,
-    { firstImageUrl:dog1, text:"czxczxczxcxzczxcz",avatar:avatar,name:"lisda",count:3 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog2, text:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",avatar:avatar,name:"linnxc",count:2 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog3, text:"today ",avatar:avatar,name:"livzc",count:7 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog4, text:"today I went to park",avatar:avatar,name:"lisdad",count:8 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    { firstImageUrl:dog5, text:"i like dogs",avatar:avatar,name:"licxzc",count:5 ,tags:["dog","play","munich","fun","friend","pets","cat","group"]} ,
-    
-    ],[],[],[],[]])
-    // const column1 = useRef([]);
-    // // const [column1, setColumn1] = useState([]);
-    // const [column2, setColumn2] = useState([]);
-    // const [column3, setColumn3] = useState([]);
-    // const [column4, setColumn4] = useState([]);
-    const assignPane=(posts)=>{
-      let postsCopy=[...posts[0]]
+    const [displayedPosts,setDisplayedPosts]= React.useState([[],[],[],[]])
+    const [displayedPostId,setDisplayedPostId]=React.useState([])
+    const assignPosts=(newPosts)=>{
       
-      let columns=[[...posts[1]],[...posts[2]],[...posts[3]],[...posts[4]]]
-    
+      let columns=[[...displayedPosts[0]],[...displayedPosts[1]],[...displayedPosts[2]],[...displayedPosts[3]]]
+      let displayedPostIdCopy=[...displayedPostId]
       for (let i = 0; i < 4; i++) {
-        if(postsCopy.length>0){
+        if(newPosts.length>0){
           for(let j=0;j<4;j++){
-            if (postsCopy.length>0){
-              let lastPost=postsCopy.pop()
-                columns[j].push(lastPost)
+            if (newPosts.length>0){
+              const lastPost=newPosts.pop()
+              displayedPostIdCopy.push(lastPost._id)
+              console.log(lastPost._id)
+              columns[j].push(lastPost)
 
             }else{
               break
@@ -97,56 +33,92 @@ const PaneContainer = ({userId}) => {
           break
           }
       }
-      return ([postsCopy,...columns])
+      setDisplayedPosts(columns)
+      setDisplayedPostId(displayedPostIdCopy)
     }
+
+  const fetchPosts= async (data)=>{
+    try{
+      const res = await getPosts(data)
+      if (res.status === 200) {
+
+        const newPosts=res.data.result
+    
+        assignPosts(newPosts)
+
+      }
+
+      else {
+          console.log("Unknown error, try again")
+      }
+
+
+      } catch (error) {
+
+      console.log(error)
+    }
+  }
+
+  const handleScroll =  ()=>{
+
+    // 获取滚动位置和页面高度等信息
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+   
+    
+    // 检查是否到达页面底部
+    if (scrollTop + clientHeight +1>= scrollHeight) {
+     
+      const displayedPostIdList=JSON.stringify(displayedPostId)
+    
+      fetchPosts({userId,keyword,where,displayedPostIdList})
+    }
+  }
+
     React.useEffect(() => {
-      setPosts(assignPane)
-      // 监听滚动事件
+
+      const displayedPostIdList=JSON.stringify(displayedPostId)
+    
+      fetchPosts({userId,keyword,where,displayedPostIdList})
+      
+
+
+    }, []);
+    React.useEffect(() => {
+
+
       window.addEventListener('scroll', handleScroll);
   
       // 在组件卸载时移除事件监听
       return () => {
         window.removeEventListener('scroll', handleScroll);
       };
-    }, []);
-    const handleScroll =  ()=>{
+    }, [displayedPostId,displayedPosts]);
 
-      // 获取滚动位置和页面高度等信息
-      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-     
-      
-      // 检查是否到达页面底部
-      if (scrollTop + clientHeight +1>= scrollHeight) {
-        console.log("底部")
-        setPosts(assignPane)
-      }
-    }
-  
 
   return (
     <div className="pane-container" style={{ display: 'flex',flexDirection:"row",justifyContent:"space-between"}}>
       <div className="column" style={{ display: 'flex',flexDirection:"column",marginRight:"40px"}}> 
         {/* 渲染第一排窗格 */}
-        {posts[1].map((item, index) => (
-          <PaneItem key={index} firstImageUrl={item.firstImageUrl} text={item.text} avatar={item.avatar} name={item.name} count={item.count} tags={item.tags}/>
+        {displayedPosts[0].map((item, index) => (
+          <PaneItem post={item}/>
         ))}
       </div>
       <div className="column" style={{ display: 'flex',flexDirection:"column" ,marginRight:"40px"}}> 
         {/* 渲染第一排窗格 */}
-        {posts[2].map((item, index) => (
-          <PaneItem key={index} firstImageUrl={item.firstImageUrl} text={item.text} avatar={item.avatar} name={item.name} count={item.count} tags={item.tags}/>
+        {displayedPosts[1].map((item, index) => (
+          <PaneItem post={item}/>
         ))}
       </div>
       <div className="column" style={{ display: 'flex',flexDirection:"column" ,marginRight:"40px"}}> 
         {/* 渲染第一排窗格 */}
-        {posts[3].map((item, index) => (
-          <PaneItem key={index} firstImageUrl={item.firstImageUrl} text={item.text} avatar={item.avatar} name={item.name} count={item.count} tags={item.tags}/>
+        {displayedPosts[2].map((item, index) => (
+          <PaneItem post={item}/>
         ))}
       </div>
       <div className="column" style={{ display: 'flex',flexDirection:"column" }}> 
         {/* 渲染第一排窗格 */}
-        {posts[4].map((item, index) => (
-          <PaneItem key={index} firstImageUrl={item.firstImageUrl} text={item.text} avatar={item.avatar} name={item.name} count={item.count} tags={item.tags}/>
+        {displayedPosts[3].map((item, index) => (
+          <PaneItem post={item}/>
         ))}
       </div>
     </div>

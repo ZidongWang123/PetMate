@@ -20,7 +20,7 @@ const severityOptions = { success: "success", failure: "error" }
 export default function CreatePost() {
 
 
-    const user = JSON.parse(localStorage.getItem('profile'));
+    const user = JSON.parse(localStorage.getItem('profile')).result;
     const { postId } = useParams();
     const [pictures, setPictures] = useState([])
     const [title, setTitle] = useState("")
@@ -55,16 +55,17 @@ export default function CreatePost() {
     const onSubmit = async () => {
         try {
 
-            const res = await apis.createExplorePost({ title, text, tags, pictures, creator: user._id })
+            console.log(user._id)
+            const res = await apis.createExplorePost({ title, text, tags, pictures, creatorId: user._id })
             if (res.status = 200) {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
 
-                setTimeout(()=>{
+                // setTimeout(()=>{
 
-                    navigate("/")
+                //     navigate("/")
 
-                },1000)     
+                // },1000)     
                 
             }
             else if (res.status = 500) {

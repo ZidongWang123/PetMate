@@ -1,13 +1,25 @@
-import React from 'react';
-import './PageHeader.css';
-import { TextField, Button, Chip, Typography, InputAdornment, IconButton } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { darkGray } from '../../../../constant/actionTypes';
+import React from "react";
+import "./PageHeader.css";
+import {
+  TextField,
+  Button,
+  Chip,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { darkGray } from "../../../../constant/actionTypes";
+import { Filter } from "./Filter";
 
-const PageHeader = ({ showSearchBar, onContinue }) => {
-
-    const user = JSON.parse(localStorage.getItem('profile'));
-    const [tags, setTags] = React.useState([]);
+const PageHeader = ({
+  showSearchBar,
+  onContinue,
+  activity,
+  onSortingChange,
+}) => {
+  const user = JSON.parse(localStorage.getItem("profile"));
+  /*    const [tags, setTags] = React.useState([]);
 
     const handleAddChip = (tag) => {
         setTags([...tags, tag]);
@@ -22,23 +34,38 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
             handleAddChip(e.target.value);
             e.target.value = '';
         }
-    };
+    }; */
 
-    const handleFindMore = () => {
-        onContinue();
-    }
+  const handleFindMore = () => {
+    onContinue();
+  };
 
+  /* 
     const handleSearch = () => {
         console.log('search');
-    }
+    } */
 
-    return (
-        <>
-            {
-                showSearchBar ?
-                    (<div className="page-header" >
-                        < div className="search-header" >
-                            <TextField
+  return (
+    <>
+      {showSearchBar ? (
+        <div className="page-header">
+          <div className="search-header">
+            {/*  <div className="sort-selection">
+              <form action="#">
+                <label htmlFor="sort"></label>
+                <select name="sort" id="sort" className="sort-selection-style">
+                  <option value="lowest">Price(lowest)</option>
+                  <option value="#" disabled></option>
+                  <option value="lowest">Price(highest)</option>
+                  <option value="#" disabled></option>
+                  <option value="lowest">latest</option>
+                  <option value="#" disabled></option>
+                  <option value="lowest">Price(highest)</option>
+                </select>
+              </form>
+            </div> */}
+            <Filter activity={activity} onSortingChange={onSortingChange} />
+            {/*   <TextField
                                 variant="outlined"
                                 onKeyPress={handleKeyPressTags}
                                 fullWidth
@@ -61,46 +88,55 @@ const PageHeader = ({ showSearchBar, onContinue }) => {
                                     width: "100%",
                                     minWidth: 300,
                                 }}
-                            />
-                            {
-                                !user ? (
-                                    <Typography variant="h6" align="center" sx={{
-                                        marginLeft: '20px',
-                                        marginTop: '20px',
-                                        whiteSpace: 'nowrap',
-                                        alignSelf: 'center',
-                                    }}>
-                                        Login for more privileges!
-                                    </Typography>
-                                ) : (<Button onClick={handleFindMore} sx={{
-                                    marginTop: '20px',
-                                    marginLeft: '20px',
-                                    borderRadius: '50px',
-                                    color: darkGray,
-                                    border: '1px solid black',
-                                    backgroundColor: 'inherit',
-                                    width: '200px',
-                                }}>More privileges!</Button>)
-                            }
-                        </div >
-                        <div className="chips-header">
-                            {tags.map((tag) => (
-                                <Chip
-                                    key={tag}
-                                    label={tag}
-                                    onDelete={() => handleDeleteChip(tag)}
-                                    sx={{
-                                        fontFamily: 'Cosmic Sans MS',
-                                    }}
-                                    inputprops={{ fontFamily: 'Cosmic Sans MS' }}
-                                />
-                            ))}
-                        </div>
-                        <hr className="line"></hr>
-                    </div >
-                    ) : null}
-        </>
-    );
-}
+                            /> */}
+            {!user ? (
+              <Typography
+                variant="h6"
+                align="center"
+                sx={{
+                  marginLeft: "20px",
+                  marginTop: "20px",
+                  whiteSpace: "nowrap",
+                  alignSelf: "center",
+                }}
+              >
+                Login for more privileges!
+              </Typography>
+            ) : (
+              <Button
+                onClick={handleFindMore}
+                sx={{
+                  marginTop: "20px",
+                  marginLeft: "20px",
+                  borderRadius: "50px",
+                  color: darkGray,
+                  border: "1px solid black",
+                  backgroundColor: "inherit",
+                  width: "200px",
+                }}
+              >
+                More privileges!
+              </Button>
+            )}
+          </div>
+          {/*    <div className="chips-header">
+            {tags.map((tag) => (
+              <Chip
+                key={tag}
+                label={tag}
+                onDelete={() => handleDeleteChip(tag)}
+                sx={{
+                  fontFamily: "Cosmic Sans MS",
+                }}
+                inputprops={{ fontFamily: "Cosmic Sans MS" }}
+              />
+            ))}
+          </div> */}
+          <hr className="line"></hr>
+        </div>
+      ) : null}
+    </>
+  );
+};
 
 export default PageHeader;

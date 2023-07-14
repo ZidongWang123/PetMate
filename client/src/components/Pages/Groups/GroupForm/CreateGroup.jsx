@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createGroup } from "../../../../actions/group";
+import {
+  addGroupPassword,
+  createGroup,
+  updateGroup,
+} from "../../../../actions/group";
 import GroupForm from "./GroupForm";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { useNavigate } from "react-router-dom";
+
 import JoinGroup from "../../../../images/dabengou/JoinGroup.jpg";
 import Warning from "../../../Widget/ConfirmDialog/Warning";
+import * as api from "../../../../api";
 
 export const CreateGroup = () => {
   const [groupData, setGroupData] = useState({
@@ -23,36 +29,55 @@ export const CreateGroup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState("your password");
   const [showFeedbackMsg, setShowFeedbackMsg] = useState(false);
+  const [message, setMessage] = useState("Update successfully");
+  const [severity, setSeverity] = useState("success");
+  const [groupId, setGroupId] = useState("");
 
   const navigate = useNavigate();
   const handelfeebackMsgClose = () => {
     setShowFeedbackMsg(false);
   };
 
+  /*  const { groups } = useSelector((state) => state.groups); */
+  const handleCreate = async () => {
+    try {
+      const createdGroupId = await dispatch(createGroup({ ...groupData }));
+      console.log("createdGroupId", createdGroupId);
+      setGroupId(createdGroupId);
+      setPic(JoinGroup);
+      setIsOpen(true);
+    } catch (error) {
+      /*  console.log("error:", error); */
+      console.log(error);
+      setMessage(error.response.data.error);
+      setSeverity("error");
+      setShowFeedbackMsg(true);
+    }
+  };
   const onConfirm = async () => {
     try {
-      await dispatch(createGroup({ ...groupData, password: inputText }));
+      console.log("newgroupId", groupId);
+      dispatch(addGroupPassword(groupId, { password: inputText }));
 
       setShowFeedbackMsg(true);
-      navigate(`/groups`);
+      navigate(`/groups/${groupId}`);
     } catch (error) {
+      /*  setMessage("groupName is already used");
+      setSeverity("error");
+      setShowFeedbackMsg(true); */
       console.log(error);
+      /*   window.location.href = "/groups/create-group"; */
     }
   };
   const onCancel = async () => {
     try {
-      await dispatch(createGroup({ ...groupData }));
-
       setShowFeedbackMsg(true);
-      navigate(`/groups`);
+      navigate(`/groups/${groupId}`);
     } catch (error) {
-      console.log(error);
+      console.log("onCancel", error);
+
+      /*  window.location.href = "/groups/create-group"; */
     }
-  };
-  /*  const { groups } = useSelector((state) => state.groups); */
-  const handleCreate = async () => {
-    setPic(JoinGroup);
-    setIsOpen(true);
   };
 
   return (
@@ -64,8 +89,8 @@ export const CreateGroup = () => {
       />
       <FeedbackMsg
         status={showFeedbackMsg}
-        message="Update successfully"
-        severity="success"
+        message={message}
+        severity={severity}
         onClose={handelfeebackMsgClose}
       />
       <Warning
@@ -73,7 +98,7 @@ export const CreateGroup = () => {
         onConfirm={onConfirm}
         onCancel={onCancel}
         pic={pic}
-        text="Do you want to make a private group? Add your pass word here:"
+        text="Create successfully! Do you want to make a private group? Add your pass word here:"
         initialText={inputText}
       />
     </>

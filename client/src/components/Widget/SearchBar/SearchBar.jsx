@@ -1,19 +1,22 @@
 import * as React from "react";
 
 import TextField from "@mui/material/TextField";
-import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
-import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
-import TravelExploreTwoToneIcon from "@mui/icons-material/TravelExploreTwoTone";
 
-const filter = createFilterOptions();
-
-export default function SearchBar({ label }) {
+export default function SearchBar({ results, searchPost }) {
   const [value, setValue] = React.useState(null);
 
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      searchPost(value);
+    }
+  };
+
   const handleSearch = () => {
-    console.log("search");
+    console.log(value);
+    searchPost(value);
   };
 
   return (
@@ -25,82 +28,32 @@ export default function SearchBar({ label }) {
         value={value}
         onChange={(event, newValue) => {
           if (typeof newValue === "string") {
-            setValue({
-              tag: newValue,
-            });
-          } else if (newValue && newValue.inputValue) {
-            // Create a new value from the user input
-            setValue({
-              tag: newValue.inputValue,
-            });
+            setValue(newValue);
           } else {
             setValue(newValue);
           }
         }}
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params);
-
-          const { inputValue } = params;
-          // Suggest the creation of a new value
-          const isExisting = options.some(
-            (option) => inputValue === option.tag
-          );
-          if (inputValue !== "" && !isExisting) {
-            filtered.push({
-              inputValue,
-              tag: (
-                <>
-                  {`"${inputValue}"`}
-                  {"                "}
-                  <TravelExploreTwoToneIcon />
-                </>
-              ),
-            });
-          }
-
-          return filtered;
-        }}
-        selectOnFocus //帮助用户清除选择的值。
         clearOnBlur //帮助用户输入新值。
-        /* handleHomeEndKeys */
-        id="free-solo-with-text-demo"
-        options={recommendedTag}
+        options={results}
         getOptionLabel={(option) => {
-          // Value selected with enter, right from the input
-          if (typeof option === "string") {
-            return option;
-          }
-          // Add "xxx" option created dynamically
-          if (option.inputValue) {
-            return option.inputValue;
-          }
-          // Regular option
-          return option.tag;
+          return option;
         }}
-        renderOption={(props, option) => (
-          <li {...props}>
-            <div>
-              <PetsTwoToneIcon />
-              {"                "}
-              {option.tag}
-            </div>
-          </li>
-        )}
         sx={{
           // 向右移动
           marginLeft: 5,
-          marginTop: 5,
+          marginTop: 3,
           backgroundColor: "white",
           borderRadius: "100px",
           minWidth: 800,
           maxWidth: 900,
           boxShadow: "0 5px 5px rgba(0, 0, 0, 0.1)",
         }}
-        freeSolo
         renderInput={(params) => (
           <TextField
             {...params}
-            label={label}
+            value={value}
+            onKeyDown={handleKeyPress}
+            onChange={(e) => setValue(e.target.value)}
             InputProps={{
               ...params.InputProps, //显示下拉框
               placeholder: "Search everything!",
@@ -119,17 +72,3 @@ export default function SearchBar({ label }) {
     </div>
   );
 }
-
-const recommendedTag = [
-  { tag: "MunichDog" },
-  { tag: "petlovers" },
-  { tag: "catlover" },
-  { tag: "catsforlife" },
-  { tag: "catslifestyle" },
-
-  { tag: "dogselfie" },
-  { tag: "catsuit" },
-  { tag: "caturdaynight" },
-  { tag: "catphotoshoot" },
-  { tag: "catvibes" },
-];

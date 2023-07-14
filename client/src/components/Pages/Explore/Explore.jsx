@@ -50,11 +50,13 @@ const Explore = () => {
       <div style={{display:"flex",alignItems: "flex-end"}}>
         <SearchBar/>
           <Warning isOpen={isOpen} onConfirm={onConfirm} onCancel={onCancel} pic={pic} text={text}></Warning> 
-          <UniformButton width="150px" backgroundColor={orange} fontColor="white" onClick={onClick}>create a post</UniformButton>
+          <UniformButton width="160px" backgroundColor={orange} fontColor="white" onClick={onClick}>create a post</UniformButton>
           
       </div>
-
-      <PaneContainer/>
+      {
+        user?<PaneContainer where='explore' userId={user?.result?._id} />:<PaneContainer where='explore'/>
+      }
+      
 
     </div>
 

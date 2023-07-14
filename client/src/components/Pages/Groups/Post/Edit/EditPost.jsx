@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar,  } from '@wangeditor/editor-for-react'
 import { DomEditor } from '@wangeditor/editor'
-import {paArticlesInfo,getArticlesInfo} from '../../../../../api/user'
+import {paArticlesInfo,getArticlesInfo} from '../../../../../api'
 import {toolbarConfig,editorConfig} from '../../../../../util/config'
 import {FormData} from '../../../../../util/index'
 import InputBar from "../../../../Widget/InputBar/InputBar";
@@ -27,10 +27,10 @@ import Input from '../../../../Widget/Input/Input'
       let params = useParams()
       const articlesId = params['id'];
       const getArticlesInfoRequest=async()=>{
-        const articlesInfoResulet=await getArticlesInfo(articlesId)   
+        const {data:articlesInfoResulet}=await getArticlesInfo(articlesId)   
         setArticle(articlesInfoResulet)
         setContent(articlesInfoResulet.content)
-        console.log(articlesInfoResulet.title);
+        //console.log(articlesInfoResulet.title);
         setTitleValue(articlesInfoResulet.title)
         setPreviewImage(articlesInfoResulet.imageURL)
         setWidth(articlesInfoResulet.imageWidth||'200')
@@ -43,7 +43,7 @@ import Input from '../../../../Widget/Input/Input'
         //   // const edito = editor.current.getInstance();
         //   // const textStyle = edito.createTextStyle({ fontName: "Arial", fontSize: "medium" });
         //   // edito.command(e => e.applyTextStyle(textStyle));
-        //   console.log(editor.getConfig());
+        //   //console.log(editor.getConfig());
         // }
        
        },[])
@@ -65,7 +65,7 @@ import Input from '../../../../Widget/Input/Input'
     
         const reader = new FileReader();
         reader.onload = () => {
-          console.log(reader.result);
+          //console.log(reader.result);
           setPreviewImage(reader.result);
         };
         reader.readAsDataURL(file);
@@ -82,9 +82,12 @@ import Input from '../../../../Widget/Input/Input'
         article.imageURL=previewImage
         article.imageWidth=width
         article.imageHeight=height
-        console.log(article);
-        paArticlesInfoReuest(article._id,article)  
-        navigate(`/groups/post/${articlesId}`,  { replace: true })
+        //console.log(article);
+        paArticlesInfoReuest(article._id,article) 
+        setTimeout(()=>{
+          navigate(`/groups/post/${articlesId}`)
+        },1000) 
+        
         
       }
       const onGoBack=()=>{
@@ -127,12 +130,12 @@ import Input from '../../../../Widget/Input/Input'
      
           <div className="author-info">
             <div className="author-avatar">
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <Avatar alt="Remy Sharp" src={article.u_id.avatar}/>
             </div>
   
             <div className="author-details">
               <span className="author-name">{article.u_id.name}</span>
-              <p className="post-timestamp">{article.updated_at==article.date?"Posted on":"Edit on"}     {FormData(article.updated_at)   }</p>
+              <p className="post-timestamp">{article.updated_at==article.date?"Posted on":"Edited on"}     {FormData(article.updated_at)   }</p>
             </div>
             
             <input type="file"   ref={fileInputRef}
@@ -169,8 +172,8 @@ import Input from '../../../../Widget/Input/Input'
           
             <div className="image_show">
             <div className="button-wrapper">
-                <button className="discard-button" onClick={()=>{onEditUploadImage()}} >Uploadimage</button>
-                <button className="discard-button" onClick={()=>{onDeleteUploadImage()}} >Deleteimage</button>
+                <button className="Image-button" onClick={()=>{onEditUploadImage()}} >Upload Image</button>
+                <button className="Image-button" onClick={()=>{onDeleteUploadImage()}} >Delete Image</button>
           
                 <Input name="width" defaultValue={width} label="Width" handleChange={handleWidthChange} type="text" />
                 <Input name="height" defaultValue={height}   label="Height" handleChange={handleHeightChange} type="text" />

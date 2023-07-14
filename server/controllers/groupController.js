@@ -1,6 +1,7 @@
 import Group from "../models/group.js";
 import mongoose from "mongoose";
 import Groupmember from "../models/groupmember.js";
+import articles from "../models/article.js";
 import bcrypt from "bcryptjs";
 
 // get all groups
@@ -39,9 +40,48 @@ const getGroups = async (req, res) => {
   }
 };
 
+const getGroupsBySearch = async (req, res) => {
+  const { searchQuery } = req.query;
+
+  try {
+    const title = new RegExp(searchQuery, "i"); // Test test TEST -> test
+
+    const groups = await Group.find({
+      $or: [{ groupName: title }, { intro: title }, { tags: { $in: title } }], // find groups that match either or
+    });
+    /*   const groups = await Group.find({
+      groupName: title, // find groups that match either or
+    }); */
+    // 获取每个组的成员ID
+    const groupIds = groups.map((group) => group._id);
+    const groupMembers = await Groupmember.find({ groupId: { $in: groupIds } });
+
+    // 将成员ID添加到每个组的成员属性
+    const groupsWithMembers = groups.map((group) => {
+      const members = groupMembers
+        .filter((member) => member.groupId.equals(group._id))
+        .map((member) => member.memberId);
+      const groupCount = members.length;
+      const creatorName = group.creatorId ? group.creatorId.name : null;
+      const creatorRefId = group.creatorId ? group.creatorId._id : null;
+      return {
+        ...group.toObject(),
+        creatorName,
+        creatorRefId,
+        members,
+        groupCount,
+      };
+    });
+
+    res.json({ data: groupsWithMembers });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 const getGroup = async (req, res) => {
   const { id } = req.params;
-  console.log("获取群组信息");
+  //console.log("Get group information");
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such group" });
   }
@@ -104,34 +144,58 @@ const getMyGroups = async (req, res) => {
 
 // create new Group
 const createGroup = async (req, res) => {
-  const { password, ...group } = req.body;
-  const encryptedPassword = password
-    ? await bcrypt.hash(password, 12).catch((error) => {
-        console.log(error);
-        throw new Error("Error hashing password");
-      })
-    : null;
-
-  const newGroupMessage = new Group({
-    ...group,
-    creatorId: req.userId,
-    password: encryptedPassword,
-  });
-  const newGroupmember = new Groupmember({
-    groupId: newGroupMessage._id,
-
-    creatorId: newGroupMessage.creatorId,
-
-    memberId: newGroupMessage.creatorId,
-  });
   try {
+    const { ...group } = req.body;
+    const exists = await Group.findOne({
+      groupName: { $regex: `^${group.groupName}$`, $options: "i" },
+    });
+    if (exists) {
+      return res.status(409).json({ error: "groupName already in use" });
+    }
+
+    const newGroupMessage = new Group({
+      ...group,
+      creatorId: req.userId,
+      password: "",
+    });
+
+    const newGroupmember = new Groupmember({
+      groupId: newGroupMessage._id,
+      creatorId: req.userId,
+      memberId: req.userId,
+    });
+
     await newGroupMessage.save();
     await newGroupmember.save();
 
     res.status(201).json(newGroupMessage);
   } catch (error) {
-    res.status(409).json(error);
+    res.status(500).json({ error: error.message });
   }
+};
+
+const addGroupPassword = async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such workout" });
+  }
+  const encryptedPassword = await bcrypt.hash(password, 12).catch((error) => {
+    console.log(error);
+    throw new Error("Error hashing password");
+  });
+
+  const group = await Group.findByIdAndUpdate(
+    id,
+    { password: encryptedPassword },
+    { new: true }
+  );
+
+  if (!group) {
+    return res.status(404).json({ error: "No such workout" });
+  }
+
+  res.status(200).json(group);
 };
 
 // delete a group
@@ -150,6 +214,7 @@ const deleteGroup = async (req, res) => {
       try {
         await Group.findByIdAndRemove(id);
         await Groupmember.deleteMany({ groupId: id });
+        await articles.deleteMany({ g_id: id });
       } catch (error) {
         res.status(409).json(error);
       }
@@ -232,8 +297,10 @@ const verifyGroup = async (req, res) => {
 export {
   getGroups,
   getGroup,
+  getGroupsBySearch,
   getMyGroups,
   createGroup,
+  addGroupPassword,
   deleteGroup,
   updateGroup,
   joinGroup,

@@ -6,14 +6,18 @@ const router = express.Router();
 import {
   getGroups,
   getGroup,
+  getGroupsBySearch,
   getMyGroups,
   createGroup,
   deleteGroup,
   updateGroup,
   joinGroup,
   verifyGroup,
+  addGroupPassword,
 } from "../controllers/groupController.js";
 
+//GET search groups
+router.get("/search", getGroupsBySearch);
 //GET all groups
 router.get("/", getGroups);
 
@@ -35,5 +39,7 @@ router.delete("/:id", auth, deleteGroup);
 
 //UPDATE a group
 router.patch("/:id", auth, updateGroup);
+
+router.patch("/:id", auth, addGroupPassword);
 
 export default router;

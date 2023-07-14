@@ -1,0 +1,8 @@
+.paper {
+  margin-bottom: "1rem";
+  padding: "13px";
+  margin-top: 10px;
+  margin-right: 15px;
+  display: grid;
+  grid-template-columns: auto auto;
+}
