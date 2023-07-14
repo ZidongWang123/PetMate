@@ -52,8 +52,28 @@ const getGroupsBySearch = async (req, res) => {
     /*   const groups = await Group.find({
       groupName: title, // find groups that match either or
     }); */
+    // 获取每个组的成员ID
+    const groupIds = groups.map((group) => group._id);
+    const groupMembers = await Groupmember.find({ groupId: { $in: groupIds } });
 
-    res.json({ data: groups });
+    // 将成员ID添加到每个组的成员属性
+    const groupsWithMembers = groups.map((group) => {
+      const members = groupMembers
+        .filter((member) => member.groupId.equals(group._id))
+        .map((member) => member.memberId);
+      const groupCount = members.length;
+      const creatorName = group.creatorId ? group.creatorId.name : null;
+      const creatorRefId = group.creatorId ? group.creatorId._id : null;
+      return {
+        ...group.toObject(),
+        creatorName,
+        creatorRefId,
+        members,
+        groupCount,
+      };
+    });
+
+    res.json({ data: groupsWithMembers });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
