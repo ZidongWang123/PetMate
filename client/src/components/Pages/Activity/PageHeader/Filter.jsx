@@ -61,7 +61,7 @@ export const Filter = ({ activity, onSortingChange }) => {
     <>
       {activity === "service" && (
         <div className="paper">
-          <Paper sx={{ padding: "13px" }}>
+          <Paper sx={{ padding: "13px", display: "flex" }}>
             <div
               style={{
                 display: "flex",
