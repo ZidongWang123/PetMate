@@ -10,7 +10,7 @@ const getArticle = async (req, res) => {
 
   const articlesResulet = await articles
     .findOne(query)
-    .populate("u_id", "name")
+    .populate("u_id", "name avatar")
     .lean();
   articlesResulet["editFlag"] = articlesResulet.u_id._id == req.userId;
 
