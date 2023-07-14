@@ -9,7 +9,11 @@ import SingleGroupDetail from "./SingleGroupDetail.jsx";
 import BasicTable from "../../../Widget/TableBar/TableBar"; */
 //import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 import { Link, useParams } from "react-router-dom";
-import { getGroupsArticles, getGroupInfo } from "../../../../api";
+import {
+  getGroupsArticles,
+  getGroupInfo,
+  fetchArticlesBySearch,
+} from "../../../../api";
 import { FormData } from "../../../../util/index";
 import TableFilter from "../../../Widget/TableFilter/TableFilter";
 
@@ -38,45 +42,48 @@ const SingleGroup1 = () => {
       headerName: "Topics",
       flex: 1,
       renderCell: (params) => (
-        <Link to={`/groups/post/${params.row.id}`} style={{ textDecoration:'none'}}>{params.row.Topics}</Link>
+        <Link
+          to={`/groups/post/${params.row.id}`}
+          style={{ textDecoration: "none" }}
+        >
+          {params.row.Topics}
+        </Link>
       ),
     },
     {
       field: "Date",
       headerName: "Date",
       flex: 1,
-   
     },
     {
       field: "Author",
       headerName: "Author",
       flex: 1,
       renderCell: (params) => (
-        <Link to={`/myposts/${params.row.u_id}`} style={{ textDecoration:'none'}}>{params.row.Author}</Link>
+        <Link
+          to={`/myposts/${params.row.u_id}`}
+          style={{ textDecoration: "none" }}
+        >
+          {params.row.Author}
+        </Link>
       ),
     },
     {
-      field: 'Tags',
-      headerName: 'Tags', 
-      width:300,
-      renderCell:(params) => (
-         
-      
-          <div>
-          {params.row.Tags.map(item=>{
-            return <span className="single-tag">#{item}</span>
+      field: "Tags",
+      headerName: "Tags",
+      width: 300,
+      renderCell: (params) => (
+        <div>
+          {params.row.Tags.map((item) => {
+            return <span className="single-tag">#{item}</span>;
           })}
-          </div>
-            
-         
+        </div>
       ),
-
     },
-   
   ];
   //请求群组下面所有的文章
   const getGroupsArticlesRequest = async () => {
-    const {data:articlesResulet} = await getGroupsArticles(groupId);
+    const { data: articlesResulet } = await getGroupsArticles(groupId);
     console.log(articlesResulet, "articlesResulet");
     const articles = articlesResulet.length
       ? articlesResulet.map((item) => {
@@ -85,33 +92,67 @@ const SingleGroup1 = () => {
             Topics: item.title,
             Date: FormData(item.date),
             Author: item.u_id.name,
-            u_id:item.u_id._id,
-            Tags:item.tags
+            u_id: item.u_id._id,
+            Tags: item.tags,
           };
         })
       : [];
     setArticles(articles);
   };
+
+  const topicsArray = articles && articles.map((article) => article.Topics);
+
   //请求群组信息
-  const getGroupInfoRequest = async () => {
+  /*   const getGroupInfoRequest = async () => {
     const {data:groupResulet} = await getGroupInfo(groupId);
     console.log(groupResulet, "groupResulet");
     setGroup(groupResulet);
-  };
+  }; */
   useEffect(() => {
     getGroupsArticlesRequest();
-    getGroupInfoRequest();
+    /*  getGroupInfoRequest(); */
   }, []);
+  const searchArticles = async (value) => {
+    console.log("searchvalue", value);
+    const { data: articlesResults } = await fetchArticlesBySearch(
+      groupId,
+      value
+    );
+    console.log("articlesbysearch", articlesResults);
+
+    const searchArticles = articlesResults.length
+      ? articlesResults.map((item) => {
+          return {
+            id: item._id,
+            Topics: item.title,
+            Date: FormData(item.date),
+            Author: item.u_id.name,
+            u_id: item.u_id._id,
+            Tags: item.tags,
+          };
+        })
+      : [];
+    setArticles(searchArticles);
+  };
+  const searchPost = async (value) => {
+    console.log("from parent components", value);
+    /*  await searchArticles(value); */
+    if (value) {
+      searchArticles(value);
+    } else {
+      getGroupsArticlesRequest();
+    }
+    /*  getArticlesBySearch(groupId,value); */
+  };
 
   return (
     <div>
-      <SearchBar />
+      <SearchBar results={topicsArray} searchPost={searchPost} />
       <SingleGroupDetail />
       {/* {articles.length!=0&&<Forum articles={articles}/>} */}
       {/* {articles.length!=0&&<BasicTable data={articles} columns={columns}></BasicTable>} */}
 
-        <TableFilter columns={columns} data={articles}></TableFilter>
- 
+      <TableFilter columns={columns} data={articles}></TableFilter>
     </div>
   );
 };

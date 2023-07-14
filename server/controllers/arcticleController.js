@@ -26,7 +26,7 @@ const getGroupArticle = async (req, res) => {
   };
 
   console.log("Search", query);
-  const Articles = await articles.find(query).populate('u_id', 'name avatar');
+  const Articles = await articles.find(query).populate("u_id", "name avatar");
 
   res.status(200).json(Articles);
 };
@@ -51,7 +51,7 @@ const getArticlesBySearch = async (req, res) => {
           },
         ], // find groups that match either or
       })
-      .populate("u_id", "name");
+      .populate("u_id", "name avatar");
 
     res.status(200).json(Articles);
   } catch (error) {
@@ -107,7 +107,7 @@ const createArticle = async (req, res) => {
   if (!content) {
     emptyFields.push("content");
   }
-  
+
   if (!u_id) {
     emptyFields.push("u_id");
   }
