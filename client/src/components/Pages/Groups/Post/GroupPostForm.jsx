@@ -178,7 +178,7 @@ const GroupPostForm = () => {
     setCompleted({});
   };
   const onBack=()=>{
-    navigate(-1)
+    navigate(`/groups/${groupId}`)
     //console.log("返回");
   }
   return (

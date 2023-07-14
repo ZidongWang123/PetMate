@@ -23,9 +23,8 @@ const PostDetails = () => {
     onGoBack()
 
   }
-  const onGoBack=()=>{
-
-    navigate(-1);
+  const onGoBack=(g_id)=>{
+    navigate(`/groups/${g_id}`)
   }
  
   const onEditArticle = async (id) => {
@@ -74,7 +73,7 @@ const PostDetails = () => {
           </div>
           <button
               className="delete-button"
-              onClick={() => onGoBack()}
+              onClick={() => onGoBack(article.g_id)}
             >
               Back
             </button>
