@@ -18,6 +18,8 @@ export const fetchServices = (page, userId = null) =>
   API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ""}`);
 export const fetchServicesBySearch = ({ tags }) =>
   API.get(`/services/search?tags=${tags}`);
+export const fetchServicesBySorting = (page, sorting) =>
+  API.get(`/services/sorting?page=${page}&sorting=${sorting}`);
 
 export const createService = (newService) => API.post("/services", newService);
 export const updateService = (id, updatedService) =>
