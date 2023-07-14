@@ -71,11 +71,15 @@ const Groups = () => {
   if (isLoading) {
     return <div>Loading...</div>; // 显示加载中的提示
   }
-  const groupResults = groups.map(({ _id, groupName }) => ({
-    _id,
-    recommended: groupName,
-  }));
-  const groupNames = groupResults.map(({ recommended }) => recommended);
+  const groupResults =
+    Array.isArray(groups) &&
+    groups.map(({ _id, groupName }) => ({
+      _id,
+      recommended: groupName,
+    }));
+  const groupNames =
+    Array.isArray(groupResults) &&
+    groupResults.map(({ recommended }) => recommended);
   const searchGroups = async (value) => {
     console.log("from parent components", value);
 
@@ -100,7 +104,7 @@ const Groups = () => {
         <GroupCreateButton onClick={onClick}></GroupCreateButton>
       </div>
       <div className="group-list">
-        {groups && Array.isArray(groups) ? (
+        {groups && !isLoading && Array.isArray(groups) ? (
           groups.map((group) => <GroupList key={group._id} group={group} />)
         ) : (
           <div>Loading...</div>
