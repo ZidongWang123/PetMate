@@ -1,6 +1,7 @@
 import ServiceMsg from "../models/service.js";
 import mongoose from "mongoose";
-
+import User from "../models/user.js"
+import requestEmail from "../middleware/sendEmail.js"
 export const getService = async (req, res) => {
   const { id } = req.params;
 
@@ -180,3 +181,19 @@ export const deleteService = async (req, res) => {
 
   res.json({ message: "Service deleted successfully" });
 };
+
+export const sendEmail=async(req,res)=>{
+  const {title,email,content}=req.body
+  console.log(title,"title");
+  try {
+
+    console.log(title,"title");
+    await requestEmail(email,title,content)
+    res.status(200).json({"msg":"发送成功"})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({"msg":"发送失败"})
+  }
+ 
+ 
+}

@@ -24,6 +24,8 @@ export const updateService = (id, updatedService) =>
   API.patch(`/services/${id}`, updatedService);
 export const deleteService = (id) => API.delete(`/services/${id}`);
 
+export const sendEmail = (formData) => API.post(`/services/sendEmail`,formData);
+
 //api for events
 export const fetchEvent = (id) => API.get(`/events/${id}`);
 export const fetchEvents  = (page, userId = null) => API.get(`/events?page=${page}${userId ? `&userId=${userId}` : ""}`);
