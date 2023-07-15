@@ -22,7 +22,8 @@ export const fetchServicesBySorting = (page, sorting) =>
   API.get(`/services/sorting?page=${page}&sorting=${sorting}`);
 
 export const createService = (newService) => API.post("/services", newService);
-export const updateService = (id, updatedService) => API.patch(`/services/${id}`, updatedService);
+export const updateService = (id, updatedService) =>
+  API.patch(`/services/${id}`, updatedService);
 export const deleteService = (id) => API.delete(`/services/${id}`);
 
 //api for events
@@ -37,10 +38,22 @@ export const deleteService = (id) => API.delete(`/services/${id}`);
 // export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
 //api for applications
-export const fetchApplicationsByApplicantId = (applicantId) => API.get(`/applications/${applicantId}`);
-export const fetchApplicationsByActivityId = (activityId) => API.get(`/applications?&activityId=${activityId}`);
-export const createApplication = (newApplication) => API.post("/applications", newApplication);
-export const updateApplication = (id, updatedApplication) => API.patch(`/applications/${id}`, updatedApplication);
+export const fetchApplicationsByApplicantId = (applicantId) =>
+  API.get(`/applications/${applicantId}`);
+export const fetchApplicationsByActivityId = (activityId) =>
+  API.get(`/applications?&activityId=${activityId}`);
+export const createApplication = (newApplication) =>
+  API.post("/applications", newApplication);
+export const updateApplication = (id, updatedApplication) =>
+  API.patch(`/applications/${id}`, updatedApplication);
+export const fetchApplicationsByApplicantId = (applicantId) =>
+  API.get(`/applications/${applicantId}`);
+export const fetchApplicationsByActivityId = (activityId) =>
+  API.get(`/applications?&activityId=${activityId}`);
+export const createApplication = (newApplication) =>
+  API.post("/applications", newApplication);
+export const updateApplication = (id, updatedApplication) =>
+  API.patch(`/applications/${id}`, updatedApplication);
 export const deleteApplication = (id) => API.delete(`/applications/${id}`);
 
 //api for groups
