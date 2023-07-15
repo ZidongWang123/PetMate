@@ -46,14 +46,6 @@ export const createApplication = (newApplication) =>
   API.post("/applications", newApplication);
 export const updateApplication = (id, updatedApplication) =>
   API.patch(`/applications/${id}`, updatedApplication);
-export const fetchApplicationsByApplicantId = (applicantId) =>
-  API.get(`/applications/${applicantId}`);
-export const fetchApplicationsByActivityId = (activityId) =>
-  API.get(`/applications?&activityId=${activityId}`);
-export const createApplication = (newApplication) =>
-  API.post("/applications", newApplication);
-export const updateApplication = (id, updatedApplication) =>
-  API.patch(`/applications/${id}`, updatedApplication);
 export const deleteApplication = (id) => API.delete(`/applications/${id}`);
 
 //api for groups
