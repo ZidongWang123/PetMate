@@ -81,12 +81,18 @@ export const Filter = ({ activity, onSortingChange }) => {
       {activity === "event" && (
         <div className="paper">
           <Paper sx={{ padding: "13px", display: "flex" }}>
-            <div>
+          <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginRight: "10px",
+              }}
+            >
               <Typography>
                 Sort By:
-                <Button size="small" color="primary" onClick={clearAllFilters}>
+                {/* <Button size="small" color="primary" onClick={clearAllFilters}>
                   Clear All
-                </Button>
+                </Button> */}
               </Typography>
             </div>
             <div>
