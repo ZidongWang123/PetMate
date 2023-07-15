@@ -8,6 +8,8 @@ import {
   createService,
   updateService,
   deleteService,
+  sendEmail
+
 } from "../controllers/service.js";
 
 const router = express.Router();
@@ -19,6 +21,7 @@ router.get("/:id", getService);
 router.get("/search", getServicesBySearch);
 
 router.post("/", auth, createService);
+router.post("/sendEmail",auth, sendEmail);
 router.patch("/:id", auth, updateService);
 router.delete("/:id", auth, deleteService);
 

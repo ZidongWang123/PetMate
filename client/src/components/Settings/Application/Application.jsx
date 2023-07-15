@@ -4,10 +4,11 @@ import { brightPurple, orange, darkGray } from "../../../constant/actionTypes";
 import { fetchPersonalInfo, updateApplication } from "../../../actions/application.js";
 import { PENDING, APPROVED, REJECT } from "../../../constant/actionTypes.js"
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
+import {sendEmail,fetchService} from "../../../api/index"
 
 const Application = ({ application }) => {
     const [applicant, setApplicant] = React.useState(null);
-
+    const [data, setData] = React.useState(null);
     React.useEffect(() => {
         fetchPersonalInfo(application.applicantId).then((item) => {
             if (applicant === null && item.data) {
@@ -16,10 +17,17 @@ const Application = ({ application }) => {
         }).catch((error) => {
             console.log(error);
         });
+        fetchServiceRequest()
+
     }, [application])
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+    const fetchServiceRequest=async ()=>{
 
+        const {data}=await fetchService(application.activityId)
+        console.log(data);
+        setData(data)
+    }
     const handelfeebackMsgClose = () => {
         setShowFeedbackMsg(false)
     }
@@ -31,6 +39,9 @@ const Application = ({ application }) => {
             item = await updateApplication(application._id, application);
         }
         setShowFeedbackMsg(true);
+        sendEmail({"email":applicant.email,"title":`The Service "${data.title}" is Approved.`,content:`Dear ${applicant.name}， 
+you applied service "${data.title}" is now approved. The Service is on ${data.startDate}, in ${data.location} with the content ${data.content}. It will cost ${data.price} Euro.`})
+       
     }
 
     const handleReject = async () => {
@@ -39,6 +50,9 @@ const Application = ({ application }) => {
             item = await updateApplication(application._id, application);
         }
         setShowFeedbackMsg(true);
+        sendEmail({"email":applicant.email,"title":` The Service "${data.title}" is Rejected. `,content:` Dear ${applicant.name}， 
+Sorry, you applied service "${data.title}" is now rejected. The Service you applied is on ${data.startDate}, in ${data.location} with the content ${data.content}. We hope we could meet each other next time!`})
+        
     }
 
     if (applicant) {
