@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from "react";
 
-import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 
 
 import "./CreatePost.css"
@@ -233,7 +233,7 @@ export default function CreatePost() {
                     margin: "10px 0",
                     color: darkPurple
                 }}>{"Pictures:"}</h2>
-                <ImageUploader
+                {/* <ImageUploader
                     label="* <=10MB&at most 9 pictures; jpg|gif|jpeg|png"
                     withLabel={true}
                     withIcon={true}
@@ -248,7 +248,7 @@ export default function CreatePost() {
                     imgExtension={['.jpg', '.gif', ".jpeg",'.png']}
                     maxFileSize={524288000*2}
                     defaultImages={pictures}
-                />
+                /> */}
                 <div style={{ display: "flex", float: "right" }}>
                     <UniformButton width="100px" backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
                     <UniformButton width="100px" backgroundColor={orange} fontColor="white" onClick={onSubmit}>
