@@ -6,7 +6,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.js";
 
-
 import serviceRoutes from "./routes/service.js";
 import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
@@ -15,7 +14,9 @@ import applicationRoutes from "./routes/application.js";
 import createdServiceRoutes from "./routes/createdService.js"
 import createdEventRoutes from "./routes/createdEvent.js"
 
-import articleRoutes  from "./routes/article.js"
+import articleRoutes from "./routes/article.js";
+//import paypal api
+import * as paypal from "./paypal-api.js";
 //create an instance of express
 const app = express();
 //use dotenv to hide the connection url
@@ -25,6 +26,30 @@ dotenv.config();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
+// paypal
+app.post("/my-server/create-paypal-order", async (req, res) => {
+  try {
+    /*  console.log("in server"); */
+    console.log("req.body:", req.body);
+    const order = await paypal.createOrder(req.body);
+    /*     console.log("successfully fetch createOrder"); */
+    res.json(order);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+});
+
+app.post("/my-server/capture-paypal-order", async (req, res) => {
+  const { orderID } = req.body;
+  try {
+    const captureData = await paypal.capturePayment(orderID);
+    res.json(captureData);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
 //routes
 //connect the routes and app, which means the all requests with /user will be directed to the userRoutes
