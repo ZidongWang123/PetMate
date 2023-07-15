@@ -3,11 +3,10 @@ import React from "react";
 import { brightPurple } from "../../../../constant/actionTypes";
 import { useDispatch } from "react-redux";
 import { fetchPersonalInfo } from "../../../../actions/service";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getApplicationsByActivityId } from "../../../../actions/application";
 
-const ActivityOverview = ({ activityData }) => {
+const ActivityOverview = ({ activityData, activityType }) => {
   const formattedStartDate = new Date(
     activityData.startDate
   ).toLocaleDateString();
@@ -18,33 +17,30 @@ const ActivityOverview = ({ activityData }) => {
   const [personalInfo, setPersonalInfo] = React.useState(null);
 
   React.useEffect(() => {
-    if (activityData) {
-      dispatch(fetchPersonalInfo(activityData.creator)).then(data => {
-        console.log(data.data)
-        setPersonalInfo(data.data);
-      });
-    }
+    //if (activityType === 'service') {
+      if (activityData) {
+        dispatch(fetchPersonalInfo(activityData.creator)).then((data) => {
+          setPersonalInfo(data.data);
+        });
+      }
+    //}
   }, [dispatch, activityData]);
-
-  const { servicesCreator } = useSelector((state) => state.service);
-  //有个问题：一页中的activityoverview的头像都是一样的cao
 
   //const [matchCount, setMatchCount] = React.useState(0);
   React.useEffect(() => {
     if (activityData) {
-      getApplicationsByActivityId(activityData._id).then((item)=>{
-        console.log(item.data, activityData._id, activityData)
+      getApplicationsByActivityId(activityData._id).then((item) => {
         //在event的时候可以筛选出status为approved
         activityData.applicant = item.data.length;
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err)
       })
     }
   }, [activityData]);
 
   const handleChoose = (id) => {
-    const activity = "service";
-    navigator(`/${activity}/${id}`);
+    console.log(activityType)
+    navigator(`/${activityType}/${id}`);
   };
 
   return (
@@ -257,58 +253,116 @@ const ActivityOverview = ({ activityData }) => {
               {formattedEndDate}
             </Typography>
           </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{ marginRight: "1em", fontWeight: 800 }}
-            >
-              Price(euro/day):
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
+          {activityType === 'service' ? (
+          <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
               }}
             >
-              {activityData.price}
-            </Typography>
-          </div>
+              <Typography
+                variant="h6"
+                sx={{ marginRight: "1em", fontWeight: 800 }}
+              >
+                Price(euro/day):
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {activityData.price}
+              </Typography>
+            </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{ marginRight: "1em", fontWeight: 800 }}
-            >
-              No. of applicants:
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
               }}
             >
-              {activityData.applicant}
-            </Typography>
-          </div>
+              <Typography
+                variant="h6"
+                sx={{ marginRight: "1em", fontWeight: 800 }}
+              >
+                No. of applicants:
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {activityData.applicant}
+              </Typography>
+            </div>
+          </>): null}
+
+          {activityType === 'event' ? (
+          <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{ marginRight: "1em", fontWeight: 800 }}
+              >
+                Current:
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {activityData.currentParticipants}
+              </Typography>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{ marginRight: "1em", fontWeight: 800 }}
+              >
+                Expected:
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {activityData.expectedParticipants}
+              </Typography>
+            </div>
+          </>): null}
+
         </Box>
         <Button
           sx={{

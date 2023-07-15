@@ -12,6 +12,8 @@ import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
 import applicationRoutes from "./routes/application.js";
+import createdServiceRoutes from "./routes/createdService.js"
+import createdEventRoutes from "./routes/createdEvent.js"
 
 import articleRoutes  from "./routes/article.js"
 //create an instance of express
@@ -32,6 +34,8 @@ app.use("/api/groups", groupRoutes);
 app.use("/explore", explorePost);
 
 app.use("/services", serviceRoutes);
+app.use("/createdservices", createdServiceRoutes); 
+app.use("/createdevents", createdEventRoutes); 
 app.use("/events", eventRoutes);
 app.use("/applications", applicationRoutes);
 

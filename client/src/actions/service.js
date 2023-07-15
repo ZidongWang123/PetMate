@@ -3,7 +3,7 @@ import {
   FETCH_ALL_CREATED_SERVICE,
   FETCH_SERVICE_SORTING,
   FETCH_SERVICE,
-  FETCH_BY_SEARCH,
+  FETCH_BY_SEARCH_SERVICE,
   START_LOADING,
   END_LOADING,
   CREATE_SERVICE,
@@ -31,18 +31,19 @@ export const getService = (id) => async (dispatch) => {
   }
 };
 
-export const getServices =
-  (page, userId = null) =>
-  async (dispatch) => {
+export const getServices = (page) => async (dispatch) => {
     try {
-      dispatch({ type: START_LOADING });
-      const { data } = await api.fetchServices(page, userId);
-      if (userId) {
-        dispatch({ type: FETCH_ALL_CREATED_SERVICE, payload: data });
-      } else {
-        dispatch({ type: FETCH_ALL_SERVICE, payload: data });
-      }
-      dispatch({ type: END_LOADING });
+      const { data } = await api.fetchServices(page);
+      dispatch({ type: FETCH_ALL_SERVICE, payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  export const getServicesByUser = (userId ) => async (dispatch) => {
+    try {
+      const { data } = await api.fetchServicesByUser(userId);
+      dispatch({ type: FETCH_ALL_CREATED_SERVICE, payload: data });
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +73,7 @@ export const getServicesBySearch =
       const {
         data: { data },
       } = await api.fetchServicesBySearch({ tags });
-      dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+      dispatch({ type: FETCH_BY_SEARCH_SERVICE, payload: { data } });
       dispatch({ type: END_LOADING });
     } catch (error) {
       console.log(error);

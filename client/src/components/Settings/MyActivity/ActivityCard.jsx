@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import ConfirmDialog from '../../Widget/ConfirmDialog/ConfirmDialog';
 import { useDispatch } from "react-redux";
 import { deleteService } from "../../../actions/service.js"
+import { deleteEvent } from "../../../actions/event.js"
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 
-const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw }) => {
+const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw, refreshCreatedService }) => {
     const navigate = useNavigate();
 
     const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
@@ -29,7 +30,13 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
 
     const deleteActivity = () => {
         try {
-            dispatch(deleteService(activityData._id));
+            if (activityType === 'services') {
+                dispatch(deleteService(activityData._id));
+            }
+
+            if (activityType === 'events') {
+                dispatch(deleteEvent(activityData._id));
+            }
 
             setShowFeedbackMsg(true);
         } catch (error) {
@@ -38,7 +45,9 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
     };
 
     const handelfeebackMsgClose = () => {
-        window.location.reload()
+
+        setShowFeedbackMsg(false);
+        window.location.reload();
     }
 
     return (
@@ -147,12 +156,22 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                     ) : null}
                     {activityType === 'events' ? (
                         <>
-                            <Typography variant="h6">
-                                expectedParticipants: ''
-                            </Typography>
-                            <Typography variant="h6">
-                                now: ''
-                            </Typography>
+                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                                    Expected:
+                                </Typography>
+                                <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                    {activityData?.expectedParticipants}
+                                </Typography>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                                    Current:
+                                </Typography>
+                                <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                    {activityData?.currentParticipants}
+                                </Typography>
+                            </div>
                         </>
                     ) : null}
                 </Box>
@@ -206,7 +225,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                                     color: 'white',
                                     borderRadius: '20px',
                                 }}
-                                onClick={()=>{deleteApplication(activityData.applicationId)}}
+                                onClick={() => { deleteApplication(activityData.applicationId) }}
                             >
                                 Withdraw
                             </Button>

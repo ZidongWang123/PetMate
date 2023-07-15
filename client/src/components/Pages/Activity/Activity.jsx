@@ -9,10 +9,12 @@ import ActivityOverview from "./ActivityOverview/ActivityOverview";
 import PublishActivity from "./PublishActivity/PublishActivity";
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 import { useDispatch } from "react-redux";
-import { createService } from "../../../actions/service";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../Widget/Pagination/Pagination";
 import { useSelector } from "react-redux";
+
+import { createService } from "../../../actions/service";
+import { createEvent } from "../../../actions/event"
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -21,6 +23,9 @@ function useQuery() {
 const Activity = ({ activity, commonSteps, creationSteps }) => {
   const query = useQuery();
   const page = query.get("page") || 1;
+
+  const servicePage = query.get("servicePage") || 1;
+  const eventPage = query.get("eventPage") || 1;
 
   const user = JSON.parse(localStorage.getItem("profile"));
   const [showSearchBar, setShowSearchBar] = React.useState(true);
@@ -47,6 +52,9 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
   const dispatch = useDispatch();
 
   const { services } = useSelector((state) => state.service);
+
+  const { events } = useSelector((state) => state.event);
+
   /* 
   React.useEffect(() => {
     console.log(allInputs);
@@ -118,7 +126,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     }
 
     if (activity === "event") {
-      //dispatch(createEvent(value));
+      dispatch(createEvent(value));
     }
 
     setShowFeedbackMsg(true);
@@ -183,14 +191,27 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
       {activity === "service" && showActivityOverview && services ? (
         <div className="activities-grid">
           {services.map((service) => (
-            <ActivityOverview key={service._id} activityData={service} />
+            <ActivityOverview key={service._id} activityData={service} activityType={activity}/>
           ))}
         </div>
       ) : null}
 
-      {showPagination ? (
-        <Pagination page={page} path={"service"} sorting={sorting} />
+      {activity === "event" && showActivityOverview && events ? (
+        <div className="activities-grid">
+          {events.map((event) => (
+            <ActivityOverview key={event._id} activityData={event} activityType={activity}/>
+          ))}
+        </div>
       ) : null}
+
+      {showPagination && activity === 'service' ? (
+        <Pagination page={servicePage} path={"service"} sorting={sorting} />
+      ) : null}
+
+      {showPagination && activity === 'event' ? (
+        <Pagination page={eventPage} path={"event"} sorting={sorting} />
+      ) : null}
+
       <FeedbackMsg
         status={showFeedbackMsg}
         message="Sucessful published"
