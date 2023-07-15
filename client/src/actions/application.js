@@ -21,18 +21,35 @@ export const updateApplication = async (activityId, application) => {
 export const getApplicationsByActivityId = async (activityId) => {
     try {
         const {data} = await api.fetchApplicationsByActivityId(activityId);
-        console.log(data)
         return data;
     } catch (error) {
         console.log(error);
     }
 }
 
-export const getApplicationsByApplicantId = async (activityId) => {
+export const getApplicationsByApplicantId = async (applicantId) => {
     try {
-        const { data } = await api.fetchApplicationsByApplicantId(activityId);
+        const { data } = await api.fetchApplicationsByApplicantId(applicantId);
         return { data }
     } catch (error) {
         console.log(error);
     }
+}
+
+
+export const fetchPersonalInfo = async (userId) => {
+    try {
+        const { data } = await api.getPersonalInfo(userId);
+        return { data }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteApplication = async (id) => {
+    try {
+        await api.deleteApplication(id);
+      } catch (error) {
+        console.log(error);
+      }
 }

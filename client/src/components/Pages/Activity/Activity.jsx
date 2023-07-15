@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Container } from "@mui/material";
-import './Activity.css'
+import "./Activity.css";
 import PrimePrivileges from "./PrimePrivileges/PrimePrivileges";
 import CommonSteps from "./CommonSteps/CommonSteps";
 import PageHeader from "./PageHeader/PageHeader";
@@ -10,152 +9,217 @@ import ActivityOverview from "./ActivityOverview/ActivityOverview";
 import PublishActivity from "./PublishActivity/PublishActivity";
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 import { useDispatch } from "react-redux";
-import { createService } from "../../../actions/service";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../Widget/Pagination/Pagination";
 import { useSelector } from "react-redux";
 
+import { createService } from "../../../actions/service";
+import { createEvent } from "../../../actions/event"
+
 function useQuery() {
-    return new URLSearchParams(useLocation().search);
+  return new URLSearchParams(useLocation().search);
 }
 
 const Activity = ({ activity, commonSteps, creationSteps }) => {
-    const query = useQuery();
-    const page = query.get('page') || 1;
+  const query = useQuery();
+  const page = query.get("page") || 1;
 
-    const user = JSON.parse(localStorage.getItem('profile'));
-    const [showSearchBar, setShowSearchBar] = React.useState(true);
+  const servicePage = query.get("servicePage") || 1;
+  const eventPage = query.get("eventPage") || 1;
 
-    const [showCommonStepper, setShowCommonStepper] = React.useState(false);
-    const [finishCommonStep, setFinishCommonStep] = React.useState(false);
-    const [showCreationStepper, setShowCreationStepper] = React.useState(false);
-    const [showPrimePrivileges, setShowPrimePrivileges] = React.useState(false);
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const [showSearchBar, setShowSearchBar] = React.useState(true);
 
-    const [showActivityOverview, setShowActivityOverview] = React.useState(true);
+  const [showCommonStepper, setShowCommonStepper] = React.useState(false);
+  const [finishCommonStep, setFinishCommonStep] = React.useState(false);
+  const [showCreationStepper, setShowCreationStepper] = React.useState(false);
+  const [showPrimePrivileges, setShowPrimePrivileges] = React.useState(false);
 
-    const [showPublishActivity, setShowPublishActivity] = React.useState(false);
+  const [showActivityOverview, setShowActivityOverview] = React.useState(true);
 
-    const [finishAfterCommonStep, setFinishAfterCommonStep] = React.useState(false);
+  const [showPublishActivity, setShowPublishActivity] = React.useState(false);
 
-    const [allInputs, setAllInputs] = React.useState([]);
+  const [finishAfterCommonStep, setFinishAfterCommonStep] =
+    React.useState(false);
 
-    const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+  const [allInputs, setAllInputs] = React.useState([]);
+  const [sorting, setSorting] = React.useState("");
 
-    const [showPagination, setShowPagination] = React.useState(true);
+  const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
 
-    const dispatch = useDispatch();
+  const [showPagination, setShowPagination] = React.useState(true);
 
-    const { services } = useSelector((state) => state.service);
+  const dispatch = useDispatch();
 
-    React.useEffect(() => {
-        console.log(allInputs);
-    }, [allInputs]);
+  const { services } = useSelector((state) => state.service);
 
-    const handelfeebackMsgClose = () => {
-        setShowFeedbackMsg(false)
+  const { events } = useSelector((state) => state.event);
+
+  /* 
+  React.useEffect(() => {
+    console.log(allInputs);
+  }, [allInputs]); */
+  /*   React.useEffect(() => {
+    dispatch(getServices());
+  }, [dispatch]); */
+
+  const handelfeebackMsgClose = () => {
+    setShowFeedbackMsg(false);
+  };
+
+  const selectActivity = () => {
+    setShowPrimePrivileges(false);
+
+    setShowCommonStepper(true);
+    setShowCreationStepper(false);
+
+    setFinishAfterCommonStep(true);
+  };
+
+  const createActivity = () => {
+    setShowPrimePrivileges(false);
+
+    setShowCommonStepper(true);
+    setShowCreationStepper(true);
+
+    setFinishAfterCommonStep(false);
+  };
+
+  const showMore = () => {
+    setShowSearchBar(false);
+    if (user && user.result.isPrime) {
+      setShowPrimePrivileges(true);
+    } else {
+      setShowCommonStepper(true);
     }
 
-    const selectActivity = () => {
-        setShowPrimePrivileges(false);
+    setShowActivityOverview(false);
+    setShowPagination(false);
+  };
 
-        setShowCommonStepper(true);
-        setShowCreationStepper(false);
+  const onFinishCommonStep = (stepInputs) => {
+    setAllInputs([]);
+    setShowCommonStepper(false);
+    if (user?.result.isPrime && !finishAfterCommonStep) {
+      setFinishCommonStep(true);
+    } else {
+      setShowActivityOverview(true);
+      setShowSearchBar(true);
+    }
 
-        setFinishAfterCommonStep(true);
-    };
+    setAllInputs(stepInputs);
+    console.log(allInputs);
+  };
 
-    const createActivity = () => {
-        setShowPrimePrivileges(false);
+  const onFinishCreationStep = (creationInputs) => {
+    setShowCreationStepper(false);
+    setAllInputs((prevInputs) => [...prevInputs, ...creationInputs]);
 
-        setShowCommonStepper(true);
-        setShowCreationStepper(true);
+    setShowPublishActivity(true);
 
-        setFinishAfterCommonStep(false);
-    };
+    console.log(allInputs);
+  };
 
-    const showMore = () => {
-        setShowSearchBar(false);
-        if (user && user.result.isPrime) {
-            setShowPrimePrivileges(true);
-        } else {
-            setShowCommonStepper(true);
-        }
+  const publishAndGoBack = (value) => {
+    if (activity === "service") {
+      dispatch(createService(value));
+    }
 
-        setShowActivityOverview(false);
-        setShowPagination(false);
-    };
+    if (activity === "event") {
+      dispatch(createEvent(value));
+    }
 
-    const onFinishCommonStep = (stepInputs) => {
-        setAllInputs([]);
-        setShowCommonStepper(false);
-        if (user?.result.isPrime && !finishAfterCommonStep) {
-            setFinishCommonStep(true);
-        } else {
-            setShowActivityOverview(true);
-            setShowSearchBar(true);
-        }
+    setShowFeedbackMsg(true);
+    //todo: async func to publish activity or not
+    setShowPublishActivity(false);
+    setShowActivityOverview(true);
+    setShowSearchBar(true);
+    setShowPagination(true);
+  };
+  const handleSortingChange = (sortingValue) => {
+    // 处理传递过来的 sortingValue
+    console.log("Sorting value:", sortingValue);
+    setSorting(sortingValue);
+  };
+  return (
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <PageHeader
+        showSearchBar={showSearchBar}
+        onContinue={showMore}
+        activity={activity}
+        onSortingChange={handleSortingChange}
+      />
 
-        setAllInputs(stepInputs);
-        console.log(allInputs);
-    };
+      {/* if user is prime, show prime privileges, else show common steps */}
+      {showPrimePrivileges ? (
+        <PrimePrivileges
+          showPrimePrivileges={showPrimePrivileges}
+          activity={activity}
+          select={selectActivity}
+          create={createActivity}
+        />
+      ) : null}
 
-    const onFinishCreationStep = (creationInputs) => {
-        setShowCreationStepper(false);
-        setAllInputs((prevInputs) => [...prevInputs, ...creationInputs]);
+      {/* if user want to select an activity, show common steps otherwise show creation steps after common steps */}
+      <CommonSteps
+        steps={commonSteps}
+        showStepper={showCommonStepper}
+        onFinishCommonStep={onFinishCommonStep}
+      />
+      <CreationSteps
+        steps={creationSteps}
+        showStepper={showCreationStepper && finishCommonStep}
+        onFinishCreationStep={onFinishCreationStep}
+      />
 
-        setShowPublishActivity(true);
+      {showPublishActivity ? (
+        <PublishActivity
+          activity={activity}
+          allInputs={allInputs}
+          publishAndGoBack={publishAndGoBack}
+          isEdit={false}
+        />
+      ) : null}
 
-        console.log(allInputs);
-    };
+      {activity === "service" && showActivityOverview && services ? (
+        <div className="activities-grid">
+          {services.map((service) => (
+            <ActivityOverview key={service._id} activityData={service} activityType={activity}/>
+          ))}
+        </div>
+      ) : null}
 
-    const publishAndGoBack = (value) => {
-        if (activity === 'service') {
-            dispatch(createService(value));
-        }
+      {activity === "event" && showActivityOverview && events ? (
+        <div className="activities-grid">
+          {events.map((event) => (
+            <ActivityOverview key={event._id} activityData={event} activityType={activity}/>
+          ))}
+        </div>
+      ) : null}
 
-        if (activity === 'event') {
-            //dispatch(createEvent(value));
-        }
+      {showPagination && activity === 'service' ? (
+        <Pagination page={servicePage} path={"service"} sorting={sorting} />
+      ) : null}
 
-        setShowFeedbackMsg(true);
-        //todo: async func to publish activity or not
-        setShowPublishActivity(false);
-        setShowActivityOverview(true);
-        setShowSearchBar(true);
-        setShowPagination(true);
-    };
+      {showPagination && activity === 'event' ? (
+        <Pagination page={eventPage} path={"event"} sorting={sorting} />
+      ) : null}
 
-    return (
-        <Container sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-            <PageHeader showSearchBar={showSearchBar} onContinue={showMore} />
-
-            {/* if user is prime, show prime privileges, else show common steps */}
-            {showPrimePrivileges ? (<PrimePrivileges showPrimePrivileges={showPrimePrivileges} activity={activity} select={selectActivity} create={createActivity} />) : null}
-
-            {/* if user want to select an activity, show common steps otherwise show creation steps after common steps */}
-            <CommonSteps steps={commonSteps} showStepper={showCommonStepper} onFinishCommonStep={onFinishCommonStep} />
-            <CreationSteps steps={creationSteps} showStepper={showCreationStepper && finishCommonStep} onFinishCreationStep={onFinishCreationStep} />
-
-            {showPublishActivity ? (<PublishActivity activity={activity} allInputs={allInputs} publishAndGoBack={publishAndGoBack} isEdit={false} />) : null}
-
-            {(activity === 'service') && showActivityOverview && services ? (
-                <div className="activities-grid">
-                    {services.map((service) => (
-                        <ActivityOverview key={service._id} activityData={service}/>
-                    ))}
-                </div>
-            ) : null}
-
-            {showPagination ? (<Pagination page={page} path={'service'} />) : null}
-            <FeedbackMsg status={showFeedbackMsg} message='Sucessful published' severity='success' onClose={handelfeebackMsgClose} />
-        </Container >
-    );
+      <FeedbackMsg
+        status={showFeedbackMsg}
+        message="Sucessful published"
+        severity="success"
+        onClose={handelfeebackMsgClose}
+      />
+    </Container>
+  );
 };
-
 
 export default Activity;

@@ -29,6 +29,8 @@ import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
 import ActivityPage from "./components/Pages/Activity/ActivityPage/ActivityPage";
 import Subscription from "./components/Navbar/Subscription";
 import Applications from "./components/Settings/Application/Applications";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import PaypalPayment from "./components/PaypalPayment/PaypalPayment";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -60,24 +62,33 @@ const App = () => {
     }
   };
 
+  const initialOptions = {
+    clientId:
+      "Ad8WcNeM12p5gnrqaZUIKL-5x9mP9JpRaNSulzlMFkcDcPI3xSwU013KEXgvPwyiDUslvp2rWIttfjOa",
+    currency: "USD",
+    intent: "capture",
+  };
+
   return (
-    <BrowserRouter>
-      <Container maxWidth="lg">
-        <Navbar handleSecNavbar={handleSecNavbar} />
-        {openSecNavbar ? (
-          <SecondNavbar pages={secNav} activityType={activityType} />
-        ) : null}
-        <div className="page">
-          <Ads />
-          <div className="routes">
-            <Routes>
-              <Route path="/" element={<Navigate to="/explore" />} />
-              <Route path="/explore" element={<Explore />} />
-              <Route path="/groups" element={<Groups />} />
-              <Route path="/groups/:id" element={<SingleGroup1 />} />
-              <Route path="/groups/create-group" element={<CreateGroup />} />
-              <Route path="/groups/:id/edit-group" element={<EditGroup />} />
-              <Route path="/groups/post/:id" element={<Post />} />
+    <PayPalScriptProvider options={initialOptions}>
+      <BrowserRouter>
+        <Container maxWidth="lg">
+          <Navbar handleSecNavbar={handleSecNavbar} />
+          {/*    <PaypalPayment /> */}
+          {openSecNavbar ? (
+            <SecondNavbar pages={secNav} activityType={activityType} />
+          ) : null}
+          <div className="page">
+            <Ads />
+            <div className="routes">
+              <Routes>
+                <Route path="/" element={<Navigate to="/explore" />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/groups" element={<Groups />} />
+                <Route path="/groups/:id" element={<SingleGroup1 />} />
+                <Route path="/groups/create-group" element={<CreateGroup />} />
+                <Route path="/groups/:id/edit-group" element={<EditGroup />} />
+                <Route path="/groups/post/:id" element={<Post />} />
 
               <Route
                 path="/groups/:id/create-post"
@@ -98,42 +109,41 @@ const App = () => {
                 path="/explore/post/editPost/:postId"
                 element={<CreatePost />}
               />
-              <Route path="/service/:id" element={<ActivityPage />} />
+              <Route path="/:activityType/:id" element={<ActivityPage />} />
+              <Route path="/:activityType/:id" element={<ActivityPage />} />
               <Route path="/subscription" element={<Subscription />} />
 
-              <Route
-                path="/appliedevents"
-                element={<Applied activityType={activityTypes[0]} />}
-              />
-              <Route
-                path="/appliedservices"
-                element={<Applied activityType={activityTypes[1]} />}
-              />
-              <Route
-                path="/createdevents"
-                element={<Created activityType={activityTypes[0]} />}
-              />
-              <Route
-                path="/createdservices"
-                element={<Created activityType={activityTypes[1]} />}
-              />
+                <Route
+                  path="/appliedevents"
+                  element={<Applied activityType={activityTypes[0]} />}
+                />
+                <Route
+                  path="/appliedservices"
+                  element={<Applied activityType={activityTypes[1]} />}
+                />
+                <Route
+                  path="/createdevents"
+                  element={<Created activityType={activityTypes[0]} />}
+                />
+                <Route
+                  path="/createdservices"
+                  element={<Created activityType={activityTypes[1]} />}
+                />
 
-              <Route
-                path="/applications/:id"
-                element={<Applications />}
-              />
+                <Route path="/applications/:id" element={<Applications />} />
 
-              {!user ? (
-                <Route path="/auth" element={<Auth />} />
-              ) : (
-                <Route path="/explore" element={<Navigate to="/" />} />
-              )}
-            </Routes>
+                {!user ? (
+                  <Route path="/auth" element={<Auth />} />
+                ) : (
+                  <Route path="/explore" element={<Navigate to="/" />} />
+                )}
+              </Routes>
+            </div>
+            <Ads />
           </div>
-          <Ads />
-        </div>
-      </Container>
-    </BrowserRouter>
+        </Container>
+      </BrowserRouter>
+    </PayPalScriptProvider>
   );
 };
 

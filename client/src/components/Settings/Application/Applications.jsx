@@ -2,40 +2,54 @@ import React from "react";
 import Application from "./Application";
 import { useParams } from "react-router-dom";
 import { getApplicationsByActivityId } from "../../../actions/application.js";
-import Pagination from "../../Widget/Pagination/Pagination";
-import { useLocation } from "react-router-dom";
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
+import { Box, Typography } from "@mui/material";
+import { useLocation } from 'react-router-dom';
 
 const Applications = () => {
-
-    const query = useQuery();
-    const page = query.get('page') || 1;
-    console.log(page);
-
-
     const { id } = useParams();
-    let applications;
-    getApplicationsByActivityId(id).then((items) => {
-        applications = items.data;
-        console.log(applications);
-    })
-        .catch((error) => {
-            console.log(error);
-        });
+    const [applications, setApplications] = React.useState(null);
+
+    const location = useLocation();
+    const activityType = location.state.activityType;
+    console.log(activityType)
+
+    React.useEffect(() => {
+        getApplicationsByActivityId(id)
+            .then((items) => {
+                setApplications(items.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [id])
+
+    if (!applications) {
+        return <div>Loading...</div>;
+    }
 
     return (
-        <div>
-            {applications ? (
-                <>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+            }}
+        >
+            {applications && applications.length !== 0 ? (
+                <div>
                     {applications.map((application) => (
-                        <Application application={application} />
+                        <Application key={application._id} application={application} isEvent={ activityType === 'events' }/>
                     ))}
-                </>
-            ) : null}
-        </div>
+                </div>
+            ) : <Typography
+                variant="h6"
+                sx={{
+                    alignSelf: 'center',
+                }}
+            >
+                No Applications!
+            </Typography>}
+        </Box>
     );
 }
 

@@ -1,22 +1,53 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { orange, brightPurple } from "../../../constant/actionTypes";
+import { orange, brightPurple, PENDING, APPROVED, REJECT } from "../../../constant/actionTypes";
 import { useNavigate } from "react-router-dom";
+import ConfirmDialog from '../../Widget/ConfirmDialog/ConfirmDialog';
+import { useDispatch } from "react-redux";
+import { deleteService } from "../../../actions/service.js"
+import { deleteEvent } from "../../../actions/event.js"
+import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 
-const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit }) => {
+const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw, refreshCreatedService }) => {
     const navigate = useNavigate();
 
     const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
     const formattedEndDate = new Date(activityData?.endDate).toLocaleDateString();
+    const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
+    const dispatch = useDispatch();
 
     const handleEdit = (activityType, activityData) => {
-        console.log(activityType, activityData);
         onEdit(activityType, activityData);
     }
 
     const getApplications = (activityType, activityData) => {
-            console.log(activityType, activityData);
-            navigate(`/applications/${activityData._id}`)
+        navigate(`/applications/${activityData._id}`, { state: { activityType } })
+    }
+
+    const deleteApplication = (id) => {
+        withdraw(id);
+    }
+
+    const deleteActivity = () => {
+        try {
+            if (activityType === 'services') {
+                dispatch(deleteService(activityData._id));
+            }
+
+            if (activityType === 'events') {
+                dispatch(deleteEvent(activityData._id));
+            }
+
+            setShowFeedbackMsg(true);
+        } catch (error) {
+            console.log('logout:', error);
+        }
+    };
+
+    const handelfeebackMsgClose = () => {
+
+        setShowFeedbackMsg(false);
+        window.location.reload();
     }
 
     return (
@@ -28,7 +59,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                 borderRadius: '30px',
                 margin: '15px 30px 15px 30px',
                 fontFamily: 'Cosmic Sans MS',
-                //width: '80%',
+                flexGrow: 1,
                 backgroundColor: 'white',
                 boxShadow: '0px 5px 10px 0px rgba(0,0,0,0.1)',
             }}>
@@ -115,7 +146,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                     {activityType === 'services' ? (
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
-                                Price:
+                                Price (euro/day):
                             </Typography>
                             <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                                 {activityData?.price}
@@ -125,12 +156,22 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                     ) : null}
                     {activityType === 'events' ? (
                         <>
-                            <Typography variant="h6">
-                                expectedParticipants: ''
-                            </Typography>
-                            <Typography variant="h6">
-                                now: ''
-                            </Typography>
+                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                                    Expected:
+                                </Typography>
+                                <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                    {activityData?.expectedParticipants}
+                                </Typography>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                                    Current:
+                                </Typography>
+                                <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                    {activityData?.currentParticipants}
+                                </Typography>
+                            </div>
                         </>
                     ) : null}
                 </Box>
@@ -159,19 +200,23 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                             flexDirection: 'row',
                             height: '10%',
                             width: '100%',
-                            padding: '0px 20px 0px 20px',
                             justifyContent: 'space-between',
                             boxSizing: 'border-box',
+                            alignItem: 'center'
                         }}>
-                            <Button
-                                sx={{
-                                    width: '30%',
-                                    backgroundColor: orange,
-                                    color: 'white',
-                                    borderRadius: '20px',
-                                }}>
-                                Apply
-                            </Button>
+                            <Typography variant="h6" sx={{
+                                wordWrap: 'break-word',
+                                maxWidth: '100%',
+                                flexGrow: 1,
+                                fontSize: '18px',
+                                color: activityData.applicationStatus === APPROVED
+                                    ? 'green'
+                                    : activityData.applicationStatus === REJECT
+                                        ? 'red'
+                                        : 'gray'
+                            }} >
+                                {activityData.applicationStatus === PENDING ? 'Your application still ' : 'This application is '} {activityData.applicationStatus}!
+                            </Typography>
                             {/* todo: if applied, show text, applied or approved */}
                             <Button
                                 sx={{
@@ -179,7 +224,9 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                                     backgroundColor: brightPurple,
                                     color: 'white',
                                     borderRadius: '20px',
-                                }}>
+                                }}
+                                onClick={() => { deleteApplication(activityData.applicationId) }}
+                            >
                                 Withdraw
                             </Button>
                         </Box>) : null}
@@ -190,36 +237,67 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit })
                             flexDirection: 'row',
                             height: '10%',
                             width: '100%',
-                            padding: '0px 20px 0px 20px',
                             justifyContent: 'space-between',
                             boxSizing: 'border-box',
                         }}>
                             <Button
                                 sx={{
-                                    width: '40%',
+                                    width: '30%',
                                     backgroundColor: orange,
                                     color: 'white',
                                     borderRadius: '20px',
                                 }}
                                 onClick={() => handleEdit(activityType, activityData)}>
-                            Edit
-                        </Button>
-                            {/* todo: if applied, show text, applied or approved */}
-                    <Button
-                        sx={{
-                            width: '40%',
-                            backgroundColor: brightPurple,
-                            color: 'white',
-                            borderRadius: '20px',
-                        }}
-                        onClick={() => getApplications(activityType, activityData)}>
-                        Application
-                    </Button>
-                </Box>) : null}
+                                Edit
+                            </Button>
 
-            </Box>
+                            <Button
+                                sx={{
+                                    width: '30%',
+                                    backgroundColor: brightPurple,
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}
+                                onClick={() => getApplications(activityType, activityData)}>
+                                Application
+                            </Button>
 
-        </Box >
+                            {/* <Button
+                                sx={{
+                                    width: '30%',
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    borderRadius: '20px',
+                                }}
+                                onClick={() => handleDelete(activityType, activityData)}>
+                                Delete
+                            </Button> */}
+                            <ConfirmDialog
+                                fontSize='20px'
+                                padding='0px'
+                                button='Delete'
+                                title="Confirm Delete"
+                                contentText={`
+
+                                                                    Are you sure you want to delete this activity?
+
+                                                                `}
+                                dialogColor='#6f0000'
+                                buttonColor='red'
+                                onConfirm={deleteActivity}
+                            />
+                        </Box>) : null}
+
+                    <FeedbackMsg
+                        status={showFeedbackMsg}
+                        message="Sucessful published"
+                        severity="success"
+                        onClose={handelfeebackMsgClose}
+                    />
+
+                </Box>
+
+            </Box >
         </>
     );
 }

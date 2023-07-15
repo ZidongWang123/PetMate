@@ -117,9 +117,14 @@
   border-color: #393c7c;
   cursor: pointer;
   margin-left: 700px;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
 }
 .joined-button {
-  padding: 8px 16px; /* 上下宽一点的内边距 */
+  /*  padding: 8px 16px; /* 上下宽一点的内边距 */
+  padding-top: 16px;
+  padding-bottom: 16px;
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
   width: 100px;
@@ -150,7 +155,7 @@ button:disabled {
 }
 
 .write-post-button {
-  padding: 8px 16px; /* 上下宽一点的内边距 */
+  /* padding: 8px 16px;  */ /* 上下宽一点的内边距 */
   font-size: 16px; /* 字体大小 */
   margin: 4px 8px; /* 左右和上下宽一点的外边距 */
 

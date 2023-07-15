@@ -22,7 +22,6 @@ const MyGroupUnit = ({ group }) => {
   const [pic, setPic] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
   const onClick = () => {
-    console.log("Clicked");
     if (user.result._id === group.creatorId) {
       setText(DeleteText);
       setPic(DelGroup);
@@ -31,7 +30,6 @@ const MyGroupUnit = ({ group }) => {
       setText(ExitText);
       setPic(ExitGroupPic);
       setIsOpen(true);
-      console.log("not logged in");
     }
   };
 

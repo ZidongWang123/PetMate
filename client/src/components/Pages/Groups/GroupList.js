@@ -33,7 +33,7 @@ const GroupList = ({ group }) => {
 
   const onClick = () => {
     console.log("Clicked");
-    if (user && group.members.includes(user.result._id)) {
+    if (user && group.members && group.members.includes(user.result._id)) {
       navigate(`/groups/${group._id}`);
       setInputText("");
     } else if (user && group.password) {

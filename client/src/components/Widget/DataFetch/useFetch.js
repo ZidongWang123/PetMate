@@ -17,7 +17,6 @@ const useFetch = (url,method="GET") => {
 
     fetch(url, { signal: abortCont.signal,method })
       .then((res) => {
-        console.log(res);
         if (!res.ok) {
           throw Error("could not fetch the data for that resource");
         }
@@ -27,7 +26,6 @@ const useFetch = (url,method="GET") => {
         setData(data);
         setIsPending(false);
         setError(null);
-        console.log(data);
       })
       .catch((err) => {
         if (err.name === "AbortError") {

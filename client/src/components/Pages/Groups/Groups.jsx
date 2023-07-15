@@ -1,31 +1,39 @@
 import React from "react";
 
-import SearchBar from "../../Widget/SearchBar/SearchBar";
-
 import GroupCreateButton from "./GroupCreateButton";
 
 import "./Group.css";
 
 import { useDispatch } from "react-redux";
-import { getGroups } from "../../../actions/group";
+import { getGroupsBySearch, getGroups } from "../../../actions/group";
 
 import { useSelector } from "react-redux";
 import GroupList from "./GroupList";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import Warning from "../../Widget/ConfirmDialog/Warning.jsx";
 import signInPic from "../../../images/dabengou/SignInPic.jpg";
 import bePrimePic from "../../../images/dabengou/BePrimePic.jpg";
 
+import SearchBar from "../../Widget/SearchBar/SearchBar";
+
 const subscribeText = "Come subscribing first!";
 const LoginText = "Please log in first!";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const Groups = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
-
+  const query = useQuery();
+  const searchQuery = query.get("searchQuery");
   const navigate = useNavigate();
   const [text, setText] = React.useState("");
   const [pic, setPic] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
+  /*   const [search, setSearch] = React.useState(""); */
+  /*   const [search, setSearch] = React.useState(""); */
   const onClick = () => {
     console.log("Clicked");
     if (user && user.result.isPrime) {
@@ -63,11 +71,29 @@ const Groups = () => {
   if (isLoading) {
     return <div>Loading...</div>; // 显示加载中的提示
   }
+  const groupResults =
+    Array.isArray(groups) &&
+    groups.map(({ _id, groupName }) => ({
+      _id,
+      recommended: groupName,
+    }));
+  const groupNames =
+    Array.isArray(groupResults) &&
+    groupResults.map(({ recommended }) => recommended);
+  const searchGroups = async (value) => {
+    console.log("from parent components", value);
+
+    if (value) {
+      dispatch(getGroupsBySearch(value));
+    } else {
+      dispatch(getGroups());
+    }
+  };
 
   return (
     <div className="groups">
       <div style={{ display: "flex", alignItems: "center" }}>
-        <SearchBar />
+        <SearchBar results={groupNames} searchPost={searchGroups} />
         <Warning
           isOpen={isOpen}
           onConfirm={onConfirm}
@@ -78,7 +104,7 @@ const Groups = () => {
         <GroupCreateButton onClick={onClick}></GroupCreateButton>
       </div>
       <div className="group-list">
-        {Array.isArray(groups) ? (
+        {groups && !isLoading && Array.isArray(groups) ? (
           groups.map((group) => <GroupList key={group._id} group={group} />)
         ) : (
           <div>Loading...</div>

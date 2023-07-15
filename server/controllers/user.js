@@ -64,7 +64,7 @@ export const signup = async (req, res) => {
 
     //Limit the validity of the JWT to 1 hour
     const token = jwt.sign({ email: res.email, id: result._id }, "test", {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     res.status(200).json({ result, token });
@@ -105,12 +105,9 @@ export const modifyPersonalInfo=async(req,res)=>{
 
 
 export const getArticles=async(req, res)=>{
-    
-  console.log(req.params);
 
   const {userId}=req.params
   const query={"u_id": userId}
-  console.log(query,"query");
   
 
   try{

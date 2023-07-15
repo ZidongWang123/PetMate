@@ -5,7 +5,7 @@ import {i18nChangeLanguage  } from '@wangeditor/editor'
 i18nChangeLanguage("en")
 export const toolbarConfig = {"excludeKeys":[
     'blockquote',
-    // 'fontFamily',
+    'fontFamily',
     "todo",
     "insertTable",
     "codeBlock",

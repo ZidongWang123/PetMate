@@ -16,7 +16,6 @@ const MyGroups = () => {
     dispatch(getMyGroups());
   }, [dispatch]);
   const { groups: mygroups } = useSelector((state) => state.groups);
-  console.log(mygroups);
   return (
     <div className="myGroupList">
       {Array.isArray(mygroups) ? (

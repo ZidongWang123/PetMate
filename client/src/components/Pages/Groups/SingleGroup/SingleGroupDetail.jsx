@@ -46,7 +46,6 @@ const SingleGroupDetail = () => {
   };
 
   const onClick = () => {
-    console.log("Clicked");
     if (user) {
       setText(`DO you want to join Group ${singleGroup.groupName}?`);
       setPic(JoinGroup);
@@ -55,7 +54,6 @@ const SingleGroupDetail = () => {
       setText(LoginText);
       setPic(signInPic);
       setIsOpen(true);
-      /* console.log("not logged in"); */
     }
   };
 
@@ -78,12 +76,7 @@ const SingleGroupDetail = () => {
     setIsOpen(false);
   };
 
-  /*   const handleEdit = () => {
-    console.log("edit");
-  }; */
-
   const handleJoinGroup = async () => {
-    console.log("join");
     const groupMemberData = {
       groupId: singleGroup._id,
 
