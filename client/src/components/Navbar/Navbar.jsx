@@ -26,7 +26,7 @@ import Subscription from './Subscription';
 
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
-const settings = ['Personal Info', 'My posts', 'My groups', 'My events', 'My services', 'How it works', 'Logout'];
+const settings = ['Personal Info', 'My explorePosts','My posts', 'My groups', 'My events', 'My services', 'How it works', 'Logout'];
 const myService = ['Applied Services', 'Created Services'];
 const myEvent = ['Applied Events', 'Created Events'];
 
@@ -60,7 +60,7 @@ function Navbar({ handleSecNavbar }) {
     };
 
     const handleCloseUserMenu = (setting) => {
-        if (typeof setting === 'string' && setting !== 'My services' && setting !== 'My events' && setting !== 'Logout') {
+        if (typeof setting === 'string' && setting !== 'My services' && setting !== 'My events' && setting !== 'Logout'&&setting !=="My explorePosts") {
             navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
         }
         setAnchorElUser(null);
@@ -73,6 +73,9 @@ function Navbar({ handleSecNavbar }) {
         if (setting === 'My events') {
             handleSecNavbar(myEvent, 'My events');
             navigate(`/appliedevents`);
+        }
+        if(setting==="My explorePosts"){
+            navigate(`/userExplorePosts/${user.result._id}`);
         }
     };
 

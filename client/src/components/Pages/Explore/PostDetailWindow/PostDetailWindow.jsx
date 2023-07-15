@@ -4,19 +4,33 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import "./PostDetailWindow.css"
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { WidthFull } from "@mui/icons-material";
 import HeartIcon from "../widget/HeartIcon";
 import { Link, useNavigate } from 'react-router-dom';
 import { faEdit,faTrash } from '@fortawesome/free-solid-svg-icons'
 import { orange } from "../../../../constant/actionTypes";
 import { Avatar } from "@mui/material";
-export default function PostDetailWindow({post,isOpen,onClose}){
+import dayjs from "dayjs";
+import { deletePost } from "../../../../api";
+import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
+import signInPic from "../../../../images/dabengou/SignInPic.jpg";
+import Warning from "../../../Widget/ConfirmDialog/Warning";
+
+const warningText="Sure to delete the post？"
+const severityOptions = { success: "success", failure: "error" }
+
+export default function PostDetailWindow({post,isOpen,onClose,count,isLiked,onClick}){
+
+    
     
     const user = JSON.parse(localStorage.getItem('profile'));
     const handleDragStart = (e) => e.preventDefault();
     const pictures=post.pictures
     const pictureItems=[]
     const navigate = useNavigate();
+    const [severiry,setSeverity]=useState("")
+    const [msg,setMsg]=useState("")
+    const [isFeedbackMsg,setIsFeedbackMsg]=useState(false)
+    const [isWarningOpen,setIsWarningOpen]=useState(false)
 
     const handleImageLoad = (event) => {
         const img = event.target;
@@ -51,13 +65,43 @@ export default function PostDetailWindow({post,isOpen,onClose}){
     })
 
     const divRef = useRef(null);
-    const deletePost=()=>{
+    const deleteConfirm=async ()=>{
         //delete the post from the database
         //to do
         //
+        try{
+            const res=await deletePost(post._id)
+            if (res.status === 200) {
+                // setSeverity(severityOptions.success)
+                // setMsg(res.data.message)
+                // setIsFeedbackMsg(true)
+                // setTimeout(()=>{
+                //     setIsFeedbackMsg(false)
+
+                // },1000)
+                onClose()
+                setIsWarningOpen(false)
+                navigate(`/empty`)
+                setTimeout(() => {
+                    navigate(`/userExplorePosts/${user.result._id}`)
+                }, 0);
+               
+            }
+            else if (res.status = 500) {
+                onClose()
+                setMsg(res.data.message)
+                setSeverity(severityOptions.failure)
+            }
+            else {
+                setSeverity(severityOptions.failure)
+                setMsg("Unknown error, try again")
+            }
+            setIsFeedbackMsg(true)
+        }catch(error){
+
+        }
         
-        onClose()
-        window.location.reload();
+
 
         
     }
@@ -78,22 +122,32 @@ export default function PostDetailWindow({post,isOpen,onClose}){
 
     }
     
+    const onWarningCanecel=()=>{
+        setIsWarningOpen(false)
+    }
+    const onDeleteClick=()=>{
+        setIsWarningOpen(true)
+    }
 
     if (!isOpen) {
         return null; // 如果弹窗关闭，则不渲染弹窗内容
       }
+    
+    
       
     return (
     <div className="popUpWindow">
         <div className="arrowLeft" onClick={onClose}>
             <FontAwesomeIcon icon={faArrowLeft} />
         </div>
+        <FeedbackMsg status={isFeedbackMsg} severity={severiry} message={msg} ></FeedbackMsg>
+        <Warning isOpen={isWarningOpen} onConfirm={deleteConfirm} onCancel={onWarningCanecel} pic={signInPic} text={warningText}></Warning>
         <div className="modal-content" >
                 <AliceCarousel 
                     
                     mouseTracking
-                    autoPlay 
-                    autoPlayStrategy="all" 
+                    // autoPlay 
+                    // autoPlayStrategy="all" 
                     autoPlayInterval={1000}
                     items={pictureItems}
                 />
@@ -101,7 +155,7 @@ export default function PostDetailWindow({post,isOpen,onClose}){
         <div style={{marginRight:"50px",height:"520",width:"420",position:"relative",marginLeft:"10px"}}>
 
             <div className="showDetail">
-                <Link to={`/userPage/${post.creatorId}`}style={{color:"inherit",textDecorationLine: "none"}} onClick={onClose}>
+                <Link to={`/userExplorePosts/${post.creatorId}`}style={{color:"inherit",textDecorationLine: "none"}} onClick={onClose}>
                     <div style={{display:"flex",alignItems:"center"}}>
                         <Avatar 
                             src={post.creator.avatar} 
@@ -127,15 +181,15 @@ export default function PostDetailWindow({post,isOpen,onClose}){
                 </Link>
 
                 <div className="contentWindow" onWheel={handleScroll} ref={divRef}>
-                    <h3 style={{wordBreak: "break-word"}}>{post.title}</h3>
-                    <p style={{wordBreak: "break-word"}}>{post.text}</p>
+                    <h3 style={{fontFamily:"ubuntu",wordBreak: "break-word"}}>{post.title}</h3>
+                    <p style={{fontFamily:"ubuntu",wordBreak: "break-word",lineHeight: '1.5'}}>{post.text}</p>
                     <div>
                         {post.tags.map((item,index) => (
                             <span
                                 style={{
                                     color: orange,
-                                    display:"inline-block"
-                                    
+                                    display:"inline-block",
+                                    fontFamily: "Comic Sans MS"
                                 }}
                                 className="tagInPosts"
                                 onClick={
@@ -147,24 +201,34 @@ export default function PostDetailWindow({post,isOpen,onClose}){
                         )
                         )}
                     </div>
+                    
+
                 </div>
+                <span 
+                    style={{
+                        fontSize:"14px",
+                        fontFamily:"ubuntu",
+                        color:"gray"
+                    }}>
+                    Created at: {dayjs(post.createdAt).format("MM-DD-YYYY HH:mm:ss")}
+                </span>
 
             </div>
             <div className="endElement" >
                 <span>
-                    <HeartIcon count={post.likes.length}/>
+                    <HeartIcon count={count} isLiked={isLiked} onClick={onClick}/>
                 </span>
                 <span style={{float:"right"}}>
-                {post.creatorId===user?._id&&
+                {user&&post.creatorId===user.result._id&&
                 <Link to={`/explore/post/editPost/${post._id}`}>
                     <FontAwesomeIcon className="clickIcon" icon={faEdit} > </FontAwesomeIcon>
                 </Link>
                 }
-                {post.creatorId===user?._id&&
+                {user&&post.creatorId===user.result._id&&
                 <FontAwesomeIcon 
                     className="clickIcon" 
                     icon={faTrash} 
-                    onClick={deletePost} 
+                    onClick={onDeleteClick} 
                     color="black"> 
                 </FontAwesomeIcon>}
                 </span>

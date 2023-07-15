@@ -4,10 +4,62 @@ import PostDetailWindow   from '../PostDetailWindow/PostDetailWindow';
 import { Link } from 'react-router-dom';
 import HeartIcon from '../widget/HeartIcon';
 import { Avatar } from '@mui/material';
+import Warning from '../../../Widget/ConfirmDialog/Warning';
+import signInPic from "../../../../images/dabengou/SignInPic.jpg";
+import { modifyLikes } from '../../../../api';
+import { useNavigate, useParams } from 'react-router-dom';
 
+const LoginText="Please log in first!"
 
 const PaneItem = ({ post}) => {
+
+  const user=JSON.parse(localStorage.getItem("profile"))
+  let initialLikeState=false
+
+  if(user&&post.likes.includes(user.result._id)){
+    initialLikeState=true
+  }
+
+  const navigate=useNavigate()
   const [isModalOpen,setIsModalOpen]=useState(false)
+  const [isLiked, setIsLiked] = React.useState(initialLikeState)
+  // const [likeCount,setLikeCount]= React.useState(post.likes.length)
+  const [isDialogOpen,setIsDialogOpen]=React.useState(false)
+  const [likes,setLikes]=React.useState(post.likes)
+  
+  const handleLikeClick = async() => {
+      if(!user){
+        setIsDialogOpen(true)
+      }
+      else{
+        let list=[...likes]
+        if(!isLiked){
+          list.push(user.result._id)
+        }else{
+          list=list.filter(item=>item!==user.result._id)
+        }
+        const res=await modifyLikes(post._id,{likes:list})
+        
+        if(res.status===200){
+          console.log(res.data.message)
+          setLikes(list)
+          setIsLiked(!isLiked)
+        }
+        else{
+          console.log("unknown error!!")
+        }
+      }
+
+  }
+  const onDialogConfirm=()=>{
+    
+    setIsDialogOpen(false)
+    navigate("/auth")   
+  }
+  const onDialogCancel=()=>{
+    setIsDialogOpen(false)
+  }
+  
 
   const handleImgClick=(event)=>{
     setIsModalOpen(true);
@@ -37,7 +89,21 @@ const PaneItem = ({ post}) => {
       <a >
         <img className="post-firstImage" src={post.pictures[0]} onClick={handleImgClick}  />
       </a>
-      <PostDetailWindow  post={post} isOpen={isModalOpen} onClose={closeModal}/>
+      <Warning 
+        isOpen={isDialogOpen} 
+        onConfirm={onDialogConfirm} 
+        onCancel={onDialogCancel} 
+        pic={signInPic} 
+        text={LoginText}>
+      </Warning>
+      <PostDetailWindow
+        post={post}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        count={likes.length} 
+        isLiked={isLiked} 
+        onClick={handleLikeClick}
+      />
       <div style={{padding:"8px"}}>
         <div style={{marginBottom:"5px",maxWidth:"204px"}}>
           <a >
@@ -46,7 +112,7 @@ const PaneItem = ({ post}) => {
         </div>
         
         <div style={{display:"flex",alignItems:"center"}}> 
-          <Link to={`/userPage/${post.creatorId}`}style={{color:"inherit", textDecorationLine: "none"}}>
+          <Link to={`/userExplorePosts/${post.creatorId}`}style={{color:"inherit", textDecorationLine: "none"}}>
             <div style={{display:"flex",alignItems:"center"}}>
               <Avatar 
                 src={post.creator.avatar} 
@@ -75,7 +141,7 @@ const PaneItem = ({ post}) => {
       
 
           <span style={{marginLeft: "auto",cursor:"pointer"}}>
-            <HeartIcon count={post.likes.length}/>
+            <HeartIcon count={likes.length} isLiked={isLiked} onClick={handleLikeClick}/>
           </span>
 
         </div>

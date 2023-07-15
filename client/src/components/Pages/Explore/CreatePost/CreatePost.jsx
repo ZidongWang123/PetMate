@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from "react";
 
-// import ImageUploader from 'react-images-upload';
+import ImageUploader from 'react-images-upload';
 
 
 import "./CreatePost.css"
@@ -9,12 +9,11 @@ import InputField from "../widget/InputField";
 import InputTagBar from "../../../Widget/InputBar/InputTagBar";
 import UniformButton from "../widget/UniformButton";
 import { useNavigate, useParams } from 'react-router-dom';
-import dog1 from "../../../../images/dog1.jpg"
-import dog2 from "../../../../images/dog2.jpg"
-import dog3 from "../../../../images/dog3.jpg"
 import * as apis from "../../../../api";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg.jsx"
-const severityOptions = { success: "success", failure: "error" }
+
+import { getSinglePost } from "../../../../api";
+const severityOptions = { success: "success", failure: "error",warning:"warning" }
 
 
 export default function CreatePost() {
@@ -42,20 +41,36 @@ export default function CreatePost() {
         setTags(value)
     }
     const onDrop = (pictureFiles, pictureDataURLs) => {
+        if(pictureDataURLs.length>9){
+            setMsg("You can upload at most 9 pictures, please adjust the pictures")
+            setSeverity(severityOptions.warning)
+            setIsFeedbackMsg(true)
+            
+        }
         setPictures(pictureDataURLs)
+        
 
     }
     const onDelete = (pictureFiles, pictureDataURLs) => {
+        
+        if(pictureDataURLs.length>9){
+            setMsg("You can upload at most 9 pictures,please adjust the pictures")
+            setSeverity(severityOptions.warning)
+            setIsFeedbackMsg(true)
+            console.log(pictureDataURLs)
+            
+        }
         setPictures(pictureDataURLs)
     }
     const handelfeebackMsgClose = () => {
         setIsFeedbackMsg(false)
 
     }
-    const onSubmit = async () => {
+
+    const createPost=async()=>{
         try {
 
-            console.log(user._id)
+            
             const res = await apis.createExplorePost({ title, text, tags, pictures, creatorId: user._id })
             if (res.status = 200) {
                 setSeverity(severityOptions.success)
@@ -84,26 +99,107 @@ export default function CreatePost() {
             setIsFeedbackMsg(true)
         }
 
+    }
+    const modifyPost=async()=>{
+        try {
+
+            
+            const res = await apis.modifyPost(postId,{ title, text, tags, pictures})
+            if (res.status = 200) {
+                setSeverity(severityOptions.success)
+                setMsg(res.data.message)
+
+                setTimeout(()=>{
+
+                    navigate(`/userExplorePosts/${user._id}`)
+
+                },1000)     
+                
+            }
+            else if (res.status = 500) {
+                setMsg(res.data.message)
+                setSeverity(severityOptions.failure)
+            }
+            else {
+                setSeverity(severityOptions.failure)
+                setMsg("Unknown error, try again")
+            }
+            setIsFeedbackMsg(true)
+
+        } catch (error) {
+            setSeverity(severityOptions.failure)
+            setMsg("Unknown error, try again")
+            setIsFeedbackMsg(true)
+        }
+
+    }
+    const onSubmit = async () => {
+
+
+
+        if(title===""||tags.length===0||text===""||pictures.length===0){
+            setMsg("Each input field must not be empty. ")
+            setSeverity(severityOptions.failure)
+            setIsFeedbackMsg(true)
+        }
+        else{
+            console.log(pictures.length)
+            if(pictures.length>9){
+
+                setMsg("You can upload at most 9 pictures,please adjust the pictures")
+                setSeverity(severityOptions.failure)
+                setIsFeedbackMsg(true)
+            }
+            else{
+                if(postId){
+                    modifyPost()
+                }
+                else{
+                    createPost()
+                }
+            }
+
+
+    
+        }
+
 
     }
 
     const onCancel = () => {
         // 导航到目标页面
-        const url = "/explore";
-        navigate(url);
+        if(postId){
+            navigate(`/userExplorePosts/${user._id}`)
+        }else{
+            const url = "/explore";
+            navigate(url);
+        }
+
     };
     useEffect(() => {
+
+        const getPost=async()=>{
+            try{
+    
+                const res=await getSinglePost(postId)
+                if(res.status===200){
+    
+                    setTitle(res.data.result.title)
+                    setTags(res.data.result.tags);
+                    setText(res.data.result.text);
+                    setPictures(res.data.result.pictures);
+                }
+    
+            }catch(error){
+                console.log(error)
+            }
+        
+        }
+
         if (postId) {
-            /* *****************************************
-                      request post data according to postId 
-      
-                      then set all states
-      
-                  ******************************************/
-            setTitle("this is a title");
-            setTags(["tag1", "tag2", "tag3"]);
-            setText("This is a text");
-            setPictures([dog1, dog2, dog3]);
+
+            getPost()
+
         }
     }, []);
 
@@ -119,7 +215,8 @@ export default function CreatePost() {
                 }}>
                     Tags:
                 </h2>
-                <InputTagBar 
+                <InputTagBar
+                    tags={tags}
                     onTagsChange={handleTagsChange}
                     width="450px" 
                     borderRadius="10px" 
@@ -127,7 +224,7 @@ export default function CreatePost() {
                     where="explorePost"
                 >
                 </InputTagBar>
-                <InputField title="Text:" value={text} isMultiline={true} height="300px" onInputChange={handleTextChange}></InputField>
+                <InputField title="Text:" value={text} isMultiline={true} height="340px" onInputChange={handleTextChange} maxLength={2000}></InputField>
 
             </div>
             <div>
@@ -136,23 +233,26 @@ export default function CreatePost() {
                     margin: "10px 0",
                     color: darkPurple
                 }}>{"Pictures:"}</h2>
-                {/* <ImageUploader
-                withIcon={false}
-                buttonText='Choose images'
-                withPreview={true}
-                onChange={onDrop}
-                onDelete={onDelete}
-                buttonStyles={{color:"white",backgroundColor:orange,fontFamily:"Gloria Hallelujah"}}
-                fileSizeError={"File size is too big!"}
-                fileTypeError={"This extension is not supported!"}
-                imgExtension={['.jpg', '.gif', '.png', '.gif',"jpeg"]}
-                maxFileSize={524288000}
-                defaultImages={pictures}
-                /> */}
+                <ImageUploader
+                    label="* <=10MB&at most 9 pictures; jpg|gif|jpeg|png"
+                    withLabel={true}
+                    withIcon={true}
+                    buttonText='Choose images'
+                    withPreview={true}
+                    labelStyles={{fontFamily:"ubuntu"}}
+                    onChange={onDrop}
+                    onDelete={onDelete}
+                    buttonStyles={{color:"white",backgroundColor:orange,fontFamily:"Gloria Hallelujah"}}
+                    fileSizeError={"File size is too big!"}
+                    fileTypeError={"This extension is not supported!"}
+                    imgExtension={['.jpg', '.gif', ".jpeg",'.png']}
+                    maxFileSize={524288000*2}
+                    defaultImages={pictures}
+                />
                 <div style={{ display: "flex", float: "right" }}>
                     <UniformButton width="100px" backgroundColor={"gray"} fontColor="white" onClick={onCancel}>cancel</UniformButton>
                     <UniformButton width="100px" backgroundColor={orange} fontColor="white" onClick={onSubmit}>
-                        {postId ? "confirm" : "post"}
+                        {postId ? "confirm change" : "post"}
                     </UniformButton>
                 </div>
 

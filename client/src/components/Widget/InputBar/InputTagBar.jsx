@@ -40,12 +40,12 @@ const InputTagBar = ({ tags, onTagsChange,where="group",width=900,borderRadius="
       try{
         const res=await getRecommendTags(inputValue,where)
         if(res.status=200){
-          tags=res.data.result
-          if(tags.length===0){
+          const recommendedTags=res.data.result
+          if(recommendedTags.length===0){
             setOptions([inputValue])
           }
           else{
-            setOptions(tags)
+            setOptions(recommendedTags)
           }
       }
       else if(res.status=500){
@@ -84,7 +84,7 @@ const InputTagBar = ({ tags, onTagsChange,where="group",width=900,borderRadius="
             {...params}
             
             /* label="Multiple values" */
-            placeholder="your tags"
+            placeholder="your tags*"
             value={inputValue} // 设置 TextField 的值为输入值
             onChange={handleInputChange}
           />

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import { darkPurple, orange } from "../../../../constant/actionTypes";
 import { Margin } from "@mui/icons-material";
 
-export default function InputField({value,title,isMultiline,height,onInputChange}){
+export default function InputField({value,title,isMultiline,height,onInputChange,maxLength=50}){
 
     
     const handleInput = (event) => {
@@ -21,6 +21,10 @@ export default function InputField({value,title,isMultiline,height,onInputChange
             multiline={isMultiline}
             onChange={handleInput}
             value={value}
+            placeholder="*"
+            inputProps={{
+                maxLength:maxLength
+            }}
             InputProps={{
 
                 style:{  fontFamily: "ubuntu", // 设置字体样式

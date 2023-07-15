@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import ExplorePost from '../models/explorePost.js';
 import mongoose from 'mongoose';
 import Group from '../models/group.js'
+import Article from "../models/article.js"
 export const postCreate = async (req, res) => {
     
     let post=req.body
@@ -33,8 +34,8 @@ export const getRecommendTags=async(req,res)=>{
         else if(where==="group"){
             documents=await Group.find({},"tags")
         }
-        else if(where==="groupPost"){
-            // documents=await 
+        else if(where==="article"){
+            documents=await Article.find({},"tags")
         }
         
         
@@ -104,9 +105,6 @@ export const getExplorePosts=async(req,res)=>{
                 }
             },
             {
-                $sample:{size:16}
-            },
-            {
                 $lookup:{
                     from:"users",
                     localField:"creatorId",
@@ -116,7 +114,10 @@ export const getExplorePosts=async(req,res)=>{
             },
             {
                 $unwind:"$creator"
-            }
+            },
+            
+            ...(argus.where === "userPage" ?[]: [{ $sample: { size: parseInt(argus.size) } }])
+            , ...(argus.where === "userPage" ?[{ $sort: { createdAt: 1 }}]: [])
         ])
 
         
@@ -130,4 +131,67 @@ export const getExplorePosts=async(req,res)=>{
     }
 }
 
+export const modifyLikes= async (req,res)=>{
+    const postId = req.params.postId;
+    let updatedInfo = req.body;
+    
+    updatedInfo.likes=updatedInfo.likes.map((item)=>(new mongoose.Types.ObjectId(item)))
+    try{
+        console.log(updatedInfo)
+        const a =await ExplorePost.findByIdAndUpdate(postId, updatedInfo)
+        console.log(a)
+        res.status(200).json({ message: 'successfully liked'} )
+    
+      }catch(error){
+        console.log(error)
+        res.status(500).json({ message: 'Failed to update likes' });
+      }
+
+
+
+}
+
+export const getSinglePost= async (req,res)=>{
+    
+    
+    const postId=req.params.postId
+
+    try{
+        const post=await ExplorePost.findById(postId)
+
+        res.status(200).json({result:post, message: 'successfully got the post'})
+    }catch(error){
+
+
+        res.status(500).json({message:"failed to get the post"})
+
+    }
+}
  
+export const deletePost=async (req,res)=>{
+    const postId=req.params.postId
+    try{
+        console.log(postId)
+        await ExplorePost.findByIdAndDelete(postId)
+
+        res.status(200).json({ message: 'successfully deleted'})
+    }catch(error){
+
+
+        res.status(500).json({message:"failed to delete the post"})
+
+    }
+}
+
+export const modifyPost=async (req,res)=>{
+    const postId=req.params.postId
+    const data=req.body
+    try{
+        await ExplorePost.findByIdAndUpdate(postId,data)
+
+        res.status(200).json({ message: 'successfully updated'})
+
+    }catch(error){
+        res.status(500).json({message:"failed to update the post"})
+    }
+}

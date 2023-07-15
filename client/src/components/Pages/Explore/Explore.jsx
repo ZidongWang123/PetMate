@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PaneContainer from './PaneContainer/PaneContainer';
-import SearchBar from './widget/searchbarPosts';
+import SearchBar from "../../Widget/SearchBar/SearchBar";
 import UniformButton from './widget/UniformButton';
 import { orange } from "../../../constant/actionTypes";
 import { useNavigate } from 'react-router-dom';

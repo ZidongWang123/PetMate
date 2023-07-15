@@ -1,6 +1,6 @@
 .popUpWindow{
     position: fixed;
-    z-index: 100;
+    z-index: 3;
     top: 0;
     left: 0;
     width: 100%;
@@ -71,6 +71,7 @@
   .tagInPosts:hover{
     cursor: pointer;
     filter: brightness(1.2);
+    
 
   }
   .clickIcon{

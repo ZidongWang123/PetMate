@@ -6,6 +6,7 @@ import { orange,darkPurple } from "../../../constant/actionTypes";
 import UniformButton from "../../Pages/Explore/widget/UniformButton";
 import { BorderBottom } from "@mui/icons-material";
 import { modifyPersonalInfo } from "../../../api";
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function AvatarItem({attribute,userId,title,onConfirmChange}){
    
@@ -14,6 +15,7 @@ export default function AvatarItem({attribute,userId,title,onConfirmChange}){
 
     const [zoom,setZoom]=useState(1)
     const [preview, setPreview] =useState(null)  
+    const navigate=useNavigate()
     var avatarEditorRef=useRef(null)  
 
     const handleSlider = (event, value) => {
@@ -40,6 +42,11 @@ export default function AvatarItem({attribute,userId,title,onConfirmChange}){
                 setPreview(null)
                 setZoom(1)
                 setOpenModal(false)
+
+                let user = JSON.parse(localStorage.getItem('profile'));
+                user.result.avatar=croppedImg
+                localStorage.setItem('profile', JSON.stringify(user));
+                navigate("/personalInfo")
             }
         }catch(error){
    
