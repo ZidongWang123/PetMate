@@ -60,8 +60,15 @@ export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
 
 //api for user
-export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost)
 export const modifyPersonalInfo=(id,data)=>API.put(`/user/modifyPersonalInfo/${id}`,data)
 export const getPersonalInfo=(id)=>API.get(`/user/getPersonalInfo/${id}`)
+
+
+//api for explore
+export const createExplorePost=(newPost)=>API.post("/explore/createPost",newPost)
 export const getRecommendTags=(keyword,where)=>API.get(`/explore/getRecommendTags/${keyword}/${where}`)
 export const getPosts=(data)=>(API.get("/explore/getPosts",{params:data}))
+export const modifyLikes=(id,data)=>API.put(`/explore/modifyLikes/${id}`,data)
+export const getSinglePost=(postId)=>API.get(`explore/getSinglePost/${postId}`)
+export const deletePost=(postId)=>API.delete(`explore/deletePost/${postId}`)
+export const modifyPost=(postId,data)=>API.put(`explore/modifyPost/${postId}`,data)
