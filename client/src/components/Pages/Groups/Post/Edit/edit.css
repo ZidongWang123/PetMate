@@ -1,162 +1,152 @@
-@import url('https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500');
+@import url("https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500");
 
-.editContent{
+.editContent {
   width: 97%;
-  font-family: 'Cosmic Sans MS'!important;
+  font-family: "Cosmic Sans MS" !important;
 }
-.Image-button{
+.Image-button {
   padding: 6px 16px;
-  color: '#3F3F3F';
-  font-family: 'Gloria Hallelujah',cursive;
+  color: "#3F3F3F";
+  font-family: "Gloria Hallelujah", cursive;
   font-weight: bold;
   border: none;
-  border: 2px solid #3F3F3F;
+  border: 2px solid #3f3f3f;
   border-radius: 20px;
   width: 127px;
   cursor: pointer;
-  transition: bac
+  transition: bac;
 }
-.image_show,.image_show img{
+.image_show,
+.image_show img {
   margin-top: 10px;
- 
 }
 .button-wrapper {
   display: flex;
 }
-.button-wrapper button{
+.button-wrapper button {
   margin: 0 10px;
 }
 .post-details {
-    width: 100%;
-    padding: 20px;
-    background-color: transparent;
-    position: relative;
+  width: 100%;
+  padding: 20px;
+  background-color: transparent;
+  position: relative;
+}
 
-  }
-  
-  .post-title-wrapper {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .post-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #393c7c;
-    font-family: "Comic Sans MS", cursive; /* 修改标题的字体 */
+.post-title-wrapper {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  }
-  
-  .author-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .author-name {
-    font-weight: bold;
-    color: #393c7c; /* 修改作者名字的颜色 */
-    font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
-    font-size: 18px;
-  }
-  
-  .author-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .author-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .author-details {
-    margin-left: 10px;
-  }
- 
-  .post-timestamp {
-    color: #888888;
-    font-size: 14px;
-    font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+.post-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #393c7c;
+  font-family: "Comic Sans MS", cursive; /* 修改标题的字体 */
+}
 
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-  }
-  
-  .save-button-wrapper,
-  .discard-button-wrapper {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+.author-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.author-name {
+  font-weight: bold;
+  color: #393c7c; /* 修改作者名字的颜色 */
+  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  font-size: 18px;
+}
 
+.author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 
-  .save-button {
-    padding: 6px 16px;
-    color: #F0A860;
-    font-family: 'Gloria Hallelujah',cursive;
-    font-weight: bold;
-    border: none;
-    border: 2px solid #F0A860;
-    border-radius: 20px;
-    width: 100px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  }
-  
-  .save-button:hover {
-    background-color: #F0A860;
-    color: #fafafa;
-  }
-  .save-button-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: 10px;
-  }
-  
-  .discard-button {
-    padding: 6px 16px;
-    color: '#3F3F3F';
-    font-family: 'Gloria Hallelujah',cursive;
-    font-weight: bold;
-    border: none;
-    border: 2px solid #3F3F3F;
-    border-radius: 20px;
-    width: 100px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  }
-  
-  .discard-button:hover {
-    background-color: #3F3F3F;
-    color: #fafafa;
-  }
-  
-  
-  
+.author-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  .post-content-wrapper {
-    margin-bottom: 20px;
-    font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+.author-details {
+  margin-left: 10px;
+}
 
-  }
-  
-  .post-content {
-    font-size: 16px;
-    line-height: 1.5;
+.post-timestamp {
+  color: #888888;
+  font-size: 14px;
+  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+}
 
-  }
-  
-  .App {
-    font-family: sans-serif;
-    text-align: center;
-  }
-  
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.save-button-wrapper,
+.discard-button-wrapper {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.save-button {
+  padding: 6px 16px;
+  color: #f0a860;
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: bold;
+  border: none;
+  border: 2px solid #f0a860;
+  border-radius: 20px;
+  width: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #f0a860;
+  color: #fafafa;
+}
+.save-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.discard-button {
+  padding: 6px 16px;
+  color: "#3F3F3F";
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: bold;
+  border: none;
+  border: 2px solid #3f3f3f;
+  border-radius: 20px;
+  width: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.discard-button:hover {
+  background-color: #3f3f3f;
+  color: #fafafa;
+}
+
+.post-content-wrapper {
+  margin-bottom: 20px;
+  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+}
+
+.post-content {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
