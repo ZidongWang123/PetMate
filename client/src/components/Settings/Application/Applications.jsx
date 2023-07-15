@@ -16,7 +16,7 @@ const Applications = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
+    }, [id])
 
     if (!applications) {
         return <div>Loading...</div>;

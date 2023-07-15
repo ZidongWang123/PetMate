@@ -18,18 +18,15 @@ const Paginate = ({ page, path, sorting }) => {
 
   React.useEffect(() => {
     if(path === "service"){
-      console.log(path)
       if (page && sorting) {
         dispatch(getServicesBySorting(page, sorting));
       } else if (page || sorting === null) {
         dispatch(getServices(page)); //get all services
       } 
     }else if (path === "event"){
-      console.log(path)
       if (page && sorting) {
         dispatch(getEventsBySorting(page, sorting));
       } else if (page || sorting === null) {
-        console.log(page)
         dispatch(getEvents(page)); //get all services
       } 
     }

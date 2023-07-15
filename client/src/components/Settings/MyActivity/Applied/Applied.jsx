@@ -2,6 +2,7 @@ import React from "react";
 import ActivityCard from "../ActivityCard";
 import { getApplicationsByApplicantId, deleteApplication } from "../../../../actions/application.js";
 import { getServiceByApplication } from "../../../../actions/service.js";
+import { getEventByApplication } from "../../../../actions/event.js";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { Typography } from "@mui/material";
 
@@ -13,6 +14,7 @@ const Applied = ({ activityType }) => {
     const [dataLoaded, setDataLoaded] = React.useState(false);
 
     const [appliedServices, setAppliedServices] = React.useState([]);
+    const [appliedEvents, setAppliedEvents] = React.useState([]);
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
 
@@ -30,8 +32,8 @@ const Applied = ({ activityType }) => {
                         applicationId: element._id,
                         applicationStatus: element.status
                     })
-
                     );
+                    console.log(activities);
                     const uniActivities = Array.from(new Set(activities));
                     setActiIds(uniActivities);
                     setDataLoaded(true);
@@ -44,27 +46,54 @@ const Applied = ({ activityType }) => {
 
     React.useEffect(() => {
         actiIds.forEach((activity) => {
-            getServiceByApplication(activity.activityId).then((item) => {
-                item.data.applicationStatus = activity.applicationStatus;
-                item.data.applicationId = activity.applicationId;
-                setAppliedServices(prev => {
-                    if (prev.some(service => JSON.stringify(service) === JSON.stringify(item.data))) {
-                        return prev;
+            if (activityType === 'services') {
+                getServiceByApplication(activity.activityId).then((item) => {
+                    if (item.data) {
+                        item.data.applicationStatus = activity.applicationStatus;
+                        item.data.applicationId = activity.applicationId;
+
+                        setAppliedServices(prev => {
+                            if (prev.some(service => JSON.stringify(service) === JSON.stringify(item.data))) {
+                                return prev;
+                            } else {
+                                return [...prev, item.data];
+                            }
+                        });
                     } else {
-                        return [...prev, item.data];
+                        console.log('item.data is null or undefined');
                     }
-                }
-                )
-            })
-                .catch((err) => {
+                }).catch((err) => {
                     console.log(err);
-                });;
+                });
+            }
+
+            if (activityType === 'events') {
+                getEventByApplication(activity.activityId).then((item) => {
+                    if (item.data) {
+                        item.data.applicationStatus = activity.applicationStatus;
+                        item.data.applicationId = activity.applicationId;
+                        //}
+
+                        setAppliedEvents(prev => {
+                            if (prev.some(service => JSON.stringify(service) === JSON.stringify(item.data))) {
+                                return prev;
+                            } else {
+                                return [...prev, item.data];
+                            }
+                        });
+                    } else {
+                        console.log('item.data is null or undefined');
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
         })
-    }, [actiIds]);
+    }, [actiIds, activityType]);
 
     React.useEffect(() => {
-        console.log(appliedServices)
-    }, [appliedServices])
+        console.log(appliedServices, appliedEvents)
+    }, [appliedServices, appliedEvents])
 
     const withdraw = (id) => {
         deleteApplication(id)
@@ -90,23 +119,44 @@ const Applied = ({ activityType }) => {
                         ))}
                     </div>
                 </>
-            ) : <Typography
-                variant="h6"
-                sx={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                }}
-            >
-                No applied services!
-            </Typography>}
+            ) : null}
+
+            {(activityType === 'events') && appliedEvents && appliedEvents.length !== 0 ? (
+                <>
+                    <div>
+                        {appliedEvents.map((event) => (
+                            <ActivityCard key={event._id} activityType={activityType} isApply={true} activityData={event} withdraw={withdraw} />
+                        ))}
+                    </div>
+                </>
+            ) : null}
+            {(activityType === 'services') && (appliedServices === undefined || appliedServices.length === 0) ?
+                (<Typography
+                    variant="h6"
+                    sx={{
+                        marginTop: '60px'
+                    }}
+                >
+                    You have no applied {activityType}!
+                </Typography>) : null}
+
+            {(activityType === 'events') && (appliedEvents === undefined || appliedEvents.length === 0) ?
+                (<Typography
+                    variant="h6"
+                    sx={{
+                        marginTop: '60px'
+                    }}
+                >
+                    You have no applied {activityType}!
+                </Typography>) : null}
+
             <FeedbackMsg
                 status={showFeedbackMsg}
                 message="Sucessful published"
                 severity="success"
                 onClose={handelfeebackMsgClose}
             />
-        </div>
+        </div >
     );
 }
 

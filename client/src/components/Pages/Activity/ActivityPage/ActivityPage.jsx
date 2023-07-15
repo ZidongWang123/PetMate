@@ -45,7 +45,6 @@ const ActivityPage = () => {
 
     const service = useSelector((state) => state.service.service);
     const event = useSelector((state) => state.event.event);
-    console.log(event)
 
     const formattedStartDate = React.useRef(null);
     const formattedEndDate = React.useRef(null);
