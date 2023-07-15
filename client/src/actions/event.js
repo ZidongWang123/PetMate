@@ -111,3 +111,12 @@ export const fetchPersonalInfoEvent = (userId) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const incrementParticipants = async (id) => {
+    try {
+        const { data } = await api.incrementParticipants(id);
+        return { data };
+    } catch (error) {
+        console.error(error);
+    }
+};

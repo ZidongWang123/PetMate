@@ -4,9 +4,10 @@ import { brightPurple, orange, darkGray } from "../../../constant/actionTypes";
 import { fetchPersonalInfo, updateApplication } from "../../../actions/application.js";
 import { PENDING, APPROVED, REJECT } from "../../../constant/actionTypes.js"
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
-import {sendEmail,fetchService} from "../../../api/index"
+import { sendEmail, fetchService } from "../../../api/index"
+import { incrementParticipants } from "../../../actions/event.js"
 
-const Application = ({ application }) => {
+const Application = ({ application, isEvent }) => {
     const [applicant, setApplicant] = React.useState(null);
     const [data, setData] = React.useState(null);
     React.useEffect(() => {
@@ -19,12 +20,11 @@ const Application = ({ application }) => {
         });
         fetchServiceRequest()
 
-    }, [application])
+    }, [application, applicant])
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
-    const fetchServiceRequest=async ()=>{
-
-        const {data}=await fetchService(application.activityId)
+    const fetchServiceRequest = async () => {
+        const { data } = await fetchService(application.activityId)
         console.log(data);
         setData(data)
     }
@@ -34,14 +34,20 @@ const Application = ({ application }) => {
 
     let item;
     const handleApprove = async () => {
+        if (isEvent) {
+            console.log(application.activityId);
+            incrementParticipants(application.activityId);
+        }
         application.status = APPROVED;
         if (application) {
             item = await updateApplication(application._id, application);
         }
         setShowFeedbackMsg(true);
-        sendEmail({"email":applicant.email,"title":`The Service "${data.title}" is Approved.`,content:`Dear ${applicant.name}， 
-you applied service "${data.title}" is now approved. The Service is on ${data.startDate}, in ${data.location} with the content ${data.content}. It will cost ${data.price} Euro.`})
-       
+        sendEmail({
+            "email": applicant.email, "title": `The Service "${data.title}" is Approved.`, content: `Dear ${applicant.name}， 
+you applied service "${data.title}" is now approved. The Service is on ${data.startDate}, in ${data.location} with the content ${data.content}. It will cost ${data.price} Euro.`
+        })
+
     }
 
     const handleReject = async () => {
@@ -50,9 +56,11 @@ you applied service "${data.title}" is now approved. The Service is on ${data.st
             item = await updateApplication(application._id, application);
         }
         setShowFeedbackMsg(true);
-        sendEmail({"email":applicant.email,"title":` The Service "${data.title}" is Rejected. `,content:` Dear ${applicant.name}， 
-Sorry, you applied service "${data.title}" is now rejected. The Service you applied is on ${data.startDate}, in ${data.location} with the content ${data.content}. We hope we could meet each other next time!`})
-        
+        sendEmail({
+            "email": applicant.email, "title": ` The Service "${data.title}" is Rejected. `, content: ` Dear ${applicant.name}， 
+Sorry, you applied service "${data.title}" is now rejected. The Service you applied is on ${data.startDate}, in ${data.location} with the content ${data.content}. We hope we could meet each other next time!`
+        })
+
     }
 
     if (applicant) {

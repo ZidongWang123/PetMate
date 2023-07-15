@@ -21,7 +21,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
     }
 
     const getApplications = (activityType, activityData) => {
-        navigate(`/applications/${activityData._id}`)
+        navigate(`/applications/${activityData._id}`, { state: { activityType } })
     }
 
     const deleteApplication = (id) => {

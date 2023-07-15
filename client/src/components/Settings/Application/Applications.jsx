@@ -3,10 +3,15 @@ import Application from "./Application";
 import { useParams } from "react-router-dom";
 import { getApplicationsByActivityId } from "../../../actions/application.js";
 import { Box, Typography } from "@mui/material";
+import { useLocation } from 'react-router-dom';
 
 const Applications = () => {
     const { id } = useParams();
     const [applications, setApplications] = React.useState(null);
+
+    const location = useLocation();
+    const activityType = location.state.activityType;
+    console.log(activityType)
 
     React.useEffect(() => {
         getApplicationsByActivityId(id)
@@ -33,7 +38,7 @@ const Applications = () => {
             {applications && applications.length !== 0 ? (
                 <div>
                     {applications.map((application) => (
-                        <Application key={application._id} application={application} />
+                        <Application key={application._id} application={application} isEvent={ activityType === 'events' }/>
                     ))}
                 </div>
             ) : <Typography
