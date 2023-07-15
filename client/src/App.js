@@ -74,7 +74,7 @@ const App = () => {
       <BrowserRouter>
         <Container maxWidth="lg">
           <Navbar handleSecNavbar={handleSecNavbar} />
-          <PaypalPayment />
+          {/*    <PaypalPayment /> */}
           {openSecNavbar ? (
             <SecondNavbar pages={secNav} activityType={activityType} />
           ) : null}
