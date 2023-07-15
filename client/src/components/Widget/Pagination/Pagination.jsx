@@ -4,26 +4,36 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getServices, getServicesBySorting } from "../../../actions/service";
+import { getEvents, getEventsBySorting } from "../../../actions/event";
 
-const Paginate = ({ page, userId = null, path, sorting }) => {
-  const { numberOfPagesCreatedServices } = useSelector(
-    (state) => state.createdService
-  );
+const Paginate = ({ page, path, sorting }) => {
+
   const { numberOfPages } = useSelector((state) => state.service);
 
-  const count = userId ? numberOfPagesCreatedServices : numberOfPages;
+  const { numberOfPagesEvent } = useSelector((state) => state.event);
+
+  const count = path === "service" ? numberOfPages : numberOfPagesEvent;
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (page && userId === null && sorting) {
-      dispatch(getServicesBySorting(page, sorting));
-    } else if ((page && userId === null) || sorting === null) {
-      dispatch(getServices(page)); //get all services
-    } else if (page && userId) {
-      dispatch(getServices(page, userId)); //get created services by user
+    if(path === "service"){
+      console.log(path)
+      if (page && sorting) {
+        dispatch(getServicesBySorting(page, sorting));
+      } else if (page || sorting === null) {
+        dispatch(getServices(page)); //get all services
+      } 
+    }else if (path === "event"){
+      console.log(path)
+      if (page && sorting) {
+        dispatch(getEventsBySorting(page, sorting));
+      } else if (page || sorting === null) {
+        console.log(page)
+        dispatch(getEvents(page)); //get all services
+      } 
     }
-  }, [dispatch, page, userId, sorting]);
+  }, [dispatch, page, sorting, path]);
 
   return (
     <Pagination
@@ -35,7 +45,7 @@ const Paginate = ({ page, userId = null, path, sorting }) => {
         <PaginationItem
           {...item}
           component={Link}
-          to={`/${path}?page=${item.page}`}
+          to={`/${path}?${path}Page=${item.page}`}
         />
       )}
     />

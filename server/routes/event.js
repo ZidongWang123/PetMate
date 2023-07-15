@@ -1,10 +1,23 @@
 import express from "express";
-import { getEvents, createEvent, updateEvent, deleteEvent } from "../controllers/event.js";
 import auth from "../middleware/auth.js";
+import {
+  getEvent,
+  getEvents,
+  getEventsBySearch,
+  getEventsBySorting,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+} from "../controllers/event.js";
 
 const router = express.Router();
+router.get("/", getEvents);
 
-router.get("/", auth, getEvents);
+router.get("/sorting", getEventsBySorting);
+router.get("/:id", getEvent);
+
+router.get("/search", getEventsBySearch);
+
 router.post("/", auth, createEvent);
 router.patch("/:id", auth, updateEvent);
 router.delete("/:id", auth, deleteEvent);

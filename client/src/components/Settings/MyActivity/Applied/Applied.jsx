@@ -2,15 +2,8 @@ import React from "react";
 import ActivityCard from "../ActivityCard";
 import { getApplicationsByApplicantId, deleteApplication } from "../../../../actions/application.js";
 import { getServiceByApplication } from "../../../../actions/service.js";
-import { useLocation } from "react-router-dom";
-import Pagination from "../../../Widget/Pagination/Pagination";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { Typography } from "@mui/material";
-
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
 
 const Applied = ({ activityType }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -22,9 +15,6 @@ const Applied = ({ activityType }) => {
     const [appliedServices, setAppliedServices] = React.useState([]);
 
     const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
-
-    const query = useQuery();
-    const page = query.get('page') || 1;
 
     const handelfeebackMsgClose = () => {
         window.location.reload()
@@ -99,7 +89,6 @@ const Applied = ({ activityType }) => {
                             <ActivityCard key={service._id} activityType={activityType} isApply={true} activityData={service} withdraw={withdraw} />
                         ))}
                     </div>
-                    <Pagination page={page} userId={user.result._id} path={'appliedservices'} />
                 </>
             ) : <Typography
                 variant="h6"

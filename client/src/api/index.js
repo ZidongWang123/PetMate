@@ -14,12 +14,10 @@ API.interceptors.request.use((req) => {
 
 //api for services
 export const fetchService = (id) => API.get(`/services/${id}`);
-export const fetchServices = (page, userId = null) =>
-  API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ""}`);
-export const fetchServicesBySearch = ({ tags }) =>
-  API.get(`/services/search?tags=${tags}`);
-export const fetchServicesBySorting = (page, sorting) =>
-  API.get(`/services/sorting?page=${page}&sorting=${sorting}`);
+export const fetchServices = (page, userId = null) => API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ""}`);
+export const fetchServicesBySearch = ({ tags }) => API.get(`/services/search?tags=${tags}`);//todo
+export const fetchServicesBySorting = (page, sorting) => API.get(`/services/sorting?page=${page}&sorting=${sorting}`);
+export const fetchServicesByUser = (userId) => API.get(`/createdservices/${userId}`);
 
 export const createService = (newService) => API.post("/services", newService);
 export const updateService = (id, updatedService) =>
@@ -27,15 +25,15 @@ export const updateService = (id, updatedService) =>
 export const deleteService = (id) => API.delete(`/services/${id}`);
 
 //api for events
-// export const fetchEvent = (id) => API.get(`/events/${id}`);
-// export const fetchEvents = (page) => API.get(`/events?page=${page}`);
-// export const fetchEventsBySearch = ({ tags }) =>
-//   API.get(`/events/search?tags=${tags}`);
+export const fetchEvent = (id) => API.get(`/events/${id}`);
+export const fetchEvents  = (page, userId = null) => API.get(`/events?page=${page}${userId ? `&userId=${userId}` : ""}`);
+export const fetchEventsBySearch = ({ tags }) => API.get(`/events/search?tags=${tags}`);//todo
+export const fetchEventsBySorting = (page, sorting) => API.get(`/events/sorting?page=${page}&sorting=${sorting}`);
+export const fetchEventsByUser = (userId) => API.get(`/createdevents/${userId}`);
 
-// export const createEvent = (newEvent) => API.post("/events", newEvent);
-// export const updateEvent = (id, updatedEvent) =>
-//   API.patch(`/events/${id}`, updatedEvent);
-// export const deleteEvent = (id) => API.delete(`/events/${id}`);
+export const createEvent = (newEvent) => API.post("/events", newEvent);
+export const updateEvent = (id, updatedEvent) => API.patch(`/events/${id}`, updatedEvent);
+export const deleteEvent = (id) => API.delete(`/events/${id}`);
 
 //api for applications
 export const fetchApplicationsByApplicantId = (applicantId) =>

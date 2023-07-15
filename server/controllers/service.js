@@ -1,4 +1,3 @@
-import e from "express";
 import ServiceMsg from "../models/service.js";
 import mongoose from "mongoose";
 
@@ -15,39 +14,24 @@ export const getService = async (req, res) => {
 };
 
 export const getServices = async (req, res) => {
-  const { page, userId } = req.query;
+  const { page } = req.query;
   try {
     let LIMIT;
     let startIndex;
     let services;
     let total;
-    if (userId) {
-      LIMIT = 2;
-      startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
-      total = await ServiceMsg.countDocuments({ creator: userId }); // count the total number of documents in the collection
-      services = await ServiceMsg.find({ creator: userId })
-        .sort({ _id: -1 })
-        .limit(LIMIT)
-        .skip(startIndex); // get the posts for the current page
-      res.status(200).json({
-        data: services,
-        currentPageCreatedServices: Number(page),
-        numberOfPagesCreatedServices: Math.ceil(total / LIMIT),
-      }); // return the posts and the number of pages
-    } else {
-      LIMIT = 6;
-      startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
-      total = await ServiceMsg.countDocuments({}); // count the total number of documents in the collection
-      services = await ServiceMsg.find()
-        .sort({ _id: -1 })
-        .skip(startIndex)
-        .limit(LIMIT); // get the posts for the current page
-      res.status(200).json({
-        data: services,
-        currentPage: Number(page),
-        numberOfPages: Math.ceil(total / LIMIT),
-      }); // return the posts and the number of pages
-    }
+    LIMIT = 6;
+    startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+    total = await ServiceMsg.countDocuments({}); // count the total number of documents in the collection
+    services = await ServiceMsg.find()
+      .sort({ _id: -1 })
+      .skip(startIndex)
+      .limit(LIMIT); // get the posts for the current page
+    res.status(200).json({
+      data: services,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / LIMIT),
+    }); // return the posts and the number of pages
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

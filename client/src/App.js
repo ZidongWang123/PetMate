@@ -108,12 +108,13 @@ const App = () => {
                   element={<EditPost />}
                 />
 
-                <Route
-                  path="/explore/post/editPost/:postId"
-                  element={<CreatePost />}
-                />
-                <Route path="/service/:id" element={<ActivityPage />} />
-                <Route path="/subscription" element={<Subscription />} />
+              <Route
+                path="/explore/post/editPost/:postId"
+                element={<CreatePost />}
+              />
+              <Route path="/:activityType/:id" element={<ActivityPage />} />
+              <Route path="/:activityType/:id" element={<ActivityPage />} />
+              <Route path="/subscription" element={<Subscription />} />
 
                 <Route
                   path="/appliedevents"

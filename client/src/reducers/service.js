@@ -1,7 +1,7 @@
 import {
   FETCH_ALL_SERVICE,
   FETCH_SERVICE_SORTING,
-  FETCH_BY_SEARCH,
+  FETCH_BY_SEARCH_SERVICE,
   FETCH_SERVICE,
   CREATE_SERVICE,
   UPDATE_SERVICE,
@@ -36,7 +36,7 @@ export default (
         numberOfPages: action.payload.numberOfPages,
       };
 
-    case FETCH_BY_SEARCH:
+    case FETCH_BY_SEARCH_SERVICE:
       return { ...state, services: action.payload };
     case FETCH_SERVICE:
       return { ...state, service: action.payload };
