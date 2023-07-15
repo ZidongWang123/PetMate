@@ -16,7 +16,8 @@ const serviceSchema = mongoose.Schema({
     status: { type: String },
 
     price: { type: Number },
-
+    
+    applicant: { type: Number, default: 0},
 });
 
 const ServiceMsg = mongoose.model('service', serviceSchema);

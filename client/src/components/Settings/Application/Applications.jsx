@@ -2,7 +2,7 @@ import React from "react";
 import Application from "./Application";
 import { useParams } from "react-router-dom";
 import { getApplicationsByActivityId } from "../../../actions/application.js";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Applications = () => {
     const { id } = useParams();
@@ -10,33 +10,40 @@ const Applications = () => {
 
     React.useEffect(() => {
         getApplicationsByActivityId(id)
-        .then((items) => {
-          setApplications(items.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+            .then((items) => {
+                setApplications(items.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, [])
 
     if (!applications) {
         return <div>Loading...</div>;
-      }
+    }
 
     return (
         <Box
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width:'100%'
+                width: '100%',
             }}
         >
-            {applications ? (
+            {applications && applications.length !== 0 ? (
                 <div>
                     {applications.map((application) => (
                         <Application key={application._id} application={application} />
                     ))}
                 </div>
-            ) : null}
+            ) : <Typography
+                variant="h6"
+                sx={{
+                    alignSelf: 'center',
+                }}
+            >
+                No Applications!
+            </Typography>}
         </Box>
     );
 }

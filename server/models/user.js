@@ -12,15 +12,15 @@ const userSchema = mongoose.Schema({
     plz: { type: String, default: '' },
     avatar: { type: String, default: '' },
 
-  // is prime user status
-  isPrime: { type: Boolean, default: false }, // todo： add prime user status
+    // is prime user status
+    isPrime: { type: Boolean, default: false }, // todo： add prime user status
 
-  sex: { type: String, default: "" },
-  birthday: { type: Date, default: new Date() },
-    //member attributes
-  subscriptionId: { type: String },
-  startTime: { type: Date },
-  dueTime: { type: Date },
+    sex: { type: String, default: "" },
+    birthday: { type: Date, default: new Date() },
+      //member attributes
+    subscriptionId: { type: String },
+    startTime: { type: Date },
+    dueTime: { type: Date },
 });
 
 export default mongoose.model("User", userSchema);

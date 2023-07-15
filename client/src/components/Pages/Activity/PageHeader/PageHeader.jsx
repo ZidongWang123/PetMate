@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { darkGray } from "../../../../constant/actionTypes";
+import { darkGray, orange } from "../../../../constant/actionTypes";
 import { Filter } from "./Filter";
 
 const PageHeader = ({
@@ -107,10 +107,11 @@ const PageHeader = ({
                 onClick={handleFindMore}
                 sx={{
                   marginLeft: "20px",
-                  color: darkGray,
-                  border: "1px solid black",
-                  backgroundColor: "inherit",
+                  color: 'white',
+                  border: "1px solid gray",
+                  backgroundColor: orange,
                   width: "200px",
+                  fontSize: "16px",
                   height: "80%"
                 }}
               >

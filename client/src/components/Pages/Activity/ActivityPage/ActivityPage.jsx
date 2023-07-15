@@ -11,6 +11,7 @@ import { TextareaAutosize, Tooltip } from "@mui/material";
 import { createApplication } from "../../../../api";
 import { useNavigate } from "react-router-dom";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
+import { getApplicationsByActivityId } from "../../../../actions/application";
 
 const ActivityPage = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -36,6 +37,7 @@ const ActivityPage = () => {
     }, [dispatch, id]);
 
     const service = useSelector((state) => state.service.service);
+    console.log(service)
 
     const formattedStartDate = React.useRef(null);
     const formattedEndDate = React.useRef(null);
@@ -47,6 +49,16 @@ const ActivityPage = () => {
             dispatch(fetchPersonalInfo(service.service.creator));
         }
     }, [dispatch, service]);
+
+    React.useEffect(() => {
+        if (service) {
+          getApplicationsByActivityId(service.service._id).then((item)=>{
+            service.service.applicant = item.data.length;
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }
+      }, [service]);
 
     const { servicesCreator } = useSelector((state) => state.service);
     //console.log(service, servicesCreator);
@@ -231,6 +243,15 @@ const ActivityPage = () => {
                                     </Typography>
                                     <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                                         {service.service.price}
+                                    </Typography>
+                                </div>
+
+                                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                                    <Typography variant="h6" sx={{ marginRight: '1em', fontWeight: 800 }}>
+                                        No. of applicants:
+                                    </Typography>
+                                    <Typography variant="h6" sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                                        {service.service.applicant}
                                     </Typography>
                                 </div>
                             </Box>) : null}

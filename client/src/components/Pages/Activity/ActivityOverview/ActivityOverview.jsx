@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { fetchPersonalInfo } from "../../../../actions/service";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getApplicationsByActivityId } from "../../../../actions/application";
 
 const ActivityOverview = ({ activityData }) => {
-  //const user = JSON.parse(localStorage.getItem('profile'));
   const formattedStartDate = new Date(
     activityData.startDate
   ).toLocaleDateString();
@@ -15,14 +15,32 @@ const ActivityOverview = ({ activityData }) => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
 
+  const [personalInfo, setPersonalInfo] = React.useState(null);
+
   React.useEffect(() => {
     if (activityData) {
-      dispatch(fetchPersonalInfo(activityData.creator));
+      dispatch(fetchPersonalInfo(activityData.creator)).then(data => {
+        console.log(data.data)
+        setPersonalInfo(data.data);
+      });
     }
   }, [dispatch, activityData]);
 
   const { servicesCreator } = useSelector((state) => state.service);
   //有个问题：一页中的activityoverview的头像都是一样的cao
+
+  //const [matchCount, setMatchCount] = React.useState(0);
+  React.useEffect(() => {
+    if (activityData) {
+      getApplicationsByActivityId(activityData._id).then((item)=>{
+        console.log(item.data, activityData._id, activityData)
+        //在event的时候可以筛选出status为approved
+        activityData.applicant = item.data.length;
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+  }, [activityData]);
 
   const handleChoose = (id) => {
     const activity = "service";
@@ -54,15 +72,15 @@ const ActivityOverview = ({ activityData }) => {
             marginTop: "15px",
           }}
         >
-          {servicesCreator &&
-            (servicesCreator.result.avatar ? (
+          {personalInfo &&
+            (personalInfo.result.avatar ? (
               <Avatar
-                src={servicesCreator.result.avatar}
+                src={personalInfo.result.avatar}
                 sx={{ border: "0.1px solid gray" }}
               />
             ) : (
               <Avatar sx={{ border: "0.1px solid gray" }}>
-                {servicesCreator.result.name.charAt(0)}
+                {personalInfo.result.name.charAt(0)}
               </Avatar>
             ))}
           <Typography
@@ -71,7 +89,7 @@ const ActivityOverview = ({ activityData }) => {
               marginLeft: "10px",
             }}
           >
-            {servicesCreator?.result.name}
+            {personalInfo?.result.name}
           </Typography>
         </Box>
 
@@ -237,6 +255,58 @@ const ActivityOverview = ({ activityData }) => {
               }}
             >
               {formattedEndDate}
+            </Typography>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ marginRight: "1em", fontWeight: 800 }}
+            >
+              Price(euro/day):
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
+              {activityData.price}
+            </Typography>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ marginRight: "1em", fontWeight: 800 }}
+            >
+              No. of applicants:
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
+              {activityData.applicant}
             </Typography>
           </div>
         </Box>

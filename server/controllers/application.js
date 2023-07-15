@@ -89,9 +89,7 @@ export const createApplication = async (req, res) => {
 }
 
 export const deleteApplication = async (req, res) => {
-    const { id } = req.params;
-    console.log(id);
-    //
+    const { id } = req.params;    
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).send("No application with that id");
   

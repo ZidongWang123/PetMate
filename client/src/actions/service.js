@@ -110,6 +110,7 @@ export const fetchPersonalInfo = (userId) => async (dispatch) => {
   try {
     const { data } = await api.getPersonalInfo(userId);
     dispatch({ type: FETCH_USER_SERVICE, payload: data });
+    return { data };
   } catch (error) {
     console.log(error);
   }

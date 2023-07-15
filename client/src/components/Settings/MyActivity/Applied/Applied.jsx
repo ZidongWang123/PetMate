@@ -5,6 +5,7 @@ import { getServiceByApplication } from "../../../../actions/service.js";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../../Widget/Pagination/Pagination";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
+import { Typography } from "@mui/material";
 
 
 function useQuery() {
@@ -91,7 +92,7 @@ const Applied = ({ activityType }) => {
             alignItems: 'center',
 
         }}>
-            {(activityType === 'services') && appliedServices ? (
+            {(activityType === 'services') && appliedServices && appliedServices.length !== 0 ? (
                 <>
                     <div>
                         {appliedServices.map((service) => (
@@ -100,7 +101,16 @@ const Applied = ({ activityType }) => {
                     </div>
                     <Pagination page={page} userId={user.result._id} path={'appliedservices'} />
                 </>
-            ) : null}
+            ) : <Typography
+                variant="h6"
+                sx={{
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                }}
+            >
+                No applied services!
+            </Typography>}
             <FeedbackMsg
                 status={showFeedbackMsg}
                 message="Sucessful published"
