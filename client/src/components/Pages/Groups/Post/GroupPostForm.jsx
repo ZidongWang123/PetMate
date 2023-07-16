@@ -11,7 +11,6 @@ import { useRef } from "react";
 import { useState } from "react";
 import {  useNavigate, useSearchParams,useParams } from "react-router-dom";
 import { poArticlesInfo } from "../../../../api"
-import { FormData } from "../../../../util/index"
 import PetsIcon from "@mui/icons-material/Pets";
 import "./GroupPostForm.css"
 
@@ -179,7 +178,6 @@ const GroupPostForm = () => {
   };
   const onBack=()=>{
     navigate(`/groups/${groupId}`)
-    //console.log("返回");
   }
   return (
     <div style={{position:"relative"}}>
@@ -363,7 +361,7 @@ const GroupPostForm = () => {
                         </h2>
                         <img
                           src={previewImage}
-                          alt="预览图像"
+                          alt="Preview"
                           style={{ maxWidth: "150px", maxHeight: "150px" }}
                         />
                       </div>

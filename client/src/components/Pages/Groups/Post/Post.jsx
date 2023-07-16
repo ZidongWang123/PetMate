@@ -27,7 +27,7 @@ const PostDetails = () => {
     navigate(`/groups/post/EditPost/${id}`);
   };
   const onGoMyposts = (id) => {
-    navigate(`/myposts/${id}`);
+    navigate(`/myarticles/${id}`);
   };
 
   useEffect(() => {
@@ -98,8 +98,8 @@ const PostDetails = () => {
               className="post-img"
               src={article.imageURL}
               alt=""
-              width={article.imageWidth}
-              height={article.imageHeight}
+              //width={article.imageWidth}
+              //height={article.imageHeight}
             />
           )}
         </div>

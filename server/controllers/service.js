@@ -184,15 +184,15 @@ export const deleteService = async (req, res) => {
 
 export const sendEmail=async(req,res)=>{
   const {title,email,content}=req.body
-  console.log(title,"title");
+  //console.log(title,"title");
   try {
 
-    console.log(title,"title");
+    //console.log(title,"title");
     await requestEmail(email,title,content)
-    res.status(200).json({"msg":"发送成功"})
+    res.status(200).json({"msg":"Sent out successfully"})
   } catch (error) {
-    console.log(error);
-    res.status(500).json({"msg":"发送失败"})
+    //console.log(error);
+    res.status(500).json({"msg":"Sending failed"})
   }
  
  
