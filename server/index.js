@@ -16,7 +16,7 @@ import createdEventRoutes from "./routes/createdEvent.js";
 
 import articleRoutes from "./routes/article.js";
 //import paypal api
-import * as paypal from "./paypal-api.js";
+
 //create an instance of express
 const app = express();
 //use dotenv to hide the connection url
