@@ -273,15 +273,7 @@ function Navbar({ handleSecNavbar }) {
                 }}
               >
                 {user.result.isPrime ? (
-                  <div
-                    style={{
-                      fontFamily: "Comic Sans MS",
-                      color: darkPurple,
-                      fontWeight: "bold",
-                      textTransform: "none",
-                      fontSize: "20px",
-                    }}
-                  >
+                  <div className="membership">
                     Hi,{user.result.name},have a good time in PetMate!
                   </div>
                 ) : (

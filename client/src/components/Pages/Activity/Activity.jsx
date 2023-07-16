@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import "./Activity.css";
 import PrimePrivileges from "./PrimePrivileges/PrimePrivileges";
 import CommonSteps from "./CommonSteps/CommonSteps";
@@ -22,7 +22,6 @@ function useQuery() {
 
 const Activity = ({ activity, commonSteps, creationSteps }) => {
   const query = useQuery();
-  const page = query.get("page") || 1;
 
   const servicePage = query.get("servicePage") || 1;
   const eventPage = query.get("eventPage") || 1;
@@ -178,6 +177,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
         showStepper={showCreationStepper && finishCommonStep}
         onFinishCreationStep={onFinishCreationStep}
       />
+      {!user && (<Typography variant="h6">Please login first to find more {activity}</Typography>)}
 
       {showPublishActivity ? (
         <PublishActivity
@@ -187,11 +187,10 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
           isEdit={false}
         />
       ) : null}
-
       {activity === "service" && showActivityOverview && services ? (
         <div className="activities-grid">
           {services.map((service) => (
-            <ActivityOverview key={service._id} activityData={service} activityType={activity}/>
+            <ActivityOverview key={service._id} activityData={service} activityType={activity} />
           ))}
         </div>
       ) : null}
@@ -199,16 +198,16 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
       {activity === "event" && showActivityOverview && events ? (
         <div className="activities-grid">
           {events.map((event) => (
-            <ActivityOverview key={event._id} activityData={event} activityType={activity}/>
+            <ActivityOverview key={event._id} activityData={event} activityType={activity} />
           ))}
         </div>
       ) : null}
 
-      {showPagination && activity === 'service' ? (
+      {user && showPagination && activity === 'service' ? (
         <Pagination page={servicePage} path={"service"} sorting={sorting} />
       ) : null}
 
-      {showPagination && activity === 'event' ? (
+      {user && showPagination && activity === 'event' ? (
         <Pagination page={eventPage} path={"event"} sorting={sorting} />
       ) : null}
 
