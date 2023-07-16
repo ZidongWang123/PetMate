@@ -18,7 +18,7 @@ router.get("/", getEvents);
 router.get("/sorting", getEventsBySorting);
 router.get("/:id", getEvent);
 
-router.get("/search", getEventsBySearch);
+router.post("/search", getEventsBySearch);
 
 router.post("/", auth, createEvent);
 router.patch("/:id", auth, updateEvent);

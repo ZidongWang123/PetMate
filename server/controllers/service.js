@@ -83,11 +83,23 @@ export const getServicesBySorting = async (req, res) => {
  * @param {*} res
  */
 export const getServicesBySearch = async (req, res) => {
-  const { tags } = req.query;
+  const [
+    city,
+    petSpecies,
+    type,
+    startDate,
+    endDate,
+  ] = req.body;
 
+  console.log('lala', city, petSpecies, type)
   try {
-    const regex = new RegExp(tags.split(",").join("|"), "i");
-    const services = await ServiceMsg.find({ $or: [{ title: regex }] });
+    const services = await ServiceMsg.find({
+      city,
+      petSpecies,
+      type,
+      startDate,
+      endDate,
+    });
 
     res.json({ data: services });
   } catch (error) {
@@ -182,18 +194,18 @@ export const deleteService = async (req, res) => {
   res.json({ message: "Service deleted successfully" });
 };
 
-export const sendEmail=async(req,res)=>{
-  const {title,email,content}=req.body
+export const sendEmail = async (req, res) => {
+  const { title, email, content } = req.body
   //console.log(title,"title");
   try {
 
     //console.log(title,"title");
-    await requestEmail(email,title,content)
-    res.status(200).json({"msg":"Sent out successfully"})
+    await requestEmail(email, title, content)
+    res.status(200).json({ "msg": "Sent out successfully" })
   } catch (error) {
     //console.log(error);
-    res.status(500).json({"msg":"Sending failed"})
+    res.status(500).json({ "msg": "Sending failed" })
   }
- 
- 
+
+
 }

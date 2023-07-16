@@ -13,8 +13,8 @@ import { useLocation } from "react-router-dom";
 import Pagination from "../../Widget/Pagination/Pagination";
 import { useSelector } from "react-redux";
 
-import { createService } from "../../../actions/service";
-import { createEvent } from "../../../actions/event"
+import { createService, getServicesBySearch } from "../../../actions/service";
+import { createEvent, getEventsBySearch } from "../../../actions/event"
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -50,10 +50,6 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
 
   const dispatch = useDispatch();
 
-  const { services } = useSelector((state) => state.service);
-
-  const { events } = useSelector((state) => state.event);
-
   /* 
   React.useEffect(() => {
     console.log(allInputs);
@@ -66,9 +62,11 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     setShowFeedbackMsg(false);
   };
 
+  const [isSelect, setIsSelect] = React.useState(false);
   const selectActivity = () => {
     setShowPrimePrivileges(false);
 
+    setIsSelect(true);
     setShowCommonStepper(true);
     setShowCreationStepper(false);
 
@@ -107,16 +105,32 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     }
 
     setAllInputs(stepInputs);
-    console.log(allInputs);
   };
+
+  React.useEffect(() => {
+    if (isSelect) {
+      setShowPagination(false)
+    } else {
+      setShowPagination(true)
+    }
+
+    if (isSelect && allInputs.length > 0) {
+      if (activity === "service") {
+        dispatch(getServicesBySearch(allInputs));
+      }
+
+      if (activity === "event") {
+        dispatch(getEventsBySearch(allInputs));
+      }
+    }
+    console.log(allInputs);
+  }, [dispatch, allInputs, isSelect, activity]);
 
   const onFinishCreationStep = (creationInputs) => {
     setShowCreationStepper(false);
     setAllInputs((prevInputs) => [...prevInputs, ...creationInputs]);
 
     setShowPublishActivity(true);
-
-    console.log(allInputs);
   };
 
   const publishAndGoBack = (value) => {
@@ -135,11 +149,14 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
     setShowSearchBar(true);
     setShowPagination(true);
   };
+
   const handleSortingChange = (sortingValue) => {
-    // 处理传递过来的 sortingValue
-    console.log("Sorting value:", sortingValue);
     setSorting(sortingValue);
   };
+
+  const { services } = useSelector((state) => state.service);
+  const { events } = useSelector((state) => state.event);
+
   return (
     <Container
       sx={{
@@ -171,6 +188,7 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
         steps={commonSteps}
         showStepper={showCommonStepper}
         onFinishCommonStep={onFinishCommonStep}
+        isSelect={isSelect}
       />
       <CreationSteps
         steps={creationSteps}
@@ -195,12 +213,20 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
         </div>
       ) : null}
 
+      {activity === "service" && showActivityOverview && isSelect && services.length === 0 ? (
+        <Typography variant="h6"> NO searched {activity} found</Typography>
+      ) : null}
+
       {activity === "event" && showActivityOverview && events ? (
         <div className="activities-grid">
           {events.map((event) => (
             <ActivityOverview key={event._id} activityData={event} activityType={activity} />
           ))}
         </div>
+      ) : null}
+
+      {activity === "event" && showActivityOverview && isSelect && events.length === 0 ? (
+        <Typography variant="h6"> NO searched {activity} found</Typography>
       ) : null}
 
       {user && showPagination && activity === 'service' ? (
