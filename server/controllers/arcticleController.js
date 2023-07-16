@@ -2,7 +2,7 @@ import articles from "../models/article.js";
 
 import mongoose from "mongoose";
 
-//查询文章详情
+//get all article
 const getArticle = async (req, res) => {
   const { id } = req.params;
 
@@ -15,7 +15,7 @@ const getArticle = async (req, res) => {
   articlesResulet["editFlag"] = articlesResulet.u_id._id == req.userId;
   res.status(200).json(articlesResulet);
 };
-//查询这个群组下面的所有文章
+//get all articles under the group
 const getGroupArticle = async (req, res) => {
   const { id } = req.params;
   const query = {
