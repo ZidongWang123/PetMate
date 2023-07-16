@@ -48,6 +48,7 @@ export const CREATE_GROUP = "CREATE_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const DELETE_GROUP = "DELETE_GROUP";
 export const JOIN_GROUP = "JOIN_GROUP";
+export const UPDATE_GROUP_PASSWORD = "UPDATE_GROUP_PASSWORD";
 
 //font color and background color
 export const paleYellow = "rgb(245, 242, 236)";

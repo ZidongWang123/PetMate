@@ -9,6 +9,7 @@ import {
   UPDATE_GROUP,
   START_LOADING,
   END_LOADING,
+  UPDATE_GROUP_PASSWORD,
 } from "../constant/actionTypes";
 import * as api from "../api/index.js";
 export const getGroups = () => async (dispatch) => {
@@ -105,11 +106,21 @@ export const updateGroup = (id, groupData) => async (dispatch) => {
     console.log(error);
   }
 };
-export const addGroupPassword = (id, groupData) => async (dispatch) => {
+export const addGroupPassword = (id, password) => async (dispatch) => {
   try {
-    const { data } = await api.addGroupPassword(id, groupData);
+    const { data } = await api.addGroupPassword(id, password);
 
     dispatch({ type: UPDATE_GROUP, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const verifyGroup = (id, password) => async (dispatch) => {
+  try {
+    const { data } = await api.verifyGroup(id, password);
+
+    dispatch({ type: UPDATE_GROUP_PASSWORD, payload: data });
   } catch (error) {
     console.log(error);
   }

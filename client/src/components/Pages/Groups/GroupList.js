@@ -2,6 +2,7 @@
 import ListItemText from "@mui/material/ListItemText"; */
 import Avatar from "@mui/material/Avatar";
 import "./Group.css";
+import * as api from "../../../api";
 import { Link, useNavigate } from "react-router-dom";
 import { joinGroup } from "../../../actions/group";
 import { useDispatch } from "react-redux";
@@ -28,6 +29,10 @@ const GroupList = ({ group }) => {
   const [severity, setSeverity] = useState("");
   const handelfeebackMsgClose = () => {
     setIsFeedbackMsg(false);
+  };
+  const handleTextChange = (value) => {
+    setInputText(value);
+    console.log(inputText);
   };
   /* const Gpassword = group.password; */
 
@@ -68,11 +73,11 @@ const GroupList = ({ group }) => {
     }
   };
   /*  const des = user ? `/groups/${group._id}` : "#"; */
-  const onConfirm = () => {
+  const onConfirm = async () => {
     setIsOpen(false);
     if (!user) {
       navigate("/auth");
-    } else {
+    } else if (!group.password) {
       handleJoinGroup();
       setSeverity(severityOptions.success);
       setMsg("Join Successfully");
@@ -81,29 +86,47 @@ const GroupList = ({ group }) => {
         navigate(`/groups/${group._id}`);
       }, 800);
       setIsFeedbackMsg(true);
+    } else if (group.password) {
+      console.log("request", group._id, inputText);
+      try {
+        const response = await api.verifyGroup(group._id, {
+          password: inputText,
+        });
+        console.log("response:", response);
+
+        // 根据后端的响应进行处理
+        if (response.status === 200) {
+          // 密码验证成功，执行相应操作
+          handleJoinGroup();
+          setSeverity(severityOptions.success);
+          setMsg("Join Successfully");
+
+          setTimeout(() => {
+            navigate(`/groups/${group._id}`);
+          }, 800);
+          setIsFeedbackMsg(true);
+          // 其他操作...
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          // 密码验证失败，执行相应操作
+          setSeverity(severityOptions.failure);
+          setMsg(error.response.data.message);
+          setIsFeedbackMsg(true);
+          // 其他操作...
+        } else {
+          // 其他错误处理
+          setSeverity(severityOptions.failure);
+          setMsg("Something went wrong");
+          setIsFeedbackMsg(true);
+        }
+      }
     }
   };
   const onCancel = () => {
     setIsOpen(false);
   };
-  const verifyGroup = async () => {
-    try {
-      const response = await verifyGroup(group._id, inputText);
 
-      // 根据后端的响应进行处理
-      if (response.status === 200) {
-        // 密码验证成功，执行相应操作
-        handleJoinGroup();
-        // 其他操作...
-      } else {
-        // 密码验证失败，执行相应操作
-        setSeverity(severityOptions.failure);
-        setMsg("password incorrectly");
-        setIsFeedbackMsg(true);
-        // 其他操作...
-      }
-    } catch (error) {}
-  };
   const handleJoinGroup = async () => {
     console.log("join");
     const groupMemberData = {
@@ -138,6 +161,7 @@ const GroupList = ({ group }) => {
         pic={pic}
         text={text}
         initialText={inputText}
+        handleInputChange={handleTextChange}
       ></Warning>
       <div className="group-avatar">
         <Avatar alt="Remy Sharp" src={group.selectedFile} />

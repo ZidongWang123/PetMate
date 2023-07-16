@@ -119,12 +119,26 @@ const SingleGroupDetail = () => {
                       </span>
                     ))}
                 </p>
+
                 <p>
                   {singleGroup.createdAt &&
-                    formatDistanceToNow(new Date(singleGroup.createdAt), {
-                      addSuffix: true,
-                    })}
-                  {/*  {singleGroup.createdAt} */}
+                    singleGroup.createdAt === singleGroup.updatedAt &&
+                    `Created at: ${formatDistanceToNow(
+                      new Date(singleGroup.createdAt),
+                      {
+                        addSuffix: true,
+                      }
+                    )}`}
+                </p>
+                <p>
+                  {singleGroup.createdAt &&
+                    singleGroup.createdAt !== singleGroup.updatedAt &&
+                    `Updated at: ${formatDistanceToNow(
+                      new Date(singleGroup.updatedAt),
+                      {
+                        addSuffix: true,
+                      }
+                    )}`}
                 </p>
               </div>
             </div>

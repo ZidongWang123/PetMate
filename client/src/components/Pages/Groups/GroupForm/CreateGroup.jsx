@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addGroupPassword,
-  createGroup,
-  updateGroup,
-} from "../../../../actions/group";
+import { createGroup } from "../../../../actions/group";
 import GroupForm from "./GroupForm";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { useNavigate } from "react-router-dom";
@@ -24,10 +20,14 @@ export const CreateGroup = () => {
 
   /*   const groups = useSelector((state) => state.groups); */
   /*   const user = JSON.parse(localStorage.getItem("profile")); */
-  const [text, setText] = useState("");
+  /*   const [text, setText] = useState(""); */
   const [pic, setPic] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState("your password");
+  const handleTextChange = (value) => {
+    setInputText(value);
+    console.log(inputText);
+  };
   const [showFeedbackMsg, setShowFeedbackMsg] = useState(false);
   const [message, setMessage] = useState("Update successfully");
   const [severity, setSeverity] = useState("success");
@@ -55,18 +55,20 @@ export const CreateGroup = () => {
     }
   };
   const onConfirm = async () => {
+    console.log("newgroupId", groupId);
     try {
-      console.log("newgroupId", groupId);
-      dispatch(addGroupPassword(groupId, { password: inputText }));
-
-      setShowFeedbackMsg(true);
-      navigate(`/groups/${groupId}`);
+      const response = await api.addGroupPassword(groupId, {
+        password: inputText,
+      });
+      if (response.status === 200) {
+        setShowFeedbackMsg(true);
+        navigate(`/groups/${groupId}`);
+      }
     } catch (error) {
-      /*  setMessage("groupName is already used");
+      setMessage(error.response.data.error);
       setSeverity("error");
-      setShowFeedbackMsg(true); */
+      setShowFeedbackMsg(true);
       console.log(error);
-      /*   window.location.href = "/groups/create-group"; */
     }
   };
   const onCancel = async () => {
@@ -100,6 +102,7 @@ export const CreateGroup = () => {
         pic={pic}
         text="Create successfully! Do you want to make a private group? Add your pass word here:"
         initialText={inputText}
+        handleInputChange={handleTextChange}
       />
     </>
   );

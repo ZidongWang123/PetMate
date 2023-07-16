@@ -20,10 +20,12 @@ export default function Warning({
   onConfirm,
   onCancel,
   initialText,
+  handleInputChange,
 }) {
   const [inputText, setInputText] = React.useState(initialText);
   const handleChange = (event) => {
     setInputText(event.target.value);
+    handleInputChange(event.target.value);
   };
   // const handleClose = () => {
   //   setOpen(false);
