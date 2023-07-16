@@ -1,5 +1,6 @@
 import EventMsg from "../models/event.js";
 import mongoose from "mongoose";
+import requestEmail from "../middleware/sendEmailEvent.js"
 
 export const getEvent = async (req, res) => {
     const { id } = req.params;
@@ -220,3 +221,34 @@ export const decrementParticipants = async (req, res) => {
     }
 };
 
+export const sendEmail=async(req,res)=>{
+    const {title,email,content}=req.body
+    //console.log(title,"title");
+    try {
+  
+      //console.log(title,"title");
+      await requestEmail(email,title,content)
+      res.status(200).json({"msg":"Sent out successfully"})
+    } catch (error) {
+      //console.log(error);
+      res.status(500).json({"msg":"Sending failed"})
+    }
+   
+   
+  }
+
+  export const sendEmailEvent=async(req,res)=>{
+    const {title,email,content}=req.body
+    //console.log(title,"title");
+    try {
+  
+      //console.log(title,"title");
+      await requestEmail(email,title,content)
+      res.status(200).json({"msg":"Sent out successfully"})
+    } catch (error) {
+      //console.log(error);
+      res.status(500).json({"msg":"Sending failed"})
+    }
+   
+   
+  }

@@ -9,7 +9,8 @@ import {
   updateEvent,
   deleteEvent,
   incrementParticipants,
-  decrementParticipants
+  decrementParticipants,
+  sendEmailEvent
 } from "../controllers/event.js";
 
 const router = express.Router();
@@ -26,5 +27,6 @@ router.patch("/:id/increment", auth, incrementParticipants);
 router.patch("/:id/decrement", auth, decrementParticipants);
 //
 router.delete("/:id", auth, deleteEvent);
+router.post("/sendEmailEvent",auth, sendEmailEvent);
 
 export default router;
