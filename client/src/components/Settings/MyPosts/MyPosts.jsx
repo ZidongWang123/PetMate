@@ -1,7 +1,6 @@
 //import PaneContainer from "./PaneContainer";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import avatar from "../../../images/avatar.jpg";
 import "./mypostpage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMars, faVenus } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +16,6 @@ export default function MyPost() {
   const userId =
     params.userId ||
     JSON.parse(window.localStorage.getItem("profile")).result._id;
-  const [profil, setProfil] = useState([]);
   const [articleList, setArticleList] = useState([]);
 
   // to get user info
