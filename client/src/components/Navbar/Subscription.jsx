@@ -9,7 +9,8 @@ import { paleYellow, darkPurple, orange } from "../../constant/actionTypes";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import PaypalPayment from "../PaypalPayment/PaypalPayment";
+/* import PaypalPayment from "../PaypalPayment/PaypalPayment"; */
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function Subscription() {
   const [open, setOpen] = React.useState(false);
@@ -140,10 +141,45 @@ export default function Subscription() {
           >
             90$ per year
           </Button>
-          {showPayPalButton && (
-            <PaypalPayment description={description} cost={cost} />
-          )}
         </DialogActions>
+        {showPayPalButton && (
+          <PayPalScriptProvider
+            options={{
+              clientId:
+                "Ad8WcNeM12p5gnrqaZUIKL-5x9mP9JpRaNSulzlMFkcDcPI3xSwU013KEXgvPwyiDUslvp2rWIttfjOa",
+            }}
+          >
+            <PayPalButtons
+              style={{
+                layout: "horizontal",
+              }}
+              createOrder={(data, actions) => {
+                return actions.order
+                  .create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: cost,
+                        },
+                      },
+                    ],
+                  })
+                  .then((orderId) => {
+                    // Your code here after create the order
+                    return orderId;
+                  });
+              }}
+              onApprove={(data, actions) => {
+                return actions.order.capture().then(function (details) {
+                  // Your code here after capture the order
+                  alert(
+                    "transaction completed by" + details.payer.name.given_name
+                  );
+                });
+              }}
+            />
+          </PayPalScriptProvider>
+        )}
       </Dialog>
     </div>
   );

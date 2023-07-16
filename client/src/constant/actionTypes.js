@@ -30,9 +30,9 @@ export const FETCH_BY_SEARCH_EVENT = "FETCH_BY_SEARCH_EVENT";
 export const FETCH_USER_EVENT = "FETCH_USER_EVENT";
 
 //-----------------application related constant-----------
-export const PENDING = 'pending';
-export const APPROVED = 'approved';
-export const REJECT = 'rejected';
+export const PENDING = "pending";
+export const APPROVED = "approved";
+export const REJECT = "rejected";
 export const FETCH_ALL_APPLICATIONS_SERVICE = "FETCH_ALL_APPLICATIONS_SERVICE";
 export const FETCH_ALL_APPLICATIONS_EVENT = "FETCH_ALL_APPLICATIONS_EVENT";
 
