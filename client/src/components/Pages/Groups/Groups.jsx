@@ -66,7 +66,7 @@ const Groups = () => {
   const { groups, isLoading } = useSelector((state) => state.groups);
   React.useEffect(() => {
     dispatch(getGroups());
-  }, [dispatch]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>; // 显示加载中的提示
@@ -84,7 +84,12 @@ const Groups = () => {
     console.log("from parent components", value);
 
     if (value) {
-      dispatch(getGroupsBySearch(value));
+      const queryParams = new URLSearchParams();
+      queryParams.append("keyword", value);
+      await dispatch(getGroupsBySearch(value));
+      const path = "/groups";
+      const url = `${path}?${queryParams.toString()}`;
+      navigate(url);
     } else {
       dispatch(getGroups());
     }

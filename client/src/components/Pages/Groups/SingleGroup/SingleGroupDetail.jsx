@@ -6,11 +6,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { getGroup, joinGroup } from "../../../../actions/group";
+import {
+  getGroup,
+  joinGroup,
+  getGroupsBySearch,
+} from "../../../../actions/group";
 import Warning from "../../../Widget/ConfirmDialog/Warning.jsx";
 import signInPic from "../../../../images/dabengou/SignInPic.jpg";
 import JoinGroup from "../../../../images/dabengou/JoinGroup.jpg";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
+
 const LoginText = "Go to log in and explore more!";
 const severityOptions = { success: "success", failure: "error" };
 
@@ -20,6 +25,7 @@ const SingleGroupDetail = () => {
   const dispatch = useDispatch();
 
   const { groups: singleGroup } = useSelector((state) => state.groups);
+
   const fetchGroup = useCallback(async () => {
     await dispatch(getGroup(id));
   }, [dispatch, id]);
@@ -87,6 +93,16 @@ const SingleGroupDetail = () => {
     await dispatch(joinGroup(singleGroup._id, groupMemberData));
     fetchGroup();
   };
+  const searchTag = async (value) => {
+    console.log("search", value);
+
+    const queryParams = new URLSearchParams();
+    queryParams.append("keyword", value);
+    await dispatch(getGroupsBySearch(value));
+    const path = "/groups";
+    const url = `${path}?${queryParams.toString()}`;
+    navigate(url);
+  };
 
   return (
     <div className="group-details">
@@ -114,7 +130,18 @@ const SingleGroupDetail = () => {
                 <p>
                   {singleGroup.tags &&
                     singleGroup.tags.map((tagItem, index) => (
-                      <span key={index} className="single-tag">
+                      <span
+                        key={index}
+                        className="single-tag"
+                        onClick={() => searchTag(tagItem)}
+                        style={{ cursor: "pointer" }}
+                        onMouseEnter={(e) =>
+                          (e.target.style.fontWeight = "bold")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.target.style.fontWeight = "normal")
+                        }
+                      >
                         #{tagItem}
                       </span>
                     ))}

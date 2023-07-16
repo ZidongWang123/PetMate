@@ -182,9 +182,10 @@ const GroupList = ({ group }) => {
         <div className="group-text-review">
           <div className="group-first-row">
             <div>
-              {user && group.creatorName === user.result.name ? (
+              {user && group.creatorName === user.result.name && (
                 <p className="group-creater">Created by: You</p>
-              ) : (
+              )}
+              {group.creatorName && (
                 <p className="group-creater">Created by: {group.creatorName}</p>
               )}
             </div>
