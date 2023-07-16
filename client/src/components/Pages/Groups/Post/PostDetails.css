@@ -1,4 +1,4 @@
-@import url('https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500');
+@import url("https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500");
 
 .post-details {
   width: 100%;
@@ -17,8 +17,7 @@
   font-size: 24px;
   font-weight: bold;
   color: #393c7c;
-  font-family: "Comic Sans MS", cursive; /* 修改标题的字体 */
-
+  font-family: "Comic Sans MS", cursive; 
 }
 
 .author-info {
@@ -28,8 +27,8 @@
 }
 .author-name {
   font-weight: bold;
-  color: #393c7c; /* 修改作者名字的颜色 */
-  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  color: #393c7c; 
+  font-family: "Comic Sans MS", cursive; 
   font-size: 18px;
 }
 
@@ -54,8 +53,7 @@
 .post-timestamp {
   color: #888888;
   font-size: 14px;
-  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
-
+  font-family: "Comic Sans MS", cursive; 
 }
 
 .button-group {
@@ -70,14 +68,13 @@
   margin-right: 10px;
 }
 
-
 .edit-button {
   padding: 6px 16px;
-  color: #F0A860;
-  font-family: 'Gloria Hallelujah',cursive;
+  color: #f0a860;
+  font-family: "Gloria Hallelujah", cursive;
   font-weight: bold;
   border: none;
-  border: 2px solid #F0A860;
+  border: 2px solid #f0a860;
   border-radius: 20px;
   width: 100px;
   cursor: pointer;
@@ -85,7 +82,7 @@
 }
 
 .edit-button:hover {
-  background-color: #F0A860;
+  background-color: #f0a860;
   color: #fafafa;
 }
 .edit-button-wrapper {
@@ -97,11 +94,11 @@
 
 .delete-button {
   padding: 6px 16px;
-  color: '#3F3F3F';
-  font-family: 'Gloria Hallelujah',cursive;
+  color: "#3F3F3F";
+  font-family: "Gloria Hallelujah", cursive;
   font-weight: bold;
   border: none;
-  border: 2px solid #3F3F3F;
+  border: 2px solid #3f3f3f;
   border-radius: 20px;
   width: 100px;
   cursor: pointer;
@@ -109,16 +106,13 @@
 }
 
 .delete-button:hover {
-  background-color: #3F3F3F;
+  background-color: #3f3f3f;
   color: #fafafa;
 }
 
-
-
-
 .post-content-wrapper {
   margin-bottom: 20px;
-  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  font-family: "Comic Sans MS", cursive; 
   border: solid #ccc 1px;
   margin: 30px;
   padding: 5px;
@@ -126,13 +120,10 @@
   border-radius: 20px;
   background-color: #ebe6e6;
   align-items: center;
-  word-wrap:break-word
-
-
+  word-wrap: break-word;
 }
 
 .post-content {
   font-size: 16px;
   line-height: 1.5;
-
 }
