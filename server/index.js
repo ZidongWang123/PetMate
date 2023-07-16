@@ -11,8 +11,8 @@ import eventRoutes from "./routes/event.js";
 import groupRoutes from "./routes/groups.js";
 import explorePost from "./routes/explorePost.js";
 import applicationRoutes from "./routes/application.js";
-import createdServiceRoutes from "./routes/createdService.js"
-import createdEventRoutes from "./routes/createdEvent.js"
+import createdServiceRoutes from "./routes/createdService.js";
+import createdEventRoutes from "./routes/createdEvent.js";
 
 import articleRoutes from "./routes/article.js";
 //import paypal api
@@ -27,30 +27,6 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-// paypal
-app.post("/my-server/create-paypal-order", async (req, res) => {
-  try {
-    /*  console.log("in server"); */
-    console.log("req.body:", req.body);
-    const order = await paypal.createOrder(req.body);
-    /*     console.log("successfully fetch createOrder"); */
-    res.json(order);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send(err.message);
-  }
-});
-
-app.post("/my-server/capture-paypal-order", async (req, res) => {
-  const { orderID } = req.body;
-  try {
-    const captureData = await paypal.capturePayment(orderID);
-    res.json(captureData);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
 //routes
 //connect the routes and app, which means the all requests with /user will be directed to the userRoutes
 app.use("/user", userRoutes);
@@ -59,8 +35,8 @@ app.use("/api/groups", groupRoutes);
 app.use("/explore", explorePost);
 
 app.use("/services", serviceRoutes);
-app.use("/createdservices", createdServiceRoutes); 
-app.use("/createdevents", createdEventRoutes); 
+app.use("/createdservices", createdServiceRoutes);
+app.use("/createdevents", createdEventRoutes);
 app.use("/events", eventRoutes);
 app.use("/applications", applicationRoutes);
 

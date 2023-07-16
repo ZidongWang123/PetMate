@@ -29,8 +29,6 @@ import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
 import ActivityPage from "./components/Pages/Activity/ActivityPage/ActivityPage";
 import Subscription from "./components/Navbar/Subscription";
 import Applications from "./components/Settings/Application/Applications";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import PaypalPayment from "./components/PaypalPayment/PaypalPayment";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -66,7 +64,7 @@ const App = () => {
     <BrowserRouter>
       <Container maxWidth="lg">
         <Navbar handleSecNavbar={handleSecNavbar} />
-        {/*    <PaypalPayment /> */}
+
         {openSecNavbar ? (
           <SecondNavbar pages={secNav} activityType={activityType} />
         ) : null}
