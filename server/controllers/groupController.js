@@ -48,7 +48,7 @@ const getGroupsBySearch = async (req, res) => {
 
     const groups = await Group.find({
       $or: [{ groupName: title }, { intro: title }, { tags: { $in: title } }], // find groups that match either or
-    });
+    }).populate("creatorId", "name");
     /*   const groups = await Group.find({
       groupName: title, // find groups that match either or
     }); */
