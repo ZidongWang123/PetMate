@@ -44,7 +44,7 @@ const SingleGroup1 = () => {
       flex: 1,
       renderCell: (params) => (
         <Link
-          to={`/myposts/${params.row.u_id}`}
+          to={`/myarticles/${params.row.u_id}`}
           style={{ textDecoration: "none" }}
         >
           {params.row.Author}

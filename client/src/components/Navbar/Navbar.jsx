@@ -28,7 +28,7 @@ const pages = ["Explore", "Groups", "Event", "Service"];
 const settings = [
   "Personal Info",
   "My explorePosts",
-  "My posts",
+  "My articles",
   "My groups",
   "My events",
   "My services",
@@ -95,6 +95,7 @@ function Navbar({ handleSecNavbar }) {
     if (setting === "My explorePosts") {
       navigate(`/userExplorePosts/${user.result._id}`);
     }
+   
   };
 
   const logout = () => {
@@ -273,15 +274,7 @@ function Navbar({ handleSecNavbar }) {
                 }}
               >
                 {user.result.isPrime ? (
-                  <div
-                    style={{
-                      fontFamily: "Comic Sans MS",
-                      color: darkPurple,
-                      fontWeight: "bold",
-                      textTransform: "none",
-                      fontSize: "20px",
-                    }}
-                  >
+                  <div className="membership">
                     Hi,{user.result.name},have a good time in PetMate!
                   </div>
                 ) : (

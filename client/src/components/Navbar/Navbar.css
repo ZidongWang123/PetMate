@@ -18,6 +18,14 @@
   align-items: center;
 }
 
+.membership{
+  font-family: Comic Sans MS;
+  color: gray;
+  font-weight: bold;
+  text-transform: none;
+  font-size: 20px;
+}
+
 @media (min-width: 1200px){
   .css-1oqqzyl-MuiContainer-root {
     max-width: 100% !important;

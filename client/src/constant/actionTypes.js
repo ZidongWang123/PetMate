@@ -58,3 +58,4 @@ export const brightGreen = "#9AC7BF";
 export const brightPurple = "#9C62F2";
 export const darkGray = "#3F3F3F";
 export const brightOrange = "#ff8000";
+export const bGreen = "#E4ECE5";

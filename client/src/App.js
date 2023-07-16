@@ -88,8 +88,8 @@ const App = () => {
               <Route path="/service" element={<Service />} />
               <Route path="/howitworks" element={<AppIntro />} />
               <Route path="/personalInfo" element={<PersonalInfo />} />
-              <Route path="/myposts" element={<MyPosts />} />
-              <Route path="/myposts/:userId" element={<MyPosts />} />
+              <Route path="/myarticles" element={<MyPosts />} />
+              <Route path="/myarticles/:userId" element={<MyPosts />} />
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/userExplorePosts/:userId" element={<UserPage />} />
               <Route path="/explore/post/create" element={<CreatePost />} />
