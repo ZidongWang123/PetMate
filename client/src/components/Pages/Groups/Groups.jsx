@@ -27,7 +27,7 @@ function useQuery() {
 const Groups = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const query = useQuery();
-  const searchQuery = query.get("searchQuery");
+  const searchQuery = query.get("keyword");
   const navigate = useNavigate();
   const [text, setText] = React.useState("");
   const [pic, setPic] = React.useState("");
@@ -65,7 +65,11 @@ const Groups = () => {
   const dispatch = useDispatch();
   const { groups, isLoading } = useSelector((state) => state.groups);
   React.useEffect(() => {
-    dispatch(getGroups());
+    if (!searchQuery) {
+      dispatch(getGroups());
+    } else {
+      searchGroups(searchQuery);
+    }
   }, []);
 
   if (isLoading) {
@@ -80,6 +84,7 @@ const Groups = () => {
   const groupNames =
     Array.isArray(groupResults) &&
     groupResults.map(({ recommended }) => recommended);
+
   const searchGroups = async (value) => {
     console.log("from parent components", value);
 
@@ -94,7 +99,6 @@ const Groups = () => {
       dispatch(getGroups());
     }
   };
-
   return (
     <div className="groups">
       <div style={{ display: "flex", alignItems: "center" }}>

@@ -83,12 +83,22 @@ export const getEventsBySorting = async (req, res) => {
  * @param {*} res
  */
 export const getEventsBySearch = async (req, res) => {
-    const { tags } = req.query;
+    const [
+        city,
+        petSpecies,
+        type,
+        startDate,
+        endDate,
+    ] = req.body;
 
     try {
-        const regex = new RegExp(tags.split(",").join("|"), "i");
-        const events = await EventMsg.find({ $or: [{ title: regex }] });
-
+        const events = await EventMsg.find({
+            city,
+            petSpecies,
+            type,
+            startDate,
+            endDate,
+        });
         res.json({ data: events });
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -192,7 +202,7 @@ export const incrementParticipants = async (req, res) => {
         if (!event) {
             return res.status(404).send("No event found with that id");
         }
-        const updated = await EventMsg.findByIdAndUpdate(_id, { $inc: {currentParticipants: 1} }, {
+        const updated = await EventMsg.findByIdAndUpdate(_id, { $inc: { currentParticipants: 1 } }, {
             new: true,
         });
 

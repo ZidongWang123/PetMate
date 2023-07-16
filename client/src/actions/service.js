@@ -65,16 +65,10 @@ export const getServicesBySorting = (page, sorting) => async (dispatch) => {
   }
 };
 
-export const getServicesBySearch =
-  ({ tags }) =>
-  async (dispatch) => {
+export const getServicesBySearch = (input) => async (dispatch) => {
     try {
-      dispatch({ type: START_LOADING });
-      const {
-        data: { data },
-      } = await api.fetchServicesBySearch({ tags });
-      dispatch({ type: FETCH_BY_SEARCH_SERVICE, payload: { data } });
-      dispatch({ type: END_LOADING });
+      const { data } = await api.fetchServicesBySearch(input);
+      dispatch({ type: FETCH_BY_SEARCH_SERVICE, payload: data });
     } catch (error) {
       console.log(error);
     }

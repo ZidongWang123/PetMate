@@ -31,7 +31,7 @@ export default (
       };
 
     case FETCH_BY_SEARCH_EVENT:
-      return { ...state, events: action.payload };
+      return { ...state, events: action.payload.data };
     case FETCH_EVENT:
       return { ...state, event: action.payload };
     case CREATE_EVENT:

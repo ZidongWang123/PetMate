@@ -34,7 +34,6 @@ const Applied = ({ activityType }) => {
                             applicationStatus: element.status
                         })
                     );
-                    console.log(activities);
                     const uniActivities = Array.from(new Set(activities));
                     setActiIds(uniActivities);
                     setDataLoaded(true);

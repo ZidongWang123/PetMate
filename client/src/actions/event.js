@@ -62,18 +62,14 @@ export const getEventsBySorting = (page, sorting) => async (dispatch) => {
     }
 };
 
-export const getEventsBySearch =
-    ({ tags }) =>
-        async (dispatch) => {
-            try {
-                const {
-                    data: { data },
-                } = await api.fetchEventsBySearch({ tags });
-                dispatch({ type: FETCH_BY_SEARCH_EVENT, payload: { data } });
-            } catch (error) {
-                console.log(error);
-            }
-        };
+export const getEventsBySearch = (input) => async (dispatch) => {
+    try {
+        const { data } = await api.fetchEventsBySearch(input);
+        dispatch({ type: FETCH_BY_SEARCH_EVENT, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 export const createEvent = (event) => async (dispatch) => {
     try {
@@ -102,7 +98,7 @@ export const deleteEvent = (id) => async (dispatch) => {
     }
 };
 
-export const fetchPersonalInfoEvent =(userId) => async (dispatch) => {
+export const fetchPersonalInfoEvent = (userId) => async (dispatch) => {
     try {
         const { data } = await api.getPersonalInfo(userId);
         dispatch({ type: FETCH_USER_EVENT, payload: data });
