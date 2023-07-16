@@ -2,9 +2,10 @@ import React from "react";
 import ActivityCard from "../ActivityCard";
 import { getApplicationsByApplicantId, deleteApplication } from "../../../../actions/application.js";
 import { getServiceByApplication } from "../../../../actions/service.js";
-import { getEventByApplication } from "../../../../actions/event.js";
+import { getEventByApplication, decrementParticipants } from "../../../../actions/event.js";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { Typography } from "@mui/material";
+import { APPROVED } from "../../../../constant/actionTypes";
 
 const Applied = ({ activityType }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -25,13 +26,13 @@ const Applied = ({ activityType }) => {
     React.useEffect(() => {
         getApplicationsByApplicantId(applicantId)
             .then((item) => {
-                if (item) {
+                if (item && item.data && item.data.data.length > 0) {
                     const activities = item.data.data.map((element) =>
-                    ({
-                        activityId: element.activityId,
-                        applicationId: element._id,
-                        applicationStatus: element.status
-                    })
+                        ({
+                            activityId: element.activityId,
+                            applicationId: element._id,
+                            applicationStatus: element.status
+                        })
                     );
                     console.log(activities);
                     const uniActivities = Array.from(new Set(activities));
@@ -72,7 +73,6 @@ const Applied = ({ activityType }) => {
                     if (item.data) {
                         item.data.applicationStatus = activity.applicationStatus;
                         item.data.applicationId = activity.applicationId;
-                        //}
 
                         setAppliedEvents(prev => {
                             if (prev.some(service => JSON.stringify(service) === JSON.stringify(item.data))) {
@@ -95,12 +95,21 @@ const Applied = ({ activityType }) => {
         console.log(appliedServices, appliedEvents)
     }, [appliedServices, appliedEvents])
 
-    const withdraw = (id) => {
-        deleteApplication(id)
-        if (id) {
+    const withdraw = (activityData) => {
+        if(activityType === 'events' && activityData.applicationStatus === APPROVED){
+            console.log(activityData)
+            decrementParticipants(activityData._id)
+            .then(() => {
+                deleteApplication(activityData.applicationId);
+                setShowFeedbackMsg(true);
+              })
+              .catch((error) => {
+                console.log(error)
+              });
+        } else {
+            deleteApplication(activityData.applicationId)
             setShowFeedbackMsg(true);
         }
-
     }
 
     return (

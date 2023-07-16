@@ -15,8 +15,6 @@ export const getGroups = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchGroups();
-    console.log(data);
-    /* console.log(data); */
     dispatch({ type: FETCH_ALLGROUPS, payload: data });
     dispatch({ type: END_LOADING });
   } catch (error) {

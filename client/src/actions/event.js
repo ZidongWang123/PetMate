@@ -102,7 +102,7 @@ export const deleteEvent = (id) => async (dispatch) => {
     }
 };
 
-export const fetchPersonalInfoEvent = (userId) => async (dispatch) => {
+export const fetchPersonalInfoEvent =(userId) => async (dispatch) => {
     try {
         const { data } = await api.getPersonalInfo(userId);
         dispatch({ type: FETCH_USER_EVENT, payload: data });
@@ -115,6 +115,15 @@ export const fetchPersonalInfoEvent = (userId) => async (dispatch) => {
 export const incrementParticipants = async (id) => {
     try {
         const { data } = await api.incrementParticipants(id);
+        return { data };
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const decrementParticipants = async (id) => {
+    try {
+        const { data } = await api.decrementParticipants(id);
         return { data };
     } catch (error) {
         console.error(error);

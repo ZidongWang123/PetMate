@@ -107,7 +107,7 @@ export const deleteService = (id) => async (dispatch) => {
   }
 };
 
-export const fetchPersonalInfo = (userId) => async (dispatch) => {
+export const fetchPersonalInfo = (userId) => async (dispatch)=> {
   try {
     const { data } = await api.getPersonalInfo(userId);
     dispatch({ type: FETCH_USER_SERVICE, payload: data });

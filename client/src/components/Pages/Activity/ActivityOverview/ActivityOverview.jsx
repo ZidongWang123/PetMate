@@ -1,36 +1,48 @@
 import { Box, Avatar, Typography, Button } from "@mui/material";
 import React from "react";
-import { brightPurple } from "../../../../constant/actionTypes";
+import { brightPurple, paleYellow } from "../../../../constant/actionTypes";
 import { useDispatch } from "react-redux";
 import { fetchPersonalInfo } from "../../../../actions/service";
+import { fetchPersonalInfoEvent } from "../../../../actions/event";
 import { useNavigate } from "react-router-dom";
 import { getApplicationsByActivityId } from "../../../../actions/application";
 
 const ActivityOverview = ({ activityData, activityType }) => {
-  const formattedStartDate = new Date(
-    activityData.startDate
-  ).toLocaleDateString();
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const formattedStartDate = new Date( activityData.startDate ).toLocaleDateString();
   const formattedEndDate = new Date(activityData.endDate).toLocaleDateString();
-  const dispatch = useDispatch();
   const navigator = useNavigate();
+  const dispatch = useDispatch();
 
   const [personalInfo, setPersonalInfo] = React.useState(null);
 
   React.useEffect(() => {
-    //if (activityType === 'service') {
+    if (activityType === 'service' && activityData) {
       if (activityData) {
         dispatch(fetchPersonalInfo(activityData.creator)).then((data) => {
           setPersonalInfo(data.data);
+        }).catch((error) => {
+          console.error("Error fetching personal info:", error);
         });
       }
-    //}
-  }, [dispatch, activityData]);
+    }
+
+    if (activityType === 'event' && activityData) {
+      if (activityData) {
+        dispatch(fetchPersonalInfoEvent(activityData.creator)).then((data) => {
+          console.log(data) 
+          setPersonalInfo(data.data);
+        }).catch((error) => {
+          console.error("Error fetching personal info:", error);
+        });
+      }
+    }
+  }, [dispatch, activityData, activityType]);
 
   //const [matchCount, setMatchCount] = React.useState(0);
   React.useEffect(() => {
     if (activityData) {
       getApplicationsByActivityId(activityData._id).then((item) => {
-        //在event的时候可以筛选出status为approved
         activityData.applicant = item.data.length;
       }).catch((err) => {
         console.log(err)
@@ -45,6 +57,7 @@ const ActivityOverview = ({ activityData, activityType }) => {
 
   return (
     <>
+    {personalInfo && personalInfo.result && ( 
       <Box
         sx={{
           display: "flex",
@@ -54,7 +67,7 @@ const ActivityOverview = ({ activityData, activityType }) => {
           margin: "15px 30px 15px 30px",
           fontFamily: "Cosmic Sans MS",
           width: "280px",
-          backgroundColor: "white",
+          backgroundColor: personalInfo.result._id === user.result._id ? paleYellow : "white",
           alignItems: "center",
           justifyContent: "space-between",
         }}
@@ -69,14 +82,14 @@ const ActivityOverview = ({ activityData, activityType }) => {
           }}
         >
           {personalInfo &&
-            (personalInfo.result.avatar ? (
+            (personalInfo?.result.avatar ? (
               <Avatar
-                src={personalInfo.result.avatar}
+                src={personalInfo?.result.avatar}
                 sx={{ border: "0.1px solid gray" }}
               />
             ) : (
               <Avatar sx={{ border: "0.1px solid gray" }}>
-                {personalInfo.result.name.charAt(0)}
+                {personalInfo?.result.name.charAt(0)}
               </Avatar>
             ))}
           <Typography
@@ -364,19 +377,31 @@ const ActivityOverview = ({ activityData, activityType }) => {
           </>): null}
 
         </Box>
-        <Button
+        {personalInfo.result._id === user.result._id ? (
+          <Typography
+          variant="h6"
           sx={{
-            width: "70%",
-            backgroundColor: brightPurple,
-            color: "white",
-            borderRadius: "20px",
             marginBottom: "15px",
+            color: brightPurple,
           }}
-          onClick={() => handleChoose(activityData._id)}
         >
-          Choose
-        </Button>
+          It's your {activityType}!
+        </Typography>
+          ):(<Button
+            sx={{
+              width: "70%",
+              backgroundColor: brightPurple,
+              color: "white",
+              borderRadius: "20px",
+              marginBottom: "15px",
+            }}
+            onClick={() => handleChoose(activityData._id)}
+          >
+            Choose
+          </Button>)
+        }
       </Box>
+      )}
     </>
   );
 };

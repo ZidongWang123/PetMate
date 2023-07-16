@@ -37,6 +37,7 @@ export const createEvent = (newEvent) => API.post("/events", newEvent);
 export const updateEvent = (id, updatedEvent) => API.patch(`/events/${id}`, updatedEvent);
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 export const incrementParticipants = (id) => API.patch(`/events/${id}/increment`);
+export const decrementParticipants = (id) => API.patch(`/events/${id}/decrement`);
 
 //api for applications
 export const fetchApplicationsByApplicantId = (applicantId) =>

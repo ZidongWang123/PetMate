@@ -8,7 +8,7 @@ import { deleteService } from "../../../actions/service.js"
 import { deleteEvent } from "../../../actions/event.js"
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
 
-const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw, refreshCreatedService }) => {
+const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, withdraw }) => {
     const navigate = useNavigate();
 
     const formattedStartDate = new Date(activityData?.startDate).toLocaleDateString();
@@ -24,8 +24,8 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
         navigate(`/applications/${activityData._id}`, { state: { activityType } })
     }
 
-    const deleteApplication = (id) => {
-        withdraw(id);
+    const deleteApplication = (activityData) => {
+        withdraw(activityData);
     }
 
     const deleteActivity = () => {
@@ -225,7 +225,7 @@ const ActivityCard = ({ activityType, isApply, isCreate, activityData, onEdit, w
                                     color: 'white',
                                     borderRadius: '20px',
                                 }}
-                                onClick={() => { deleteApplication(activityData.applicationId) }}
+                                onClick={() => { deleteApplication(activityData) }}
                             >
                                 Withdraw
                             </Button>

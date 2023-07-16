@@ -4,7 +4,7 @@ import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signup, signin } from "../../actions/auth";
-import { darkPurple, paleYellow, orange } from "../../constant/actionTypes";
+import { darkPurple, orange } from "../../constant/actionTypes";
 
 import './Auth.css';
 
@@ -40,10 +40,15 @@ const Auth = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Paper sx={{ elevation: 3, backgroundColor: paleYellow, marginTop: 15, border: '1px solid black',
-            borderRadius: '10px',
-            padding: '20px',
-            boxSizing: 'border-box',}}>
+            <Paper sx={{
+                elevation: 3,
+                backgroundColor: 'white',
+                marginTop: 15,
+                boxShadow: "0px 5px 10px 0px rgba(0,0,0,0.1)",
+                borderRadius: '10px',
+                padding: '20px',
+                boxSizing: 'border-box',
+            }}>
                 <Typography variant="h4"
                     sx={{
                         fontFamily: 'Comic Sans MS',

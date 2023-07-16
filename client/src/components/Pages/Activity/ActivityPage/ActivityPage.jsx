@@ -10,7 +10,7 @@ import { fetchPersonalInfoEvent } from "../../../../actions/event";
 import { Avatar } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { TextareaAutosize, Tooltip } from "@mui/material";
-import { createApplication } from "../../../../api";
+import { createApplication } from "../../../../actions/application";
 import { useNavigate } from "react-router-dom";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import { getApplicationsByActivityId } from "../../../../actions/application";
@@ -93,13 +93,22 @@ const ActivityPage = () => {
 
     const handleApply = () => {
         if (user.result._id && service && service.service && service.service.creator && service.service._id) {
-            createApplication([value, service.service.creator, service.service._id, user.result._id]);
+            createApplication([value, service.service.creator, service.service._id, user.result._id]).then(() => {
+                setShowFeedbackMsg(true);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
             setShowFeedbackMsg(true)
         }
 
         if (user.result._id && event && event.event && event.event.creator && event.event._id) {
-            createApplication([value, event.event.creator, event.event._id, user.result._id]);
-            setShowFeedbackMsg(true)
+            createApplication([value, event.event.creator, event.event._id, user.result._id]).then(() => {
+                setShowFeedbackMsg(true);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
         }
     };
 

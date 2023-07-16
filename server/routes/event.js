@@ -8,7 +8,8 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
-  incrementParticipants
+  incrementParticipants,
+  decrementParticipants
 } from "../controllers/event.js";
 
 const router = express.Router();
@@ -22,6 +23,8 @@ router.get("/search", getEventsBySearch);
 router.post("/", auth, createEvent);
 router.patch("/:id", auth, updateEvent);
 router.patch("/:id/increment", auth, incrementParticipants);
+router.patch("/:id/decrement", auth, decrementParticipants);
+//
 router.delete("/:id", auth, deleteEvent);
 
 export default router;
