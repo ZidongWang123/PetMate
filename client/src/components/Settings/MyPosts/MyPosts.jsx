@@ -132,6 +132,7 @@ export default function MyPost() {
             location: {userInfo.location}
           </div>
           <div>Introduction:{userInfo.intro}</div>
+          <div>Number of Post:{articleList.length}</div>
           <div style={{ marginTop: "5px", marginBottom: "5px" }}>
             {(userInfo.sex === "female" || userInfo.sex === "male") && (
               <FontAwesomeIcon
