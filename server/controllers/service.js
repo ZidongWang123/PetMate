@@ -131,7 +131,7 @@ export const createService = async (req, res) => {
     startDate,
     endDate,
     location,
-    status: null,
+    status: 'active',
     price,
   });
 

@@ -55,6 +55,7 @@ function Navbar({ handleSecNavbar,isAdsOpen,onAdsChange}) {
         localStorage.setItem('ActiveButton', page);
         navigate(`/${page.toLowerCase()}`);
         handleSecNavbar([], '');
+        window.location.reload();
     };
 
   const handleOpenNavMenu = (event) => {
