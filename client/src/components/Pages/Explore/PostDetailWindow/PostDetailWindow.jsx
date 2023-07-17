@@ -117,7 +117,11 @@ export default function PostDetailWindow({post,isOpen,onClose,count,isLiked,onCl
         // 导航到目标页面
         const path = '/explore';
         const url = `${path}?${queryParams.toString()}`;
-        navigate(url);
+        navigate("/explore/empty")
+        setTimeout(() => {
+            navigate(url);
+        }, 0);
+        
         onClose()
 
     }

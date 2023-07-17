@@ -23,14 +23,14 @@ import decode from 'jwt-decode';
 import { darkPurple, paleYellow, orange } from "../../constant/actionTypes";
 import ConfirmDialog from '../Widget/ConfirmDialog/ConfirmDialog';
 import Subscription from './Subscription';
-
+import Switch from '@mui/material/Switch';
 
 const pages = ['Explore', 'Groups', 'Event', 'Service'];
-const settings = ['Personal Info', 'My explorePosts','My posts', 'My groups', 'My events', 'My services', 'How it works', 'Logout'];
+const settings = ['Personal Info', 'My posts','My articles', 'My groups', 'My events', 'My services', 'How it works','Puremode', 'Logout'];
 const myService = ['Applied Services', 'Created Services'];
 const myEvent = ['Applied Events', 'Created Events'];
 
-function Navbar({ handleSecNavbar }) {
+function Navbar({ handleSecNavbar,isAdsOpen,onAdsChange }) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -46,7 +46,6 @@ function Navbar({ handleSecNavbar }) {
         localStorage.setItem('ActiveButton', page);
         navigate(`/${page.toLowerCase()}`);
         handleSecNavbar([], '');
-        window.location.reload();
     };
 
     const handleOpenNavMenu = (event) => {
@@ -62,7 +61,7 @@ function Navbar({ handleSecNavbar }) {
     };
 
     const handleCloseUserMenu = (setting) => {
-        if (typeof setting === 'string' && setting !== 'My services' && setting !== 'My events' && setting !== 'Logout'&&setting !=="My explorePosts") {
+        if (typeof setting === 'string' && setting !== 'My services' && setting !== 'My events' && setting !== 'Logout'&&setting !=="My posts"&&setting !=="Puremode") {
             navigate(`/${setting.toLowerCase().replace(/\s+/g, '')}`);
         }
         setAnchorElUser(null);
@@ -76,7 +75,7 @@ function Navbar({ handleSecNavbar }) {
             handleSecNavbar(myEvent, 'My events');
             navigate(`/appliedevents`);
         }
-        if(setting==="My explorePosts"){
+        if(setting==="My posts"){
             navigate(`/userExplorePosts/${user.result._id}`);
         }
     };
@@ -281,12 +280,29 @@ function Navbar({ handleSecNavbar }) {
                                                     dialogColor='#6f0000'
                                                     buttonColor='red'
                                                     onConfirm={logout}
-                                                />) : (
+                                                />) :setting==="Puremode"?(user.result.isPrime&&
+                                                    <div style={{display:"flex",alignItems:"center"}}>
+                                                        < Typography sx={{
+                                                            fontFamily: 'Comic Sans MS',
+                                                            fontWeight: 800,
+                                                            color:'inherit',
+                                                        
+                                                        }}>{setting}</Typography>
+                                                        <Switch
+                                                            checked={!isAdsOpen}
+                                                            onChange={onAdsChange}
+                                                            inputProps={{ 'aria-label': 'controlled' }}
+                                                        />
+                                                    </div>
+                                                ):(
                                                 < Typography sx={{
                                                     fontFamily: 'Comic Sans MS',
                                                     fontWeight: 800,
                                                     color: setting === 'Logout' ? 'red' : 'inherit',
-                                                }}>{setting}</Typography>)}
+                                                }}>{setting}</Typography>
+                                            )}
+
+                                                
                                         </MenuItem>
                                     ))}
                                 </Menu>

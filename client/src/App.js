@@ -34,6 +34,7 @@ import PaypalPayment from "./components/PaypalPayment/PaypalPayment";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
+  const [isAds,setIsAds]=React.useState(true)
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
     localStorage.getItem("secNavbar") === "true"
   );
@@ -42,7 +43,11 @@ const App = () => {
   );
   const activityTypes = ["events", "services"];
   const [activityType, setActivityType] = React.useState("");
+  
 
+  const handleAdSChange=(event)=>{
+    setIsAds(!event.target.checked);
+  }
   const handleSecNavbar = (param, type) => {
     if (param.length === 0) {
       localStorage.setItem("secNavbar", false);
@@ -73,13 +78,13 @@ const App = () => {
     <PayPalScriptProvider options={initialOptions}>
       <BrowserRouter>
         <Container maxWidth="lg">
-          <Navbar handleSecNavbar={handleSecNavbar} />
+          <Navbar handleSecNavbar={handleSecNavbar} isAdsOpen={isAds} onAdsChange={handleAdSChange} />
           {/*    <PaypalPayment /> */}
           {openSecNavbar ? (
             <SecondNavbar pages={secNav} activityType={activityType} />
           ) : null}
           <div className="page">
-            <Ads />
+          {isAds&&<Ads className="ads-leftContainer"/>}
             <div className="routes">
               <Routes>
                 <Route path="/" element={<Navigate to="/explore" />} />
@@ -139,7 +144,7 @@ const App = () => {
                 )}
               </Routes>
             </div>
-            <Ads />
+            {isAds&&<Ads className="ads-rightContainer"  />}
           </div>
         </Container>
       </BrowserRouter>

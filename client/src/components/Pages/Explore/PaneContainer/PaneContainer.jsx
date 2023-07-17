@@ -5,7 +5,7 @@ import { getPosts } from '../../../../api';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-const PaneContainer = ({userId="",keyword="",where="explore"}) => {
+const PaneContainer = ({userId="",keyword="",where="explore",postsCountGet=undefined}) => {
     const divRefs = [React.useRef(null),React.useRef(null),React.useRef(null),React.useRef(null)];
     const dataFetchedRef = React.useRef(false);
     const displayedPostsIdRef = React.useRef([]);
@@ -65,7 +65,9 @@ const PaneContainer = ({userId="",keyword="",where="explore"}) => {
       if (res.status === 200) {
 
         const newPosts=res.data.result
-    
+        if(postsCountGet){
+          postsCountGet(newPosts.length)
+        }
         assignPosts(newPosts)
 
       }
@@ -111,12 +113,9 @@ const PaneContainer = ({userId="",keyword="",where="explore"}) => {
       if(!dataFetchedRef.current){
         dataFetchedRef.current = true;
         const displayedPostIdList=JSON.stringify(displayedPostsIdRef.current)
-        fetchPosts({userId,keyword,where,displayedPostIdList,size:32})
+        fetchPosts({userId,keyword,where,displayedPostIdList,size:16})
 
       }
-
-      
-      
 
     }, []);
 

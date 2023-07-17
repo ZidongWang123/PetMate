@@ -9,6 +9,7 @@ import { getPersonalInfo } from "../../../../api";
 import { Avatar } from "@mui/material";
 
 import { fontSize } from "@mui/system";
+import { VpnLock } from "@mui/icons-material";
 
 
 
@@ -16,7 +17,7 @@ import { fontSize } from "@mui/system";
 export default function UserPage(){
     const{userId} = useParams();
     const[userInfo,setUserInfo]=useState({})
-
+    const[postsCount,setPostsCount]=useState(0)
     const fetcbPersonalInfo=async(userId)=>{
         try{
     
@@ -30,6 +31,9 @@ export default function UserPage(){
         }catch(error){
             console.log(error)
         }
+    }
+    const postsCountGet=(value)=>{
+        setPostsCount(value)
     }
 
     useEffect( ()=>{
@@ -60,9 +64,9 @@ export default function UserPage(){
                 </Avatar>
                 
                 <div style={{display:"flex",flexDirection:"column",justifyContent:"center"}}>
-                    <h3 style={{marginTop:"5px",marginBottom:"5px"}}>{userInfo.name}</h3>
-                    <div style={{color:"gray",fontSize:"12px"}}>id: {userInfo._id} | location: {userInfo.location}</div>
-                    <div>Introduction:{userInfo.intro}</div>
+                    <h3 style={{marginTop:"5px",marginBottom:"5px",fontFamily:"Comic Sans MS"}}>{userInfo.name}</h3>
+                    <div style={{color:"gray",fontSize:"12px",fontFamily:"ubuntu"}}>id: {userInfo._id} | address: {userInfo.address}</div>
+                    <div style={{fontFamily:"ubuntu"}}>Introduction:{userInfo.intro}</div>
                     <div style={{marginTop:"5px",marginBottom:"5px"}}>
                         {(userInfo.sex==="female"||userInfo.sex==="male")&&
                         <FontAwesomeIcon 
@@ -70,14 +74,14 @@ export default function UserPage(){
                             color={userInfo.sex=="male" ? "blue" : userInfo.gender==="female"? "pink" :""} 
                         />}
                     </div>
-                    <div>{} <span style={{color:"gray"}}>likes</span>
+                    <div>{postsCount} <span style={{color:"gray"}}>posts</span>
                     </div>
                 </div>
 
             </div>
 
 
-            <PaneContainer userId={userId} where="userPage" keyword=""></PaneContainer>
+            <PaneContainer userId={userId} where="userPage" keyword="" postsCountGet={postsCountGet}></PaneContainer>
         </div>
     )
 }

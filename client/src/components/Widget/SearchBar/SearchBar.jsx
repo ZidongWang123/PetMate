@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 
-export default function SearchBar({ results, searchPost }) {
+export default function SearchBar({ results=[], searchPost }) {
   const [value, setValue] = React.useState(null);
 
   const handleKeyPress = (e) => {

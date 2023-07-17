@@ -1,9 +1,29 @@
-.ads-container {
+.ads-leftContainer {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  width: 10%;
+  align-items: center;
+  height: 700px;
+  position: fixed;
+  left: 0;
+  flex: 1,1;
+  z-index: 3;
+  
+  
+}
+.ads-rightContainer {
+    width: 10%;
     text-align: center;
     justify-content: center;
     display: flex;
-    border: 1px solid;
     flex: 1 1 10%;
     align-items: center;
-    height: 820px;
+    height: 700px;
+    right: 0;
+    position: fixed;
+  }
+  .adsPicture{
+    height: 400px;
+    width: 100%;
   }
