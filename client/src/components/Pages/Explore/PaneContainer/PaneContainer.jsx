@@ -66,7 +66,13 @@ const PaneContainer = ({userId="",keyword="",where="explore",postsCountGet=undef
 
         const newPosts=res.data.result
         if(postsCountGet){
-          postsCountGet(newPosts.length)
+          let likes=0
+          newPosts.forEach((item)=>{
+            likes+=item.likes.length
+          })
+          
+          postsCountGet(newPosts.length,likes)
+          
         }
         assignPosts(newPosts)
 
