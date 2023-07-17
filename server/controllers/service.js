@@ -90,8 +90,6 @@ export const getServicesBySearch = async (req, res) => {
     startDate,
     endDate,
   ] = req.body;
-
-  console.log('lala', city, petSpecies, type)
   try {
     const services = await ServiceMsg.find({
       city,
@@ -131,7 +129,7 @@ export const createService = async (req, res) => {
     startDate,
     endDate,
     location,
-    status: null,
+    status: 'active',
     price,
   });
 
@@ -196,14 +194,10 @@ export const deleteService = async (req, res) => {
 
 export const sendEmail = async (req, res) => {
   const { title, email, content } = req.body
-  //console.log(title,"title");
   try {
-
-    //console.log(title,"title");
     await requestEmail(email, title, content)
     res.status(200).json({ "msg": "Sent out successfully" })
   } catch (error) {
-    //console.log(error);
     res.status(500).json({ "msg": "Sending failed" })
   }
 

@@ -52,12 +52,9 @@ export const getServices = (page) => async (dispatch) => {
 export const getServicesBySorting = (page, sorting) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    console.log("ready to send request for sorting");
     const { data } = await api.fetchServicesBySorting(page, sorting);
 
     dispatch({ type: FETCH_SERVICE_SORTING, payload: data });
-    console.log(data);
-
     dispatch({ type: END_LOADING });
     console.log("sorting successfully", sorting);
   } catch (error) {

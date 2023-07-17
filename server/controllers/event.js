@@ -233,14 +233,10 @@ export const decrementParticipants = async (req, res) => {
 
 export const sendEmail=async(req,res)=>{
     const {title,email,content}=req.body
-    //console.log(title,"title");
     try {
-  
-      //console.log(title,"title");
       await requestEmail(email,title,content)
       res.status(200).json({"msg":"Sent out successfully"})
     } catch (error) {
-      //console.log(error);
       res.status(500).json({"msg":"Sending failed"})
     }
    
@@ -249,14 +245,10 @@ export const sendEmail=async(req,res)=>{
 
   export const sendEmailEvent=async(req,res)=>{
     const {title,email,content}=req.body
-    //console.log(title,"title");
     try {
-  
-      //console.log(title,"title");
       await requestEmail(email,title,content)
       res.status(200).json({"msg":"Sent out successfully"})
     } catch (error) {
-      //console.log(error);
       res.status(500).json({"msg":"Sending failed"})
     }
    

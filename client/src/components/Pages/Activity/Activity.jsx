@@ -123,7 +123,6 @@ const Activity = ({ activity, commonSteps, creationSteps }) => {
         dispatch(getEventsBySearch(allInputs));
       }
     }
-    console.log(allInputs);
   }, [dispatch, allInputs, isSelect, activity]);
 
   const onFinishCreationStep = (creationInputs) => {

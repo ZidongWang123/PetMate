@@ -47,7 +47,6 @@ const PaneItem = ({ post,likesCountGet=undefined,likesCount}) => {
         const res=await modifyLikes(post._id,{likes:list})
         
         if(res.status===200){
-          console.log(res.data.message)
           setLikes(list)
           setIsLiked(!isLiked)
         }

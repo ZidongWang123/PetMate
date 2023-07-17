@@ -11,7 +11,6 @@ const Applications = () => {
 
     const location = useLocation();
     const activityType = location.state.activityType;
-    console.log(activityType)
 
     React.useEffect(() => {
         getApplicationsByActivityId(id)

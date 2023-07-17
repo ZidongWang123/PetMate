@@ -174,10 +174,8 @@ const createGroup = async (req, res) => {
 };
 
 const addGroupPassword = async (req, res) => {
-  console.log("im here");
   const { id } = req.params;
   const { password } = req.body;
-  console.log("password", password);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such workout" });
   }
@@ -185,7 +183,6 @@ const addGroupPassword = async (req, res) => {
   // reason for await: this stp takes time to complete by design
   //argument: the number of rounds or the cost of the salt, 越大越安全,也让用户注册时间更长 default value:10
   const hash = await bcrypt.hash(password, salt);
-  console.log("hash", hash);
 
   const group = await Group.findByIdAndUpdate(
     id,
@@ -275,19 +272,16 @@ const joinGroup = async (req, res) => {
 };
 
 const verifyGroup = async (req, res) => {
-  console.log("im here");
   const { id } = req.params;
   const { password } = req.body;
   try {
     const existingGroup = await Group.findOne({ _id: id });
-    console.log("password", password);
-    console.log("existingGrouppassword", existingGroup.password);
 
     const isPasswordCorrect = await bcrypt.compare(
       password,
       existingGroup.password
     );
-    console.log("isPasswordCorrect", isPasswordCorrect);
+
     if (!isPasswordCorrect) {
       return res
         .status(400)

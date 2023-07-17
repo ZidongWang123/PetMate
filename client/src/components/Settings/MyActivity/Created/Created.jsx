@@ -21,7 +21,6 @@ const Created = ({ activityType }) => {
     const dispatch = useDispatch();
     React.useEffect(() => {
         if (activityType === 'services') {
-            console.log(user.result._id)
             dispatch(getServicesByUser(user.result._id)); //get all services
         }
 

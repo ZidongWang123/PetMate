@@ -32,12 +32,10 @@ const GroupList = ({ group }) => {
   };
   const handleTextChange = (value) => {
     setInputText(value);
-    console.log(inputText);
   };
   /* const Gpassword = group.password; */
 
   const onClick = () => {
-    console.log("Clicked");
     if (user && group.members && group.members.includes(user.result._id)) {
       navigate(`/groups/${group._id}`);
       setInputText("");
@@ -46,8 +44,6 @@ const GroupList = ({ group }) => {
       setText("please input the password:");
       setPic(JoinGroup);
       setIsOpen(true);
-      console.log(isOpen);
-      console.log("set ok");
     } else if (user) {
       navigate(`/groups/${group._id}`);
       setInputText("");
@@ -56,7 +52,6 @@ const GroupList = ({ group }) => {
       setPic(signInPic);
       setIsOpen(true);
       setInputText("");
-      console.log("not logged in");
     }
   };
 
@@ -87,12 +82,10 @@ const GroupList = ({ group }) => {
       }, 800);
       setIsFeedbackMsg(true);
     } else if (group.password) {
-      console.log("request", group._id, inputText);
       try {
         const response = await api.verifyGroup(group._id, {
           password: inputText,
         });
-        console.log("response:", response);
 
         // 根据后端的响应进行处理
         if (response.status === 200) {
@@ -128,7 +121,6 @@ const GroupList = ({ group }) => {
   };
 
   const handleJoinGroup = async () => {
-    console.log("join");
     const groupMemberData = {
       groupName: group.groupName,
       groupId: group._id,

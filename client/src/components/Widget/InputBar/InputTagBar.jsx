@@ -32,7 +32,6 @@ const InputTagBar = ({
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
-    console.log(e.target.value);
   };
   const onClose = (e) => {
     setInputValue("");

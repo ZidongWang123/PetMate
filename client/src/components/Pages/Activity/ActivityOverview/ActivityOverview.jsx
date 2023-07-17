@@ -64,7 +64,6 @@ const ActivityOverview = ({ activityData, activityType }) => {
   }, [activityData, application]);
 
   const handleChoose = (id) => {
-    console.log(activityType)
     navigator(`/${activityType}/${id}`);
   };
 

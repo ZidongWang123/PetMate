@@ -56,9 +56,7 @@ export default function CreatePost() {
         if(pictureDataURLs.length>9){
             setMsg("You can upload at most 9 pictures,please adjust the pictures")
             setSeverity(severityOptions.warning)
-            setIsFeedbackMsg(true)
-            console.log(pictureDataURLs)
-            
+            setIsFeedbackMsg(true)            
         }
         setPictures(pictureDataURLs)
     }
@@ -143,7 +141,6 @@ export default function CreatePost() {
             setIsFeedbackMsg(true)
         }
         else{
-            console.log(pictures.length)
             if(pictures.length>9){
 
                 setMsg("You can upload at most 9 pictures,please adjust the pictures")
