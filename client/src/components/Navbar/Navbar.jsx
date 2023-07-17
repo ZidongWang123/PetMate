@@ -39,7 +39,7 @@ const settings = [
 const myService = ['Applied Services', 'Created Services'];
 const myEvent = ['Applied Events', 'Created Events'];
 
-function Navbar({ handleSecNavbar }) {
+function Navbar({ handleSecNavbar,isAdsOpen,onAdsChange}) {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
