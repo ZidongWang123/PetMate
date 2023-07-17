@@ -1,3 +1,4 @@
+/* THis css define the form of Edit page*/
 @import url("https://fonts.font.im/css?family=Gloria+Hallelujah|Ubuntu:400,500");
 
 .editContent {
@@ -54,8 +55,8 @@
 }
 .author-name {
   font-weight: bold;
-  color: #393c7c; /* 修改作者名字的颜色 */
-  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  color: #393c7c;
+  font-family: "Comic Sans MS", cursive;
   font-size: 18px;
 }
 
@@ -79,7 +80,7 @@
 .post-timestamp {
   color: #888888;
   font-size: 14px;
-  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  font-family: "Comic Sans MS", cursive;
 }
 
 .button-group {
@@ -104,7 +105,7 @@
   border-radius: 20px;
   width: 100px;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; /*define the transition effect enabling smooth and gradual style changes over a specified duration.*/
 }
 
 .save-button:hover {
@@ -138,7 +139,7 @@
 
 .post-content-wrapper {
   margin-bottom: 20px;
-  font-family: "Comic Sans MS", cursive; /* 修改作者名字的字体 */
+  font-family: "Comic Sans MS", cursive;
 }
 
 .post-content {

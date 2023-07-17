@@ -24,13 +24,12 @@ router.get("/", getGroups);
 //GET my group
 router.get("/mygroups", auth, getMyGroups);
 
+//Join a group
+router.post("/:id/verifyGroup", auth, verifyGroup);
+router.post("/:id/joinGroup", auth, joinGroup);
+
 //GET a single group
 router.get("/:id", auth, getGroup);
-
-//Join a group
-router.post("/:id/joinGroup", auth, joinGroup);
-router.post("/:id/verifyGroup", auth, verifyGroup);
-
 //POST a new group
 router.post("/", auth, createGroup);
 
@@ -38,8 +37,7 @@ router.post("/", auth, createGroup);
 router.delete("/:id", auth, deleteGroup);
 
 //UPDATE a group
+router.patch("/:id/addGroupPassword", auth, addGroupPassword);
 router.patch("/:id", auth, updateGroup);
-
-router.patch("/:id", auth, addGroupPassword);
 
 export default router;

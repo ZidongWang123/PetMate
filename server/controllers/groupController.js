@@ -2,7 +2,7 @@ import Group from "../models/group.js";
 import mongoose from "mongoose";
 import Groupmember from "../models/groupmember.js";
 import articles from "../models/article.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 // get all groups
 const getGroups = async (req, res) => {
@@ -48,7 +48,7 @@ const getGroupsBySearch = async (req, res) => {
 
     const groups = await Group.find({
       $or: [{ groupName: title }, { intro: title }, { tags: { $in: title } }], // find groups that match either or
-    });
+    }).populate("creatorId", "name");
     /*   const groups = await Group.find({
       groupName: title, // find groups that match either or
     }); */
@@ -174,19 +174,22 @@ const createGroup = async (req, res) => {
 };
 
 const addGroupPassword = async (req, res) => {
+  console.log("im here");
   const { id } = req.params;
   const { password } = req.body;
+  console.log("password", password);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such workout" });
   }
-  const encryptedPassword = await bcrypt.hash(password, 12).catch((error) => {
-    console.log(error);
-    throw new Error("Error hashing password");
-  });
+  const salt = await bcrypt.genSalt(10);
+  // reason for await: this stp takes time to complete by design
+  //argument: the number of rounds or the cost of the salt, 越大越安全,也让用户注册时间更长 default value:10
+  const hash = await bcrypt.hash(password, salt);
+  console.log("hash", hash);
 
   const group = await Group.findByIdAndUpdate(
     id,
-    { password: encryptedPassword },
+    { password: hash },
     { new: true }
   );
 
@@ -263,7 +266,7 @@ const joinGroup = async (req, res) => {
   // 完成加入小组操作后，返回相应的数据
   try {
     await newMember.save();
-    const { groupId } = groupMemberData;
+    /*   const { groupId } = groupMemberData; */
     /*     await Group.findOneAndUpdate({ _id: groupId }, { $inc: { groupcount: 1 } }); */
     res.status(201).json(groupMemberData);
   } catch (error) {
@@ -272,25 +275,28 @@ const joinGroup = async (req, res) => {
 };
 
 const verifyGroup = async (req, res) => {
-  const { _id, password } = req.body;
-
+  console.log("im here");
+  const { id } = req.params;
+  const { password } = req.body;
   try {
-    const existingUser = await Group.findOne(_id);
-
-    if (!existingUser)
-      return res.status(404).json({ message: "User doesn't exist." });
+    const existingGroup = await Group.findOne({ _id: id });
+    console.log("password", password);
+    console.log("existingGrouppassword", existingGroup.password);
 
     const isPasswordCorrect = await bcrypt.compare(
       password,
-      existingUser.password
+      existingGroup.password
     );
+    console.log("isPasswordCorrect", isPasswordCorrect);
+    if (!isPasswordCorrect) {
+      return res
+        .status(400)
+        .json({ message: "Password is incorrect. Please try again." });
+    }
 
-    if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Invalid credentials." });
-
-    res.status(200).json({ result: existingUser });
+    res.status(200).json({ result: existingGroup });
   } catch (error) {
-    return res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ error: error.message });
   }
 };
 export {

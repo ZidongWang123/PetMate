@@ -2,17 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 import Avatar from "@mui/material/Avatar";
 import "@wangeditor/editor/dist/css/style.css"; // use for rich-text editor
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
-import { DomEditor } from "@wangeditor/editor";
 import { paArticlesInfo, getArticlesInfo } from "../../../../../api";
 import { toolbarConfig, editorConfig } from "../../../../../util/config";
 import { FormData } from "../../../../../util/index";
 import InputBar from "../../../../Widget/InputBar/InputBar";
-import "./edit.css"; // 引入自定义的 CSS 样式文件
+import "./edit.css"; // import the css form we defined
 import { useNavigate, useParams } from "react-router-dom";
 
 import Input from "../../../../Widget/Input/Input";
 const EditPost = () => {
-  //const { title, author, timestamp, content } = dummyData;
   const [editor, setEditor] = useState(null);
   const [article, setArticle] = useState(null);
   const [content, setContent] = useState("");
@@ -23,14 +21,14 @@ const EditPost = () => {
   const [titleValue, setTitleValue] = useState("");
   const editorRef = useRef();
 
-  const navigate = useNavigate();
-  let params = useParams();
-  const articlesId = params["id"];
+  const navigate = useNavigate();//navigation between pages
+  let params = useParams(); //access the parameter values from the current URL
+  const articlesId = params["id"];//take the id from params to the articleid
+
   const getArticlesInfoRequest = async () => {
-    const { data: articlesInfoResulet } = await getArticlesInfo(articlesId);
+    const { data: articlesInfoResulet } = await getArticlesInfo(articlesId); //extract the data property from the response and pass to articlesInfoResulet
     setArticle(articlesInfoResulet);
     setContent(articlesInfoResulet.content);
-    //console.log(articlesInfoResulet.title);
     setTitleValue(articlesInfoResulet.title);
     setPreviewImage(articlesInfoResulet.imageURL);
     setWidth(articlesInfoResulet.imageWidth || "200");
@@ -38,31 +36,30 @@ const EditPost = () => {
   };
   useEffect(() => {
     getArticlesInfoRequest();
-    // if(editor){
-    //   // const edito = editor.current.getInstance();
-    //   // const textStyle = edito.createTextStyle({ fontName: "Arial", fontSize: "medium" });
-    //   // edito.command(e => e.applyTextStyle(textStyle));
-    //   //console.log(editor.getConfig());
-    // }
   }, []);
+
+  // image edit 
   const onEditUploadImage = async () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
-    fileInput.accept = "image/*"; // 只接受图片类型的文件
+    fileInput.accept = "image/*"; // only accept image
     fileInput.addEventListener("change", handleFileChange);
-    fileInput.click();
+    fileInput.click(); //pop up window to choose 
   };
+  // image delete 
   const onDeleteUploadImage = async () => {
     setPreviewImage(null);
   };
   const handleFileChange = (event) => {
+    //accesses the files property of the target property of the event parameter to get the selected files. Only one file is selected-->index [0]
     const file = event.target.files[0];
-
+    // read content of the file 
     const reader = new FileReader();
+    // will be called when the file reading is complete
     reader.onload = () => {
-      //console.log(reader.result);
-      setPreviewImage(reader.result);
+      setPreviewImage(reader.result); // to show preview of image 
     };
+    //starts the file reading process and return as URL 
     reader.readAsDataURL(file);
     // 处理选择的文件
   };
@@ -75,7 +72,6 @@ const EditPost = () => {
     article.imageURL = previewImage;
     article.imageWidth = width;
     article.imageHeight = height;
-    //console.log(article);
     paArticlesInfoReuest(article._id, article);
     setTimeout(() => {
       navigate(`/groups/post/${articlesId}`);
@@ -105,9 +101,6 @@ const EditPost = () => {
                 initialValue={titleValue}
                 onInputChange={handleTitleChange}
               />
-              {/* <input type="text"   value={titleValue}  onChange={e => {
-		setTitleValue(e.target.value);
-	}} />      */}
             </h2>
           </div>
 
@@ -119,7 +112,7 @@ const EditPost = () => {
             <div className="author-details">
               <span className="author-name">{article.u_id.name}</span>
               <p className="post-timestamp">
-                {article.updated_at == article.date ? "Posted on" : "Edited on"}{" "}
+                {article.updated_at == article.date ? "Posted on" : "Edited on"}{" "}  
                 {FormData(article.updated_at)}
               </p>
             </div>
@@ -220,9 +213,6 @@ const EditPost = () => {
               />
             )}
           </div>
-          {/* <div className="post-content-wrapper">
-            <p className="post-content">{content}</p>
-          </div> */}
         </div>
       </div>
     )

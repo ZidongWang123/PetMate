@@ -37,7 +37,7 @@ export default (
       };
 
     case FETCH_BY_SEARCH_SERVICE:
-      return { ...state, services: action.payload };
+      return { ...state, services: action.payload.data };
     case FETCH_SERVICE:
       return { ...state, service: action.payload };
     case CREATE_SERVICE:

@@ -41,7 +41,7 @@ export const signup = async (req, res) => {
       throw Error("Email is not valid");
     }
     if (!validator.isStrongPassword(password)) {
-      throw Error("Password not strong enough");
+      return res.status(400).json({ message: "Password not strong enough" });
     }
     const existingUser = await User.findOne({ email });
 
@@ -73,50 +73,42 @@ export const signup = async (req, res) => {
   }
 };
 
-
-export const getPersonalInfo=async (req,res)=>{
-
+export const getPersonalInfo = async (req, res) => {
   const userId = req.params.userId;
-  try{
+  try {
     const result = await User.findById(userId).exec();
     if (result) {
-      res.status(200).json({result, message: 'personal info got' });
+      res.status(200).json({ result, message: "personal info got" });
     } else {
-      res.status(404).json({ message: 'user not found' });
+      res.status(404).json({ message: "user not found" });
     }
-
-  }catch(error){
-    res.status(500).json({ message: 'Failed to get personal infomation' });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to get personal infomation" });
   }
-}
+};
 
-export const modifyPersonalInfo=async(req,res)=>{
+export const modifyPersonalInfo = async (req, res) => {
   const userId = req.params.userId;
   const updatedInfo = req.body;
-  try{
-    await User.findByIdAndUpdate(userId, updatedInfo)
-    res.status(200).json({ message: 'successfully updated'} )
-
-  }catch(error){
-    res.status(500).json({ message: 'Failed to update personal information' });
+  try {
+    await User.findByIdAndUpdate(userId, updatedInfo);
+    res.status(200).json({ message: "successfully updated" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update personal information" });
   }
-}
+};
 
+export const getArticles = async (req, res) => {
+  const { userId } = req.params;
+  const query = { u_id: userId };
 
-
-export const getArticles=async(req, res)=>{
-
-  const {userId}=req.params
-  const query={"u_id": userId}
-  
-
-  try{
-    const articlesResulet = await articles.find(query).populate('g_id', 'groupName').populate('u_id', 'name')
+  try {
+    const articlesResulet = await articles
+      .find(query)
+      .populate("g_id", "groupName")
+      .populate("u_id", "name");
     res.status(200).json(articlesResulet);
-
-  }catch(error){
-    res.status(500).json({ message: 'Failed to update personal information' });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update personal information" });
   }
-
-  
-}
+};

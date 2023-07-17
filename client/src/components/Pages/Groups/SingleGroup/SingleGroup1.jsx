@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./Single.css"; // 引入自定义的CSS样式文件
-//import SearchBar from "../../../Widget/searchBar";
-//import SearchBar from "../../Widget/searchBar/searchBar";
+import "./Single.css";
 import SearchBar from "../../../Widget/SearchBar/SearchBar";
 import SingleGroupDetail from "./SingleGroupDetail.jsx";
-
-/* import Avatar from "@mui/material/Avatar";
-import BasicTable from "../../../Widget/TableBar/TableBar"; */
-//import { darkPurple, brightGreen, brightPurple, orange } from '../../../constant/actionTypes';
 import { Link, useParams } from "react-router-dom";
 import {
   getGroupsArticles,
@@ -19,16 +13,6 @@ import TableFilter from "../../../Widget/TableFilter/TableFilter";
 
 export const orange = "#F0A860";
 
-// TODO
-/* const GroupDetails = ({ group, id }) => {
-  const user = JSON.parse(localStorage.getItem("profile"));
-
-  if (!user) {
-    return <SignInWarning />;
-  }
-
-  return <SingleGroupDetail />;
-}; */
 const SingleGroup1 = () => {
   const [articles, setArticles] = useState([]);
   const [group, setGroup] = useState([]);
@@ -60,7 +44,7 @@ const SingleGroup1 = () => {
       flex: 1,
       renderCell: (params) => (
         <Link
-          to={`/myposts/${params.row.u_id}`}
+          to={`/myarticles/${params.row.u_id}`}
           style={{ textDecoration: "none" }}
         >
           {params.row.Author}
@@ -100,12 +84,6 @@ const SingleGroup1 = () => {
 
   const topicsArray = articles && articles.map((article) => article.Topics);
 
-  //请求群组信息
-  /*   const getGroupInfoRequest = async () => {
-    const {data:groupResulet} = await getGroupInfo(groupId);
-    console.log(groupResulet, "groupResulet");
-    setGroup(groupResulet);
-  }; */
   useEffect(() => {
     getGroupsArticlesRequest();
     /*  getGroupInfoRequest(); */
@@ -143,9 +121,6 @@ const SingleGroup1 = () => {
     <div>
       <SearchBar results={topicsArray} searchPost={searchPost} />
       <SingleGroupDetail />
-      {/* {articles.length!=0&&<Forum articles={articles}/>} */}
-      {/* {articles.length!=0&&<BasicTable data={articles} columns={columns}></BasicTable>} */}
-
       <TableFilter columns={columns} data={articles}></TableFilter>
     </div>
   );

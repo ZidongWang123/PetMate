@@ -27,7 +27,7 @@ function useQuery() {
 const Groups = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const query = useQuery();
-  const searchQuery = query.get("searchQuery");
+  const searchQuery = query.get("keyword");
   const navigate = useNavigate();
   const [text, setText] = React.useState("");
   const [pic, setPic] = React.useState("");
@@ -65,8 +65,12 @@ const Groups = () => {
   const dispatch = useDispatch();
   const { groups, isLoading } = useSelector((state) => state.groups);
   React.useEffect(() => {
-    dispatch(getGroups());
-  }, [dispatch]);
+    if (!searchQuery) {
+      dispatch(getGroups());
+    } else {
+      searchGroups(searchQuery);
+    }
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>; // 显示加载中的提示
@@ -80,16 +84,21 @@ const Groups = () => {
   const groupNames =
     Array.isArray(groupResults) &&
     groupResults.map(({ recommended }) => recommended);
+
   const searchGroups = async (value) => {
     console.log("from parent components", value);
 
     if (value) {
-      dispatch(getGroupsBySearch(value));
+      const queryParams = new URLSearchParams();
+      queryParams.append("keyword", value);
+      await dispatch(getGroupsBySearch(value));
+      const path = "/groups";
+      const url = `${path}?${queryParams.toString()}`;
+      navigate(url);
     } else {
       dispatch(getGroups());
     }
   };
-
   return (
     <div className="groups">
       <div style={{ display: "flex", alignItems: "center" }}>

@@ -1,52 +1,43 @@
-.userPageProfil{
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    direction: "row";
-
-    
+.userPageProfil {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  direction: "row";
 }
-.myPosts{
-    width: 80%;
-    /* display: flex;
-    justify-content: center; */
-
-    
+.myPosts {
+  width: 80%;
 }
 .forum-post {
-    display: flex;
-    align-items: center;
-}
-  
-  
-.header-post
- {
-    margin-right: 10px; /* 调整具体的间距值 */
+  display: flex;
+  align-items: center;
 }
 
-.header-group{
-
-    margin-right: 300px;
+.header-post {
+  margin-right: 10px;
 }
 
-.header-date{
-    margin-right: 500px;
+.header-group {
+  margin-right: 300px;
+}
+
+.header-date {
+  margin-right: 500px;
 }
 
 .post-list {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-  
+
 .post {
-    margin-right: 400px;
+  margin-right: 400px;
 }
-  
+
 .group {
-    margin-right: 500px;
+  margin-right: 500px;
 }
-  
-.post-date{
-    margin-right: 350px; /* 调整右侧的间距 */
+
+.post-date {
+  margin-right: 350px;
 }

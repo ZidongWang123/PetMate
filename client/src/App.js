@@ -29,8 +29,6 @@ import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
 import ActivityPage from "./components/Pages/Activity/ActivityPage/ActivityPage";
 import Subscription from "./components/Navbar/Subscription";
 import Applications from "./components/Settings/Application/Applications";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import PaypalPayment from "./components/PaypalPayment/PaypalPayment";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -67,13 +65,6 @@ const App = () => {
     }
   };
 
-  const initialOptions = {
-    clientId:
-      "Ad8WcNeM12p5gnrqaZUIKL-5x9mP9JpRaNSulzlMFkcDcPI3xSwU013KEXgvPwyiDUslvp2rWIttfjOa",
-    currency: "USD",
-    intent: "capture",
-  };
-
   return (
     <PayPalScriptProvider options={initialOptions}>
       <BrowserRouter>
@@ -103,8 +94,8 @@ const App = () => {
               <Route path="/service" element={<Service />} />
               <Route path="/howitworks" element={<AppIntro />} />
               <Route path="/personalInfo" element={<PersonalInfo />} />
-              <Route path="/myposts" element={<MyPosts />} />
-              <Route path="/myposts/:userId" element={<MyPosts />} />
+              <Route path="/myarticles" element={<MyPosts />} />
+              <Route path="/myarticles/:userId" element={<MyPosts />} />
               <Route path="/mygroups" element={<MyGroups />} />
               <Route path="/userExplorePosts/:userId" element={<UserPage />} />
               <Route path="/explore/post/create" element={<CreatePost />} />
@@ -118,24 +109,24 @@ const App = () => {
               <Route path="/:activityType/:id" element={<ActivityPage />} />
               <Route path="/subscription" element={<Subscription />} />
 
-                <Route
-                  path="/appliedevents"
-                  element={<Applied activityType={activityTypes[0]} />}
-                />
-                <Route
-                  path="/appliedservices"
-                  element={<Applied activityType={activityTypes[1]} />}
-                />
-                <Route
-                  path="/createdevents"
-                  element={<Created activityType={activityTypes[0]} />}
-                />
-                <Route
-                  path="/createdservices"
-                  element={<Created activityType={activityTypes[1]} />}
-                />
+              <Route
+                path="/appliedevents"
+                element={<Applied activityType={activityTypes[0]} />}
+              />
+              <Route
+                path="/appliedservices"
+                element={<Applied activityType={activityTypes[1]} />}
+              />
+              <Route
+                path="/createdevents"
+                element={<Created activityType={activityTypes[0]} />}
+              />
+              <Route
+                path="/createdservices"
+                element={<Created activityType={activityTypes[1]} />}
+              />
 
-                <Route path="/applications/:id" element={<Applications />} />
+              <Route path="/applications/:id" element={<Applications />} />
 
                 {!user ? (
                   <Route path="/auth" element={<Auth />} />

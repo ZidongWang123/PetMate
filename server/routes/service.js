@@ -18,7 +18,7 @@ router.get("/", getServices);
 router.get("/sorting", getServicesBySorting);
 router.get("/:id", getService);
 
-router.get("/search", getServicesBySearch);
+router.post("/search", getServicesBySearch);
 
 router.post("/", auth, createService);
 router.post("/sendEmail",auth, sendEmail);

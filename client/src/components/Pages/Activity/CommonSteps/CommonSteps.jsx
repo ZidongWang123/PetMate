@@ -13,7 +13,7 @@ import DateSelecter from "../../../Widget/DateSelecter/DateSelecter";
 
 import { darkPurple, brightGreen } from '../../../../constant/actionTypes';
 
-const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
+const CommonSteps = ({ steps, showStepper, onFinishCommonStep }) => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [showDateError, setShowDateError] = React.useState(false);
     const [stepInputs, setStepInputs] = React.useState(['', '', '', '', '']);//TODO: length of stepInputs should be the same as steps.length
@@ -26,9 +26,9 @@ const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
 
     const selectStartDate = (date) => {
         if (stepInputs[4] !== '') {
-            if(date > stepInputs[4]){
-                setShowDateError(true);    
-            }else{
+            if (date > stepInputs[4]) {
+                setShowDateError(true);
+            } else {
                 setShowDateError(false);
             }
         }
@@ -39,9 +39,9 @@ const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
 
     const selectEndDate = (date) => {
         if (stepInputs[3] !== '') {
-            if( date < stepInputs[3]){
-                setShowDateError(true);    
-            }else{
+            if (date < stepInputs[3]) {
+                setShowDateError(true);
+            } else {
                 setShowDateError(false);
             }
         }
@@ -71,7 +71,6 @@ const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
         onFinishCommonStep(stepInputs);
         setStepInputs(['', '', '', '', '']);
         setActiveStep(0);
-        //todo: send stepInputs to backend
     };
 
     return (
@@ -204,13 +203,13 @@ const CommonSteps = ({steps, showStepper, onFinishCommonStep}) => {
                                 fontWeight: 'bold',
                                 color: darkPurple,
                             }}>All steps completed - you&apos;re finished !</Typography>
-                            <Button 
+                            <Button
                                 onClick={handleGoNext} sx={{
-                                mt: 1, mr: 1, fontFamily: 'Comic Sans MS',
-                                fontWeight: 'bold',
-                                color: 'white',
-                                backgroundColor: brightGreen,
-                            }}>
+                                    mt: 1, mr: 1, fontFamily: 'Comic Sans MS',
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    backgroundColor: brightGreen,
+                                }}>
                                 Go Next
                             </Button>
                             <Button

@@ -1,5 +1,6 @@
 import EventMsg from "../models/event.js";
 import mongoose from "mongoose";
+import requestEmail from "../middleware/sendEmailEvent.js"
 
 export const getEvent = async (req, res) => {
     const { id } = req.params;
@@ -82,12 +83,22 @@ export const getEventsBySorting = async (req, res) => {
  * @param {*} res
  */
 export const getEventsBySearch = async (req, res) => {
-    const { tags } = req.query;
+    const [
+        city,
+        petSpecies,
+        type,
+        startDate,
+        endDate,
+    ] = req.body;
 
     try {
-        const regex = new RegExp(tags.split(",").join("|"), "i");
-        const events = await EventMsg.find({ $or: [{ title: regex }] });
-
+        const events = await EventMsg.find({
+            city,
+            petSpecies,
+            type,
+            startDate,
+            endDate,
+        });
         res.json({ data: events });
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -191,7 +202,7 @@ export const incrementParticipants = async (req, res) => {
         if (!event) {
             return res.status(404).send("No event found with that id");
         }
-        const updated = await EventMsg.findByIdAndUpdate(_id, { $inc: {currentParticipants: 1} }, {
+        const updated = await EventMsg.findByIdAndUpdate(_id, { $inc: { currentParticipants: 1 } }, {
             new: true,
         });
 
@@ -200,3 +211,54 @@ export const incrementParticipants = async (req, res) => {
         res.status(500).json({ message: "Failed to update event" });
     }
 };
+
+export const decrementParticipants = async (req, res) => {
+    const { id: _id } = req.params;
+
+    try {
+        const event = await EventMsg.findById(_id);
+        if (!event) {
+            return res.status(404).send("No event found with that id");
+        }
+
+        const updated = await EventMsg.findByIdAndUpdate(_id, { $inc: { currentParticipants: -1 } }, {
+            new: true,
+        });
+
+        res.status(200).json({ message: "Successfully updated" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to update event" });
+    }
+};
+
+export const sendEmail=async(req,res)=>{
+    const {title,email,content}=req.body
+    //console.log(title,"title");
+    try {
+  
+      //console.log(title,"title");
+      await requestEmail(email,title,content)
+      res.status(200).json({"msg":"Sent out successfully"})
+    } catch (error) {
+      //console.log(error);
+      res.status(500).json({"msg":"Sending failed"})
+    }
+   
+   
+  }
+
+  export const sendEmailEvent=async(req,res)=>{
+    const {title,email,content}=req.body
+    //console.log(title,"title");
+    try {
+  
+      //console.log(title,"title");
+      await requestEmail(email,title,content)
+      res.status(200).json({"msg":"Sent out successfully"})
+    } catch (error) {
+      //console.log(error);
+      res.status(500).json({"msg":"Sending failed"})
+    }
+   
+   
+  }

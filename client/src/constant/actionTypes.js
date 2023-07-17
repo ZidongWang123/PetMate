@@ -30,9 +30,9 @@ export const FETCH_BY_SEARCH_EVENT = "FETCH_BY_SEARCH_EVENT";
 export const FETCH_USER_EVENT = "FETCH_USER_EVENT";
 
 //-----------------application related constant-----------
-export const PENDING = 'pending';
-export const APPROVED = 'approved';
-export const REJECT = 'rejected';
+export const PENDING = "pending";
+export const APPROVED = "approved";
+export const REJECT = "rejected";
 export const FETCH_ALL_APPLICATIONS_SERVICE = "FETCH_ALL_APPLICATIONS_SERVICE";
 export const FETCH_ALL_APPLICATIONS_EVENT = "FETCH_ALL_APPLICATIONS_EVENT";
 
@@ -48,6 +48,7 @@ export const CREATE_GROUP = "CREATE_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const DELETE_GROUP = "DELETE_GROUP";
 export const JOIN_GROUP = "JOIN_GROUP";
+export const UPDATE_GROUP_PASSWORD = "UPDATE_GROUP_PASSWORD";
 
 //font color and background color
 export const paleYellow = "rgb(245, 242, 236)";
@@ -57,3 +58,4 @@ export const brightGreen = "#9AC7BF";
 export const brightPurple = "#9C62F2";
 export const darkGray = "#3F3F3F";
 export const brightOrange = "#ff8000";
+export const bGreen = "#E4ECE5";
