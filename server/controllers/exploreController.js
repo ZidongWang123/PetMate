@@ -118,7 +118,6 @@ export const getExplorePosts=async(req,res)=>{
 
         return res.status(200).json({result: newPosts, message: "Successfully got tagsList" })
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: 'failed, internal server error' });
     }
 }
@@ -129,13 +128,10 @@ export const modifyLikes= async (req,res)=>{
     
     updatedInfo.likes=updatedInfo.likes.map((item)=>(new mongoose.Types.ObjectId(item)))
     try{
-        console.log(updatedInfo)
         const a =await ExplorePost.findByIdAndUpdate(postId, updatedInfo)
-        console.log(a)
         res.status(200).json({ message: 'successfully liked'} )
     
       }catch(error){
-        console.log(error)
         res.status(500).json({ message: 'Failed to update likes' });
       }
 
@@ -163,7 +159,6 @@ export const getSinglePost= async (req,res)=>{
 export const deletePost=async (req,res)=>{
     const postId=req.params.postId
     try{
-        console.log(postId)
         await ExplorePost.findByIdAndDelete(postId)
 
         res.status(200).json({ message: 'successfully deleted'})

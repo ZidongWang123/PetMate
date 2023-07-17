@@ -35,7 +35,6 @@ const Groups = () => {
   /*   const [search, setSearch] = React.useState(""); */
   /*   const [search, setSearch] = React.useState(""); */
   const onClick = () => {
-    console.log("Clicked");
     if (user && user.result.isPrime) {
       navigate("/groups/create-group");
     } else if (user) {
@@ -46,7 +45,6 @@ const Groups = () => {
       setText(LoginText);
       setPic(signInPic);
       setIsOpen(true);
-      console.log("not logged in");
     }
   };
 
@@ -86,8 +84,6 @@ const Groups = () => {
     groupResults.map(({ recommended }) => recommended);
 
   const searchGroups = async (value) => {
-    console.log("from parent components", value);
-
     if (value) {
       const queryParams = new URLSearchParams();
       queryParams.append("keyword", value);

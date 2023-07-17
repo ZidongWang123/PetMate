@@ -51,12 +51,9 @@ export const getEventsByUser = (userId) => async (dispatch) => {
 
 export const getEventsBySorting = (page, sorting) => async (dispatch) => {
     try {
-        console.log("ready to send request for sorting");
         const { data } = await api.fetchEventsBySorting(page, sorting);
 
         dispatch({ type: FETCH_EVENT_SORTING, payload: data });
-        console.log(data);
-        console.log("sorting successfully", sorting);
     } catch (error) {
         console.log(error);
     }

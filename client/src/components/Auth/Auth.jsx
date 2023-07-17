@@ -32,7 +32,6 @@ const Auth = () => {
       dispatch(signup(formData, navigate)).then((errorMessage) => {
         if (errorMessage) {
           setError(errorMessage);
-          console.log("error", errorMessage);
         }
       });
     } else {

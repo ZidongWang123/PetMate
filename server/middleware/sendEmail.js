@@ -2,7 +2,6 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
 const { Sender, HOST, PASS } = process.env;
-console.log(Sender, HOST, PASS);
 export default async function requestEmail(email, title, content) {
   let transporter = nodemailer.createTransport({
     host: HOST, // smtp host adress
@@ -14,7 +13,6 @@ export default async function requestEmail(email, title, content) {
     },
     connectionTimeout: 5 * 60 * 1000,
   });
-  console.log("Log in successfully");
   // define the transporter object to send email
   let info = await transporter.sendMail({
     from: Sender, // sender address
@@ -22,6 +20,4 @@ export default async function requestEmail(email, title, content) {
     subject: title, // Subject of email 
     text: content,//content of email 
   });
-  console.log(email);
-  console.log("Sent out successfully");
 }

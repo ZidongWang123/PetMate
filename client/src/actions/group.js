@@ -29,7 +29,6 @@ export const getGroup = (id) => async (dispatch) => {
     dispatch({ type: START_LOADING });
     dispatch({ type: FETCH_GROUP, payload: data });
     dispatch({ type: END_LOADING });
-    console.log(data);
   } catch (error) {
     console.log(error.message);
   }
@@ -37,11 +36,8 @@ export const getGroup = (id) => async (dispatch) => {
 
 export const getMyGroups = () => async (dispatch) => {
   try {
-    console.log("group here");
     const { data } = await api.fetchMyGroups();
-    console.log(data);
     dispatch({ type: FETCH_MY_GROUPS, payload: data });
-    console.log(data);
   } catch (error) {
     console.log(error.message);
   }
@@ -53,7 +49,6 @@ export const getGroupsBySearch = (searchQuery) => async (dispatch) => {
     const {
       data: { data },
     } = await api.fetchGroupsBySearch(searchQuery);
-    console.log(data);
     dispatch({ type: FETCH_GROUPS_BY_SEARCH, payload: data });
     dispatch({ type: END_LOADING });
   } catch (error) {
@@ -63,12 +58,8 @@ export const getGroupsBySearch = (searchQuery) => async (dispatch) => {
 
 export const createGroup = (group) => async (dispatch) => {
   try {
-    console.log("group here");
     const { data } = await api.createGroup(group);
     const groupId = data._id;
-
-    console.log("api create succeed", data);
-    console.log("action", groupId);
     dispatch({ type: CREATE_GROUP, payload: data });
     return groupId;
   } catch (error) {
@@ -80,9 +71,7 @@ export const createGroup = (group) => async (dispatch) => {
 export const joinGroup = (id, newMemberData) => async (dispatch) => {
   try {
     const { data } = await api.joinGroup(id, newMemberData);
-    console.log("api request sends", data);
     dispatch({ type: JOIN_GROUP, payload: data });
-    console.log("dispatch succeed");
   } catch (error) {
     console.log(error.message);
   }

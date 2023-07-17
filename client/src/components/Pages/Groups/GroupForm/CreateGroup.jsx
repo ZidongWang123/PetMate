@@ -26,7 +26,6 @@ export const CreateGroup = () => {
   const [inputText, setInputText] = useState("your password");
   const handleTextChange = (value) => {
     setInputText(value);
-    console.log(inputText);
   };
   const [showFeedbackMsg, setShowFeedbackMsg] = useState(false);
   const [message, setMessage] = useState("Update successfully");
@@ -42,20 +41,16 @@ export const CreateGroup = () => {
   const handleCreate = async () => {
     try {
       const createdGroupId = await dispatch(createGroup({ ...groupData }));
-      console.log("createdGroupId", createdGroupId);
       setGroupId(createdGroupId);
       setPic(JoinGroup);
       setIsOpen(true);
     } catch (error) {
-      /*  console.log("error:", error); */
-      console.log(error);
       setMessage(error.response.data.error);
       setSeverity("error");
       setShowFeedbackMsg(true);
     }
   };
   const onConfirm = async () => {
-    console.log("newgroupId", groupId);
     try {
       const response = await api.addGroupPassword(groupId, {
         password: inputText,

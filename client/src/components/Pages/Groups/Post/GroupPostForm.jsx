@@ -59,9 +59,6 @@ const GroupPostForm = () => {
     // 更新选中的标签状态
 
     setTag(tags);
-    //console.log(tags);
-    // 在标签数据变化时触发回调函数
-    // 可以在这里进行其他处理
   };
 
   //groupintro
@@ -69,7 +66,6 @@ const GroupPostForm = () => {
 
   const handleIntroChange = (value) => {
     setIntro(value);
-    console.log(intro);
   };
 
   const handleEmojiClick = (emoji) => {
@@ -168,7 +164,7 @@ const GroupPostForm = () => {
       poArticlesInfoRequest(article)
       setTimeout(()=>{
         navigate(`/groups/${groupId}`)
-      },1000)      // console.log(name,tag,intro,previewImage);
+      },1000)
     }
   };
 

@@ -47,26 +47,18 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
 
   const handleNameChange = (value) => {
     setGroupData({ ...groupData, groupName: value });
-    console.log(groupData);
   };
 
   //tags
 
   const handleTagsChange = (tags) => {
-    // 更新选中的标签状态
-
     setGroupData({ ...groupData, tags: tags });
-    console.log(groupData.tags);
-    // 在标签数据变化时触发回调函数
-    // 可以在这里进行其他处理
   };
 
   //groupintro
 
   const handleIntroChange = (value) => {
     setGroupData({ ...groupData, intro: value });
-
-    console.log(groupData);
   };
 
   const handleEmojiClick = (emoji) => {
@@ -74,8 +66,6 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
       ...prevData,
       intro: prevData.intro + emoji,
     }));
-    /* console.log(groupData.intro); */
-    console.log(groupData);
   };
 
   //avatar
@@ -142,7 +132,6 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
 
   const handleCreate = async (e) => {
     e.preventDefault(); // normally for refreshing the page
-    console.log("IM HERE", groupData);
     handleSubmit();
   };
 

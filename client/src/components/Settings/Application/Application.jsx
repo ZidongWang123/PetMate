@@ -40,12 +40,10 @@ const Application = ({ application, isEvent }) => {
   const [showFeedbackMsg, setShowFeedbackMsg] = React.useState(false);
   const fetchServiceRequest = async () => {
     const { data } = await fetchService(application.activityId);
-    console.log(data);
     setData(data);
   };
   const fetchEventRequest = async () => {
     const { data } = await fetchEvent(application.activityId);
-    console.log(data);
     setData(data);
   };
   const handelfeebackMsgClose = () => {
@@ -55,7 +53,6 @@ const Application = ({ application, isEvent }) => {
   let item;
   const handleApprove = async () => {
     if (isEvent) {
-      console.log(application.activityId);
       incrementParticipants(application.activityId);
       sendEmailEvent({
         email: applicant.email,

@@ -94,7 +94,6 @@ const SingleGroupDetail = () => {
     fetchGroup();
   };
   const searchTag = async (value) => {
-    console.log("search", value);
 
     const queryParams = new URLSearchParams();
     queryParams.append("keyword", value);

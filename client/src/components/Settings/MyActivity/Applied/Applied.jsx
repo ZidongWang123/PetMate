@@ -96,7 +96,6 @@ const Applied = ({ activityType }) => {
 
     const withdraw = (activityData) => {
         if(activityType === 'events' && activityData.applicationStatus === APPROVED){
-            console.log(activityData)
             decrementParticipants(activityData._id)
             .then(() => {
                 deleteApplication(activityData.applicationId);
