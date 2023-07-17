@@ -18,6 +18,7 @@ export default function UserPage(){
     const{userId} = useParams();
     const[userInfo,setUserInfo]=useState({})
     const[postsCount,setPostsCount]=useState(0)
+    const[likes,setLikes]=useState(0)
     const fetcbPersonalInfo=async(userId)=>{
         try{
     
@@ -32,8 +33,9 @@ export default function UserPage(){
             console.log(error)
         }
     }
-    const postsCountGet=(value)=>{
-        setPostsCount(value)
+    const postsCountGet=(postsCount,likesCount)=>{
+        setPostsCount(postsCount)
+        setLikes(likesCount)
     }
 
     useEffect( ()=>{
@@ -74,7 +76,9 @@ export default function UserPage(){
                             color={userInfo.sex=="male" ? "blue" : userInfo.gender==="female"? "pink" :""} 
                         />}
                     </div>
-                    <div>{postsCount} <span style={{color:"gray"}}>posts</span>
+                    <div style={{display:"flex"}}>
+                        <span style={{color:"gray",fontFamily:"ubuntu"}}>{postsCount}&nbsp;posts &nbsp;|&nbsp;</span>
+                        <span style={{color:"gray",fontFamily:"ubuntu"}}>{likes}&nbsp;likes</span>
                     </div>
                 </div>
 

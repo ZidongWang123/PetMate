@@ -114,7 +114,7 @@ export const getExplorePosts=async(req,res)=>{
             
             ...(argus.where === "userPage" ?[]: [{ $sample: { size: parseInt(argus.size) } }])
             , ...(argus.where === "userPage" ?[{ $sort: { createdAt: 1 }}]: [])
-        ])
+        ],{ allowDiskUse: true })
 
         return res.status(200).json({result: newPosts, message: "Successfully got tagsList" })
     } catch (error) {
