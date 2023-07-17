@@ -95,7 +95,7 @@ const PersonalInfo = () => {
             <DateItem attribute={userInfo.birthday} userId={userInfo._id} title={"birthday"} onConfirmChange={onInfoUpdate}></DateItem>
             <InfoItem attribute={userInfo.intro} userId={userInfo._id} title={"intro"} onConfirmChange={onInfoUpdate} inputLength={60} inputWidth={"460px"}></InfoItem>
             {userInfo.isPrime&&
-           <FixedInfo title="Prime"></FixedInfo>
+           <FixedInfo title="Prime">{userInfo.startTime} - {userInfo.dueTime}</FixedInfo>
 
             }
             <FeedbackMsg status={isFeedbackMsg} severity={severity.success} message={msg.successful} onClose={handelfeebackMsgClose}></FeedbackMsg>

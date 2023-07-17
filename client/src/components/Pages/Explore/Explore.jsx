@@ -22,17 +22,21 @@ const Explore = () => {
   const [text,setText]=React.useState("") 
   const [pic,setPic]=React.useState("") 
   const [isOpen,setIsOpen]=React.useState(false)
+  const [path,setPath]=React.useState("")
   // const [keyword,setKeyword]=React.useState("")
     const onClick=()=>{
     if(user&&user.result.isPrime){
       navigate("/explore/post/create")   
     }
     else if(user){
+      // setOnConfirm(onConfirmSubscribe)
+      setPath("/subscription")
       setText(subscribeText)
       setPic(bePrimePic)
       setIsOpen(true)
     }
     else{
+      setPath("/auth")
       setText(LoginText)
       setPic(signInPic)
       setIsOpen(true)
@@ -56,8 +60,9 @@ const Explore = () => {
     
     setIsOpen(false)
     
-    navigate("/auth")   
+    navigate(path)   
   }
+
   const onCancel=()=>{
     setIsOpen(false)
   }

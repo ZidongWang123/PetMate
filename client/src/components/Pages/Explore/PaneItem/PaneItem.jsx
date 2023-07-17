@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const LoginText="Please log in first!"
 
-const PaneItem = ({ post}) => {
+const PaneItem = ({ post,likesCountGet=undefined,likesCount}) => {
 
   const user=JSON.parse(localStorage.getItem("profile"))
   let initialLikeState=false
@@ -35,7 +35,13 @@ const PaneItem = ({ post}) => {
         let list=[...likes]
         if(!isLiked){
           list.push(user.result._id)
+          if(likesCountGet){
+            likesCountGet(likesCount+1)
+          }
         }else{
+          if(likesCountGet){
+            likesCountGet(likesCount-1)
+          } 
           list=list.filter(item=>item!==user.result._id)
         }
         const res=await modifyLikes(post._id,{likes:list})
@@ -103,6 +109,7 @@ const PaneItem = ({ post}) => {
         count={likes.length} 
         isLiked={isLiked} 
         onClick={handleLikeClick}
+
       />
       <div style={{padding:"8px"}}>
         <div style={{marginBottom:"5px",maxWidth:"204px"}}>
