@@ -20,6 +20,10 @@ export const signin = async (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Invalid credentials." });
 
+    const currentTime = new Date();
+    if (existingUser.dueTime < currentTime) {
+      existingUser.isPrime = false;
+    }
     //Limit the validity of the JWT to 1 hour
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
