@@ -33,8 +33,11 @@ export default function UserPage(){
             console.log(error)
         }
     }
-    const postsCountGet=(postsCount,likesCount)=>{
+    const postsCountGet=(postsCount)=>{
         setPostsCount(postsCount)
+
+    }
+    const likesCountGet=(likesCount)=>{
         setLikes(likesCount)
     }
 
@@ -85,7 +88,7 @@ export default function UserPage(){
             </div>
 
 
-            <PaneContainer userId={userId} where="userPage" keyword="" postsCountGet={postsCountGet}></PaneContainer>
+            <PaneContainer userId={userId} where="userPage" keyword="" postsCountGet={postsCountGet} likesCountGet={likesCountGet} likes={likes}></PaneContainer>
         </div>
     )
 }

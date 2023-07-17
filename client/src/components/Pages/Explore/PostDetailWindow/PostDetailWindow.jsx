@@ -14,6 +14,7 @@ import { deletePost } from "../../../../api";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg";
 import signInPic from "../../../../images/dabengou/SignInPic.jpg";
 import Warning from "../../../Widget/ConfirmDialog/Warning";
+import Tooltip from '@mui/material/Tooltip';
 
 const warningText="Sure to delete the post？"
 const severityOptions = { success: "success", failure: "error" }
@@ -225,16 +226,21 @@ export default function PostDetailWindow({post,isOpen,onClose,count,isLiked,onCl
                 <span style={{float:"right"}}>
                 {user&&post.creatorId===user.result._id&&
                 <Link to={`/explore/post/editPost/${post._id}`}>
-                    <FontAwesomeIcon className="clickIcon" icon={faEdit} > </FontAwesomeIcon>
+                    <Tooltip title="edit">
+                        <FontAwesomeIcon className="clickIcon" icon={faEdit} > </FontAwesomeIcon>
+                    </Tooltip>
                 </Link>
                 }
                 {user&&post.creatorId===user.result._id&&
-                <FontAwesomeIcon 
-                    className="clickIcon" 
-                    icon={faTrash} 
-                    onClick={onDeleteClick} 
-                    color="black"> 
-                </FontAwesomeIcon>}
+                <Tooltip title="delete">
+                    <FontAwesomeIcon 
+                        className="clickIcon" 
+                        icon={faTrash} 
+                        onClick={onDeleteClick} 
+                        color="black"> 
+                    </FontAwesomeIcon>
+                </Tooltip>}
+
                 </span>
             </div>
         </div>
