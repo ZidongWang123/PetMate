@@ -185,7 +185,7 @@ const GroupList = ({ group }) => {
               {user && group.creatorName === user.result.name && (
                 <p className="group-creater">Created by: You</p>
               )}
-              {group.creatorName && (
+              {group.creatorName !== user.result.name && (
                 <p className="group-creater">Created by: {group.creatorName}</p>
               )}
             </div>
