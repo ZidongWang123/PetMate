@@ -32,7 +32,7 @@ import Applications from "./components/Settings/Application/Applications";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
-  const [isAds,setIsAds]=React.useState(true)
+  const [isAds, setIsAds] = React.useState(true);
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
     localStorage.getItem("secNavbar") === "true"
   );
@@ -41,11 +41,10 @@ const App = () => {
   );
   const activityTypes = ["events", "services"];
   const [activityType, setActivityType] = React.useState("");
-  
 
-  const handleAdSChange=(event)=>{
+  const handleAdSChange = (event) => {
     setIsAds(!event.target.checked);
-  }
+  };
   const handleSecNavbar = (param, type) => {
     if (param.length === 0) {
       localStorage.setItem("secNavbar", false);
@@ -66,25 +65,28 @@ const App = () => {
   };
 
   return (
-    <PayPalScriptProvider options={initialOptions}>
-      <BrowserRouter>
-        <Container maxWidth="lg">
-          <Navbar handleSecNavbar={handleSecNavbar} isAdsOpen={isAds} onAdsChange={handleAdSChange} />
-          {/*    <PaypalPayment /> */}
-          {openSecNavbar ? (
-            <SecondNavbar pages={secNav} activityType={activityType} />
-          ) : null}
-          <div className="page">
-          {isAds&&<Ads className="ads-leftContainer"/>}
-            <div className="routes">
-              <Routes>
-                <Route path="/" element={<Navigate to="/explore" />} />
-                <Route path="/explore" element={<Explore />} />
-                <Route path="/groups" element={<Groups />} />
-                <Route path="/groups/:id" element={<SingleGroup1 />} />
-                <Route path="/groups/create-group" element={<CreateGroup />} />
-                <Route path="/groups/:id/edit-group" element={<EditGroup />} />
-                <Route path="/groups/post/:id" element={<Post />} />
+    <BrowserRouter>
+      <Container maxWidth="lg">
+        <Navbar
+          handleSecNavbar={handleSecNavbar}
+          isAdsOpen={isAds}
+          onAdsChange={handleAdSChange}
+        />
+        {/*    <PaypalPayment /> */}
+        {openSecNavbar ? (
+          <SecondNavbar pages={secNav} activityType={activityType} />
+        ) : null}
+        <div className="page">
+          {isAds && <Ads className="ads-leftContainer" />}
+          <div className="routes">
+            <Routes>
+              <Route path="/" element={<Navigate to="/explore" />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/groups" element={<Groups />} />
+              <Route path="/groups/:id" element={<SingleGroup1 />} />
+              <Route path="/groups/create-group" element={<CreateGroup />} />
+              <Route path="/groups/:id/edit-group" element={<EditGroup />} />
+              <Route path="/groups/post/:id" element={<Post />} />
 
               <Route
                 path="/groups/:id/create-post"
@@ -128,18 +130,17 @@ const App = () => {
 
               <Route path="/applications/:id" element={<Applications />} />
 
-                {!user ? (
-                  <Route path="/auth" element={<Auth />} />
-                ) : (
-                  <Route path="/explore" element={<Navigate to="/" />} />
-                )}
-              </Routes>
-            </div>
-            {isAds&&<Ads className="ads-rightContainer"  />}
+              {!user ? (
+                <Route path="/auth" element={<Auth />} />
+              ) : (
+                <Route path="/explore" element={<Navigate to="/" />} />
+              )}
+            </Routes>
           </div>
-        </Container>
-      </BrowserRouter>
-    </PayPalScriptProvider>
+          {isAds && <Ads className="ads-rightContainer" />}
+        </div>
+      </Container>
+    </BrowserRouter>
   );
 };
 
