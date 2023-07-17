@@ -4,8 +4,9 @@ const API = axios.create({ baseURL: "http://localhost:100" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
-    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
-      }`;
+    req.headers.Authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
   }
 
   return req;
@@ -15,7 +16,8 @@ API.interceptors.request.use((req) => {
 export const fetchService = (id) => API.get(`/services/${id}`);
 export const fetchServices = (page, userId = null) =>
   API.get(`/services?page=${page}${userId ? `&userId=${userId}` : ""}`);
-export const fetchServicesBySearch = (input) => API.post('/services/search', input);
+export const fetchServicesBySearch = (input) =>
+  API.post("/services/search", input);
 export const fetchServicesBySorting = (page, sorting) =>
   API.get(`/services/sorting?page=${page}&sorting=${sorting}`);
 export const fetchServicesByUser = (userId) =>
@@ -29,14 +31,14 @@ export const deleteService = (id) => API.delete(`/services/${id}`);
 export const sendEmail = (formData) =>
   API.post(`/services/sendEmail`, formData);
 
-  export const sendEmailEvent = (formData) =>
+export const sendEmailEvent = (formData) =>
   API.post(`/events/sendEmailEvent`, formData);
 
 //api for events
 export const fetchEvent = (id) => API.get(`/events/${id}`);
 export const fetchEvents = (page, userId = null) =>
   API.get(`/events?page=${page}${userId ? `&userId=${userId}` : ""}`);
-export const fetchEventsBySearch = (input) => API.post('/events/search', input);
+export const fetchEventsBySearch = (input) => API.post("/events/search", input);
 export const fetchEventsBySorting = (page, sorting) =>
   API.get(`/events/sorting?page=${page}&sorting=${sorting}`);
 export const fetchEventsByUser = (userId) =>
@@ -85,6 +87,8 @@ export const signUp = (formData) => API.post("/user/signup", formData);
 export const modifyPersonalInfo = (id, data) =>
   API.put(`/user/modifyPersonalInfo/${id}`, data);
 export const getPersonalInfo = (id) => API.get(`/user/getPersonalInfo/${id}`);
+export const updateMembership = (id, data) =>
+  API.patch(`/user/updateMembership/${id}`, data);
 
 //api for explore
 export const createExplorePost = (newPost) =>
@@ -124,6 +128,7 @@ export const fetchGroupsBySearch = (searchQuery) =>
   API.get(`/api/groups/search?searchQuery=${searchQuery || "none"}`);
 export const fetchArticlesBySearch = (groupId, searchQuery) =>
   API.get(
-    `/api/articles/getGroups/${groupId}/search?searchQuery=${searchQuery || "none"
+    `/api/articles/getGroups/${groupId}/search?searchQuery=${
+      searchQuery || "none"
     }`
   );

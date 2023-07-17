@@ -97,7 +97,38 @@ export const modifyPersonalInfo = async (req, res) => {
     res.status(500).json({ message: "Failed to update personal information" });
   }
 };
+export const updateMembership = async (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+  console.log("userId", id);
+  console.log("data", data);
+  try {
+    let updatedInfo = {};
 
+    if (data === "year") {
+      updatedInfo = {
+        isPrime: true,
+        startTime: new Date(),
+        dueTime: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+      };
+    } else {
+      updatedInfo = {
+        isPrime: true,
+        startTime: new Date(),
+        dueTime: new Date(Date.now() + 31 * 24 * 60 * 60 * 1000),
+      };
+    }
+
+    await User.findByIdAndUpdate(id, updatedInfo);
+    console.log("updatedInfo", updatedInfo);
+    const updatedUser = await User.findById(id);
+    res
+      .status(200)
+      .json({ message: "successfully membership updated", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update membership" });
+  }
+};
 export const getArticles = async (req, res) => {
   const { userId } = req.params;
   const query = { u_id: userId };

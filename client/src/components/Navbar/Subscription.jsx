@@ -8,9 +8,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { paleYellow, darkPurple, orange } from "../../constant/actionTypes";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import * as api from "../../api";
 
 /* import PaypalPayment from "../PaypalPayment/PaypalPayment"; */
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { constant } from "lodash";
 
 export default function Subscription() {
   const [open, setOpen] = React.useState(false);
@@ -19,6 +21,8 @@ export default function Subscription() {
   const [cost, setCost] = React.useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("profile"));
+  console.log("id", user.result._id);
 
   React.useEffect(() => {
     if (location.pathname === "/subscription") {
@@ -34,14 +38,14 @@ export default function Subscription() {
   };
 
   const directToMonthPayment = () => {
-    setDescription("PetMate membership description for 1 month");
+    setDescription("month");
     setCost("9.00");
     setShowPayPalButton(true);
     /* setOpen(false); */
   };
   const directToYearPayment = () => {
     setShowPayPalButton(true);
-    setDescription("PetMate membership description for 1 year");
+    setDescription("year");
     setCost("90.00");
     /* setOpen(false); */
   };
@@ -175,6 +179,28 @@ export default function Subscription() {
                   alert(
                     "transaction completed by" + details.payer.name.given_name
                   );
+                  // 调用API更新用户数据
+                  api
+                    .updateMembership(user.result._id, { data: description })
+                    .then((response) => {
+                      if (response.status === 200) {
+                        const updatedUser = response.data.user;
+
+                        // 更新本地存储的用户信息
+                        let user = JSON.parse(localStorage.getItem("profile"));
+                        user.result.isPrime = updatedUser.isPrime;
+                        user.result.startTime = updatedUser.startTime;
+                        user.result.dueTime = updatedUser.dueTime;
+                        localStorage.setItem("profile", JSON.stringify(user));
+                        navigate("/explore");
+                      } else if (response.status === 500) {
+                        console.log("fail to update");
+                      }
+                    })
+                    .catch((error) => {
+                      console.error("更新用户数据时出错:", error);
+                      // 处理错误...
+                    });
                 });
               }}
             />
