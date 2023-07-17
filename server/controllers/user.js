@@ -88,7 +88,14 @@ export const getPersonalInfo = async (req, res) => {
 
 export const modifyPersonalInfo = async (req, res) => {
   const userId = req.params.userId;
-  const updatedInfo = req.body;
+  let updatedInfo = req.body;
+  const firstKey = Object.keys(updatedInfo)[0];
+  if(firstKey==="password"){
+    const hashedPassword = await bcrypt.hash(updatedInfo.password, 12).catch((error) => {
+      throw new Error("Error hashing password");
+    });
+    updatedInfo={password:hashedPassword}
+  }
   try {
     await User.findByIdAndUpdate(userId, updatedInfo);
     res.status(200).json({ message: "successfully updated" });
@@ -99,7 +106,7 @@ export const modifyPersonalInfo = async (req, res) => {
 export const updateMembership = async (req, res) => {
   const { id } = req.params;
   const { data } = req.body;
-  console.log("userId", id);
+  c0onsole.log("userId", id);
   console.log("data", data);
   try {
     let updatedInfo = {};

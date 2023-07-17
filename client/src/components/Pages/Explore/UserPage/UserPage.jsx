@@ -75,8 +75,8 @@ export default function UserPage(){
                     <div style={{marginTop:"5px",marginBottom:"5px"}}>
                         {(userInfo.sex==="female"||userInfo.sex==="male")&&
                         <FontAwesomeIcon 
-                            icon={userInfo.sex==="male" ? faMars : userInfo.gender==="female"? faVenus :null}
-                            color={userInfo.sex=="male" ? "blue" : userInfo.gender==="female"? "pink" :""} 
+                            icon={userInfo.sex==="male" ? faMars : userInfo.sex==="female"? faVenus :null}
+                            color={userInfo.sex=="male" ? "blue" : userInfo.sex==="female"? "pink" :""} 
                         />}
                     </div>
                     <div style={{display:"flex"}}>

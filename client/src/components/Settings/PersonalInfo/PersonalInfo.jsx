@@ -6,6 +6,8 @@ import DateItem from "./DateItem";
 import AvatarItem from "./AvatarItem";
 import {getPersonalInfo } from "../../../api";
 import FeedbackMsg from "../../Widget/FeedbackMsg/FeedbackMsg";
+import dayjs from "dayjs";
+import PassordItem from "./PasswordItem";
 const FixedInfo=({title,children})=>{
 
 
@@ -94,8 +96,9 @@ const PersonalInfo = () => {
             <InfoItem attribute={userInfo.sex} userId={userInfo._id} title={"sex"} onConfirmChange={onInfoUpdate} select={true} selectItems={sexOptions}></InfoItem>
             <DateItem attribute={userInfo.birthday} userId={userInfo._id} title={"birthday"} onConfirmChange={onInfoUpdate}></DateItem>
             <InfoItem attribute={userInfo.intro} userId={userInfo._id} title={"intro"} onConfirmChange={onInfoUpdate} inputLength={60} inputWidth={"460px"}></InfoItem>
+            <PassordItem attribute={userInfo.password} userId={userInfo._id} title={"password"} onConfirmChange={onInfoUpdate}></PassordItem>
             {userInfo.isPrime&&
-           <FixedInfo title="Prime">{userInfo.startTime} - {userInfo.dueTime}</FixedInfo>
+           <FixedInfo title="Prime">{dayjs(userInfo.startTime).format("YYYY-MM-DD HH:mm:ss")} - {dayjs(userInfo.dueTime).format("YYYY-MM-DD HH:mm:ss")}</FixedInfo>
 
             }
             <FeedbackMsg status={isFeedbackMsg} severity={severity.success} message={msg.successful} onClose={handelfeebackMsgClose}></FeedbackMsg>
