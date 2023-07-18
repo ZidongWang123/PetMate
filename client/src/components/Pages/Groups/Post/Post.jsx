@@ -114,8 +114,8 @@ const PostDetails = () => {
               className="post-img"
               src={article.imageURL}
               alt=""
-              //width={article.imageWidth}
-              //height={article.imageHeight}
+              width={article.imageWidth}
+              height={article.imageHeight}
             />
           )}
         </div>
