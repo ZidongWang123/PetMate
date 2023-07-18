@@ -10,14 +10,30 @@ import {
 } from "../../../../api";
 import { FormData } from "../../../../util/index";
 import TableFilter from "../../../Widget/TableFilter/TableFilter";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const orange = "#F0A860";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const SingleGroup1 = () => {
+  const query = useQuery();
+  const searchQuery = query.get("keyword");
+  const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [group, setGroup] = useState([]);
   let params = useParams();
   const groupId = params["id"];
+
+  const searchTag = async (value) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("keyword", value);
+    searchArticles(value);
+    const path = `/groups/${groupId} `;
+    const url = `${path}?${queryParams.toString()}`;
+    navigate(url);
+  };
 
   const columns = [
     {
@@ -58,7 +74,17 @@ const SingleGroup1 = () => {
       renderCell: (params) => (
         <div>
           {params.row.Tags.map((item) => {
-            return <span className="single-tag">#{item}</span>;
+            return (
+              <span
+                className="single-tag"
+                onClick={() => searchPost(item)}
+                style={{ cursor: "pointer" }}
+                onMouseEnter={(e) => (e.target.style.fontWeight = "bold")}
+                onMouseLeave={(e) => (e.target.style.fontWeight = "normal")}
+              >
+                #{item}
+              </span>
+            );
           })}
         </div>
       ),
@@ -85,10 +111,15 @@ const SingleGroup1 = () => {
   const topicsArray = articles && articles.map((article) => article.Topics);
 
   useEffect(() => {
-    getGroupsArticlesRequest();
-    /*  getGroupInfoRequest(); */
+    if (searchQuery) {
+      searchPost(searchQuery);
+    } else {
+      getGroupsArticlesRequest();
+    }
   }, []);
   const searchArticles = async (value) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("keyword", value);
     const { data: articlesResults } = await fetchArticlesBySearch(
       groupId,
       value
@@ -106,13 +137,18 @@ const SingleGroup1 = () => {
         })
       : [];
     setArticles(searchArticles);
+    const path = `/groups/${groupId} `;
+    const url = `${path}?${queryParams.toString()}`;
+    navigate(url);
   };
-  const searchPost = async (value) => {
+  const searchPost = (value) => {
     /*  await searchArticles(value); */
     if (value) {
       searchArticles(value);
     } else {
       getGroupsArticlesRequest();
+
+      navigate(`/groups/${groupId} `);
     }
     /*  getArticlesBySearch(groupId,value); */
   };

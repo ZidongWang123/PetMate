@@ -29,7 +29,13 @@ const PostDetails = () => {
   const onGoMyposts = (id) => {
     navigate(`/myarticles/${id}`);
   };
-
+  const searchTag = async (value) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append("keyword", value);
+    const path = `/groups/${article.g_id}`;
+    const url = `${path}?${queryParams.toString()}`;
+    navigate(url);
+  };
   useEffect(() => {
     getArticlesInfoRequest();
   }, []);
@@ -55,7 +61,17 @@ const PostDetails = () => {
             <p>
               {" "}
               {article.tags.map((item) => {
-                return <span className="single-tag">#{item}</span>;
+                return (
+                  <span
+                    className="single-tag"
+                    onClick={() => searchTag(item)}
+                    style={{ cursor: "pointer" }}
+                    onMouseEnter={(e) => (e.target.style.fontWeight = "bold")}
+                    onMouseLeave={(e) => (e.target.style.fontWeight = "normal")}
+                  >
+                    #{item}
+                  </span>
+                );
               })}
             </p>
           </div>
