@@ -1,10 +1,12 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import _ from "lodash"
 
 import ExplorePost from '../models/explorePost.js';
 import mongoose from 'mongoose';
 import Group from '../models/group.js'
 import Article from "../models/article.js"
+
 export const postCreate = async (req, res) => {
     
     let post=req.body
@@ -77,6 +79,7 @@ export const getExplorePosts=async(req,res)=>{
 
                 }:
                 {
+                    _id:{$nin:objectIdList},
                     creatorId:{$ne:argus.userId},
                     $or:[{
                         tags:{
@@ -180,5 +183,32 @@ export const modifyPost=async (req,res)=>{
 
     }catch(error){
         res.status(500).json({message:"failed to update the post"})
+    }
+}
+
+export const getPopularTags=async (req,res)=>{
+    const tagsList=[]
+    
+    try{
+        
+        const documents=await ExplorePost.find({},"tags")
+        documents.forEach((document)=>{
+            tagsList.push(...document.tags)
+
+        })
+        const stringCountMap = _.countBy(tagsList);
+
+        const sortedStrings = _.chain(stringCountMap)
+          .toPairs()
+          .orderBy(pair => pair[1], 'desc')
+          .take(8)
+          .map(pair => pair[0])
+          .value();
+
+
+        res.status(200).json({ result:sortedStrings,message: 'successfully got popular tags'})
+
+    }catch(error){
+        res.status(500).json({message:"failed to get popular tags"})
     }
 }

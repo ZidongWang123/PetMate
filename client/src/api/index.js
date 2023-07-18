@@ -100,11 +100,11 @@ export const getPosts = (data) =>
 export const modifyLikes = (id, data) =>
   API.put(`/explore/modifyLikes/${id}`, data);
 export const getSinglePost = (postId) =>
-  API.get(`explore/getSinglePost/${postId}`);
+  API.get(`/explore/getSinglePost/${postId}`);
 export const deletePost = (postId) =>
-  API.delete(`explore/deletePost/${postId}`);
+  API.delete(`/explore/deletePost/${postId}`);
 export const modifyPost = (postId, data) =>
-  API.put(`explore/modifyPost/${postId}`, data);
+  API.put(`/explore/modifyPost/${postId}`, data);
 
 //api for articles
 export const getGroups = (formData = {}) => API.get("/api/groups", formData);
@@ -132,3 +132,6 @@ export const fetchArticlesBySearch = (groupId, searchQuery) =>
       searchQuery || "none"
     }`
   );
+
+export const getPopularTags=()=>API.get("/explore/getPopularTags")
+

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import PaneContainer from './PaneContainer/PaneContainer';
 import SearchBar from "../../Widget/SearchBar/SearchBar";
 import UniformButton from './widget/UniformButton';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Warning from "../../Widget/ConfirmDialog/Warning.jsx"
 import signInPic from "../../../images/dabengou/SignInPic.jpg";
 import bePrimePic from "../../../images/dabengou/BePrimePic.jpg";
+import { getPopularTags } from '../../../api';
 
 const subscribeText="Come subscribing first!"
 const LoginText="Please log in first!"
@@ -23,6 +24,7 @@ const Explore = () => {
   const [pic,setPic]=React.useState("") 
   const [isOpen,setIsOpen]=React.useState(false)
   const [path,setPath]=React.useState("")
+  const [tags,setTags]=React.useState([])
   // const [keyword,setKeyword]=React.useState("")
     const onClick=()=>{
     if(user&&user.result.isPrime){
@@ -44,17 +46,27 @@ const Explore = () => {
 
   }
   const onSearch=(value)=>{
+    if(value){
+      const queryParams = new URLSearchParams();
+      queryParams.append('keyword', value);
+      // 导航到目标页面
+      const path = '/explore';
+      const url = `${path}?${queryParams.toString()}`;
+      navigate("/explore/empty")
+      
+      setTimeout(() => {
+          navigate(url)
+      }, 0);
 
-    const queryParams = new URLSearchParams();
-    queryParams.append('keyword', value);
-    // 导航到目标页面
-    const path = '/explore';
-    const url = `${path}?${queryParams.toString()}`;
-    navigate("explore/empty")
-    
-    setTimeout(() => {
-        navigate(url)
-    }, 0);
+    }
+    else{
+      navigate("/explore/empty")
+      
+      setTimeout(() => {
+          navigate("/explore")
+      }, 0);
+    }
+
   }
   const onConfirm=()=>{
     
@@ -66,10 +78,31 @@ const Explore = () => {
   const onCancel=()=>{
     setIsOpen(false)
   }
+  const getTags=async ()=>{
+    try{
+      const res=await getPopularTags()
+      if (res.status===200){
+        console.log(res.data.result)
+        setTags(res.data.result)
+      }
+      else{
+        console.log("unknown error, try again")
+      }
+    }catch(error){
+      console.log(error)
+    }
+
+  }
+  React.useEffect(()=>{
+
+
+    getTags()
+
+  },[])
   return(
     <div>
       <div style={{display:"flex",alignItems: "flex-end"}}>
-        <SearchBar searchPost={onSearch}/>
+        <SearchBar searchPost={onSearch} results={tags}/>
           <Warning isOpen={isOpen} onConfirm={onConfirm} onCancel={onCancel} pic={pic} text={text}></Warning> 
           <UniformButton width="160px" backgroundColor={orange} fontColor="white" onClick={onClick}>create a post</UniformButton>
           

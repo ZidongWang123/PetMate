@@ -204,6 +204,7 @@ const PaneContainer = ({userId="",keyword="",where="explore",postsCountGet=undef
         </div>
         )
       }
+       {(!isloading&&displayedPosts[0].length===0)&&<div style={{display:"flex",justifyContent:"center"}}>No results</div>}
     </div>
   );
 };
