@@ -126,7 +126,7 @@ export default function MyPost() {
             {userInfo.name}
           </h3>
           <div style={{ color: "gray", fontSize: "12px" }}>
-            location: {userInfo.location}
+            location: {userInfo.address}
           </div>
           <div>Introduction:{userInfo.intro}</div>
           <div>Number of Post:{articleList.length}</div>
