@@ -17,7 +17,7 @@ const PostDetails = () => {
   };
   const onDeleteArticle = async (id) => {
     await delArticles(id);
-    onGoBack();
+    onGoBack(article.g_id);
   };
   const onGoBack = (g_id) => {
     navigate(`/groups/${g_id}`);
@@ -93,6 +93,7 @@ const PostDetails = () => {
                   Delete
                 </button>
               </div>
+
               <button
                 className="delete-button"
                 onClick={() => onGoBack(article.g_id)}
