@@ -18,7 +18,9 @@ export const signin = async (req, res) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Invalid credentials." });
+      return res
+        .status(400)
+        .json({ message: "Your password is wrong, please try again." });
 
     const currentTime = new Date();
     if (existingUser.dueTime < currentTime) {

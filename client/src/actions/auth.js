@@ -10,6 +10,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
     navigate("/");
   } catch (error) {
     console.log(error);
+    return error.response.data.message;
   }
 };
 
