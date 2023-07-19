@@ -1,9 +1,7 @@
 import React,{useState} from "react"
-import { darkPurple,orange } from "../../../constant/actionTypes";
+import { darkPurple} from "../../../constant/actionTypes";
 import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-import { auto } from "@popperjs/core";
-import { display, fontFamily, width } from "@mui/system";
+import { useNavigate } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
 import { modifyPersonalInfo } from "../../../api";
 
@@ -16,7 +14,7 @@ export default function InfoItem({attribute,userId,title,onConfirmChange,select,
     const normTitle=title.charAt(0).toUpperCase() + title.slice(1)
     const[currentValue,setCurrentValue]=useState(attribute)
     const[isEdit,setIsEdit]=useState(false)
-
+    const navigate=useNavigate()
 
     const handleConfirmClick =async () => {
 
@@ -25,6 +23,10 @@ export default function InfoItem({attribute,userId,title,onConfirmChange,select,
             if(res.status===200){
                 setIsEdit(false);
                 onConfirmChange(title,currentValue)
+                const user = JSON.parse(localStorage.getItem('profile'));
+                user.result[title]=currentValue
+                localStorage.setItem('profile', JSON.stringify(user));
+                navigate("/personalInfo")
             }
         }catch(error){
 

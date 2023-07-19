@@ -1,12 +1,11 @@
-import React,{useState,useEffect, useRef}from "react";
-import { Avatar, Button, Box, Slider } from "@mui/material";
+import React,{useState, useRef}from "react";
+import { Avatar,  Box, Slider } from "@mui/material";
 import AvatarEditor from "react-avatar-editor";
 import { Modal } from "@mui/material";
 import { orange,darkPurple } from "../../../constant/actionTypes";
 import UniformButton from "../../Pages/Explore/widget/UniformButton";
-import { BorderBottom } from "@mui/icons-material";
 import { modifyPersonalInfo } from "../../../api";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function AvatarItem({attribute,userId,title,onConfirmChange}){
    
