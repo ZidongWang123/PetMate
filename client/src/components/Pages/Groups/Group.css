@@ -14,7 +14,6 @@
   padding-top: 20px;
   margin: 10px 0;
   margin-left: 75px;
-  /*   border-bottom: 1px solid #f6e8fe; */
   width: 800px;
   text-decoration: none;
 
@@ -48,11 +47,9 @@
   color: #5c5c5c;
 }
 .group-preview .group-creater {
-  /* margin-right: 100px; */
   white-space: nowrap;
   margin-right: 50px;
 
-  /* margin-left: 100px; */
 } /* 调整第二个元素的左边距 */
 
 .group-preview .group-first-row .group-amount {
@@ -115,7 +112,6 @@
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
 .group-preview .grouplist-button:hover {
-  /*   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1); */
   background-color: #393c7c;
   color: #fafafa;
 }

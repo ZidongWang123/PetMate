@@ -32,8 +32,7 @@ const Groups = () => {
   const [text, setText] = React.useState("");
   const [pic, setPic] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
-  /*   const [search, setSearch] = React.useState(""); */
-  /*   const [search, setSearch] = React.useState(""); */
+
   const onClick = () => {
     if (user && user.result.isPrime) {
       navigate("/groups/create-group");

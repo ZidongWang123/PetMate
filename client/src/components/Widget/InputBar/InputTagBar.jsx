@@ -1,16 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getRecommendTags } from "../../../api";
-/* import useAutocomplete from "@mui/base/useAutocomplete";
-import CheckIcon from "@mui/icons-material/Check";
-
-import {
-  InputWrapper,
-  StyledTag,
-  Listbox,
-  Label,
-  Root,
-} from "./inputTagBarStyle"; */
 
 import { Autocomplete } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -74,7 +64,6 @@ const InputTagBar = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            /* label="Multiple values" */
             placeholder="your tags*"
             value={inputValue} // 设置 TextField 的值为输入值
             onChange={handleInputChange}

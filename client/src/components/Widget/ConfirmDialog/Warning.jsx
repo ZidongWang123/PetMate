@@ -5,12 +5,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import { Box, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+
 import "./ConfirmDialog.css";
 
 import { darkPurple, orange, brightGreen } from "../../../constant/actionTypes";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { useNavigate } from "react-router-dom";
 
 export default function Warning({
   text,
@@ -27,15 +26,6 @@ export default function Warning({
     setInputText(event.target.value);
     handleInputChange(event.target.value);
   };
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   navigate(-1);
-  // };
-
-  // const handleCancel = async () => {
-  //   //await onCancel();
-  //   setOpen(false);
-  // };
 
   return (
     <div>

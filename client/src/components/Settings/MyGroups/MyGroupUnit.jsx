@@ -73,7 +73,7 @@ const MyGroupUnit = ({ group }) => {
           )}
         </div>
         <div className="mygroup-time">
-          {/*  {group.creatorId === user.result._id ?(""):()} */}
+         
           {group.createdAt &&
             formatDistanceToNow(new Date(group.createdAt), {
               addSuffix: true,

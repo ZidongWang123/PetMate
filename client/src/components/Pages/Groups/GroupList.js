@@ -67,7 +67,7 @@ const GroupList = ({ group }) => {
       setIsOpen(true);
     }
   };
-  /*  const des = user ? `/groups/${group._id}` : "#"; */
+
   const onConfirm = async () => {
     setIsOpen(false);
     if (!user) {
@@ -201,13 +201,6 @@ const GroupList = ({ group }) => {
       </div>
 
       <div>
-        {/*  <Warning
-          isOpen={isOpen}
-          onConfirm={onConfirm}
-          onCancel={onCancel}
-          pic={pic}
-          text={text}
-        ></Warning> */}
         {user &&
           (user.result._id === group.creatorRefId ? (
             <Link to={`/groups/${group._id}/edit-group`}>

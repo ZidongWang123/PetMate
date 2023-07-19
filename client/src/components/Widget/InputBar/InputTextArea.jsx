@@ -168,53 +168,6 @@ const InputTextArea = ({ initialValue, onInputChange, onEmojiClick }) => {
         ),
       }}
     />
-    /*     <Box sx={{ p: 2 }}>
-      <Textarea
-        placeholder="Type in here…"
-        defaultValue="Try to put text longer than 4 lines."
-        minRows={2}
-        maxRows={4}
-      />
-    </Box> */
-
-    /* <Textarea
-      placeholder="Type in here…"
-      value="default value"
-      onChange={handleChange}
-      minRows={2}
-      maxRows={4}
-      startDecorator={
-        <JoyBox sx={{ display: "flex", gap: 0.5 }}>
-          <JoyIconButton
-            variant="outlined"
-            color="neutral"
-            onClick={addEmoji("👍")}
-          >
-            👍
-          </JoyIconButton>
-          <JoyIconButton
-            variant="outlined"
-            color="neutral"
-            onClick={addEmoji("🏖")}
-          >
-            🏖
-          </JoyIconButton>
-          <JoyIconButton
-            variant="outlined"
-            color="neutral"
-            onClick={addEmoji("😍")}
-          >
-            😍
-          </JoyIconButton>
-        </JoyBox>
-      }
-      endDecorator={
-        <JoyTypography level="body3" sx={{ ml: "auto" }}>
-          {/* {value.length} character(s) 
-        </JoyTypography>
-      }
-      sx={{ minWidth: 300 }}
-    /> */
   );
 };
 

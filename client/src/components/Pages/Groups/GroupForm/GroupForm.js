@@ -10,11 +10,8 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Fragment } from "react";
 
-/* import { useHistory } from "react-router-dom/cjs/react-router-dom.min"; */
-
 import {
   darkPurple,
-  orange,
   brightOrange,
   darkGray,
 } from "../../../../constant/actionTypes";
@@ -24,9 +21,6 @@ import InputTagBar from "../../../Widget/InputBar/InputTagBar";
 
 import InputAvatar from "../../../Widget/InputBar/InputAvatar";
 
-/* import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
-import { Grid } from "@mui/material";
- */
 const steps = [
   {
     label: "Groupname",
@@ -232,7 +226,6 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
                   <Box sx={{ mb: 2, marginTop: 2 }}>
                     <div sx={{}}>
                       <Button
-                        /* variant="contained" */
                         color="success"
                         onClick={
                           completedSteps() === totalSteps() - 1
@@ -251,14 +244,12 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
                           : "Next"}
                       </Button>
                       <Button
-                        /* variant="contained" */
-                        /* color="secondary" */
                         onClick={handleBack}
                         sx={{
                           mt: 1,
                           mr: 1,
                           borderRadius: "100px",
-                          /* backgroundColor: "#009999", */
+
                           fontWeight: "bold",
                           color: darkGray,
                         }}
@@ -268,14 +259,12 @@ const GroupForm = ({ groupData, setGroupData, handleSubmit }) => {
                       </Button>
 
                       <Button
-                        /* disabled={index === 0} */
-                        /* variant="contained" */
                         onClick={handleReset}
                         sx={{
                           mt: 1,
                           mr: 1,
                           borderRadius: "100px",
-                          /* backgroundColor: "#67AB9F", */
+
                           fontWeight: "bold",
                           color: brightOrange,
                         }}
