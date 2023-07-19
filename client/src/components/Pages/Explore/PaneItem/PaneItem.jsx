@@ -7,7 +7,7 @@ import { Avatar } from '@mui/material';
 import Warning from '../../../Widget/ConfirmDialog/Warning';
 import signInPic from "../../../../images/dabengou/SignInPic.jpg";
 import { modifyLikes } from '../../../../api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LoginText="Please log in first!"
 
@@ -23,7 +23,6 @@ const PaneItem = ({ post,likesCountGet=undefined,likesCount}) => {
   const navigate=useNavigate()
   const [isModalOpen,setIsModalOpen]=useState(false)
   const [isLiked, setIsLiked] = React.useState(initialLikeState)
-  // const [likeCount,setLikeCount]= React.useState(post.likes.length)
   const [isDialogOpen,setIsDialogOpen]=React.useState(false)
   const [likes,setLikes]=React.useState(post.likes)
   
@@ -74,7 +73,7 @@ const PaneItem = ({ post,likesCountGet=undefined,likesCount}) => {
     setIsModalOpen(false);
   };
   const handleWheel = (e) => {
-    e.preventDefault(); // 阻止默认的滚轮行为
+    e.preventDefault(); 
   };
   useEffect(() => {
     if (isModalOpen) {

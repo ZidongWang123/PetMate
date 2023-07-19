@@ -120,11 +120,8 @@ const PaneContainer = ({userId="",keyword="",where="explore",postsCountGet=undef
   }
   const handleScroll =  ()=>{
 
-    // 获取滚动位置和页面高度等信息
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-   
-    
-    // 检查是否到达页面底部
+
     if (scrollTop + clientHeight +1>= scrollHeight&&
       displayedPostsIdRef.current.length!==0) {
         
@@ -133,9 +130,6 @@ const PaneContainer = ({userId="",keyword="",where="explore",postsCountGet=undef
       fetchPosts({userId,keyword,where,displayedPostIdList,size:12})
       window.removeEventListener('scroll', handleScroll);
       
-      
-      
-     
     }
   }
     React.useEffect(() => {

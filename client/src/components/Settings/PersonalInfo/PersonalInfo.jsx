@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./PersonalInfo.css"
-import { darkPurple,orange } from "../../../constant/actionTypes";
+import { darkPurple } from "../../../constant/actionTypes";
 import InfoItem from "./InfoItem.jsx";
 import DateItem from "./DateItem";
 import AvatarItem from "./AvatarItem";
@@ -30,9 +30,9 @@ const FixedInfo=({title,children})=>{
                 >
                     {title}:
                 </h4>
-                <span style={{fontFamily: "ubuntu", // 设置字体样式
-                fontSize: '15px', // 设置字体大小
-                fontWeight: 'bold', // 设置字体粗细}
+                <span style={{fontFamily: "ubuntu", 
+                fontSize: '15px',
+                fontWeight: 'bold', 
                 }}>{children}</span>
             </div>
         </div>

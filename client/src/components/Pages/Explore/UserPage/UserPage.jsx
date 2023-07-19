@@ -1,15 +1,12 @@
 import PaneContainer from "../PaneContainer/PaneContainer";
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import avatar from "../../../../images/avatar.jpg"
 import "./UserPage.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 import { getPersonalInfo } from "../../../../api";
 import { Avatar } from "@mui/material";
 
-import { fontSize } from "@mui/system";
-import { VpnLock } from "@mui/icons-material";
 
 
 

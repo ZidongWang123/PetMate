@@ -87,8 +87,7 @@ export default function AvatarItem({attribute,userId,title,onConfirmChange}){
                         backdrop:{
                             sx:{
                                 backgroundColor: "rgba(0, 0, 0, 0.6)",
-                                // display:"flex"
-                                
+
                             }
                         },
                         root:{
@@ -110,7 +109,7 @@ export default function AvatarItem({attribute,userId,title,onConfirmChange}){
                             width={180}
                             height={180}
                             border={50}
-                            color={[0, 0, 0, 0.7]} // RGBA
+                            color={[0, 0, 0, 0.7]} 
                             rotate={0}
                             scale={zoom}
                         />

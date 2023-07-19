@@ -2,10 +2,9 @@ import * as React from "react"
 import { darkPurple,orange } from "../../../constant/actionTypes";
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { modifyPersonalInfo } from "../../../api";
 
 export default function DateItem({attribute,userId,title,onConfirmChange}){
@@ -28,12 +27,6 @@ export default function DateItem({attribute,userId,title,onConfirmChange}){
    
         }
         
-        
-
-        //update the data in the database
-
-        //todo
-
     }
 
     const handleEditClick = () => {
@@ -67,9 +60,9 @@ export default function DateItem({attribute,userId,title,onConfirmChange}){
                     />
                 </LocalizationProvider>:
                 <span style={{
-                    fontFamily: "ubuntu", // 设置字体样式
-                    fontSize: '15px', // 设置字体大小
-                    fontWeight: 'bold', // 设置字体粗细}
+                    fontFamily: "ubuntu", 
+                    fontSize: '15px', 
+                    fontWeight: 'bold', 
                 }}>
                     {attribute&&dayjs(attribute).format("MM-DD-YYYY")}
                 </span>}

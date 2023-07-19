@@ -1,14 +1,13 @@
-import React,{useEffect,useState,userState} from "react";
+import React from "react";
 import TextField from '@mui/material/TextField';
 import { darkPurple, orange } from "../../../../constant/actionTypes";
-import { Margin } from "@mui/icons-material";
 
 export default function InputField({value,title,isMultiline,height,onInputChange,maxLength=50}){
 
     
     const handleInput = (event) => {
         const inputValue = event.target.value;
-        onInputChange(inputValue); // 调用父组件传递的回调函数，并传递输入框的值
+        onInputChange(inputValue); 
       };
     return(
         <>
@@ -27,9 +26,9 @@ export default function InputField({value,title,isMultiline,height,onInputChange
             }}
             InputProps={{
 
-                style:{  fontFamily: "ubuntu", // 设置字体样式
-                fontSize: '15px', // 设置字体大小
-                fontWeight: 'bold', // 设置字体粗细}
+                style:{  fontFamily: "ubuntu", 
+                fontSize: '15px', 
+                fontWeight: 'bold', 
                 },
                 maxRows:50
             }}

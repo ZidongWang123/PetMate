@@ -23,7 +23,6 @@ import Applied from "./components/Settings/MyActivity/Applied/Applied";
 import Created from "./components/Settings/MyActivity/Created/Created";
 import GroupPostForm from "./components/Pages/Groups/Post/GroupPostForm";
 import EditPost from "./components/Pages/Groups/Post/Edit/EditPost";
-
 import { CreateGroup } from "./components/Pages/Groups/GroupForm/CreateGroup";
 import { EditGroup } from "./components/Pages/Groups/GroupForm/EditGroup";
 import ActivityPage from "./components/Pages/Activity/ActivityPage/ActivityPage";
@@ -32,7 +31,21 @@ import Applications from "./components/Settings/Application/Applications";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
-  const [isAds, setIsAds] = React.useState(true);
+  const pureMode=localStorage.getItem("pureMode")
+  let initialAds=true
+  if(pureMode){
+    
+    if(pureMode==="false"){
+      initialAds=false
+    }else{
+      initialAds=true
+    }
+    
+    console.log(initialAds)
+  }
+  const [isAds, setIsAds] = React.useState(initialAds);
+
+  
   const [openSecNavbar, setOpenSecNavbar] = React.useState(
     localStorage.getItem("secNavbar") === "true"
   );
@@ -45,6 +58,9 @@ const App = () => {
 
   const handleAdSChange=(event)=>{
     setIsAds(!event.target.checked);
+    const pureMode=!event.target.checked
+    localStorage.setItem('pureMode', pureMode);
+
   }
   const handleSecNavbar = (param, type) => {
     if (param.length === 0) {

@@ -1,10 +1,5 @@
 import React,{useState} from "react"
-import { darkPurple,orange } from "../../../constant/actionTypes";
-import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-import { auto } from "@popperjs/core";
-import { display, fontFamily, width } from "@mui/system";
-import MenuItem from '@mui/material/MenuItem';
+import { darkPurple} from "../../../constant/actionTypes";
 import { modifyPersonalInfo } from "../../../api";
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
@@ -15,10 +10,7 @@ import Input from '@mui/material/Input';
 
 
 
-
-
-
-export default function PassordItem({attribute,userId,title,onConfirmChange,select,selectItems,inputLength,inputWidth}){
+export default function PassordItem({attribute,userId,title,onConfirmChange}){
 
 
     const normTitle=title.charAt(0).toUpperCase() + title.slice(1)
@@ -80,9 +72,9 @@ export default function PassordItem({attribute,userId,title,onConfirmChange,sele
                         value={currentValue}
                         onChange={onChange}
                         inputProps={{
-                            style:{  fontFamily: "ubuntu", // 设置字体样式
-                            fontSize: '15px', // 设置字体大小
-                            fontWeight: 'bold', // 设置字体粗细}
+                            style:{  fontFamily: "ubuntu", 
+                            fontSize: '15px', 
+                            fontWeight: 'bold', 
                             width:"230px"
                             },
                             maxLength:24
@@ -101,27 +93,12 @@ export default function PassordItem({attribute,userId,title,onConfirmChange,sele
                         }
                     />
                     </FormControl>:
-                // <TextField 
-                //     variant="standard" 
-                //     value={currentValue}
-                //     onChange={onChange}
-                    
-                
-                //     // value={inputValue}
-                //     inputProps={{
-                //         style:{  fontFamily: "ubuntu", // 设置字体样式
-                //         fontSize: '15px', // 设置字体大小
-                //         fontWeight: 'bold', // 设置字体粗细}
-                //         width:inputWidth
-                //         },
-                //         maxLength:inputLength
-                //     }}>
-                // </TextField>:
+
                 <span style={{
-                    fontFamily: "ubuntu", // 设置字体样式
-                    fontSize: '15px', // 设置字体大小
+                    fontFamily: "ubuntu", 
+                    fontSize: '15px', 
                     fontWeight: 'bold',
-                    whiteSpace: 'nowrap', // 设置字体粗细}
+                    whiteSpace: 'nowrap', 
                 }}>
                     **********************
                 </span>}

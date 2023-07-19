@@ -1,4 +1,4 @@
-import react,{useRef,useEffect,useState} from "react"
+import {useRef,useState} from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import "./PostDetailWindow.css"
@@ -67,19 +67,10 @@ export default function PostDetailWindow({post,isOpen,onClose,count,isLiked,onCl
 
     const divRef = useRef(null);
     const deleteConfirm=async ()=>{
-        //delete the post from the database
-        //to do
-        //
+
         try{
             const res=await deletePost(post._id)
             if (res.status === 200) {
-                // setSeverity(severityOptions.success)
-                // setMsg(res.data.message)
-                // setIsFeedbackMsg(true)
-                // setTimeout(()=>{
-                //     setIsFeedbackMsg(false)
-
-                // },1000)
                 onClose()
                 setIsWarningOpen(false)
                 navigate(`/empty`)
@@ -115,7 +106,6 @@ export default function PostDetailWindow({post,isOpen,onClose,count,isLiked,onCl
         
         const queryParams = new URLSearchParams();
         queryParams.append('keyword', param);
-        // 导航到目标页面
         const path = '/explore';
         const url = `${path}?${queryParams.toString()}`;
         navigate("/explore/empty")
@@ -135,7 +125,7 @@ export default function PostDetailWindow({post,isOpen,onClose,count,isLiked,onCl
     }
 
     if (!isOpen) {
-        return null; // 如果弹窗关闭，则不渲染弹窗内容
+        return null; 
       }
     
     

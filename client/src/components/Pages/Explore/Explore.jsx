@@ -49,7 +49,6 @@ const Explore = () => {
     if(value){
       const queryParams = new URLSearchParams();
       queryParams.append('keyword', value);
-      // 导航到目标页面
       const path = '/explore';
       const url = `${path}?${queryParams.toString()}`;
       navigate("/explore/empty")

@@ -6,10 +6,6 @@ import "../PaneItem/PaneItem.css"
 
 const HeartIcon=({count,isLiked,onClick})=>{
 
-    // check whether the author is in the list of likes
-      // todo
-
-
     return(
       <>
           <FontAwesomeIcon

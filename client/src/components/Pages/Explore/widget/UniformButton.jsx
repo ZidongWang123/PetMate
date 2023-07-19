@@ -17,7 +17,6 @@ export default function UniformButton({width,backgroundColor,fontColor,onClick,c
             borderRadius: "50px",
             color: fontColor,
             backgroundColor: backgroundColor,
-            // border:"solid 2px "+orange,
     
             ":hover": {
               backgroundColor: backgroundColor,

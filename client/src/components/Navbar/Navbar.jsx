@@ -33,7 +33,6 @@ const settings = [
     'My groups', 
     'My events', 
     'My services', 
-    'How it works',
     'Puremode', 
     'Logout'];
 const myService = ['Applied Services', 'Created Services'];

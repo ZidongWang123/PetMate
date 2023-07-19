@@ -61,13 +61,10 @@ export default function InfoItem({attribute,userId,title,onConfirmChange,select,
                     variant="standard" 
                     value={currentValue}
                     onChange={onChange}
-                    
-                
-                    // value={inputValue}
                     inputProps={{
-                        style:{  fontFamily: "ubuntu", // 设置字体样式
-                        fontSize: '15px', // 设置字体大小
-                        fontWeight: 'bold', // 设置字体粗细}
+                        style:{  fontFamily: "ubuntu", 
+                        fontSize: '15px', 
+                        fontWeight: 'bold', 
                         width:inputWidth
                         },
                         maxLength:inputLength
@@ -82,10 +79,10 @@ export default function InfoItem({attribute,userId,title,onConfirmChange,select,
                     :null}
                 </TextField>:
                 <span style={{
-                    fontFamily: "ubuntu", // 设置字体样式
-                    fontSize: '15px', // 设置字体大小
+                    fontFamily: "ubuntu", 
+                    fontSize: '15px', 
                     fontWeight: 'bold',
-                    whiteSpace: 'nowrap', // 设置字体粗细}
+                    whiteSpace: 'nowrap', 
                 }}>
                     {attribute}
                 </span>}
