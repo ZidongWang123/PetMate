@@ -35,7 +35,11 @@ const Auth = () => {
         }
       });
     } else {
-      dispatch(signin(formData, navigate));
+      dispatch(signin(formData, navigate)).then((errorMessage) => {
+        if (errorMessage) {
+          setError(errorMessage);
+        }
+      });
     }
   };
 
