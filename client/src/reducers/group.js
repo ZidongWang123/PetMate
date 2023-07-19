@@ -8,10 +8,8 @@ import {
   UPDATE_GROUP,
   START_LOADING,
   END_LOADING,
-  UPDATE_GROUP_PASSWORD,
 } from "../constant/actionTypes";
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = { isLoading: true, groups: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
@@ -40,8 +38,7 @@ export default (state = { isLoading: true, groups: [] }, action) => {
           group._id === action.payload._id ? action.payload : group
         ),
       };
-    case UPDATE_GROUP_PASSWORD:
-      return { ...state, groups: action.payload };
+
     default:
       return state;
   }

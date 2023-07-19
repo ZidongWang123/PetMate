@@ -49,9 +49,7 @@ const getGroupsBySearch = async (req, res) => {
     const groups = await Group.find({
       $or: [{ groupName: title }, { intro: title }, { tags: { $in: title } }], // find groups that match either or
     }).populate("creatorId", "name");
-    /*   const groups = await Group.find({
-      groupName: title, // find groups that match either or
-    }); */
+    
     // 获取每个组的成员ID
     const groupIds = groups.map((group) => group._id);
     const groupMembers = await Groupmember.find({ groupId: { $in: groupIds } });
@@ -114,12 +112,7 @@ const getGroup = async (req, res) => {
 };
 const getMyGroups = async (req, res) => {
   const userId = req.userId;
-  /* try {
-    const myGroups = await Groupmember.find({ memberId: userId });
 
-    // 返回小组信息给客户端
-    res.status(200).json(myGroups);
-  } */
   try {
     const myGroups = await Groupmember.find({ memberId: userId })
       .sort({ createdAt: -1 })
@@ -258,13 +251,10 @@ const joinGroup = async (req, res) => {
     return res.status(409).json("You have already joined this group");
   }
   const newMember = new Groupmember(groupMemberData);
-  // 在此处处理加入小组的逻辑
-  // ...
-  // 完成加入小组操作后，返回相应的数据
+
   try {
     await newMember.save();
-    /*   const { groupId } = groupMemberData; */
-    /*     await Group.findOneAndUpdate({ _id: groupId }, { $inc: { groupcount: 1 } }); */
+
     res.status(201).json(groupMemberData);
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -104,13 +104,3 @@ export const addGroupPassword = (id, password) => async (dispatch) => {
     console.log(error);
   }
 };
-
-export const verifyGroup = (id, password) => async (dispatch) => {
-  try {
-    const { data } = await api.verifyGroup(id, password);
-
-    dispatch({ type: UPDATE_GROUP_PASSWORD, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};

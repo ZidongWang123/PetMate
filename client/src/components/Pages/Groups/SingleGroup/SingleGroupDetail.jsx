@@ -1,8 +1,7 @@
 import Avatar from "@mui/material/Avatar";
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-/* import { useWorkoutsContext } from "../../../../hooks/useWorkoutsContext"; */
-/* import { useAuthContext } from "../../../../hooks/useAuthContext"; */
+
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +19,7 @@ const LoginText = "Go to log in and explore more!";
 const severityOptions = { success: "success", failure: "error" };
 
 const SingleGroupDetail = () => {
-  /* const { user } = useAuthContext(); */
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -72,9 +71,7 @@ const SingleGroupDetail = () => {
       setSeverity(severityOptions.success);
       setMsg("Join Successfully");
 
-      /* setTimeout(() => {
-        navigate(`/groups/${singleGroup._id}`);
-      }, 800); */
+
       setIsFeedbackMsg(true);
     }
   };

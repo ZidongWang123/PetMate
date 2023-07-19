@@ -35,9 +35,6 @@ export const EditGroup = () => {
     }
   }, [singleGroup]);
 
-  /*   const groups = useSelector((state) => state.groups); */
-  /*   const user = JSON.parse(localStorage.getItem("profile")); */
-
   const handleEdit = async () => {
     dispatch(updateGroup(id, groupData));
     setTimeout(() => {

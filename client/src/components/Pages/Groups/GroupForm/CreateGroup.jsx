@@ -18,9 +18,6 @@ export const CreateGroup = () => {
   });
   const dispatch = useDispatch();
 
-  /*   const groups = useSelector((state) => state.groups); */
-  /*   const user = JSON.parse(localStorage.getItem("profile")); */
-  /*   const [text, setText] = useState(""); */
   const [pic, setPic] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState("your password");
@@ -37,7 +34,6 @@ export const CreateGroup = () => {
     setShowFeedbackMsg(false);
   };
 
-  /*  const { groups } = useSelector((state) => state.groups); */
   const handleCreate = async () => {
     try {
       const createdGroupId = await dispatch(createGroup({ ...groupData }));
@@ -72,8 +68,6 @@ export const CreateGroup = () => {
       navigate(`/groups/${groupId}`);
     } catch (error) {
       console.log("onCancel", error);
-
-      /*  window.location.href = "/groups/create-group"; */
     }
   };
 
