@@ -94,11 +94,13 @@ export const modifyPersonalInfo = async (req, res) => {
   const userId = req.params.userId;
   let updatedInfo = req.body;
   const firstKey = Object.keys(updatedInfo)[0];
-  if(firstKey==="password"){
-    const hashedPassword = await bcrypt.hash(updatedInfo.password, 12).catch((error) => {
-      throw new Error("Error hashing password");
-    });
-    updatedInfo={password:hashedPassword}
+  if (firstKey === "password") {
+    const hashedPassword = await bcrypt
+      .hash(updatedInfo.password, 12)
+      .catch((error) => {
+        throw new Error("Error hashing password");
+      });
+    updatedInfo = { password: hashedPassword };
   }
   try {
     await User.findByIdAndUpdate(userId, updatedInfo);
@@ -110,7 +112,7 @@ export const modifyPersonalInfo = async (req, res) => {
 export const updateMembership = async (req, res) => {
   const { id } = req.params;
   const { data } = req.body;
-  c0onsole.log("userId", id);
+  console.log("userId", id);
   console.log("data", data);
   try {
     let updatedInfo = {};
