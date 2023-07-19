@@ -3,11 +3,7 @@ import "./Single.css";
 import SearchBar from "../../../Widget/SearchBar/SearchBar";
 import SingleGroupDetail from "./SingleGroupDetail.jsx";
 import { Link, useParams } from "react-router-dom";
-import {
-  getGroupsArticles,
-  getGroupInfo,
-  fetchArticlesBySearch,
-} from "../../../../api";
+import { getGroupsArticles, fetchArticlesBySearch } from "../../../../api";
 import { FormData } from "../../../../util/index";
 import TableFilter from "../../../Widget/TableFilter/TableFilter";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -22,18 +18,8 @@ const SingleGroup1 = () => {
   const searchQuery = query.get("keyword");
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
-  const [group, setGroup] = useState([]);
   let params = useParams();
   const groupId = params["id"];
-
-  const searchTag = async (value) => {
-    const queryParams = new URLSearchParams();
-    queryParams.append("keyword", value);
-    searchArticles(value);
-    const path = `/groups/${groupId} `;
-    const url = `${path}?${queryParams.toString()}`;
-    navigate(url);
-  };
 
   const columns = [
     {
@@ -142,7 +128,6 @@ const SingleGroup1 = () => {
     navigate(url);
   };
   const searchPost = (value) => {
-    /*  await searchArticles(value); */
     if (value) {
       searchArticles(value);
     } else {
@@ -150,7 +135,6 @@ const SingleGroup1 = () => {
 
       navigate(`/groups/${groupId} `);
     }
-    /*  getArticlesBySearch(groupId,value); */
   };
 
   return (

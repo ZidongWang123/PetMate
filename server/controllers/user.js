@@ -112,8 +112,7 @@ export const modifyPersonalInfo = async (req, res) => {
 export const updateMembership = async (req, res) => {
   const { id } = req.params;
   const { data } = req.body;
-  console.log("userId", id);
-  console.log("data", data);
+
   try {
     let updatedInfo = {};
 
@@ -132,7 +131,7 @@ export const updateMembership = async (req, res) => {
     }
 
     await User.findByIdAndUpdate(id, updatedInfo);
-    console.log("updatedInfo", updatedInfo);
+
     const updatedUser = await User.findById(id);
     res
       .status(200)

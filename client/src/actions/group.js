@@ -9,7 +9,6 @@ import {
   UPDATE_GROUP,
   START_LOADING,
   END_LOADING,
-  UPDATE_GROUP_PASSWORD,
 } from "../constant/actionTypes";
 import * as api from "../api/index.js";
 export const getGroups = () => async (dispatch) => {
