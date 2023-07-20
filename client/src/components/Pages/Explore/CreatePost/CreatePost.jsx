@@ -19,7 +19,6 @@ export default function CreatePost() {
     const user = JSON.parse(localStorage.getItem('profile')).result;
     const { postId } = useParams();
     const [pictures, setPictures] = useState([])
-    const [files,setFiles]=useState([])
     const [title, setTitle] = useState("")
     const [text, setText] = useState("")
     const [tags, setTags] = useState([])
@@ -42,15 +41,15 @@ export default function CreatePost() {
         return new Promise((resolve, reject) => {
           Resizer.imageFileResizer(
             file,
-            420, // 不设置宽度
-            undefined, // 不设置高度
-            'JPEG', // 设置输出格式为 JPEG
-            50, // 设置压缩质量，取值范围为 0 到 100
-            0, // 设置旋转角度，0 表示不旋转
+            420, 
+            undefined, 
+            'JPEG', 
+            50, 
+            0, 
             (compressedDataUrl) => {
               resolve(compressedDataUrl);
             },
-            'base64' // 设置返回的 Data URL 格式为 base64
+            'base64' 
           );
         });
       };
@@ -95,16 +94,17 @@ export default function CreatePost() {
     const createPost=async()=>{
         try {
 
+            
             const res = await apis.createExplorePost({ title, text, tags,  pictures, creatorId: user._id })
             if (res.status = 200) {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
 
-                setTimeout(()=>{
+                // setTimeout(()=>{
 
-                    navigate(`/userExplorePosts/${user._id}`)
+                //     navigate(`/userExplorePosts/${user._id}`)
 
-                },1000)     
+                // },1000)     
                 
             }
             else if (res.status = 500) {

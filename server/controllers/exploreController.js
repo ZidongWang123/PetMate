@@ -121,6 +121,7 @@ export const getExplorePosts=async(req,res)=>{
 
         return res.status(200).json({result: newPosts, message: "Successfully got tagsList" })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: 'failed, internal server error' });
     }
 }
