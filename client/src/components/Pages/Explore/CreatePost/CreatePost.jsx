@@ -1,18 +1,15 @@
 import React, {useEffect,useState} from "react";
-
 import ImageUploader from 'react-images-upload';
-
-
 import "./CreatePost.css"
-import { darkPurple, orange,darkGray } from "../../../../constant/actionTypes";
+import { darkPurple, orange } from "../../../../constant/actionTypes";
 import InputField from "../widget/InputField";
 import InputTagBar from "../../../Widget/InputBar/InputTagBar";
 import UniformButton from "../widget/UniformButton";
 import { useNavigate, useParams } from 'react-router-dom';
 import * as apis from "../../../../api";
 import FeedbackMsg from "../../../Widget/FeedbackMsg/FeedbackMsg.jsx"
-
 import { getSinglePost } from "../../../../api";
+import Resizer from 'react-image-file-resizer';
 const severityOptions = { success: "success", failure: "error",warning:"warning" }
 
 
@@ -22,6 +19,7 @@ export default function CreatePost() {
     const user = JSON.parse(localStorage.getItem('profile')).result;
     const { postId } = useParams();
     const [pictures, setPictures] = useState([])
+    const [files,setFiles]=useState([])
     const [title, setTitle] = useState("")
     const [text, setText] = useState("")
     const [tags, setTags] = useState([])
@@ -40,25 +38,54 @@ export default function CreatePost() {
     const handleTagsChange = (value) => {
         setTags(value)
     }
-    const onDrop = (pictureFiles, pictureDataURLs) => {
-        if(pictureDataURLs.length>9){
-            setMsg("You can upload at most 9 pictures, please adjust the pictures")
+    const compressImage = (file) => {
+        return new Promise((resolve, reject) => {
+          Resizer.imageFileResizer(
+            file,
+            420, // 不设置宽度
+            undefined, // 不设置高度
+            'JPEG', // 设置输出格式为 JPEG
+            50, // 设置压缩质量，取值范围为 0 到 100
+            0, // 设置旋转角度，0 表示不旋转
+            (compressedDataUrl) => {
+              resolve(compressedDataUrl);
+            },
+            'base64' // 设置返回的 Data URL 格式为 base64
+          );
+        });
+      };
+    const onDrop =async (pictureFiles, pictureDataURLs) => {
+        if(pictureFiles.length>6){
+            setMsg("You can upload at most 6 pictures, please adjust the pictures")
             setSeverity(severityOptions.warning)
             setIsFeedbackMsg(true)
             
         }
-        setPictures(pictureDataURLs)
+       
+       const compressedDataUrls=[]
+       for(const file of pictureFiles){
+        const compressedDataUrl= await compressImage(file);
+        compressedDataUrls.push(compressedDataUrl)
+       }
+    
+        setPictures(compressedDataUrls)
         
 
     }
-    const onDelete = (pictureFiles, pictureDataURLs) => {
+    const onDelete = async(pictureFiles, pictureDataURLs) => {
         
-        if(pictureDataURLs.length>9){
-            setMsg("You can upload at most 9 pictures,please adjust the pictures")
+        if(pictureFiles.length>6){
+            setMsg("You can upload at most 6 pictures,please adjust the pictures")
             setSeverity(severityOptions.warning)
             setIsFeedbackMsg(true)            
         }
-        setPictures(pictureDataURLs)
+        const compressedDataUrls=[]
+        for(const file of pictureFiles){
+         const compressedDataUrl= await compressImage(file);
+         compressedDataUrls.push(compressedDataUrl)
+        }
+
+        setPictures(compressedDataUrls)
     }
     const handelfeebackMsgClose = () => {
         setIsFeedbackMsg(false)
@@ -68,17 +95,16 @@ export default function CreatePost() {
     const createPost=async()=>{
         try {
 
-            
-            const res = await apis.createExplorePost({ title, text, tags, pictures, creatorId: user._id })
+            const res = await apis.createExplorePost({ title, text, tags,  pictures, creatorId: user._id })
             if (res.status = 200) {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
 
-                // setTimeout(()=>{
+                setTimeout(()=>{
 
-                //     navigate("/")
+                    navigate(`/userExplorePosts/${user._id}`)
 
-                // },1000)     
+                },1000)     
                 
             }
             else if (res.status = 500) {
@@ -141,9 +167,9 @@ export default function CreatePost() {
             setIsFeedbackMsg(true)
         }
         else{
-            if(pictures.length>9){
+            if(pictures.length>6){
 
-                setMsg("You can upload at most 9 pictures,please adjust the pictures")
+                setMsg("You can upload at most 6 pictures,please adjust the pictures")
                 setSeverity(severityOptions.failure)
                 setIsFeedbackMsg(true)
             }
@@ -164,7 +190,6 @@ export default function CreatePost() {
     }
 
     const onCancel = () => {
-        // 导航到目标页面
         if(postId){
             navigate(`/userExplorePosts/${user._id}`)
         }else{
@@ -231,7 +256,7 @@ export default function CreatePost() {
                     color: darkPurple
                 }}>{"Pictures:"}</h2>
                 <ImageUploader
-                    label="* <=10MB&at most 9 pictures; jpg|gif|jpeg|png"
+                    label="* <=5MB&at most 6 pictures; jpg|jpeg|png|gif"
                     withLabel={true}
                     withIcon={true}
                     buttonText='Choose images'
@@ -242,8 +267,8 @@ export default function CreatePost() {
                     buttonStyles={{color:"white",backgroundColor:orange,fontFamily:"Gloria Hallelujah"}}
                     fileSizeError={"File size is too big!"}
                     fileTypeError={"This extension is not supported!"}
-                    imgExtension={['.jpg', '.gif', ".jpeg",'.png']}
-                    maxFileSize={524288000*2}
+                    imgExtension={['.jpg', '.gif','.jpeg','.png']}
+                    maxFileSize={5242880}
                     defaultImages={pictures}
                 />
                 <div style={{ display: "flex", float: "right" }}>

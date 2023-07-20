@@ -32,7 +32,8 @@ export default function AvatarItem({attribute,userId,title,onConfirmChange}){
     const handleSave = async (e) => {
     if (avatarEditorRef) {
         const canvasScaled = avatarEditorRef.getImageScaledToCanvas();
-        const croppedImg = canvasScaled.toDataURL();
+    
+        const croppedImg = canvasScaled.toDataURL('image/jpeg', 0.8);
 
         try{
             const res=await modifyPersonalInfo(userId,{[title]:croppedImg})
