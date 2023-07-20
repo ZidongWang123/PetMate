@@ -100,11 +100,11 @@ export default function CreatePost() {
                 setSeverity(severityOptions.success)
                 setMsg(res.data.message)
 
-                // setTimeout(()=>{
+                setTimeout(()=>{
 
-                //     navigate(`/userExplorePosts/${user._id}`)
+                    navigate(`/userExplorePosts/${user._id}`)
 
-                // },1000)     
+                },1000)     
                 
             }
             else if (res.status = 500) {
