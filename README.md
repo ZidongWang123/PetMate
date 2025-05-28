@@ -7,15 +7,12 @@ Using React, Node.js, Express & MongoDB to build a Full Stack MERN Application. 
 ## Init
 
 Setup:
-- First of all, in order to connect to the database, You need to login in on `https://www.mongodb.com/atlas`  to add your current IP address to in `Network Access`.  The account number is `haidong.xu@tum.de`, The password is `hfv7d7jhUPNqpW.`
+- First of all, in order to connect to the database, You need to login in on `https://www.mongodb.com/atlas` ， create an account, add your current IP address to in `Network Access`.  `
 - CONNECTION_URL is the link to the cloud database that you have set up on mongodb. 
 - Sender, PASS and HOST are needed for mail-message function in our application
 - You can find already setup .env file with valid CONNECTION_URL, Sender, PASS and HOST in the server folder
 - After setup of the above, run ``npm install -force`` and ``npm start`` for client folder, and ``npm install`` and ``npm start`` for server folder to start the app
 
-test account:
--Non-membership user account: `haidong.xu@tum.de`, password `Haidongxu1234--`
--Membership user account: `zidong.wang@tum.de`   password: `5691569aDONG!`
 
 ## Technical documentation
 Here we will instruct our code in each folder.
